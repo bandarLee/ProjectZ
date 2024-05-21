@@ -17,7 +17,7 @@ public class CharacterMoveAbility : MonoBehaviour
 
     private float _yVelocity = 0f;
     private float _gravity = -9.8f;
-    public float JumpPower = 5f;
+    public float JumpPower = 3f;
 
     private void Start()
     {
@@ -32,13 +32,13 @@ public class CharacterMoveAbility : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         // 2. 방향구하기
-        Vector3 dir = new Vector3(h, 0, v);
-        dir.Normalize();
-        dir = Camera.main.transform.TransformDirection(dir);
+        Vector3 horizontalDir = new Vector3(h, 0, v);
+        horizontalDir.Normalize();
+        horizontalDir = Camera.main.transform.TransformDirection(horizontalDir);
 
         // 3-1. 중력값 적용
         _yVelocity += _gravity * Time.deltaTime;
-        dir.y = _yVelocity;
+        Vector3 finalDir = new Vector3(horizontalDir.x, _yVelocity, horizontalDir.z);
 
 
         // 4. 달리기 적용
@@ -52,7 +52,7 @@ public class CharacterMoveAbility : MonoBehaviour
         else
         {
             speed = MoveSpeed;
-            if (dir.magnitude > 0)
+            if (horizontalDir.magnitude > 0)
             {
                 _animator.SetFloat("Move", 0.5f); 
             }
@@ -66,7 +66,7 @@ public class CharacterMoveAbility : MonoBehaviour
         Stamina = Mathf.Clamp(Stamina, 0, MaxStamina);
 
         // 3. 이동하기
-        _characterController.Move(dir * speed * Time.deltaTime);
+        _characterController.Move(finalDir * speed * Time.deltaTime);
 
         // 5. 점프 적용
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)

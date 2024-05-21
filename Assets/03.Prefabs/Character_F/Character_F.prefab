@@ -3010,7 +3010,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3718133280236988569}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e7a2aa13e50638746834e52af1e25dcc, type: 2}
   m_Controller: {fileID: 9100000, guid: 469bdb8f26ca8a84482d9536b5f048cf, type: 2}
   m_CullingMode: 0
@@ -3551,7 +3551,7 @@ MonoBehaviour:
   MaxStamina: 100
   RunConsumeStamina: 5
   RecoveryStamina: 7
-  JumpPower: 5
+  JumpPower: 3
 --- !u!114 &3344521617650795625
 MonoBehaviour:
   m_ObjectHideFlags: 0
