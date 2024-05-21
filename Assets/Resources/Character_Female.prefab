@@ -2974,7 +2974,7 @@ GameObject:
   - component: {fileID: -2024017660748558482}
   - component: {fileID: -5814765953578817013}
   m_Layer: 0
-  m_Name: Character_F
+  m_Name: Character_Female
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

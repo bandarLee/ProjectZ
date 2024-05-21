@@ -87,8 +87,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         // 접속 상태 표시
         connectionInfoText.text = " 파티에 참가합니다. ";
-        // 모든 룸 참가자들이 Main 씬을 로드하게 함
-        PhotonNetwork.LoadLevel("Main");
+        // 모든 룸 참가자들이 Main 씬을 로드하게 함    
+        PhotonNetwork.LoadLevel("TestScene");   // -> 임시: "TestScene"
     }
 
 }
