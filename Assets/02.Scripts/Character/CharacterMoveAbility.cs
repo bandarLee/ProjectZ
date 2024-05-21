@@ -72,6 +72,7 @@ public class CharacterMoveAbility : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
             _yVelocity = JumpPower;
+            _animator.SetTrigger("Jump");
         }
     }
 }
