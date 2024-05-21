@@ -3,26 +3,29 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    public GameObject inventoryPanel;
-    public GameObject inventorySlotPrefab;
+    public GameObject[] inventorySlots; 
     private Inventory inventory;
 
     private void Start()
     {
         inventory = FindObjectOfType<Inventory>();
+        UpdateInventoryUI();
     }
 
     public void UpdateInventoryUI()
     {
-        foreach (Transform child in inventoryPanel.transform)
+        for (int i = 0; i < inventory.items.Count; i++)
         {
-            Destroy(child.gameObject);
-        }
-
-        foreach (Item item in inventory.items)
-        {
-            GameObject slot = Instantiate(inventorySlotPrefab, inventoryPanel.transform);
-            slot.GetComponent<Image>().sprite = item.icon;
+            if (i < inventory.items.Count)
+            {
+                inventorySlots[i].GetComponent<Image>().sprite = inventory.items[i].icon;
+                inventorySlots[i].SetActive(true);
+            }
+            else
+            {
+                inventorySlots[i].GetComponent<Image>().sprite = null;
+                inventorySlots[i].SetActive(false);
+            }
         }
     }
 }
