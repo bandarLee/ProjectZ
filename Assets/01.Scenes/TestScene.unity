@@ -47241,6 +47241,7 @@ GameObject:
   - component: {fileID: 1958095573}
   - component: {fileID: 1958095572}
   - component: {fileID: 1958095571}
+  - component: {fileID: 1958095581}
   m_Layer: 0
   m_Name: Character_F
   m_TagString: Untagged
@@ -47327,6 +47328,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1958095572}
   - {fileID: 1958095571}
+  - {fileID: 1958095581}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -47343,7 +47345,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraRoot: {fileID: 1227795950}
-  RotationSpeed: 200
 --- !u!114 &1958095575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47356,13 +47357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d627dd5ad51502d4aaf3a69311c2eebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  RunSpeed: 8
-  Stamina: 100
-  MaxStamina: 100
-  RunConsumeStamina: 5
-  RecoveryStamina: 7
-  JumpPower: 3
 --- !u!143 &1958095576
 CharacterController:
   m_ObjectHideFlags: 0
@@ -47983,6 +47977,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+--- !u!114 &1958095581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958095569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stat:
+    Health: 100
+    MaxHealth: 100
+    Damage: 20
+    Stamina: 100
+    MaxStamina: 100
+    RunConsumeStamina: 5
+    RecoveryStamina: 7
+    MoveSpeed: 4
+    RunSpeed: 7
+    RotationSpeed: 200
+    AttackCoolTime: 1
+    AttackConsumeStamina: 10
+    JumpPower: 3
+    JumpConsumeStamina: 0
 --- !u!1001 &1967258226
 PrefabInstance:
   m_ObjectHideFlags: 0
