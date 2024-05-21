@@ -24,11 +24,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.GameVersion = gameVersion; 
+        PhotonNetwork.ConnectUsingSettings(); 
 
-        PhotonNetwork.GameVersion = gameVersion;
-        PhotonNetwork.ConnectUsingSettings();
-
-        joinButton.interactable = false;
+        joinButton.interactable = false; 
         connectionInfoText.text = "마스터 서버에 접속중...";
     }
 
