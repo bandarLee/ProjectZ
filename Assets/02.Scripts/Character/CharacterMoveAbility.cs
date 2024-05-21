@@ -46,7 +46,7 @@ public class CharacterMoveAbility : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Stamina > 0)
         {
             speed = RunSpeed;
-            _animator.SetFloat("Move", 1.0f); 
+            _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3)); 
             Stamina -= Time.deltaTime * RunConsumeStamina;
         }
         else
@@ -54,11 +54,11 @@ public class CharacterMoveAbility : MonoBehaviour
             speed = MoveSpeed;
             if (horizontalDir.magnitude > 0)
             {
-                _animator.SetFloat("Move", 0.5f); 
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5)); 
             }
             else
             {
-                _animator.SetFloat("Move", 0); 
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
             }
             Stamina += Time.deltaTime * RecoveryStamina;
         }
