@@ -15,7 +15,6 @@ Material:
   m_InvalidKeywords:
   - WATER_EDGEBLEND_ON
   - WATER_REFLECTIVE
-  - _WEATHERMAKERFOGMODE_EXPONENTIAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -112,7 +111,7 @@ Material:
     - _FogSpherePosition: {r: 0, g: 0, b: 0, a: 0}
     - _WeatherMakerFogBoxCenter: {r: 0, g: 0, b: 0, a: 0}
     - _WeatherMakerFogColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WeatherMakerFogNoiseVelocity: {r: 6.8645983, g: 11.441001, b: 16.017353, a: 0}
+    - _WeatherMakerFogNoiseVelocity: {r: 0.4578325, g: 0.7630541, b: 1.0682758, a: 0}
     - _WeatherMakerFogSpherePosition: {r: 0, g: 0, b: 0, a: 0}
     - _WeatherMakerFogVolumePower: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
