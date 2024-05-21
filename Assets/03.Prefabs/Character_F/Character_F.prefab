@@ -3019,7 +3019,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 469bdb8f26ca8a84482d9536b5f048cf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3584,7 +3584,7 @@ MonoBehaviour:
   - {fileID: 8349035265593133369}
   - {fileID: 6868937196769392597}
   - {fileID: 2553871074119320547}
-  sceneViewId: 1
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &8349035265593133369
