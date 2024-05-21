@@ -10,7 +10,13 @@ using UnityEngine;
 public class Character : MonoBehaviour, IPunObservable
 {
     public PhotonView PhotonView { get; private set; }
+
+    public Stat Stat;
+
     private Animator _animator;
+
+    private Vector3 _recivedPosition;
+    private Quaternion _recivedRotation;
 
     private void Awake()
     {
