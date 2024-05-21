@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class CharacterMoveAbility : MonoBehaviour
 {
@@ -15,6 +14,10 @@ public class CharacterMoveAbility : MonoBehaviour
     public float MaxStamina = 100f;
     public float RunConsumeStamina = 5f;
     public float RecoveryStamina = 7f;
+
+    private float _yVelocity = 0f;
+    private float _gravity = -9.8f;
+    public float JumpPower = 5f;
 
     private void Start()
     {
@@ -34,25 +37,29 @@ public class CharacterMoveAbility : MonoBehaviour
         dir = Camera.main.transform.TransformDirection(dir);
 
         // 3-1. 중력값 적용
-        dir.y = -1f;
+        _yVelocity += _gravity * Time.deltaTime;
+        dir.y = _yVelocity;
 
-        // 달리기 적용
+
+        // 4. 달리기 적용
         float speed = MoveSpeed;
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && Stamina > 0)
         {
-            if(Stamina > 0)
-            {
-                speed = RunSpeed;
-                Stamina -= Time.deltaTime * RunConsumeStamina;
-            }
-            else
-            {
-                speed = MoveSpeed;
-            }
+            speed = RunSpeed;
+            _animator.SetFloat("Move", 1.0f); 
+            Stamina -= Time.deltaTime * RunConsumeStamina;
         }
         else
         {
+            speed = MoveSpeed;
+            if (dir.magnitude > 0)
+            {
+                _animator.SetFloat("Move", 0.5f); 
+            }
+            else
+            {
+                _animator.SetFloat("Move", 0); 
+            }
             Stamina += Time.deltaTime * RecoveryStamina;
         }
 
@@ -60,6 +67,11 @@ public class CharacterMoveAbility : MonoBehaviour
 
         // 3. 이동하기
         _characterController.Move(dir * speed * Time.deltaTime);
-        //_animator.SetFloat("Move");
+
+        // 5. 점프 적용
+        if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
+        {
+            _yVelocity = JumpPower;
+        }
     }
 }
