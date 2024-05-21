@@ -24,8 +24,6 @@ public class Stat
     public float AttackConsumeStamina;
 
     public float JumpPower;
-    public int JumpMaxCount;
-    public int JumpRemainCount;
     public float JumpConsumeStamina;
 
     public void Init()
