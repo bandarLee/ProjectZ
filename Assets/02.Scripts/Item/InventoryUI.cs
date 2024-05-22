@@ -19,6 +19,7 @@ public class InventoryUI : MonoBehaviour
             if (i < inventory.items.Count * 3)
             {
                 inventorySlots[i].GetComponent<Image>().sprite = inventory.items[i/3].icon;
+                inventorySlots[i].GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
             }
  
         }
