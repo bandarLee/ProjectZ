@@ -1,8 +1,6 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TestScene : MonoBehaviourPunCallbacks
 {
@@ -19,23 +17,14 @@ public class TestScene : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (!_init)
+        if (PhotonNetwork.InRoom)
         {
-            Init();
+            if (!_init)
+            {
+                Init();
+            }
         }
-
-       // PhotonNetwork.ConnectUsingSettings(); // 마스터 서버에 연결
     }
-
-    /*public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinRandomRoom(); // 랜덤한 방에 참여 시도
-    }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        PhotonNetwork.CreateRoom(null); // 랜덤 참여 실패 시 새 방 생성
-    }*/
 
     public override void OnJoinedRoom()
     {
@@ -43,21 +32,25 @@ public class TestScene : MonoBehaviourPunCallbacks
         {
             Init();
         }
-
-        Hashtable props = new Hashtable
-{
-    {"CharacterType", (int)UI_PlaceholderModel.SelectedCharacterType}
-};
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
     public void Init()
     {
         _init = true;
 
-        // Character_Male <- 리소스에 넣어줄 이름
-        // Character_Female
-        PhotonNetwork.Instantiate($"Character_{UI_PlaceholderModel.SelectedCharacterType}", SpawnPoints[0].transform.position, Quaternion.identity);
+        if (SpawnPoints == null || SpawnPoints.Count == 0)
+        {
+            Debug.LogError("Spawn points are not set!");
+            return;
+        }
+
+
+        string characterName = "Character_Female"; 
+        Vector3 spawnPosition = SpawnPoints[0].transform.position;
+        Quaternion spawnRotation = Quaternion.identity;
+
+        GameObject character = PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
+
 
     }
 }

@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Pun;
-using Photon.Realtime;
+
 
 namespace Michsky.UI.Shift
 {
-    public class QuickMatchButton : MonoBehaviourPunCallbacks
+    public class QuickMatchButton : MonoBehaviour
     {
         [Header("Text")]
         public bool useCustomText = false;
@@ -16,9 +15,6 @@ namespace Michsky.UI.Shift
         public bool useCustomImage = false;
         public Sprite backgroundImage;
 
-        [Header("Photon Settings")]
-        public string defaultRoomName = "QuickMatchRoom";
-        public int maxPlayers = 4;
 
         TextMeshProUGUI titleText;
         Image image1;
@@ -27,8 +23,6 @@ namespace Michsky.UI.Shift
 
         void Start()
         {
-            button = GetComponent<Button>();
-            button.onClick.AddListener(JoinOrCreateRoom);
 
             if (useCustomText == false)
             {
@@ -43,35 +37,10 @@ namespace Michsky.UI.Shift
             }
         }
 
-        public override void OnConnectedToMaster()
-        {
-            PhotonNetwork.JoinLobby(); // Ensure the client is in a lobby.
-        }
 
-        void JoinOrCreateRoom()
-        {
-            if (PhotonNetwork.IsConnectedAndReady)
-            {
-                RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
-                PhotonNetwork.JoinOrCreateRoom(defaultRoomName, options, TypedLobby.Default);
-            }
-            else
-            {
-                Debug.LogError("Photon Network is not ready. Check the network connection.");
-            }
-        }
 
-        public override void OnJoinedRoom()
-        {
-            if (PhotonNetwork.CurrentRoom != null)
-                Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
-            else
-                Debug.LogError("Failed to access the current room.");
-        }
 
-        public override void OnJoinRoomFailed(short returnCode, string message)
-        {
-            Debug.LogError("Failed to join room: " + message);
-        }
+
+
     }
 }

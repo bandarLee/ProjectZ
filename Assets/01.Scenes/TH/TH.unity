@@ -925,8 +925,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &185358113
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1528,8 +1530,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &293922521
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2096,8 +2100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &427123538
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3102,8 +3108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &548668490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3822,8 +3830,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &769403099
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5895,8 +5905,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1149745500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6102,8 +6114,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!1 &1187284937
 GameObject:
   m_ObjectHideFlags: 0
@@ -6994,8 +7008,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1352499710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7301,8 +7317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1391794840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7548,8 +7566,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1428359753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7669,8 +7689,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1428820519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9381,8 +9403,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1664021515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10401,8 +10425,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1887502840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10846,8 +10872,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1944159985
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11060,8 +11088,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: Head
+    itemName: "\uACE0\uAE30"
     icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    itemEffect: "\uD5C8\uAE30+1"
+    itemDescript: "\uC2F1\uC2F1\uD55C \uC0DD\uACE0\uAE30"
 --- !u!65 &1994009979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15632,7 +15662,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &855439974361225979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23194,7 +23236,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2628753999867313057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24119,7 +24173,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2857224994119431473
 GameObject:
   m_ObjectHideFlags: 0
@@ -43389,7 +43455,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &4285163326789264509
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48067,7 +48145,7 @@ GameObject:
   - component: {fileID: 8611850060348544893}
   - component: {fileID: 1369212737798966375}
   m_Layer: 5
-  m_Name: PlayerInventory_9
+  m_Name: InventoryFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54894,7 +54972,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7127162882349366250
 GameObject:
   m_ObjectHideFlags: 0
@@ -55022,7 +55112,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4489826223998824237}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7138291454749725668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55227,7 +55329,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7183215765115587819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59273,7 +59387,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9015068297335545198}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: UpdateItemInformation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8105583758256177605
 MonoBehaviour:
   m_ObjectHideFlags: 0

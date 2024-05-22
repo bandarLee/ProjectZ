@@ -6,16 +6,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static System.Net.WebRequestMethods;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "1";
     public TMP_InputField NicknameInput;
-    public TMP_InputField PersonalityInput;
-
-    public Text connectionInfoText;
+/*    public TMP_InputField PersonalityInput;
+*/
+    public TextMeshProUGUI connectionInfoText;
     //네트워크 정보 표시 텍스트
     public Button joinButton;
     //룸 접속 버튼
@@ -54,29 +53,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 룸 접속 시도
     public void Connect()
     {
-        Hashtable playerProperties = new Hashtable();
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
-        if (gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            string personalityValue = PersonalityInput.text;
-
-            playerProperties.Add("Personality", personalityValue);
-
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        }
-
-        joinButton.interactable = false;
-
         if (PhotonNetwork.IsConnected)
         {
-            connectionInfoText.text = "룸에 접속...";
-            RoomOptions roomOptions = new RoomOptions { MaxPlayers = 6 };
-            PhotonNetwork.JoinOrCreateRoom("MyUniqueRoom", roomOptions, TypedLobby.Default);
-
+            RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+            PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
         }
         else
         {
-            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -85,10 +69,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        // 접속 상태 표시
         connectionInfoText.text = " 파티에 참가합니다. ";
-        // 모든 룸 참가자들이 Main 씬을 로드하게 함    
-        PhotonNetwork.LoadLevel("TestScene");   // -> 임시: "TestScene"
+        PhotonNetwork.LoadLevel("TestScene");  
     }
 
 }
