@@ -14,10 +14,16 @@ public enum CharacterType
 
 public class UI_PlaceholderModel : MonoBehaviour
 {
+    public static UI_PlaceholderModel Instance { get; private set; }
     public  CharacterType SelectedCharacterType = CharacterType.Female;
 
     public GameObject FemaleCharacter;
     public GameObject MaleCharacter;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

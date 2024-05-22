@@ -45,12 +45,12 @@ public class TestScene : MonoBehaviourPunCallbacks
         }
 
         //PhotonNetwork.LocalPlayer.CustomProperties["CharacterClass"];
-
-        string characterName = "Character_Female"; 
+        int characterType = (int)PhotonNetwork.LocalPlayer.CustomProperties["CharacterType"];
+        string characterName = characterType == 0 ? "Character_Female" : "Character_Male"; 
         Vector3 spawnPosition = SpawnPoints[0].transform.position;
         Quaternion spawnRotation = Quaternion.identity;
 
-        GameObject character = PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
+        PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
 
 
     }
