@@ -14,18 +14,13 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        for (int i = 0; i < inventory.items.Count; i++)
+        for (int i = 0; i < inventory.items.Count * 3; i++)
         {
-            if (i < inventory.items.Count)
+            if (i < inventory.items.Count * 3)
             {
-                inventorySlots[i].GetComponent<Image>().sprite = inventory.items[i].icon;
-                inventorySlots[i].SetActive(true);
+                inventorySlots[i].GetComponent<Image>().sprite = inventory.items[i/3].icon;
             }
-            else
-            {
-                inventorySlots[i].GetComponent<Image>().sprite = null;
-                inventorySlots[i].SetActive(false);
-            }
+ 
         }
     }
 }
