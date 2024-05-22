@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/WeatherMaker/Demo/Scenes/DemoScene.unity
+    guid: 3779a3620d75e7847b5dfef6a89cdd24
   m_configObjects: {}
