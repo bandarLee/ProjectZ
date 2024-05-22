@@ -8,6 +8,8 @@ public class Stat
 {
     public int Health;
     public int MaxHealth;
+    public int Mental;
+    public int MaxMental;
     public int Damage;
 
     public float Stamina;
@@ -29,6 +31,7 @@ public class Stat
     public void Init()
     {
         Health = MaxHealth;
+        Mental = MaxMental;
         Stamina = MaxStamina;
     }
 }

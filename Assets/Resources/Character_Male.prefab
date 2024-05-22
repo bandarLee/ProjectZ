@@ -1810,6 +1810,8 @@ MonoBehaviour:
   Stat:
     Health: 100
     MaxHealth: 100
+    Mental: 100
+    MaxMental: 100
     Damage: 20
     Stamina: 100
     MaxStamina: 100

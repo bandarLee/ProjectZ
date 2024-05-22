@@ -40,12 +40,14 @@ public class Character : MonoBehaviour, IPunObservable
             /*stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);*/
             stream.SendNext(Stat.Health);
+            stream.SendNext(Stat.Mental);
             stream.SendNext(Stat.Stamina);
         }
         else if (stream.IsReading)   // 데이터를 수신하는 상황
         {
             // 데이터를 전송한 순서와 똑같이 받은 데이터를 캐스팅해야된다.
             Stat.Health = (int)stream.ReceiveNext();
+            Stat.Mental = (int)stream.ReceiveNext();
             Stat.Stamina = (float)stream.ReceiveNext();
         }
         // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
