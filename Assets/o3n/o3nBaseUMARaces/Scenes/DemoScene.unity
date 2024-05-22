@@ -8580,8 +8580,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 363062548}
-  - {fileID: 1354753117}
   - {fileID: 1385428173}
+  - {fileID: 1354753117}
   - {fileID: 1553957388}
   - {fileID: 3943146075358863491}
   - {fileID: 4381143025426346349}
@@ -55152,6 +55152,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 331623066}
     m_Modifications:
+    - target: {fileID: 233446461001477348, guid: da76264f66c55d24e8c3b8dc2f0e3bb0, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1594809375959838129, guid: da76264f66c55d24e8c3b8dc2f0e3bb0, type: 3}
       propertyPath: umaGenerator
       value: 
