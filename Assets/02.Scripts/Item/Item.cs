@@ -5,4 +5,6 @@ public class Item
 {
     public string itemName;
     public Sprite icon;
+    public string itemEffect;
+    public string itemDescript;
 }
