@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_M_Mat_2
+  m_Name: Character_Male_Mat_2
   m_Shader: {fileID: 4800000, guid: 1dfceb7e0c0486842b8db8911f0f1f85, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 3e5dde291cc1425448bf44bfc474c084, type: 3}
+        m_Texture: {fileID: 2800000, guid: 139783dd73961f34783a7b541c42916b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CombinedMap:
@@ -76,15 +76,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: cf21e3027fe911d44888011a152f70d5, type: 3}
+        m_Texture: {fileID: 2800000, guid: a85c04eea09be4a4481a8e5eebdfe5dc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: a38fc87e0a4680a47bff6ed95926a227, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3f693215da355a442b0545a6ef0c5304, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 77669f567d4bd3640aebe3ca97dc6679, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3772c9ff51510804f9c285c97f513ece, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MicroBumpMap:
@@ -96,7 +96,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 55153a580328d2141bc5cb5b5a1efa58, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4e9f1e09f0ae54e4a8634859dcc851b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionTex:

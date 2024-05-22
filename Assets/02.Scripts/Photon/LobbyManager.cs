@@ -70,6 +70,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //캐릭터 선택한거에서 변수를 Hashtable 로 업로드
+       // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         connectionInfoText.text = " 파티에 참가합니다. ";
         PhotonNetwork.LoadLevel("TestScene");  
     }

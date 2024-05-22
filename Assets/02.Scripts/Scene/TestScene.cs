@@ -44,6 +44,7 @@ public class TestScene : MonoBehaviourPunCallbacks
             return;
         }
 
+        //PhotonNetwork.LocalPlayer.CustomProperties["CharacterClass"];
 
         string characterName = "Character_Female"; 
         Vector3 spawnPosition = SpawnPoints[0].transform.position;
