@@ -5,6 +5,13 @@ public class Item
 {
     public string itemName;
     public Sprite icon;
+    public ItemType itemType;
+
     public string itemEffect;
-    public string itemDescript;
+    public string itemDescription;
+}
+public enum ItemType
+{
+    Food,
+    Weapon
 }

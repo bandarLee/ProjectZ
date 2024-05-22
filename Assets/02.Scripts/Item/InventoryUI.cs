@@ -1,11 +1,17 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    public GameObject[] inventorySlots; 
+    public GameObject[] inventorySlots;
     private Inventory inventory;
 
+    public TMP_Text itemNameText;
+    public TMP_Text itemTypeText;
+    public TMP_Text itemEffectText;
+    public TMP_Text itemDescriptionText;
+    public Image itemIconImage;
     private void Start()
     {
         inventory = FindObjectOfType<Inventory>();
@@ -14,18 +20,69 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        for (int i = 0; i < inventory.items.Count * 3; i++)
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if (i < inventory.items.Count * 3)
+            Slot slot = inventorySlots[i].GetComponent<Slot>();
+            if (i < inventory.items.Count)
             {
-                inventorySlots[i].GetComponent<Image>().sprite = inventory.items[i/3].icon;
-                inventorySlots[i].GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
+                int itemIndex = i;
+                Item currentItem = inventory.items[itemIndex];
+
+                if (slot != null)
+                {
+                    slot.normalIcon.sprite = currentItem.icon;
+                    slot.highlightedIcon.sprite = currentItem.icon;
+                    slot.pressedIcon.sprite = currentItem.icon;
+
+                    slot.normalIcon.transform.localScale = new Vector3(2, 2, 2);
+                    slot.highlightedIcon.transform.localScale = new Vector3(2, 2, 2);
+                    slot.pressedIcon.transform.localScale = new Vector3(2, 2, 2);
+                }
+
+                inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
+                int capturedIndex = itemIndex;
+                inventorySlots[i].GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(capturedIndex));
             }
- 
+            else
+            {
+                if (slot != null)
+                {
+                    slot.normalIcon.sprite = slot.normalIcon.sprite;
+                    slot.highlightedIcon.sprite = slot.highlightedIcon.sprite;
+                    slot.pressedIcon.sprite = slot.pressedIcon.sprite;
+
+                    slot.normalIcon.transform.localScale = new Vector3(0, 0, 0);
+                    slot.highlightedIcon.transform.localScale = new Vector3(0, 0, 0);
+                    slot.pressedIcon.transform.localScale = new Vector3(0, 0, 0);
+                }
+
+                inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            }
         }
     }
-    public void UpdateItemInformation()
-    {
 
+    public void ShowItemInfo(int index)
+    {
+        if (index < inventory.items.Count)
+        {
+            Item item = inventory.items[index];
+            itemNameText.text = item.itemName;
+            itemTypeText.text = GetItemType(item.itemType);
+            itemEffectText.text = item.itemEffect;
+            itemDescriptionText.text = item.itemDescription;
+            itemIconImage.sprite = item.icon;
+        }
+    }
+    public string GetItemType(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Food:
+                return "음식";
+            case ItemType.Weapon:
+                return "무기";
+            default:
+                return "알 수 없음";
+        }
     }
 }
