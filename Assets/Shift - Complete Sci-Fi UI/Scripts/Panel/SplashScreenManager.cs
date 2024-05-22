@@ -7,6 +7,7 @@ namespace Michsky.UI.Shift
         [Header("Resources")]
         public GameObject splashScreen;
         public GameObject mainPanels;
+        public GameObject characterGameObject; // 캐릭터 게임 오브젝트 참조 추가
 
         private Animator splashScreenAnimator;
         private Animator mainPanelsAnimator;
@@ -22,6 +23,8 @@ namespace Michsky.UI.Shift
 
         void OnEnable()
         {
+            mpm = FindObjectOfType<MainPanelManager>(); // MainPanelManager 찾기
+
             if (showOnlyOnce && GameObject.Find("[Shift UI - Splash Screen Helper]") != null) { disableSplashScreen = true; }
             if (splashScreenAnimator == null) { splashScreenAnimator = splashScreen.GetComponent<Animator>(); }
             if (ssTimedEvent == null) { ssTimedEvent = splashScreen.GetComponent<TimedEvent>(); }
@@ -70,6 +73,19 @@ namespace Michsky.UI.Shift
                 tempHelper.name = "[Shift UI - Splash Screen Helper]";
                 DontDestroyOnLoad(tempHelper);
             }
+
+            if (!disableSplashScreen)
+            {
+                Invoke("InitializeCharacterVisibility", 0.5f); // 스플래시 스크린 종료 후 캐릭터 초기화 지연
+            }
+        }
+
+        void InitializeCharacterVisibility()
+        {
+            if (mpm.IsHomeScreenActive())
+                characterGameObject.SetActive(true); // Home 화면이면 캐릭터 활성화
+            else
+                characterGameObject.SetActive(false); // Home 화면이 아니면 비활성화
         }
 
         public void LoginScreenCheck()
