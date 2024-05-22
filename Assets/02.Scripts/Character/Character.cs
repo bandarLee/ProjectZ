@@ -5,6 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterMoveAbility))]
 [RequireComponent(typeof(CharacterRotateAbility))]
+[RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(Animator))]
 
 public class Character : MonoBehaviour, IPunObservable

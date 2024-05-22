@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/WeatherMaker/Demo/Scenes/DemoScene.unity
     guid: 3779a3620d75e7847b5dfef6a89cdd24
+  - enabled: 1
+    path: Assets/01.Scenes/LobbyScene.unity
+    guid: b77b2dc7e1a894c4c8e673d96314dcb4
+  - enabled: 1
+    path: Assets/01.Scenes/TestScene.unity
+    guid: 7a895e6f075ec0840bda6c12b0efbbdf
   m_configObjects: {}
