@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TestScene : MonoBehaviourPunCallbacks
 {
@@ -42,6 +43,12 @@ public class TestScene : MonoBehaviourPunCallbacks
         {
             Init();
         }
+
+        Hashtable props = new Hashtable
+{
+    {"CharacterType", (int)UI_PlaceholderModel.SelectedCharacterType}
+};
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
     public void Init()
