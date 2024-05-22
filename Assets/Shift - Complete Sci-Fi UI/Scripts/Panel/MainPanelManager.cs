@@ -189,11 +189,5 @@ namespace Michsky.UI.Shift
                 panels[i].panelObject.gameObject.SetActive(false);
             }
         }
-
-        public bool IsHomeScreenActive()
-        {
-            return currentPanelIndex == 0; 
-        }
-
     }
 }
