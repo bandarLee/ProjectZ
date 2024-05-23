@@ -15460,6 +15460,7 @@ GameObject:
   - component: {fileID: 5500736266278914367}
   - component: {fileID: 3491692362441620745}
   - component: {fileID: 9138099167174580527}
+  - component: {fileID: 9138099167174580528}
   m_Layer: 0
   m_Name: Character_F
   m_TagString: Player
@@ -16302,25 +16303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Health: 100
-    MaxHealth: 100
-    Mental: 0
-    MaxMental: 0
-    Hunger: 0
-    MaxHunger: 0
-    Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
-    MoveSpeed: 4
-    RunSpeed: 7
-    RotationSpeed: 200
-    AttackCoolTime: 1
-    AttackConsumeStamina: 10
-    JumpPower: 3
-    JumpConsumeStamina: 0
 --- !u!1 &3570444120317132580
 GameObject:
   m_ObjectHideFlags: 0
@@ -35253,6 +35235,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 8872838007490279108}
+--- !u!114 &9138099167174580528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349930148885993075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c460b75187e5cf42822de98268d1869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stat:
+    Health: 0
+    MaxHealth: 0
+    Mental: 0
+    MaxMental: 0
+    Hunger: 0
+    MaxHunger: 0
+    Temperature: 0
+    StandardTemperature: 0
+    Damage: 0
+    Stamina: 0
+    MaxStamina: 0
+    RunConsumeStamina: 0
+    RecoveryStamina: 0
+    MoveSpeed: 5
+    RunSpeed: 0
+    RotationSpeed: 0
+    AttackCoolTime: 0
+    AttackConsumeStamina: 0
+    JumpPower: 0
+    JumpConsumeStamina: 0
+  State: 0
 --- !u!4 &9182158483213949274
 Transform:
   m_ObjectHideFlags: 0

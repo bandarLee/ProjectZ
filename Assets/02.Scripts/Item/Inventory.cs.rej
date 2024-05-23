@@ -1,0 +1,40 @@
+diff a/Assets/02.Scripts/Item/Inventory.cs b/Assets/02.Scripts/Item/Inventory.cs	(rejected hunks)
+@@ -5,20 +5,32 @@
+ {
+     public Dictionary<string, Item> items = new Dictionary<string, Item>();
+     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
+-    public InventoryUI inventoryUI; 
+-
++    public InventoryUI inventoryUI;
+ 
++    private void Start()
++    {
++        inventoryUI = FindObjectOfType<InventoryUI>();
++    }
+ 
+     public void AddItem(Item newItem)
+     {
+-        if (items.ContainsKey(newItem.itemName))
++        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
+         {
+-            itemQuantities[newItem.itemName]++; 
++            string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
++            items[uniqueItemName] = newItem;
++            itemQuantities[uniqueItemName] = 1;
+         }
+         else
+         {
+-            items[newItem.itemName] = newItem;
+-            itemQuantities[newItem.itemName] = 1;
++            if (items.ContainsKey(newItem.itemName))
++            {
++                itemQuantities[newItem.itemName]++;
++            }
++            else
++            {
++                items[newItem.itemName] = newItem;
++                itemQuantities[newItem.itemName] = 1;
++            }
+         }
+ 
+         inventoryUI.UpdateInventoryUI();
