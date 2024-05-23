@@ -83,14 +83,7 @@ public class InventoryUI : MonoBehaviour
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
 
-            // Äü½½·Ô µî·Ï ¹öÆ° ¼³Á¤
-            Button[] quickSlotButtons = ItemInfo.GetComponentsInChildren<Button>();
-            for (int i = 0; i < quickSlotButtons.Length; i++)
-            {
-                int slotIndex = i;
-                quickSlotButtons[i].onClick.RemoveAllListeners();
-                quickSlotButtons[i].onClick.AddListener(() => quickSlotManager.RegisterItemToQuickSlot(slotIndex, item));
-            }
+
         }
     }
 

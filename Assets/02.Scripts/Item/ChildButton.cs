@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ChildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ChildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private UI_QuickSlotResister parentQuickSlot;
     [HideInInspector]
     public bool isPointerOver = false;
-    public int slotIndex; 
 
     private void Start()
     {
@@ -31,16 +30,7 @@ public class ChildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        RegisterToQuickSlot();
-    }
 
-    public void RegisterToQuickSlot()
-    {
-        if (parentQuickSlot != null)
-        {
-            parentQuickSlot.RegisterItemToQuickSlot(slotIndex);
-        }
-    }
+
+ 
 }

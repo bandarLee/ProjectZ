@@ -9,6 +9,10 @@ public class QuickSlotManager : MonoBehaviour
     private void Start()
     {
         quickSlotItems = new Item[quickSlotImages.Length];
+        foreach(Image image in quickSlotImages)
+        {
+            image.gameObject.SetActive(false);
+        }
     }
 
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
@@ -23,9 +27,7 @@ public class QuickSlotManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
-        // 아이템 사용 로직
-        Debug.Log("Using item: " + quickSlotItems[slotIndex].itemName);
-        // 여기서 아이템의 효과를 적용하는 코드를 추가하세요.
+        Debug.Log("아이템 사용" + quickSlotItems[slotIndex].itemName);
     }
 
     private void Update()

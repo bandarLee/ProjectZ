@@ -16,10 +16,7 @@ public class UI_QuickSlotResister : MonoBehaviour, IPointerEnterHandler, IPointe
         for (int i = 0; i < targetObject.transform.childCount; i++)
         {
             var childButton = targetObject.transform.GetChild(i).GetComponent<ChildButton>();
-            if (childButton != null)
-            {
-                childButton.slotIndex = i;
-            }
+
         }
     }
 
