@@ -6,7 +6,6 @@ public class Item
     public string itemName;
     public Sprite icon;
     public ItemType itemType;
-
     public string itemEffect;
     public string itemDescription;
 }
@@ -14,5 +13,8 @@ public class Item
 public enum ItemType
 {
     Food,
-    Weapon
+    Weapon,
+    Heal,
+    Mental,
+    ETC
 }

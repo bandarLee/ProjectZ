@@ -1,48 +1,119 @@
+//
+// Weather Maker for Unity
+// (c) 2016 Digital Ruby, LLC
+// Source code may be used for personal or commercial projects.
+// Source code may NOT be redistributed or sold.
+// 
+// *** A NOTE ABOUT PIRACY ***
+// 
+// If you got this asset from a pirate site, please consider buying it from the Unity asset store at https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL. This asset is only legally available from the Unity Asset Store.
+// 
+// I'm a single indie dev supporting my family by spending hundreds and thousands of hours on this and other assets. It's very offensive, rude and just plain evil to steal when I (and many others) put so much hard work into the software.
+// 
+// Thank you.
+//
+// *** END NOTE ABOUT PIRACY ***
+//
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
-
+    /// <summary>
+    /// Configuration script for the Weather Maker configuration side panel
+    /// </summary>
     public class WeatherMakerConfigurationScript : MonoBehaviour
     {
-
+        /// <summary>
+        /// Show FPS?
+        /// </summary>
         public bool ShowFPS = true;
 
-
+        /// <summary>
+        /// Show time of day?
+        /// </summary>
         public bool ShowTimeOfDay = true;
 
+        /// <summary>
+        /// Auto add lights upon play?
+        /// </summary>
         public bool AutoAddLightsOnStart = true;
 
+        /// <summary>
+        /// Configuration panel
+        /// </summary>
         public GameObject ConfigurationPanel;
 
+        /// <summary>
+        /// Label display for FPS
+        /// </summary>
         public UnityEngine.UI.Text LabelFPS;
 
+        /// <summary>
+        /// Transition duration slider
+        /// </summary>
         public UnityEngine.UI.Slider TransitionDurationSlider;
 
+        /// <summary>
+        /// Intensity slider
+        /// </summary>
         public UnityEngine.UI.Slider IntensitySlider;
 
+        /// <summary>
+        /// Mouse look checkbox
+        /// </summary>
         public UnityEngine.UI.Toggle MouseLookEnabledCheckBox;
 
+        /// <summary>
+        /// Flashlight checkbox
+        /// </summary>
         public UnityEngine.UI.Toggle FlashlightToggle;
 
+        /// <summary>
+        /// Time of day checkbox
+        /// </summary>
         public UnityEngine.UI.Toggle TimeOfDayEnabledCheckBox;
 
+        /// <summary>
+        /// Collision checkbox
+        /// </summary>
         public UnityEngine.UI.Toggle CollisionToggle;
 
+        /// <summary>
+        /// Time of day slider
+        /// </summary>
         public UnityEngine.UI.Slider DawnDuskSlider;
 
+        /// <summary>
+        /// Time of day text
+        /// </summary>
         public UnityEngine.UI.Text TimeOfDayText;
 
+        /// <summary>
+        /// Time of day category text
+        /// </summary>
         public UnityEngine.UI.Text TimeOfDayCategoryText;
 
+        /// <summary>
+        /// Cloud picker
+        /// </summary>
         public UnityEngine.UI.Dropdown CloudDropdown;
 
+        /// <summary>
+        /// Weather map image
+        /// </summary>
         public UnityEngine.UI.RawImage WeatherMapImage;
 
+        /// <summary>
+        /// Event system
+        /// </summary>
         public UnityEngine.EventSystems.EventSystem EventSystem;
 
+        /// <summary>
+        /// Side panel root object
+        /// </summary>
         public GameObject SidePanel;
 
         private int frameCount = 0;
@@ -55,15 +126,15 @@ namespace DigitalRuby.WeatherMaker
 
         private void UpdateTimeOfDay()
         {
-            if (DayNightCycleManager.HasInstance())
+            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
             {
-                DawnDuskSlider.value = DayNightCycleManager.Instance.TimeOfDay;
+                DawnDuskSlider.value = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay;
                 if (TimeOfDayText.IsActive() && ShowTimeOfDay)
                 {
-                    System.TimeSpan t = System.TimeSpan.FromSeconds(DayNightCycleManager.Instance.TimeOfDay);
+                    System.TimeSpan t = System.TimeSpan.FromSeconds(WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay);
                     TimeOfDayText.text = string.Format("{0:00}:{1:00}:{2:00}", t.Hours, t.Minutes, t.Seconds);
                 }
-                TimeOfDayCategoryText.text = DayNightCycleManager.Instance.TimeOfDayCategory.ToString();
+                TimeOfDayCategoryText.text = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDayCategory.ToString();
             }
         }
 
@@ -88,7 +159,7 @@ namespace DigitalRuby.WeatherMaker
             {
                 WeatherMakerPrecipitationManagerScript.Instance.PrecipitationIntensity = IntensitySlider.value = 0.5f;
                 WeatherMakerPrecipitationManagerScript.Instance.PrecipitationChangeDuration = TransitionDurationSlider.value;
-                DawnDuskSlider.value = DayNightCycleManager.Instance.TimeOfDay;
+                DawnDuskSlider.value = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay;
             }
             else
             {
@@ -119,10 +190,10 @@ namespace DigitalRuby.WeatherMaker
                     }
                 }
             }
-            if (DayNightCycleManager.HasInstance())
+            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
             {
                 bool val = TimeOfDayEnabledCheckBox.enabled;
-                DayNightCycleManager.Instance.Speed = DayNightCycleManager.Instance.NightSpeed = (val ? 10.0f : 0.0f);
+                WeatherMakerDayNightCycleManagerScript.Instance.Speed = WeatherMakerDayNightCycleManagerScript.Instance.NightSpeed = (val ? 10.0f : 0.0f);
             }
             if (Camera.main != null && Camera.main.orthographic && WeatherMapImage != null)
             {
@@ -489,9 +560,9 @@ namespace DigitalRuby.WeatherMaker
         /// <param name="val">New value</param>
         public void TimeOfDayEnabledChanged(bool val)
         {
-            if (DayNightCycleManager.HasInstance())
+            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
             {
-                DayNightCycleManager.Instance.Speed = DayNightCycleManager.Instance.NightSpeed = (val ? 10.0f : 0.0f);
+                WeatherMakerDayNightCycleManagerScript.Instance.Speed = WeatherMakerDayNightCycleManagerScript.Instance.NightSpeed = (val ? 10.0f : 0.0f);
             }
         }
 
@@ -512,9 +583,9 @@ namespace DigitalRuby.WeatherMaker
         /// <param name="val">New value in seconds, 0 to 86400</param>
         public void DawnDuskSliderChanged(float val)
         {
-            if (DayNightCycleManager.HasInstance())
+            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
             {
-                DayNightCycleManager.Instance.TimeOfDay = val;
+                WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay = val;
             }
         }
     }

@@ -130,18 +130,18 @@ namespace DigitalRuby.WeatherMaker
 
         private void UpdateSeason()
         {
-            if (DayNightCycleManager.Instance == null)
+            if (WeatherMakerDayNightCycleManagerScript.Instance == null)
             {
                 return;
             }
 
-            int month = DayNightCycleManager.Instance.Month - 1;
+            int month = WeatherMakerDayNightCycleManagerScript.Instance.Month - 1;
             if (month < 0 || month > 11)
             {
                 return;
             }
             float season;
-            if (DayNightCycleManager.Instance.Latitude > 0.0f)
+            if (WeatherMakerDayNightCycleManagerScript.Instance.Latitude > 0.0f)
             {
                 season = monthToSeasonLookupNorth[month];
             }

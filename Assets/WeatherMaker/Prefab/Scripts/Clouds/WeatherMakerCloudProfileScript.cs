@@ -823,8 +823,8 @@ namespace DigitalRuby.WeatherMaker
             Vector4 fade = CloudLayerVolumetric1.CloudHorizonFade;
             const float horizonDawnDuskMultiplier = 0.5f;
             const float horizonNightMultiplier = 0.0f;
-            float horizonDawnDusk = DayNightCycleManager.Instance.DawnDuskMultiplier * horizonDawnDuskMultiplier;
-            float horizonNight = DayNightCycleManager.Instance.NightMultiplier * horizonNightMultiplier;
+            float horizonDawnDusk = WeatherMakerDayNightCycleManagerScript.Instance.DawnDuskMultiplier * horizonDawnDuskMultiplier;
+            float horizonNight = WeatherMakerDayNightCycleManagerScript.Instance.NightMultiplier * horizonNightMultiplier;
             float horizonTotal = 1.0f - Mathf.Min(1.0f, horizonDawnDusk + horizonNight);
             fade.x = Mathf.Clamp(fade.x, 0.0f, 16.0f);
             fade.y = Mathf.Clamp(fade.y, 0.1f, 16.0f);
@@ -976,7 +976,7 @@ namespace DigitalRuby.WeatherMaker
         {
             if (WeatherMakerScript.Instance == null ||
                 WeatherMakerScript.Instance.PerformanceProfile == null ||
-                DayNightCycleManager.Instance == null ||
+                WeatherMakerDayNightCycleManagerScript.Instance == null ||
                 WeatherMakerLightManagerScript.Instance == null)
             {
                 return;

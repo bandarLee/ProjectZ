@@ -31,7 +31,7 @@ public class QuickSlotManager : MonoBehaviour
                 quickSlotItems[i] = null;
                 quickSlotImages[i].sprite = null;
                 quickSlotImages[i].gameObject.SetActive(false);
-                quickSlotQuantities[i].text = ""; 
+                quickSlotQuantities[i].text = ""; // 수량 텍스트 숨기기
                 break;
             }
         }
@@ -39,7 +39,14 @@ public class QuickSlotManager : MonoBehaviour
         quickSlotItems[slotIndex] = item;
         quickSlotImages[slotIndex].sprite = item.icon;
         quickSlotImages[slotIndex].gameObject.SetActive(true);
-        quickSlotQuantities[slotIndex].text = inventory.itemQuantities[item.itemName].ToString();
+        if (item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC)
+        {
+            quickSlotQuantities[slotIndex].text = ""; 
+        }
+        else
+        {
+            quickSlotQuantities[slotIndex].text = inventory.itemQuantities[item.itemName].ToString(); 
+        }
     }
 
     public void UseQuickSlotItem(int slotIndex)
@@ -90,7 +97,14 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (quickSlotItems[i] != null)
             {
-                quickSlotQuantities[i].text = inventory.itemQuantities[quickSlotItems[i].itemName].ToString();
+                if (quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC)
+                {
+                    quickSlotQuantities[i].text = ""; 
+                }
+                else
+                {
+                    quickSlotQuantities[i].text = inventory.itemQuantities[quickSlotItems[i].itemName].ToString();
+                }
             }
             else
             {

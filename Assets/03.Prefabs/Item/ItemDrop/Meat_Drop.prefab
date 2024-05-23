@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemName: "\uACE0\uAE30"
-    icon: {fileID: 21300000, guid: 3e85c0b7b58ed7b45b0b322208bea0bf, type: 3}
+    icon: {fileID: 21300000, guid: 14e62563269c11443b9c936be93b95f4, type: 3}
     itemType: 0
     itemEffect: "\uD5C8\uAE30+1"
     itemDescription: "\uB9DB\uC788\uB294 \uC74C\uC2DD"

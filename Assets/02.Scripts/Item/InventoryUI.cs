@@ -5,7 +5,7 @@ using System.Linq;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Item currentSelectedItem; 
+    public Item currentSelectedItem;
 
     public GameObject[] inventorySlots;
     private Inventory inventory;
@@ -29,7 +29,7 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        var itemList = inventory.items.Values.ToList();
+        var itemList = inventory.items.Keys.ToList();
         var itemQuantities = inventory.itemQuantities;
 
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -37,8 +37,9 @@ public class InventoryUI : MonoBehaviour
             Slot slot = inventorySlots[i].GetComponent<Slot>();
             if (i < itemList.Count)
             {
-                var currentItem = itemList[i];
-                int currentQuantity = itemQuantities[currentItem.itemName];
+                var itemName = itemList[i];
+                var currentItem = inventory.items[itemName];
+                int currentQuantity = itemQuantities.ContainsKey(itemName) ? itemQuantities[itemName] : 0;
 
                 if (slot != null)
                 {
@@ -75,9 +76,10 @@ public class InventoryUI : MonoBehaviour
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
             }
         }
-        quickSlotManager.UpdateQuickSlotUI();
 
+        quickSlotManager.UpdateQuickSlotUI(); // 퀵슬롯 UI 업데이트
     }
+
     public void UseSelectedItem()
     {
         if (currentSelectedItem == null) return;
@@ -88,13 +90,14 @@ public class InventoryUI : MonoBehaviour
         {
             inventory.items.Remove(itemName);
             inventory.itemQuantities.Remove(itemName);
-            quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem); 
+            quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
             currentSelectedItem = null;
             CloseItemInfo();
         }
 
         UpdateInventoryUI();
     }
+
     public void ShowItemInfo(int index)
     {
         ItemInfo.SetActive(true);
@@ -120,6 +123,12 @@ public class InventoryUI : MonoBehaviour
                 return "음식";
             case ItemType.Weapon:
                 return "무기";
+            case ItemType.Heal:
+                return "회복";
+            case ItemType.Mental:
+                return "정신력";
+            case ItemType.ETC:
+                return "기타";
             default:
                 return "알 수 없음";
         }
