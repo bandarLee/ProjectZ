@@ -9,7 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(Animator))]
 
-public class Character : MonoBehaviour, IPunObservable
+public class Character : MonoBehaviour, IPunObservable, IDamaged
 {
     public PhotonView PhotonView { get; private set; }
 
@@ -38,8 +38,6 @@ public class Character : MonoBehaviour, IPunObservable
         // stream(통로)은 서버에서 주고받을 데이터가 담겨있는 변수
         if (stream.IsWriting)        // 데이터를 전송하는 상황
         {
-            /*stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);*/
             stream.SendNext(Stat.Health);
             stream.SendNext(Stat.Mental);
             stream.SendNext(Stat.Stamina);

@@ -26,6 +26,37 @@ namespace DigitalRuby.WeatherMaker
     /// </summary>
     public class WeatherMakerPlayerControllerScript : MonoBehaviour
     {
+        private static WeatherMakerPlayerControllerScript instance;
+
+        public static WeatherMakerPlayerControllerScript Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<WeatherMakerPlayerControllerScript>();
+                    if (instance == null)
+                    {
+                        GameObject obj = new GameObject("WeatherMakerPlayerControllerScript");
+                        instance = obj.AddComponent<WeatherMakerPlayerControllerScript>();
+                    }
+                }
+                return instance;
+            }
+        }
+        public bool MouseLookEnabled { get; set; }
+
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if (instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
         /// <summary>
         /// Move speed
         /// </summary>

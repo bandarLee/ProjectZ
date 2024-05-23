@@ -10,6 +10,9 @@ public class Stat
     public int MaxHealth;
     public int Mental;
     public int MaxMental;
+    public int Hunger;
+    public int MaxHunger;
+
     public int Damage;
 
     public float Stamina;
