@@ -4,18 +4,26 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+    public static Item currentSelectedItem;
+
     public GameObject[] inventorySlots;
     private Inventory inventory;
+
+    public GameObject ItemInfo;
 
     public TMP_Text itemNameText;
     public TMP_Text itemTypeText;
     public TMP_Text itemEffectText;
     public TMP_Text itemDescriptionText;
     public Image itemIconImage;
+    public GameObject inventoryobject;
+    public QuickSlotManager quickSlotManager;
+
     private void Start()
     {
         inventory = FindObjectOfType<Inventory>();
         UpdateInventoryUI();
+        ItemInfo.SetActive(false);
     }
 
     public void UpdateInventoryUI()
@@ -63,16 +71,22 @@ public class InventoryUI : MonoBehaviour
 
     public void ShowItemInfo(int index)
     {
+        ItemInfo.SetActive(true);
+
         if (index < inventory.items.Count)
         {
             Item item = inventory.items[index];
+            currentSelectedItem = item; // 현재 선택된 아이템 설정
             itemNameText.text = item.itemName;
             itemTypeText.text = GetItemType(item.itemType);
             itemEffectText.text = item.itemEffect;
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
+
+
         }
     }
+
     public string GetItemType(ItemType itemType)
     {
         switch (itemType)
@@ -84,5 +98,15 @@ public class InventoryUI : MonoBehaviour
             default:
                 return "알 수 없음";
         }
+    }
+
+    public void CloseItemInfo()
+    {
+        ItemInfo.SetActive(false);
+    }
+
+    public void CloseInventory()
+    {
+        inventoryobject.SetActive(false);
     }
 }
