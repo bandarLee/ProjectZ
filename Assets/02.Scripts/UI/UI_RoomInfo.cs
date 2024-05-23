@@ -8,7 +8,7 @@ public class UI_RoomInfo : MonoBehaviourPunCallbacks
 {
     public static UI_RoomInfo Instance { get; private set; }
     
-    public TextMeshProUGUI LogTextUI;
+    public TextMeshProUGUI LogMessageUI;
 
     private string _logText = string.Empty;
 
