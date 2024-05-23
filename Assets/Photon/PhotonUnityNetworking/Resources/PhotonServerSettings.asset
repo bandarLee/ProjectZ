@@ -43,6 +43,9 @@ MonoBehaviour:
   - Damaged
   - Death
   - DropItems
+  - Hunger
+  - Mental
+  - Temperature
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterMoveAbility))]
 [RequireComponent(typeof(CharacterRotateAbility))]
+[RequireComponent(typeof(CharacterStatAbility))]
 [RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(Animator))]
 
@@ -13,12 +14,14 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 {
     public PhotonView PhotonView { get; private set; }
 
-    public Stat Stat;
+    public Stat Stat { get; private set; }
     public State State { get; private set; } = State.Live;
     private Animator _animator;
 
     private void Awake()
     {
+        CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
+        Stat = ability.Stat;
         Stat.Init();
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
@@ -90,56 +93,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         PhotonView.RPC(nameof(AddLog), RpcTarget.All, logMessage);
     }
 
-    [PunRPC]
-    public void Hunger(int hunger)
-    {
-        if (State == State.Death)
-        {
-            return;
-        }
-
-        // 시간이 흐르면 배고픔이 차는 코드 (hunger가 올라가는)
-        Stat.Hunger -= hunger;
-        if (Stat.Hunger <= 0)
-        {
-            // 정신력이 10초마다 -10
-            
-        }
-    }
-
-    [PunRPC]
-    public void Temperature(int temperature)
-    {
-        if (State == State.Death)
-        {
-            return;
-        }
-        Stat.Temperature -= temperature;
-        if (Stat.Temperature <= 0 || Stat.Temperature >= 30)
-        {
-            // 정신력이 10초마다 -5
-        }
-        if (Stat.Temperature <= -10 || Stat.Temperature >= 40)
-        {
-            // 정신력이 10초마다 - 10
-        }
-
-    }
-
-    [PunRPC]
-    public void Mental(int mental)
-    {
-        if (State == State.Death)
-        {
-            return;
-        }
-
-        if (Stat.Mental <= 0)
-        {
-            // 체력이 10초마다 -10
-            Stat.Health -= mental;
-        }
-    }
 
     [PunRPC]
     private void Death()
