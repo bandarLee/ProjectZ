@@ -344,12 +344,12 @@ namespace DigitalRuby.WeatherMaker
 
         private void SetShaderLightParameters(Material material)
         {
-            if (WeatherMakerDayNightCycleManagerScript.Instance == null || AtmosphereProfile == null)
+            if (DayNightCycleManager.Instance == null || AtmosphereProfile == null)
             {
                 return;
             }
 
-            Shader.SetGlobalFloat(WMS._NightSkyMultiplier, Mathf.Max(1.0f - Mathf.Min(1.0f, AtmosphereProfile.AtmosphereThickness), WeatherMakerDayNightCycleManagerScript.Instance.NightMultiplier));
+            Shader.SetGlobalFloat(WMS._NightSkyMultiplier, Mathf.Max(1.0f - Mathf.Min(1.0f, AtmosphereProfile.AtmosphereThickness), DayNightCycleManager.Instance.NightMultiplier));
             Shader.SetGlobalFloat(WMS._NightVisibilityThreshold, NightVisibilityThreshold);
             Shader.SetGlobalFloat(WMS._NightIntensity, NightIntensity);
             Shader.SetGlobalFloat(WMS._NightPower, NightPower);
@@ -421,7 +421,7 @@ namespace DigitalRuby.WeatherMaker
             {
                 float eclipseLightReducer = 1.0f - Mathf.Clamp(eclipsePower, 0.0f, 1.0f);
                 WeatherMakerLightManagerScript.Instance.DirectionalLightIntensityMultipliers["WeatherMakerSkySphereScriptEclipse"] = eclipseLightReducer;
-                Shader.SetGlobalFloat(WMS._NightSkyMultiplier, Mathf.Max(1.0f - Mathf.Min(1.0f, AtmosphereProfile.AtmosphereThickness), Mathf.Max(eclipsePower, WeatherMakerDayNightCycleManagerScript.Instance.NightMultiplier)));
+                Shader.SetGlobalFloat(WMS._NightSkyMultiplier, Mathf.Max(1.0f - Mathf.Min(1.0f, AtmosphereProfile.AtmosphereThickness), Mathf.Max(eclipsePower, DayNightCycleManager.Instance.NightMultiplier)));
             }
         }
 

@@ -118,8 +118,8 @@ namespace DigitalRuby.WeatherMaker
                     float lat, lon;
                     if (Latitude < -998.0f || Longitude < -998.0f)
                     {
-                        lat = (float)WeatherMakerDayNightCycleManagerScript.Instance.Latitude;
-                        lon = (float)WeatherMakerDayNightCycleManagerScript.Instance.Longitude;
+                        lat = (float)DayNightCycleManager.Instance.Latitude;
+                        lon = (float)DayNightCycleManager.Instance.Longitude;
                     }
                     else if ((Latitude > 998.0f || Longitude > 998.0f) && Input.location.isEnabledByUser && Input.location.status == LocationServiceStatus.Running)
                     {
@@ -135,8 +135,8 @@ namespace DigitalRuby.WeatherMaker
                         }
                         else
                         {
-                            lat = (float)WeatherMakerDayNightCycleManagerScript.Instance.Latitude;
-                            lon = (float)WeatherMakerDayNightCycleManagerScript.Instance.Longitude;
+                            lat = (float)DayNightCycleManager.Instance.Latitude;
+                            lon = (float)DayNightCycleManager.Instance.Longitude;
                         }
                     }
                     WeatherApi.QueryWeather(lat, lon, PlaceName, ApiKey, weatherCallback);

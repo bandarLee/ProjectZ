@@ -107,11 +107,11 @@ namespace DigitalRuby.WeatherMaker
         protected override void LateUpdate()
         {
             base.LateUpdate();
-            if (SkySphereProfile != null && WeatherMakerDayNightCycleManagerScript.HasInstance() &&
+            if (SkySphereProfile != null && DayNightCycleManager.HasInstance() &&
                 (SkySphereProfile.SkyMode == WeatherMakeSkyMode.ProceduralUnityStyle || SkySphereProfile.SkyMode == WeatherMakeSkyMode.ProceduralPhysicallyBased) &&
-                WeatherMakerDayNightCycleManagerScript.Instance.DayNightProfile != null && SkySphereProfile.RotateAxis != Vector3.zero)
+                DayNightCycleManager.Instance.DayNightProfile != null && SkySphereProfile.RotateAxis != Vector3.zero)
             {
-                float seconds = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay;
+                float seconds = DayNightCycleManager.Instance.TimeOfDay;
                 Transform t = transform;
                 t.rotation = Quaternion.AngleAxis(Mathf.Lerp(0.0f, 360.0f, seconds / WeatherMakerDayNightCycleProfileScript.SecondsPerDay), SkySphereProfile.RotateAxis);
                 Shader.SetGlobalVector(WMS._WeatherMakerSkyRotation, new Vector4(t.rotation.x, t.rotation.y, t.rotation.z, t.rotation.w));

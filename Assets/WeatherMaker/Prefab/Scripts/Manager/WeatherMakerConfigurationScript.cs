@@ -4,25 +4,45 @@ using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
+
     public class WeatherMakerConfigurationScript : MonoBehaviour
     {
+
         public bool ShowFPS = true;
+
+
         public bool ShowTimeOfDay = true;
+
         public bool AutoAddLightsOnStart = true;
+
         public GameObject ConfigurationPanel;
+
         public UnityEngine.UI.Text LabelFPS;
+
         public UnityEngine.UI.Slider TransitionDurationSlider;
+
         public UnityEngine.UI.Slider IntensitySlider;
+
         public UnityEngine.UI.Toggle MouseLookEnabledCheckBox;
+
         public UnityEngine.UI.Toggle FlashlightToggle;
+
         public UnityEngine.UI.Toggle TimeOfDayEnabledCheckBox;
+
         public UnityEngine.UI.Toggle CollisionToggle;
+
         public UnityEngine.UI.Slider DawnDuskSlider;
+
         public UnityEngine.UI.Text TimeOfDayText;
+
         public UnityEngine.UI.Text TimeOfDayCategoryText;
+
         public UnityEngine.UI.Dropdown CloudDropdown;
+
         public UnityEngine.UI.RawImage WeatherMapImage;
+
         public UnityEngine.EventSystems.EventSystem EventSystem;
+
         public GameObject SidePanel;
 
         private int frameCount = 0;
@@ -35,20 +55,15 @@ namespace DigitalRuby.WeatherMaker
 
         private void UpdateTimeOfDay()
         {
-            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
+            if (DayNightCycleManager.HasInstance())
             {
+                DawnDuskSlider.value = DayNightCycleManager.Instance.TimeOfDay;
                 if (TimeOfDayText.IsActive() && ShowTimeOfDay)
                 {
-                    float timeOfDay = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay;
-
-                    // 하루 15분을 24시간으로 변환하여 텍스트에 표시
-                    float normalizedTimeOfDay = (timeOfDay / 900.0f) * 86400.0f;
-                    System.TimeSpan t = System.TimeSpan.FromSeconds(normalizedTimeOfDay);
-
-                    // 시간 부분 생략하고 분과 초만 표시
-                    TimeOfDayText.text = string.Format("{0:00}:{1:00}", t.Minutes, t.Seconds);
+                    System.TimeSpan t = System.TimeSpan.FromSeconds(DayNightCycleManager.Instance.TimeOfDay);
+                    TimeOfDayText.text = string.Format("{0:00}:{1:00}:{2:00}", t.Hours, t.Minutes, t.Seconds);
                 }
-                TimeOfDayCategoryText.text = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDayCategory.ToString();
+                TimeOfDayCategoryText.text = DayNightCycleManager.Instance.TimeOfDayCategory.ToString();
             }
         }
 
@@ -73,7 +88,7 @@ namespace DigitalRuby.WeatherMaker
             {
                 WeatherMakerPrecipitationManagerScript.Instance.PrecipitationIntensity = IntensitySlider.value = 0.5f;
                 WeatherMakerPrecipitationManagerScript.Instance.PrecipitationChangeDuration = TransitionDurationSlider.value;
-                DawnDuskSlider.value = WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDay;
+                DawnDuskSlider.value = DayNightCycleManager.Instance.TimeOfDay;
             }
             else
             {
@@ -104,10 +119,10 @@ namespace DigitalRuby.WeatherMaker
                     }
                 }
             }
-            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
+            if (DayNightCycleManager.HasInstance())
             {
                 bool val = TimeOfDayEnabledCheckBox.enabled;
-                WeatherMakerDayNightCycleManagerScript.Instance.Speed = WeatherMakerDayNightCycleManagerScript.Instance.NightSpeed = (val ? 1.0f : 0.0f);
+                DayNightCycleManager.Instance.Speed = DayNightCycleManager.Instance.NightSpeed = (val ? 10.0f : 0.0f);
             }
             if (Camera.main != null && Camera.main.orthographic && WeatherMapImage != null)
             {
@@ -128,6 +143,7 @@ namespace DigitalRuby.WeatherMaker
             }
             if (Input.GetKeyDown(KeyCode.BackQuote) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
             {
+                // Unity bug, disabling or setting transform scale to 0 will break any projectors in the scene
                 RectTransform r = SidePanel.GetComponent<RectTransform>();
                 Vector2 ap = r.anchoredPosition;
                 bool visible;
@@ -180,6 +196,15 @@ namespace DigitalRuby.WeatherMaker
                 }
             }
 
+            /*
+            // test additive scene loading
+            if (Input.GetKeyDown(KeyCode.F1) && Input.GetKey(KeyCode.LeftShift))
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                return;
+            }
+            */
+
             if (WeatherMapImage != null && Camera.main != null)
             {
                 if (Camera.main.orthographic)
@@ -194,6 +219,8 @@ namespace DigitalRuby.WeatherMaker
             UpdateTimeOfDay();
             frameCounter++;
         }
+
+        // Weather configuration...
 
         private void UpdateClouds()
         {
@@ -233,6 +260,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Rain change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void RainToggleChanged(bool isOn)
         {
@@ -243,6 +273,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Snow change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void SnowToggleChanged(bool isOn)
         {
@@ -253,6 +286,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Hail change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void HailToggleChanged(bool isOn)
         {
@@ -263,6 +299,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Sleet change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void SleetToggleChanged(bool isOn)
         {
@@ -273,6 +312,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Cloud change handler
+        /// </summary>
         public void CloudToggleChanged()
         {
             string text = CloudDropdown.captionText.text;
@@ -281,6 +323,9 @@ namespace DigitalRuby.WeatherMaker
             UpdateClouds();
         }
 
+        /// <summary>
+        /// Lightning change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void LightningToggleChanged(bool isOn)
         {
@@ -290,6 +335,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Collision change handler for precipitation
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void CollisionToggleChanged(bool isOn)
         {
@@ -299,6 +347,9 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        /// <summary>
+        /// Wind change handler
+        /// </summary>
         /// <param name="isOn">True if on</param>
         public void WindToggleChanged(bool isOn)
         {
@@ -438,9 +489,9 @@ namespace DigitalRuby.WeatherMaker
         /// <param name="val">New value</param>
         public void TimeOfDayEnabledChanged(bool val)
         {
-            if (WeatherMakerDayNightCycleManagerScript.HasInstance())
+            if (DayNightCycleManager.HasInstance())
             {
-                WeatherMakerDayNightCycleManagerScript.Instance.Speed = WeatherMakerDayNightCycleManagerScript.Instance.NightSpeed = (val ? 1.0f : 0.0f);
+                DayNightCycleManager.Instance.Speed = DayNightCycleManager.Instance.NightSpeed = (val ? 10.0f : 0.0f);
             }
         }
 
@@ -461,7 +512,10 @@ namespace DigitalRuby.WeatherMaker
         /// <param name="val">New value in seconds, 0 to 86400</param>
         public void DawnDuskSliderChanged(float val)
         {
-            // 자동 주기에서는 슬라이더 값에 따라 변경하지 않음
+            if (DayNightCycleManager.HasInstance())
+            {
+                DayNightCycleManager.Instance.TimeOfDay = val;
+            }
         }
     }
 }

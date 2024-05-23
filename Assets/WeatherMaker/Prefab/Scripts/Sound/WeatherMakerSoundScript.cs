@@ -239,7 +239,7 @@ namespace DigitalRuby.WeatherMaker
         private bool CanStartSound()
         {
             if (!Disabled && CanPlay && AudioClips != null && AudioClips.Length != 0 && AudioSourceLoop != null && AudioSourceLoop.AudioSource != null && !AudioSourceLoop.DestroyOnStopped &&
-                (HoursOfDay.Count != 0 || (WeatherMakerDayNightCycleManagerScript.HasInstance() && (int)(WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDayCategory & TimesOfDay) != 0)))
+                (HoursOfDay.Count != 0 || (DayNightCycleManager.HasInstance() && (int)(DayNightCycleManager.Instance.TimeOfDayCategory & TimesOfDay) != 0)))
             {
                 if (HoursOfDay.Count == 0)
                 {
@@ -247,9 +247,9 @@ namespace DigitalRuby.WeatherMaker
                 }
                 foreach (RangeOfFloats hours in HoursOfDay)
                 {
-                    if (WeatherMakerDayNightCycleManagerScript.HasInstance() &&
-                        WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDayTimespan.TotalHours >= hours.Minimum &&
-                        WeatherMakerDayNightCycleManagerScript.Instance.TimeOfDayTimespan.TotalHours <= hours.Maximum)
+                    if (DayNightCycleManager.HasInstance() &&
+                        DayNightCycleManager.Instance.TimeOfDayTimespan.TotalHours >= hours.Minimum &&
+                        DayNightCycleManager.Instance.TimeOfDayTimespan.TotalHours <= hours.Maximum)
                     {
                         return true;
                     }

@@ -371,7 +371,7 @@ namespace DigitalRuby.WeatherMaker
             {
                 Debug.LogError("Missing or deactivated command buffer manager script, this script is required for correct functionality.");
             }
-            if (WeatherMakerDayNightCycleManagerScript.Instance == null || !WeatherMakerDayNightCycleManagerScript.Instance.isActiveAndEnabled)
+            if (DayNightCycleManager.Instance == null || !DayNightCycleManager.Instance.isActiveAndEnabled)
             {
                 Debug.LogError("Missing or deactivated day night cycle manager script, this script is required for correct functionality. To disable dynamic time of day, set the day night profile speeds to 0.");
             }

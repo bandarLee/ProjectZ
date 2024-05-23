@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
-    /// <summary>
-    /// Day night cycle manager
-    /// </summary>
     [ExecuteInEditMode]
-    public class WeatherMakerDayNightCycleManagerScript : MonoBehaviour
+    public class DayNightCycleManager : MonoBehaviour
     {
         [Tooltip("Day night cycle profile and color scheme")]
         public WeatherMakerDayNightCycleProfileScript DayNightProfile;
@@ -24,22 +24,40 @@ namespace DigitalRuby.WeatherMaker
 
 #endif
 
-        // Properties for controlling day-night cycle
         public float Speed { get { return DayNightProfile.Speed; } set { DayNightProfile.Speed = value; } }
+
         public float NightSpeed { get { return DayNightProfile.NightSpeed; } set { DayNightProfile.NightSpeed = value; } }
+
         public float TimeOfDay { get { return DayNightProfile.TimeOfDay; } set { DayNightProfile.TimeOfDay = value; } }
+
         public WeatherMakerTimeOfDayCategory TimeOfDayCategory { get { return DayNightProfile.TimeOfDayCategory; } }
+
         public TimeSpan TimeOfDayTimespan { get { return DayNightProfile.TimeOfDayTimespan; } set { DayNightProfile.TimeOfDayTimeSpan = value; } }
+
         public int TimeZoneOffsetSeconds { get { return DayNightProfile.TimeZoneOffsetSeconds; } set { DayNightProfile.TimeZoneOffsetSeconds = value; } }
-        public int Year { get { return DayNightProfile.Year; } set { DayNightProfile.Year = value; } }
+
+        public int Year {  get { return DayNightProfile.Year; } set { DayNightProfile.Year = value; } }
+
         public int Month { get { return DayNightProfile.Month; } set { DayNightProfile.Month = value; } }
+
         public int Day { get { return DayNightProfile.Day; } set { DayNightProfile.Day = value; } }
-        public DateTime DateTime { get { return DayNightProfile.DateTime; } set { DayNightProfile.DateTime = value; } }
+
+        public DateTime DateTime
+        {
+            get { return DayNightProfile.DateTime; }
+            set { DayNightProfile.DateTime = value; }
+        }
+
         public double Latitude { get { return DayNightProfile.Latitude; } set { DayNightProfile.Latitude = value; } }
+        
         public double Longitude { get { return DayNightProfile.Longitude; } set { DayNightProfile.Longitude = value; } }
+
         public float DayMultiplier { get { return DayNightProfile.DayMultiplier; } }
+
         public float DawnDuskMultiplier { get { return DayNightProfile.DawnDuskMultiplier; } }
+
         public float NightMultiplier { get { return DayNightProfile.NightMultiplier; } }
+
         public WeatherMakerDayNightCycleProfileScript.SunInfo SunData { get { return DayNightProfile.SunData; } }
 
         private void EnsureProfile()
@@ -78,29 +96,14 @@ namespace DigitalRuby.WeatherMaker
 
         private void Update()
         {
-            // 게임이 실행 중일 때만 시간을 진행
-            if (Application.isPlaying)
-            {
-                DayNightProfile.UpdateFromProfile(WeatherMakerScript.Instance != null && WeatherMakerScript.Instance.NetworkConnection.IsServer);
-
-                // 하루 86400초를 900초(15분)으로 설정
-                float secondsInDay = 86400f;
-                float dayDurationInSeconds = 900f; // 하루가 15분 (900초)
-                float timeIncrement = (secondsInDay / dayDurationInSeconds) * Time.deltaTime;
-
-                // 실제 시간을 1초에 1초가 되도록 증가
-                TimeOfDay += timeIncrement;
-
-                // 하루가 끝나면 시간을 다시 0으로 설정
-                if (TimeOfDay >= secondsInDay)
-                {
-                    TimeOfDay -= secondsInDay;
-                }
+            DayNightProfile.UpdateFromProfile(WeatherMakerScript.Instance != null && WeatherMakerScript.Instance.NetworkConnection.IsServer);
 
 #if UNITY_EDITOR
-                TimeOfDayLabel = DayNightProfile.TimeOfDayLabel;
+
+            TimeOfDayLabel = DayNightProfile.TimeOfDayLabel;
+
 #endif
-            }
+
         }
 
         private void OnDestroy()
@@ -114,8 +117,9 @@ namespace DigitalRuby.WeatherMaker
             WeatherMakerScript.ReleaseInstance(ref instance);
         }
 
-        private static WeatherMakerDayNightCycleManagerScript instance;
-        public static WeatherMakerDayNightCycleManagerScript Instance
+        private static DayNightCycleManager instance;
+
+        public static DayNightCycleManager Instance
         {
             get { return WeatherMakerScript.FindOrCreateInstance(ref instance, true); }
         }
