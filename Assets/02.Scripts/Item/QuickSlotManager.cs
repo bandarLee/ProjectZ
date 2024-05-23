@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
 
 public class QuickSlotManager : MonoBehaviour
 {
-    public Image[] quickSlotImages; 
-    public Item[] quickSlotItems;  
+    public Image[] quickSlotImages;
+    public TMP_Text[] quickSlotQuantities; 
+    public Item[] quickSlotItems;
+
+    public Inventory inventory;
 
     private void Start()
     {
         quickSlotItems = new Item[quickSlotImages.Length];
-        foreach(Image image in quickSlotImages)
+        foreach (Image image in quickSlotImages)
         {
             image.gameObject.SetActive(false);
         }
@@ -18,9 +23,23 @@ public class QuickSlotManager : MonoBehaviour
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length) return;
+
+        for (int i = 0; i < quickSlotItems.Length; i++)
+        {
+            if (quickSlotItems[i] == item)
+            {
+                quickSlotItems[i] = null;
+                quickSlotImages[i].sprite = null;
+                quickSlotImages[i].gameObject.SetActive(false);
+                quickSlotQuantities[i].text = ""; 
+                break;
+            }
+        }
+
         quickSlotItems[slotIndex] = item;
         quickSlotImages[slotIndex].sprite = item.icon;
         quickSlotImages[slotIndex].gameObject.SetActive(true);
+        quickSlotQuantities[slotIndex].text = inventory.itemQuantities[item.itemName].ToString();
     }
 
     public void UseQuickSlotItem(int slotIndex)
@@ -28,8 +47,57 @@ public class QuickSlotManager : MonoBehaviour
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
         Debug.Log("아이템 사용" + quickSlotItems[slotIndex].itemName);
-    }
 
+        string itemName = quickSlotItems[slotIndex].itemName;
+        inventory.itemQuantities[itemName]--;
+        if (inventory.itemQuantities[itemName] <= 0)
+        {
+            inventory.items.Remove(itemName);
+            inventory.itemQuantities.Remove(itemName);
+            quickSlotItems[slotIndex] = null;
+            quickSlotImages[slotIndex].sprite = null;
+            quickSlotImages[slotIndex].gameObject.SetActive(false);
+            quickSlotQuantities[slotIndex].text = ""; 
+
+            if (inventory.inventoryUI.currentSelectedItem != null && inventory.inventoryUI.currentSelectedItem.itemName == itemName)
+            {
+                inventory.inventoryUI.CloseItemInfo();
+            }
+        }
+        else
+        {
+            quickSlotQuantities[slotIndex].text = inventory.itemQuantities[itemName].ToString(); 
+        }
+
+        inventory.inventoryUI.UpdateInventoryUI();
+    }
+    public void RemoveItemFromQuickSlots(Item item)
+    {
+        for (int i = 0; i < quickSlotItems.Length; i++)
+        {
+            if (quickSlotItems[i] == item)
+            {
+                quickSlotItems[i] = null;
+                quickSlotImages[i].sprite = null;
+                quickSlotImages[i].gameObject.SetActive(false);
+                quickSlotQuantities[i].text = ""; 
+            }
+        }
+    }
+    public void UpdateQuickSlotUI()
+    {
+        for (int i = 0; i < quickSlotItems.Length; i++)
+        {
+            if (quickSlotItems[i] != null)
+            {
+                quickSlotQuantities[i].text = inventory.itemQuantities[quickSlotItems[i].itemName].ToString();
+            }
+            else
+            {
+                quickSlotQuantities[i].text = "";
+            }
+        }
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))

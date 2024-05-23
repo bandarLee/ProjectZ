@@ -7,11 +7,13 @@ public class UI_QuickSlotResister : MonoBehaviour, IPointerEnterHandler, IPointe
     public GameObject targetObject;
     public bool isPointerOver = false;
     private QuickSlotManager quickSlotManager;
+    private InventoryUI inventoryUI;
 
     void Start()
     {
         targetObject.SetActive(false);
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>(); 
 
         for (int i = 0; i < targetObject.transform.childCount; i++)
         {
@@ -61,9 +63,9 @@ public class UI_QuickSlotResister : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void RegisterItemToQuickSlot(int slotIndex)
     {
-        if (quickSlotManager != null && InventoryUI.currentSelectedItem != null)
+        if (quickSlotManager != null && inventoryUI.currentSelectedItem != null)
         {
-            quickSlotManager.RegisterItemToQuickSlot(slotIndex, InventoryUI.currentSelectedItem);
+            quickSlotManager.RegisterItemToQuickSlot(slotIndex, inventoryUI.currentSelectedItem);
         }
     }
 }

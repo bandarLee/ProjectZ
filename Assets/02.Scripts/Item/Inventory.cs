@@ -3,17 +3,24 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items = new List<Item>();
-    private InventoryUI inventoryUI;
+    public Dictionary<string, Item> items = new Dictionary<string, Item>();
+    public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
+    public InventoryUI inventoryUI; 
 
-    private void Start()
-    {
-        inventoryUI = FindObjectOfType<InventoryUI>();
-    }
 
-    public void AddItem(Item item)
+
+    public void AddItem(Item newItem)
     {
-        items.Add(item);
+        if (items.ContainsKey(newItem.itemName))
+        {
+            itemQuantities[newItem.itemName]++; 
+        }
+        else
+        {
+            items[newItem.itemName] = newItem;
+            itemQuantities[newItem.itemName] = 1;
+        }
+
         inventoryUI.UpdateInventoryUI();
     }
 }
