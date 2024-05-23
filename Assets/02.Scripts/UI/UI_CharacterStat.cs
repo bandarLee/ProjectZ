@@ -28,7 +28,6 @@ public class UI_CharacterStat : MonoBehaviour
         {
             return;
         }
-
         HealthSliderUI.value = (float)MyCharacter.Stat.Health / MyCharacter.Stat.MaxHealth;
         MentalSliderUI.value = MyCharacter.Stat.Mental / MyCharacter.Stat.MaxMental;
         HungerSliderUI.value = MyCharacter.Stat.Hunger / MyCharacter.Stat.MaxHunger;

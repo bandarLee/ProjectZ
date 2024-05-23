@@ -914,7 +914,6 @@ GameObject:
   - component: {fileID: 24800805}
   - component: {fileID: 24800808}
   - component: {fileID: 24800807}
-  - component: {fileID: 24800806}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -941,18 +940,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &24800806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24800804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &24800807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29507,7 +29494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 877.58624
+      value: 1039.4261
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -37396,7 +37383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224610485142845316, guid: ff1f672cbc5b6234895e1078abb9185e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 841.74
+      value: 605.41003
       objectReference: {fileID: 0}
     - target: {fileID: 224610485142845316, guid: ff1f672cbc5b6234895e1078abb9185e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -39467,7 +39454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224610485142845316, guid: ff1f672cbc5b6234895e1078abb9185e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 590.405
+      value: 506.41
       objectReference: {fileID: 0}
     - target: {fileID: 224610485142845316, guid: ff1f672cbc5b6234895e1078abb9185e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -44600,7 +44587,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114791886253589244, guid: 399aab7bd3e871e4a86276e6342e6160, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -54248,7 +54236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1105.3962
+      value: 1251.8312
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -57154,8 +57142,9 @@ GameObject:
   - component: {fileID: 1322803378}
   - component: {fileID: 1322803380}
   - component: {fileID: 1322803379}
+  - component: {fileID: 1322803381}
   m_Layer: 5
-  m_Name: CharacterStat
+  m_Name: UI_CharacterStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57217,6 +57206,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322803377}
   m_CullTransparentMesh: 0
+--- !u!114 &1322803381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322803377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778801ff404d4d84e8567e7a970b734e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCharacter: {fileID: 229137278063292559}
+  HealthSliderUI: {fileID: 1491578785}
+  MentalSliderUI: {fileID: 1291887309}
+  HungerSliderUI: {fileID: 1546054338}
+  HealthTextUI: {fileID: 558268614}
+  MentalTextUI: {fileID: 361879654}
+  HungerTextUI: {fileID: 1121904732}
 --- !u!1 &1323873801
 GameObject:
   m_ObjectHideFlags: 0
@@ -71333,7 +71341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1320.5563
+      value: 1390.2312
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -94550,23 +94558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Health: 100
-    MaxHealth: 100
-    Mental: 100
-    MaxMental: 100
-    Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
-    MoveSpeed: 4
-    RunSpeed: 7
-    RotationSpeed: 200
-    AttackCoolTime: 1
-    AttackConsumeStamina: 10
-    JumpPower: 3
-    JumpConsumeStamina: 0
 --- !u!4 &254927977837630769
 Transform:
   m_ObjectHideFlags: 0
@@ -96686,6 +96677,7 @@ GameObject:
   - component: {fileID: 4534608218522795259}
   - component: {fileID: 2494570968153374198}
   - component: {fileID: 229137278063292559}
+  - component: {fileID: 9007661123685104080}
   m_Layer: 6
   m_Name: Character_Male
   m_TagString: Player
@@ -101169,6 +101161,40 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9007661123685104080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508219808107376206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c460b75187e5cf42822de98268d1869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stat:
+    Health: 100
+    MaxHealth: 100
+    Mental: 100
+    MaxMental: 100
+    Hunger: 100
+    MaxHunger: 100
+    Temperature: 20
+    StandardTemperature: 20
+    Damage: 20
+    Stamina: 100
+    MaxStamina: 100
+    RunConsumeStamina: 5
+    RecoveryStamina: 7
+    MoveSpeed: 4
+    RunSpeed: 7
+    RotationSpeed: 200
+    AttackCoolTime: 1
+    AttackConsumeStamina: 10
+    JumpPower: 3
+    JumpConsumeStamina: 0
+  State: 0
 --- !u!1 &9031563252843759200
 GameObject:
   m_ObjectHideFlags: 0
