@@ -10,6 +10,7 @@ public class Item
     public string itemEffect;
     public string itemDescription;
 }
+
 public enum ItemType
 {
     Food,

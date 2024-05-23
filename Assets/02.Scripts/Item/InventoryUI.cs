@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class InventoryUI : MonoBehaviour
 {
-    public static Item currentSelectedItem;
+    public Item currentSelectedItem; 
 
     public GameObject[] inventorySlots;
     private Inventory inventory;
@@ -28,13 +29,16 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
+        var itemList = inventory.items.Values.ToList();
+        var itemQuantities = inventory.itemQuantities;
+
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             Slot slot = inventorySlots[i].GetComponent<Slot>();
-            if (i < inventory.items.Count)
+            if (i < itemList.Count)
             {
-                int itemIndex = i;
-                Item currentItem = inventory.items[itemIndex];
+                var currentItem = itemList[i];
+                int currentQuantity = itemQuantities[currentItem.itemName];
 
                 if (slot != null)
                 {
@@ -45,10 +49,12 @@ public class InventoryUI : MonoBehaviour
                     slot.normalIcon.transform.localScale = new Vector3(2, 2, 2);
                     slot.highlightedIcon.transform.localScale = new Vector3(2, 2, 2);
                     slot.pressedIcon.transform.localScale = new Vector3(2, 2, 2);
+
+                    slot.quantityText.text = currentQuantity.ToString();
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                int capturedIndex = itemIndex;
+                int capturedIndex = i;
                 inventorySlots[i].GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(capturedIndex));
             }
             else
@@ -62,28 +68,47 @@ public class InventoryUI : MonoBehaviour
                     slot.normalIcon.transform.localScale = new Vector3(0, 0, 0);
                     slot.highlightedIcon.transform.localScale = new Vector3(0, 0, 0);
                     slot.pressedIcon.transform.localScale = new Vector3(0, 0, 0);
+
+                    slot.quantityText.text = "";
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
             }
         }
-    }
+        quickSlotManager.UpdateQuickSlotUI();
 
+    }
+    public void UseSelectedItem()
+    {
+        if (currentSelectedItem == null) return;
+
+        string itemName = currentSelectedItem.itemName;
+        inventory.itemQuantities[itemName]--;
+        if (inventory.itemQuantities[itemName] <= 0)
+        {
+            inventory.items.Remove(itemName);
+            inventory.itemQuantities.Remove(itemName);
+            quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem); 
+            currentSelectedItem = null;
+            CloseItemInfo();
+        }
+
+        UpdateInventoryUI();
+    }
     public void ShowItemInfo(int index)
     {
         ItemInfo.SetActive(true);
 
-        if (index < inventory.items.Count)
+        var itemList = inventory.items.Values.ToList();
+        if (index < itemList.Count)
         {
-            Item item = inventory.items[index];
-            currentSelectedItem = item; // 현재 선택된 아이템 설정
+            Item item = itemList[index];
+            currentSelectedItem = item;
             itemNameText.text = item.itemName;
             itemTypeText.text = GetItemType(item.itemType);
             itemEffectText.text = item.itemEffect;
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
-
-
         }
     }
 
