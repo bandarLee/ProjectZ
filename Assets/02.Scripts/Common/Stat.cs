@@ -35,6 +35,7 @@ public class Stat
     {
         Health = MaxHealth;
         Mental = MaxMental;
+        Hunger = MaxHunger;
         Stamina = MaxStamina;
     }
 }

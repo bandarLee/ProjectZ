@@ -40,6 +40,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             stream.SendNext(Stat.Health);
             stream.SendNext(Stat.Mental);
+            stream.SendNext(Stat.Hunger);
             stream.SendNext(Stat.Stamina);
         }
         else if (stream.IsReading)   // 데이터를 수신하는 상황
@@ -47,6 +48,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             // 데이터를 전송한 순서와 똑같이 받은 데이터를 캐스팅해야된다.
             Stat.Health = (int)stream.ReceiveNext();
             Stat.Mental = (int)stream.ReceiveNext();
+            Stat.Hunger = (int)stream.ReceiveNext();
             Stat.Stamina = (float)stream.ReceiveNext();
         }
         // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
@@ -83,6 +85,21 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     {
         string logMessage = $"\n{PhotonView.Owner.NickName}이 운명을 다했습니다.";
         PhotonView.RPC(nameof(AddLog), RpcTarget.All, logMessage);
+    }
+
+    [PunRPC]
+    public void Hunger(int hunger)
+    {
+        if (State == State.Death)
+        {
+            return;
+        }
+        Stat.Hunger -= hunger;
+        if (Stat.Hunger <= 0)
+        {
+            
+            
+        }
     }
 
     [PunRPC]
