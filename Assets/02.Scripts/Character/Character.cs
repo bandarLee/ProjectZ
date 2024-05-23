@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.SlotRacer.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class Character : MonoBehaviour, IPunObservable
     public PhotonView PhotonView { get; private set; }
 
     public Stat Stat;
-
+    public State State { get; private set; } = State.Live;
     private Animator _animator;
 
     private void Awake()
@@ -52,6 +53,70 @@ public class Character : MonoBehaviour, IPunObservable
         }
         // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
     }
+    [PunRPC]
+    public void AddLog(string logMessage)
+    {
+        UI_RoomInfo.Instance.AddLog(logMessage);
+    }
 
+    [PunRPC]
+    public void Damaged(int damage)
+    {
+        if (State == State.Death)
+        {
+            return;
+        }
+        Stat.Health -= damage;
+        if (Stat.Health <= 0)
+        {
+            if (PhotonView.IsMine)
+            {
+                OnDeath();
+            }
+            /* Death();*/
+            PhotonView.RPC(nameof(Death), RpcTarget.All); // Death 함수를 호출
+        }
 
+        //GetComponent<CharacterShakeAbility>().Shake();
+
+    }
+
+    private void OnDeath()
+    {
+        string logMessage = $"\n{PhotonView.Owner.NickName}이 운명을 다했습니다.";
+        PhotonView.RPC(nameof(AddLog), RpcTarget.All, logMessage);
+    }
+
+    [PunRPC]
+    private void Death()
+    {
+        if (State == State.Death)
+        {
+            return;
+        }
+
+        State = State.Death;
+
+        /*GetComponent<Animator>().SetTrigger($"Die");
+        GetComponent<CharacterAttackAbility>().InActiveCollider();*/
+
+        // 죽고나서 5초후 리스폰
+        if (PhotonView.IsMine)
+        {
+            DropItems();
+            StartCoroutine(Death_Coroutine());
+        }
+    }
+
+    [PunRPC]
+    private void DropItems()
+    {
+
+    }
+
+    private IEnumerator Death_Coroutine()
+    {
+        yield return new WaitForSeconds(5f);
+
+    }
 }
