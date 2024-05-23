@@ -12,6 +12,8 @@ public class Stat
     public int MaxMental;
     public int Hunger;
     public int MaxHunger;
+    public int Temperature;
+    public int StandardTemperature;
 
     public int Damage;
 
@@ -36,6 +38,7 @@ public class Stat
         Health = MaxHealth;
         Mental = MaxMental;
         Hunger = MaxHunger;
+        Temperature = StandardTemperature;
         Stamina = MaxStamina;
     }
 }
