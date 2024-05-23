@@ -1,36 +1,38 @@
 //
 // Weather Maker for Unity
 // (c) 2016 Digital Ruby, LLC
-// Source code may be used for personal or commercial projects.
-// Source code may NOT be redistributed or sold.
+// 소스 코드는 개인 또는 상업 프로젝트에서 사용할 수 있습니다.
+// 소스 코드는 재배포되거나 판매될 수 없습니다.
 // 
-// *** A NOTE ABOUT PIRACY ***
+// *** 불법 복제에 대한 주의 사항 ***
 // 
-// If you got this asset from a pirate site, please consider buying it from the Unity asset store at https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL. This asset is only legally available from the Unity Asset Store.
+// 이 자산을 불법 복제 사이트에서 받았다면, 유니티 애셋 스토어에서 구입해 주세요: https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL
+// 이 자산은 유니티 애셋 스토어에서만 합법적으로 구할 수 있습니다.
 // 
-// I'm a single indie dev supporting my family by spending hundreds and thousands of hours on this and other assets. It's very offensive, rude and just plain evil to steal when I (and many others) put so much hard work into the software.
+// 저는 수백, 수천 시간 동안 이 소프트웨어와 다른 자산들을 개발하며 가족을 부양하는 인디 개발자입니다.
+// 많은 사람들이 소프트웨어를 위해 많은 노력을 기울이는 동안 이를 도둑질하는 것은 매우 불쾌하고 무례하며 부도덕한 일입니다.
 // 
-// Thank you.
-//
-// *** END NOTE ABOUT PIRACY ***
+// 감사합니다.
+// 
+// *** 불법 복제에 대한 주의 사항 끝 ***
 //
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
     /// <summary>
-    /// Day night cycle profile, contains all fields and properties for time of day and how they effect everything
+    /// 낮/밤 주기 프로필, 하루의 시간 및 이들이 모든 것에 미치는 영향을 포함하는 모든 필드와 속성을 포함
     /// </summary>
     [CreateAssetMenu(fileName = "WeatherMakerDayNightCycleProfile", menuName = "WeatherMaker/Day-Night Cycle Profile", order = 41)]
     public class WeatherMakerDayNightCycleProfileScript : ScriptableObject
     {
-        #region Classes
+        #region 클래스들
 
+        // 타임아웃 기능이 있는 웹 클라이언트 클래스
         private class WebClientWithTimeout : System.Net.WebClient
         {
             protected override System.Net.WebRequest GetWebRequest(Uri uri)
@@ -41,226 +43,96 @@ namespace DigitalRuby.WeatherMaker
             }
 
             /// <summary>
-            /// Milliseconds
+            /// 타임아웃 시간 (밀리초)
             /// </summary>
             public int Timeout { get; set; }
         }
 
         /// <summary>
-        /// Sun orbit information
+        /// 태양 궤도 정보 클래스
         /// </summary>
         public class SunInfo
         {
-            /// <summary>
-            /// Calculation parameter, the date/time on the observer planet
-            /// </summary>
-            public DateTime DateTime;
-
-            /// <summary>
-            /// Calculation parameter, latitude of observer planet in degrees
-            /// </summary>
-            public double Latitude;
-
-            /// <summary>
-            /// Calculation parameter, longitude of observer planet in degrees
-            /// </summary>
-            public double Longitude;
-
-            /// <summary>
-            /// Calculation parameter, axis tilt of observer planet in degrees
-            /// </summary>
-            public double AxisTilt;
-
-            /// <summary>
-            /// Position (unit vector) of the sun in the sky from origin
-            /// </summary>
-            public Vector3 UnitVectorUp;
-
-            /// <summary>
-            /// Normal (unit vector) of the sun in the sky pointing to origin (negation of Position)
-            /// </summary>
-            public Vector3 UnitVectorDown;
-
-            /// <summary>
-            /// Time of dawn
-            /// </summary>
-            public TimeSpan Dawn;
-
-            /// <summary>
-            /// Time of sunrise
-            /// </summary>
-            public TimeSpan SunRise;
-
-            /// <summary>
-            /// Time of sunset
-            /// </summary>
-            public TimeSpan SunSet;
-
-            /// <summary>
-            /// Time of dusk
-            /// </summary>
-            public TimeSpan Dusk;
-
-            /// <summary>
-            /// JulianDays
-            /// </summary>
-            public double JulianDays;
-
-            /// <summary>
-            /// Declination
-            /// </summary>
-            public double Declination;
-
-            /// <summary>
-            /// RightAscension
-            /// </summary>
-            public double RightAscension;
-
-            /// <summary>
-            /// Azimuth
-            /// </summary>
-            public double Azimuth;
-
-            /// <summary>
-            /// Altitude
-            /// </summary>
-            public double Altitude;
-
-            /// <summary>
-            /// SolarMeanAnomaly
-            /// </summary>
-            public double SolarMeanAnomaly;
-
-            /// <summary>
-            /// EclipticLongitude
-            /// </summary>
-            public double EclipticLongitude;
-
-            /// <summary>
-            /// SiderealTime
-            /// </summary>
-            public double SiderealTime;
+            public DateTime DateTime; // 계산을 위한 날짜 및 시간
+            public double Latitude; // 관찰자의 위도
+            public double Longitude; // 관찰자의 경도
+            public double AxisTilt; // 행성의 축 기울기
+            public Vector3 UnitVectorUp; // 태양 위치 벡터
+            public Vector3 UnitVectorDown; // 태양 위치 벡터의 반대 벡터
+            public TimeSpan Dawn; // 새벽 시간
+            public TimeSpan SunRise; // 일출 시간
+            public TimeSpan SunSet; // 일몰 시간
+            public TimeSpan Dusk; // 황혼 시간
+            public double JulianDays; // 율리우스 날짜
+            public double Declination; // 적위
+            public double RightAscension; // 적경
+            public double Azimuth; // 방위각
+            public double Altitude; // 고도
+            public double SolarMeanAnomaly; // 태양 평균 근점이각
+            public double EclipticLongitude; // 황경
+            public double SiderealTime; // 항성시
         }
 
         /// <summary>
-        /// Moon orbit information
+        /// 달 궤도 정보 클래스
         /// </summary>
         public class MoonInfo
         {
-            /// <summary>
-            /// The sun data used to calculate the moon info
-            /// </summary>
-            public SunInfo SunData;
-
-            /// <summary>
-            /// Position (unit vector) of the moon in the sky from origin
-            /// </summary>
-            public Vector3 UnitVectorUp;
-
-            /// <summary>
-            /// Normal (unit vector) of the moon in the sky pointing to origin (negation of Position)
-            /// </summary>
-            public Vector3 UnitVectorDown;
-
-            /// <summary>
-            /// Distance in kilometers
-            /// </summary>
-            public double Distance;
-
-            /// <summary>
-            /// Moon illumination phase (0.5 is full, 0.0 to 1.0)
-            /// </summary>
-            public double Phase;
-
-            /// <summary>
-            /// Percent (0 to 1) that moon is full
-            /// </summary>
-            public double PercentFull;
-
-            /// <summary>
-            /// Moon illumination angle
-            /// </summary>
-            public double Angle;
-
-            /// <summary>
-            /// Moon illumination fraction
-            /// </summary>
-            public double Fraction;
-
-            /// <summary>
-            /// Azimuth
-            /// </summary>
-            public double Azimuth;
-
-            /// <summary>
-            /// Altitude
-            /// </summary>
-            public double Altitude;
-
-            /// <summary>
-            /// RightAscension
-            /// </summary>
-            public double RightAscension;
-
-            /// <summary>
-            /// Declination
-            /// </summary>
-            public double Declination;
-
-            /// <summary>
-            /// LunarMeanAnomaly
-            /// </summary>
-            public double LunarMeanAnomaly;
-
-            /// <summary>
-            /// EclipticLongitude
-            /// </summary>
-            public double EclipticLongitude;
-
-            /// <summary>
-            /// SiderealTime
-            /// </summary>
-            public double SiderealTime;
-
-            /// <summary>
-            /// ParallacticAngle
-            /// </summary>
-            public double ParallacticAngle;
+            public SunInfo SunData; // 태양 데이터 참조
+            public Vector3 UnitVectorUp; // 달 위치 벡터
+            public Vector3 UnitVectorDown; // 달 위치 벡터의 반대 벡터
+            public double Distance; // 달까지의 거리 (킬로미터)
+            public double Phase; // 달의 위상
+            public double PercentFull; // 만월 비율
+            public double Angle; // 조명 각도
+            public double Fraction; // 조명 비율
+            public double Azimuth; // 방위각
+            public double Altitude; // 고도
+            public double RightAscension; // 적경
+            public double Declination; // 적위
+            public double LunarMeanAnomaly; // 달 평균 근점이각
+            public double EclipticLongitude; // 황경
+            public double SiderealTime; // 항성시
+            public double ParallacticAngle; // 시차각
         }
 
-        #endregion Classes
+        #endregion 클래스들
 
-        /// <summary>The day speed of the cycle. Set to 0 to freeze the cycle and manually control it. At a speed of 1, the cycle is in real-time. A speed of 100 is 100 times faster than normal. Negative numbers run the cycle backwards.</summary>
+        /// <summary>
+        /// 낮/밤 주기의 속도. 1은 실시간, 100은 100배 빠르며, 음수 값은 역방향으로 진행.
+        /// </summary>
         [Header("Day/night cycle")]
         [Range(-100000, 100000.0f)]
-        [Tooltip("The day speed of the cycle. Set to 0 to freeze the cycle and manually control it. At a speed of 1, the cycle is in real-time. " +
-            "A speed of 100 is 100 times faster than normal. Negative numbers run the cycle backwards.")]
+        [Tooltip("주기의 낮 속도. 0으로 설정하면 주기가 멈추고 수동으로 제어할 수 있습니다. 속도가 1이면 주기가 실시간으로 진행됩니다. " +
+            "속도가 100이면 정상 속도의 100배로 진행됩니다. 음수는 주기가 역방향으로 진행됩니다.")]
         public float Speed = 10.0f;
 
-        /// <summary>The night speed of the cycle. Set to 0 to freeze the cycle and manually control it. At a speed of 1, the cycle is in real-time. A speed of 100 is 100 times faster than normal. Negative numbers run the cycle backwards.</summary>
+        /// <summary>
+        /// 밤 주기의 속도. 낮 속도와 동일한 방식으로 작동.
+        /// </summary>
         [Range(-100000, 100000.0f)]
-        [Tooltip("The night speed of the cycle. Set to 0 to freeze the cycle and manually control it. At a speed of 1, the cycle is in real-time. " +
-            "A speed of 100 is 100 times faster than normal. Negative numbers run the cycle backwards.")]
+        [Tooltip("주기의 밤 속도. 0으로 설정하면 주기가 멈추고 수동으로 제어할 수 있습니다. 속도가 1이면 주기가 실시간으로 진행됩니다. " +
+            "속도가 100이면 정상 속도의 100배로 진행됩니다. 음수는 주기가 역방향으로 진행됩니다.")]
         public float NightSpeed = 10.0f;
 
-        /// <summary>How often the update cycle updates. Use higher values if you have issues with shadow flickering, etc. Turning on temporal anti-aliasing is also a good way to reduce flicker, though you may have to play with the settings.</summary>
-        [Tooltip("How often the update cycle updates. Use higher values if you have issues with shadow flickering, etc. Turning on temporal anti-aliasing " +
-            "is also a good way to reduce flicker, though you may have to play with the settings.")]
+        /// <summary>
+        /// 주기가 업데이트되는 빈도. 높은 값은 그림자 깜박임을 줄이는 데 도움이 될 수 있습니다.
+        /// </summary>
+        [Tooltip("주기가 업데이트되는 빈도. 높은 값을 사용하면 그림자 깜박임 문제가 줄어들 수 있습니다. " +
+            "일시적 안티앨리어싱을 켜는 것도 깜박임을 줄이는 좋은 방법이지만 설정을 조정해야 할 수 있습니다.")]
         [Range(0.0f, 10.0f)]
         public float UpdateInterval = 0.03f;
 
-        /// <summary>
-        /// How much time has accumulated for the next update
-        /// </summary>
-        private float accumulatedTime = 10.0f;
+        private float accumulatedTime = 10.0f; // 업데이트를 위한 누적 시간
 
-        /// <summary>The current time of day in seconds (local time).</summary>
+        /// <summary>
+        /// 현재 하루의 시간 (초). 0은 자정, 43200은 정오, 86400은 다음 날 자정.
+        /// </summary>
         [Range(0.0f, SecondsPerDay)]
-        [Tooltip("The current time of day in seconds (local time).")]
-        public float TimeOfDay = SecondsPerDay * 0.5f; // high noon default time of day
+        [Tooltip("현재 하루의 시간 (초).")]
+        public float TimeOfDay = SecondsPerDay * 0.5f; // 기본값은 정오
 
 #if UNITY_EDITOR
-
 #pragma warning disable 0414
 
         [ReadOnlyLabel]
@@ -268,248 +140,209 @@ namespace DigitalRuby.WeatherMaker
         internal string TimeOfDayLabel = string.Empty;
 
 #pragma warning restore 0414
-
 #endif
 
-        /// <summary>The year for simulating the sun and moon position - this can change during runtime. The calculation is only correct for dates in the range March 1 1900 to February 28 2100.</summary>
         [Header("Date")]
-        [Tooltip("The year for simulating the sun and moon position - this can change during runtime. " +
-            "The calculation is only correct for dates in the range March 1 1900 to February 28 2100.")]
+        [Tooltip("태양과 달의 위치를 시뮬레이션하는 연도 - 이 값은 런타임 중 변경될 수 있습니다. " +
+            "계산은 1900년 3월 1일부터 2100년 2월 28일까지의 날짜에 대해서만 정확합니다.")]
         [Range(1900, 2100)]
         public int Year = 2000;
 
-        /// <summary>The month for simulating the sun and moon position - this can change during runtime.</summary>
-        [Tooltip("The month for simulating the sun and moon position - this can change during runtime.")]
+        [Tooltip("태양과 달의 위치를 시뮬레이션하는 달 - 이 값은 런타임 중 변경될 수 있습니다.")]
         [Range(1, 12)]
         public int Month = 9;
 
-        /// <summary>The day for simulating the sun and moon position - this can change during runtime.</summary>
-        [Tooltip("The day for simulating the sun and moon position - this can change during runtime.")]
+        [Tooltip("태양과 달의 위치를 시뮬레이션하는 날 - 이 값은 런타임 중 변경될 수 있습니다.")]
         [Range(1, 31)]
         public int Day = 21;
 
-        /// <summary>Whether to adjust the date when the day ends. This is important to maintain accurate sun and moon positions as days begin and end, but if your time is static you can turn it off.</summary>
-        [Tooltip("Whether to adjust the date when the day ends. This is important to maintain accurate sun and moon positions as days begin and end, but if your time is static you can turn it off.")]
+        [Tooltip("하루가 끝날 때 날짜를 조정할지 여부. 날이 시작되고 끝날 때 정확한 태양 및 달 위치를 유지하는 데 중요하지만, 시간이 정적이면 끌 수 있습니다.")]
         public bool AdjustDateWhenDayEnds = true;
 
-        /// <summary>Offset for the time zone of the lat / lon in seconds. Set to -1111 to auto-calculate (just tab out of the text field after you type -1111). Note about -1111: during editor mode, a web service is used. During play mode, longitude is used for fast calculation.</summary>
-        [Tooltip("Offset for the time zone of the lat / lon in seconds. Set to -1111 to auto-calculate (just tab out of the text field after you type -1111). Note about -1111: during editor mode, a web service is used. During play mode, longitude is used for fast calculation.")]
+        [Tooltip("위도/경도에 대한 시간대 오프셋 (초). -1111로 설정하면 자동으로 계산됩니다 (입력란에 -1111을 입력한 후 탭키를 누르세요). -1111에 대한 참고: 에디터 모드에서는 웹 서비스를 사용합니다. 플레이 모드에서는 경도를 사용하여 빠르게 계산합니다.")]
         public int TimeZoneOffsetSeconds = -21600;
 
-        /// <summary>The latitude in degrees on the planet that the camera is at - 90 (north pole) to -90 (south pole)</summary>
         [Header("Location")]
         [Range(-90.0f, 90.0f)]
-        [Tooltip("The latitude in degrees on the planet that the camera is at - 90 (north pole) to -90 (south pole)")]
-        public double Latitude = 40.7608; // salt lake city latitude
+        [Tooltip("카메라가 있는 행성의 위도 (도) - 북극 90에서 남극 -90까지")]
+        public double Latitude = 40.7608; // 솔트 레이크 시티의 위도
 
-        /// <summary>The longitude in degrees on the planet that the camera is at. -180 to 180.</summary>
         [Range(-180.0f, 180.0f)]
-        [Tooltip("The longitude in degrees on the planet that the camera is at. -180 to 180.")]
-        public double Longitude = -111.8910; // salt lake city longitude
+        [Tooltip("카메라가 있는 행성의 경도 (도). -180에서 180까지.")]
+        public double Longitude = -111.8910; // 솔트 레이크 시티의 경도
 
-        /// <summary>The amount of degrees your planet is tilted - Earth is about 23.439f</summary>
         [Range(0.0f, 360.0f)]
-        [Tooltip("The amount of degrees your planet is tilted - Earth is about 23.439f")]
+        [Tooltip("행성의 기울기 (도) - 지구는 약 23.439도")]
         public float AxisTilt = 23.439f;
 
-        /// <summary>Determines when it is day, dawn/dusk or night, where center of gradient is sun at horizon. Green = day, Red = dawn/dusk, Blue = night. If it's dawn/dusk, the time of day before 12 p.m. will be dawn, after 12 p.m. will be dusk.</summary>
         [Header("Time of Day Mapping")]
-        [Tooltip("Determines when it is day, dawn/dusk or night, where center of gradient is sun at horizon. Green = day, Red = dawn/dusk, Blue = night. If it's dawn/dusk, the time of day before 12 p.m. will be dawn, after 12 p.m. will be dusk.")]
+        [Tooltip("낮, 새벽/황혼, 밤을 결정하는 그라디언트. 중심은 태양이 수평선에 있는 위치. 녹색 = 낮, 빨강 = 새벽/황혼, 파랑 = 밤. 새벽/황혼일 경우 오전 12시 이전은 새벽, 오후 12시 이후는 황혼.")]
         public Gradient DayDawnDuskNightGradient;
 
-        /// <summary>Sky tint color, center of gradient is sun at horizon.</summary>
-        [Tooltip("Sky tint color, center of gradient is sun at horizon.")]
+        [Tooltip("하늘의 색조를 설정하는 그라디언트, 중심은 태양이 수평선에 있는 위치.")]
         public Gradient SkyTintColor;
 
-        /// <summary>Sky add color, center of gradient is sun at horizon.</summary>
-        [Tooltip("Sky add color, center of gradient is sun at horizon.")]
+        [Tooltip("하늘에 추가하는 색을 설정하는 그라디언트, 중심은 태양이 수평선에 있는 위치.")]
         public Gradient SkyAddColor;
 
-        /// <summary>Whether to set the Unity built in ambient colors to the day, dawn/dusk and night ambient colors.</summary>
         [Header("Ambient colors")]
-        [Tooltip("Whether to set the Unity built in ambient colors to the day, dawn/dusk and night ambient colors.")]
+        [Tooltip("Unity의 내장된 앰비언트 색상을 낮, 새벽/황혼, 밤 앰비언트 색상으로 설정할지 여부.")]
         public WeatherMakerDayNightAmbientColorMode AmbientColorMode = WeatherMakerDayNightAmbientColorMode.AmbientColor;
 
-        /// <summary>Day ambient color, where far right is fully day - alpha is used for intensity</summary>
         [Header("Ambient colors - day")]
-        [Tooltip("Day ambient color, where far right is fully day - alpha is used for intensity")]
+        [Tooltip("낮 앰비언트 색상. 가장 오른쪽이 완전히 낮 - 알파 값은 강도로 사용.")]
         public Gradient DayAmbientColor;
 
-        /// <summary>Additional day ambient color intensity</summary>
-        [Tooltip("Additional day ambient color intensity")]
+        [Tooltip("추가 낮 앰비언트 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DayAmbientColorIntensity = 0.05f;
 
-        /// <summary>Day ambient sky color, where far right is fully day - alpha is used for intensity</summary>
-        [Tooltip("Day ambient sky color, where far right is fully day - alpha is used for intensity")]
+        [Tooltip("낮 앰비언트 하늘 색상. 가장 오른쪽이 완전히 낮 - 알파 값은 강도로 사용.")]
         public Gradient DayAmbientColorSky;
 
-        /// <summary>Additional day ambient sky color intensity</summary>
-        [Tooltip("Additional day ambient sky color intensity")]
+        [Tooltip("추가 낮 앰비언트 하늘 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DayAmbientColorSkyIntensity = 0.05f;
 
-        /// <summary>Day ambient ground color, where far right is fully day - alpha is used for intensity</summary>
-        [Tooltip("Day ambient ground color, where far right is fully day - alpha is used for intensity")]
+        [Tooltip("낮 앰비언트 지면 색상. 가장 오른쪽이 완전히 낮 - 알파 값은 강도로 사용.")]
         public Gradient DayAmbientColorGround;
 
-        /// <summary>Additional day ambient ground color intensity</summary>
-        [Tooltip("Additional day ambient ground color intensity")]
+        [Tooltip("추가 낮 앰비언트 지면 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DayAmbientColorGroundIntensity = 0.05f;
 
-        /// <summary>Day ambient equator color, where far right is fully day - alpha is used for intensity</summary>
-        [Tooltip("Day ambient equator color, where far right is fully day - alpha is used for intensity")]
+        [Tooltip("낮 앰비언트 적도 색상. 가장 오른쪽이 완전히 낮 - 알파 값은 강도로 사용.")]
         public Gradient DayAmbientColorEquator;
 
-        /// <summary>Additional day ambient equator color intensity</summary>
-        [Tooltip("Additional day ambient equator color intensity")]
+        [Tooltip("추가 낮 앰비언트 적도 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DayAmbientColorEquatorIntensity = 0.05f;
 
-        /// <summary>Dawn/dusk ambient color, where far right is fully dawn or dusk - alpha is used for intensity</summary>
         [Header("Ambient colors - dawn/dusk")]
-        [Tooltip("Dawn/dusk ambient color, where far right is fully dawn or dusk - alpha is used for intensity")]
+        [Tooltip("새벽/황혼 앰비언트 색상. 가장 오른쪽이 완전히 새벽 또는 황혼 - 알파 값은 강도로 사용.")]
         public Gradient DawnDuskAmbientColor;
 
-        /// <summary>Additional daw/dusk ambient color intensity</summary>
-        [Tooltip("Additional daw/dusk ambient color intensity")]
+        [Tooltip("추가 새벽/황혼 앰비언트 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DawnDuskAmbientColorIntensity = 0.05f;
 
-        /// <summary>Dawn/dusk ambient sky color, where far right is fully dawn or dusk - alpha is used for intensity</summary>
-        [Tooltip("Dawn/dusk ambient sky color, where far right is fully dawn or dusk - alpha is used for intensity")]
+        [Tooltip("새벽/황혼 앰비언트 하늘 색상. 가장 오른쪽이 완전히 새벽 또는 황혼 - 알파 값은 강도로 사용.")]
         public Gradient DawnDuskAmbientColorSky;
 
-        /// <summary>Additional daw/dusk ambient sky color intensity</summary>
-        [Tooltip("Additional daw/dusk ambient sky color intensity")]
+        [Tooltip("추가 새벽/황혼 앰비언트 하늘 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DawnDuskAmbientColorSkyIntensity = 0.05f;
 
-        /// <summary>Dawn/dusk ambient ground color, where far right is fully dawn or dusk - alpha is used for intensity</summary>
-        [Tooltip("Dawn/dusk ambient ground color, where far right is fully dawn or dusk - alpha is used for intensity")]
+        [Tooltip("새벽/황혼 앰비언트 지면 색상. 가장 오른쪽이 완전히 새벽 또는 황혼 - 알파 값은 강도로 사용.")]
         public Gradient DawnDuskAmbientColorGround;
 
-        /// <summary>Additional daw/dusk ambient ground color intensity</summary>
-        [Tooltip("Additional daw/dusk ambient ground color intensity")]
+        [Tooltip("추가 새벽/황혼 앰비언트 지면 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DawnDuskAmbientColorGroundIntensity = 0.05f;
 
-        /// <summary>Dawn/dusk ambient equator color, where far right is fully dawn or dusk - alpha is used for intensity</summary>
-        [Tooltip("Dawn/dusk ambient equator color, where far right is fully dawn or dusk - alpha is used for intensity")]
+        [Tooltip("새벽/황혼 앰비언트 적도 색상. 가장 오른쪽이 완전히 새벽 또는 황혼 - 알파 값은 강도로 사용.")]
         public Gradient DawnDuskAmbientColorEquator;
 
-        /// <summary>Additional daw/dusk ambient equator color intensity</summary>
-        [Tooltip("Additional daw/dusk ambient equator color intensity")]
+        [Tooltip("추가 새벽/황혼 앰비언트 적도 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float DawnDuskAmbientColorEquatorIntensity = 0.05f;
 
-        /// <summary>Night ambient color, where far right is fully night - alpha is used for intensity</summary>
         [Header("Ambient colors - night")]
-        [Tooltip("Night ambient color, where far right is fully night - alpha is used for intensity")]
+        [Tooltip("밤 앰비언트 색상. 가장 오른쪽이 완전히 밤 - 알파 값은 강도로 사용.")]
         public Gradient NightAmbientColor;
 
-        /// <summary>Additional night ambient color intensity</summary>
-        [Tooltip("Additional night ambient color intensity")]
+        [Tooltip("추가 밤 앰비언트 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float NightAmbientColorIntensity = 0.05f;
 
-        /// <summary>Night ambient sky color, where far right is fully night - alpha is used for intensity</summary>
-        [Tooltip("Night ambient sky color, where far right is fully night - alpha is used for intensity")]
+        [Tooltip("밤 앰비언트 하늘 색상. 가장 오른쪽이 완전히 밤 - 알파 값은 강도로 사용.")]
         public Gradient NightAmbientColorSky;
 
-        /// <summary>Additional night ambient sky color intensity</summary>
-        [Tooltip("Additional night ambient sky color intensity")]
+        [Tooltip("추가 밤 앰비언트 하늘 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float NightAmbientColorSkyIntensity = 0.05f;
 
-        /// <summary>Night ambient ground color, where far right is fully night - alpha is used for intensity</summary>
-        [Tooltip("Night ambient ground color, where far right is fully night - alpha is used for intensity")]
+        [Tooltip("밤 앰비언트 지면 색상. 가장 오른쪽이 완전히 밤 - 알파 값은 강도로 사용.")]
         public Gradient NightAmbientColorGround;
 
-        /// <summary>Additional night ambient ground color intensity</summary>
-        [Tooltip("Additional night ambient ground color intensity")]
+        [Tooltip("추가 밤 앰비언트 지면 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float NightAmbientColorGroundIntensity = 0.05f;
 
-        /// <summary>Night ambient equator color, where far right is fully night - alpha is used for intensity</summary>
-        [Tooltip("Night ambient equator color, where far right is fully night - alpha is used for intensity")]
+        [Tooltip("밤 앰비언트 적도 색상. 가장 오른쪽이 완전히 밤 - 알파 값은 강도로 사용.")]
         public Gradient NightAmbientColorEquator;
 
-        /// <summary>Additional night ambient equator color intensity</summary>
-        [Tooltip("Additional night ambient equator color intensity")]
+        [Tooltip("추가 밤 앰비언트 적도 색상 강도")]
         [Range(0.0f, 10.0f)]
         public float NightAmbientColorEquatorIntensity = 0.05f;
 
-        /// <summary>Tint color of sun, where center is sun at horizon</summary>
         [Header("Sun modifiers")]
-        [Tooltip("Tint color of sun, where center is sun at horizon")]
+        [Tooltip("태양의 색조를 설정하는 그라디언트, 중심은 태양이 수평선에 있는 위치.")]
         public Gradient SunTintColorGradient;
 
-        /// <summary>Control sun intensity where center of gradient is sun at horizon</summary>
-        [Tooltip("Control sun intensity where center of gradient is sun at horizon")]
+        [Tooltip("태양 강도를 조절하는 그라디언트, 중심은 태양이 수평선에 있는 위치.")]
         public Gradient SunIntensityGradient;
 
         /// <summary>
-        /// Time of day as a TimeSpan object
+        /// 하루의 시간을 TimeSpan 객체로 반환
         /// </summary>
         public TimeSpan TimeOfDayTimespan { get; private set; }
 
         /// <summary>
-        /// Time of day category
+        /// 하루의 시간 범주
         /// </summary>
         public WeatherMakerTimeOfDayCategory TimeOfDayCategory { get; private set; }
 
         /// <summary>
-        /// 1 if it is fully day
+        /// 완전히 낮인 경우 1
         /// </summary>
         public float DayMultiplier { get; private set; }
 
         /// <summary>
-        /// 1 if it is fully dawn or dusk
+        /// 완전히 새벽 또는 황혼인 경우 1
         /// </summary>
         public float DawnDuskMultiplier { get; private set; }
 
         /// <summary>
-        /// 1 if it is fully night
+        /// 완전히 밤인 경우 1
         /// </summary>
         public float NightMultiplier { get; private set; }
 
         /// <summary>
-        /// Current sun info
+        /// 현재 태양 정보
         /// </summary>
         [NonSerialized]
         public readonly SunInfo SunData = new SunInfo();
 
         /// <summary>
-        /// Current moon info
+        /// 현재 달 정보
         /// </summary>
         [NonSerialized]
         public readonly List<MoonInfo> MoonDatas = new List<MoonInfo>();
 
         /// <summary>
-        /// Number of seconds per day
+        /// 하루의 총 초 수
         /// </summary>
         public const float SecondsPerDay = 86400.0f;
 
         /// <summary>
-        /// Time of day at high noon
+        /// 정오 시간
         /// </summary>
         public const float HighNoonTimeOfDay = SecondsPerDay * 0.5f;
 
         /// <summary>
-        /// Number of seconds in one degree
+        /// 1도당 초 수
         /// </summary>
         public const float SecondsForOneDegree = SecondsPerDay / 360.0f;
 
         /// <summary>
-        /// How many seconds must elapse in time of day time to update dynamic GI should that option be selected
+        /// 동적 GI 업데이트를 위해 경과해야 하는 시간 (초)
         /// </summary>
         public const float DynamicGIUpdateThresholdSeconds = 300.0f;
 
         private DateTime prevDt;
         /// <summary>
-        /// Get a date time object representing the current year, month, day and time of day in local time
+        /// 현재 연도, 월, 일, 시간의 로컬 시간을 나타내는 DateTime 객체 반환
         /// </summary>
         public DateTime DateTime
         {
@@ -529,17 +362,17 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Get a TimeSpan from the TimeOfDay property
+        /// TimeOfDay 속성에서 TimeSpan을 반환
         /// </summary>
         public TimeSpan TimeOfDayTimeSpan { get { return TimeSpan.FromSeconds(TimeOfDay); } set { TimeOfDay = (float)value.TotalSeconds; } }
 
         private float lastTimeOfDayForDynamicGIUpdate = -999999.0f;
 
         /// <summary>
-        /// Julian date to System.DateTime
+        /// 율리우스 날짜를 System.DateTime으로 변환
         /// </summary>
-        /// <param name="julianDate">Julian date</param>
-        /// <returns>DateTime with UTC kind</returns>
+        /// <param name="julianDate">율리우스 날짜</param>
+        /// <returns>UTC 형식의 DateTime 객체</returns>
         public static DateTime JulianToDateTime(double julianDate)
         {
             double unixTime = (julianDate - 2440587.5) * 86400;
@@ -549,11 +382,11 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Azimuth and atltidue unit vector
+        /// 방위각과 고도를 단위 벡터로 변환
         /// </summary>
-        /// <param name="azimuth">Azimuth</param>
-        /// <param name="altitude">Altitude</param>
-        /// <param name="vector">Unit vector</param>
+        /// <param name="azimuth">방위각</param>
+        /// <param name="altitude">고도</param>
+        /// <param name="vector">단위 벡터</param>
         public static void ConvertAzimuthAtltitudeToUnitVector(double azimuth, double altitude, ref Vector3 vector)
         {
             vector.y = (float)Math.Sin(altitude);
@@ -563,16 +396,15 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Calculate the position of the sun
+        /// 태양의 위치를 계산
         /// </summary>
-        /// <param name="sunInfo">Calculates and receives sun info, including position, etc. Parameters marked as calculation parameters need to be set first.</param>
-        /// <param name="rotateYDegrees">Rotate around the Y axis</param>
+        /// <param name="sunInfo">계산된 태양 정보를 받음</param>
+        /// <param name="rotateYDegrees">Y축 주위로 회전할 각도</param>
         public static void CalculateSunPosition(SunInfo sunInfo, float rotateYDegrees)
         {
-            // dateTime should already be UTC format
+            // dateTime은 이미 UTC 형식이어야 함
             double d = (sunInfo.DateTime.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds / dayMs) + jDiff;
-            //double d = sunInfo.DateTime.ToOADate() + 2415018.5;
-            double e = degreesToRadians * sunInfo.AxisTilt; // obliquity of the Earth
+            double e = degreesToRadians * sunInfo.AxisTilt; // 지구의 기울기
             double m = SolarMeanAnomaly(d);
             double l = EclipticLongitude(m);
             double dec = Declination(e, l, 0);
@@ -612,29 +444,29 @@ namespace DigitalRuby.WeatherMaker
             }
             catch
             {
-                // don't crash if date time is out of bounds
+                // 날짜 및 시간 범위를 초과할 경우 크래시 방지
             }
         }
 
         /// <summary>
-        /// Calculate moon position
+        /// 달의 위치를 계산
         /// </summary>
-        /// <param name="sunInfo">Sun info, already calculated</param>
-        /// <param name="moonInfo">Receives moon info</param>
-        /// <param name="rotateYDegrees">Rotate the moon in the sky around the y axis by this degrees</param>
+        /// <param name="sunInfo">계산된 태양 정보</param>
+        /// <param name="moonInfo">계산된 달 정보를 받음</param>
+        /// <param name="rotateYDegrees">달을 y축 주위로 회전할 각도</param>
         public static void CalculateMoonPosition(SunInfo sunInfo, MoonInfo moonInfo, float rotateYDegrees)
         {
             double d = sunInfo.JulianDays;
-            double e = degreesToRadians * sunInfo.AxisTilt; // obliquity of the Earth
-            double L = degreesToRadians * (218.316 + 13.176396 * d); // ecliptic longitude
-            double M = degreesToRadians * (134.963 + 13.064993 * d); // mean anomaly
-            double F = degreesToRadians * (93.272 + 13.229350 * d); // mean distance
-            double l = L + degreesToRadians * 6.289 * Math.Sin(M); // longitude
-            double b = degreesToRadians * 5.128 * Math.Sin(F); // latitude
-            double dist = 385001.0 - (20905.0 * Math.Cos(M)); // distance to the moon in km
+            double e = degreesToRadians * sunInfo.AxisTilt; // 지구의 기울기
+            double L = degreesToRadians * (218.316 + 13.176396 * d); // 황경
+            double M = degreesToRadians * (134.963 + 13.064993 * d); // 평균 근점이각
+            double F = degreesToRadians * (93.272 + 13.229350 * d); // 평균 거리
+            double l = L + degreesToRadians * 6.289 * Math.Sin(M); // 경도
+            double b = degreesToRadians * 5.128 * Math.Sin(F); // 위도
+            double dist = 385001.0 - (20905.0 * Math.Cos(M)); // 달까지의 거리 (킬로미터)
             double ra = RightAscension(e, l, b);
             double dec = Declination(e, l, b);
-            const double sunDistance = 149598000.0; // avg sun distance to Earth
+            const double sunDistance = 149598000.0; // 지구와 태양 사이의 평균 거리
             double phi = Math.Acos(Math.Sin(sunInfo.Declination) * Math.Sin(dec) + Math.Cos(sunInfo.Declination) * Math.Cos(dec) * Math.Cos(sunInfo.RightAscension - ra));
             double inc = Math.Atan2(sunDistance * Math.Sin(phi), dist - sunDistance * Math.Cos(phi));
             double angle = Math.Atan2(Math.Cos(sunInfo.Declination) * Math.Sin(sunInfo.RightAscension - ra), Math.Sin(sunInfo.Declination) * Math.Cos(dec) - Math.Cos(sunInfo.Declination) * Math.Sin(dec) * Math.Cos(sunInfo.RightAscension - ra));
@@ -645,14 +477,14 @@ namespace DigitalRuby.WeatherMaker
             double H = SiderealTime(d, lw) - ra;
             double h = Altitude(H, phi, dec);
 
-            // formula 14.1 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
+            // "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998의 14.1 공식.
             double pa = Math.Atan2(Math.Sin(H), Math.Tan(phi) * Math.Cos(dec) - Math.Sin(dec) * Math.Cos(H));
-            h = h + AstroRefraction(h); // altitude correction for refraction
+            h = h + AstroRefraction(h); // 굴절을 위한 고도 보정
             double azimuth = Azimuth(H, phi, dec);
             double altitude = h;
             ConvertAzimuthAtltitudeToUnitVector(azimuth, altitude, ref moonInfo.UnitVectorUp);
 
-            // set moon position and look at the origin
+            // 달의 위치 설정 및 원점을 바라보도록 설정
             moonInfo.UnitVectorUp = Quaternion.AngleAxis(rotateYDegrees, Vector3.up) * moonInfo.UnitVectorUp;
             moonInfo.UnitVectorDown = -moonInfo.UnitVectorUp;
             moonInfo.Distance = dist;
@@ -709,19 +541,19 @@ namespace DigitalRuby.WeatherMaker
 
         private static double EclipticLongitude(double m)
         {
-            double c = degreesToRadians * (1.9148 * Math.Sin(m) + 0.02 * Math.Sin(2.0 * m) + 0.0003 * Math.Sin(3.0 * m)); // equation of center
-            double p = degreesToRadians * 102.9372; // perihelion of the Earth
+            double c = degreesToRadians * (1.9148 * Math.Sin(m) + 0.02 * Math.Sin(2.0 * m) + 0.0003 * Math.Sin(3.0 * m)); // 중심 방정식
+            double p = degreesToRadians * 102.9372; // 지구의 근일점
             return m + c + p + Math.PI;
         }
 
         private static double AstroRefraction(double h)
         {
-            // the following formula works for positive altitudes only.
-            // if h = -0.08901179 a div/0 would occur.
+            // 이 공식은 양의 고도에 대해서만 작동합니다.
+            // h = -0.08901179이면 div/0가 발생합니다.
             h = (h < 0.0 ? 0.0 : h);
 
-            // formula 16.4 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
-            // 1.02 / tan(h + 10.26 / (h + 5.10)) h in degrees, result in arc minutes -> converted to rad:
+            // "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998의 16.4 공식.
+            // 1.02 / tan(h + 10.26 / (h + 5.10)) h는 도, 결과는 호 분 -> 라디안으로 변환:
             return 0.0002967 / Math.Tan(h + 0.00312536 / (h + 0.08901179));
         }
 
@@ -817,7 +649,7 @@ namespace DigitalRuby.WeatherMaker
                 }
                 else
                 {
-                    // convert local time of day to UTC time of day - quick and dirty calculation
+                    // 현지 시간의 하루 시간을 UTC 시간으로 변환 - 빠르고 간단한 계산
                     double offsetSeconds = TimeZoneOffsetSeconds;
                     TimeSpan t = TimeSpan.FromSeconds(TimeOfDay - offsetSeconds);
                     SunData.DateTime = new DateTime(Year, Month, Day, 0, 0, 0, DateTimeKind.Utc) + t;
@@ -825,14 +657,14 @@ namespace DigitalRuby.WeatherMaker
                     SunData.Longitude = Longitude;
                     SunData.AxisTilt = AxisTilt;
 
-                    // calculate and set sun position in sky
+                    // 태양의 위치를 계산하고 설정
                     if (sun.OrbitType == WeatherMakerOrbitType.FromEarth)
                     {
                         CalculateSunPosition(SunData, sun.RotateYDegrees);
                     }
                     SetCelestialObjectPosition(sun, SunData.UnitVectorDown);
 
-                    // calculate sun intensity and shadow strengths
+                    // 태양 강도 및 그림자 강도를 계산
                     float l = sun.GetGradientLookup();
                     float sunIntensityLookup = SunIntensityGradient.Evaluate(l).grayscale;
                     sunIntensityLookup *= sunIntensityLookup;
@@ -886,9 +718,9 @@ namespace DigitalRuby.WeatherMaker
                     SetCelestialObjectPosition(moon, MoonDatas[i].UnitVectorDown);
                 }
 
-                // intensity raises squared compare to moon fullness - this means less full is squared amount of less light
-                // moon light intensity reduces as sun light intensity approaches 1
-                // reduce moon light as it drops below horizon
+                // 강도는 만월에 비례하여 제곱으로 증가 - 이는 덜 채워진 경우 제곱만큼의 빛 감소를 의미
+                // 태양 강도가 1에 가까워질수록 달의 빛 강도 감소
+                // 지평선 아래로 떨어질 때 달 빛 감소
                 dot = Mathf.Clamp(Vector3.Dot(MoonDatas[i].UnitVectorDown, Vector3.down) + 0.2f, 0.0f, 1.0f);
                 dot = Mathf.Pow(dot, 0.25f);
                 yPower = Mathf.Clamp((MoonDatas[i].UnitVectorUp.y + 0.2f) * 4.0f, 0.0f, 1.0f);
@@ -896,7 +728,7 @@ namespace DigitalRuby.WeatherMaker
                 moon.Light.intensity = moon.LightBaseIntensity * yPower * sunIntensityReducer * dot * moon.LightMultiplier;
                 if (moon.OrbitType == WeatherMakerOrbitType.FromEarth)
                 {
-                    // as moon goes away from full, intensity reduces squared
+                    // 만월에서 멀어질수록 강도가 제곱으로 감소
                     moon.Light.intensity *= ((float)MoonDatas[i].PercentFull * (float)MoonDatas[i].PercentFull);
                 }
                 moon.Light.shadowStrength = moon.LightBaseShadowStrength;
@@ -921,7 +753,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        private void UpdateLightIntensitiesAndShadows(WeatherMakerCelestialObjectScript sun, ICollection<WeatherMakerCelestialObjectScript> moons, 
+        private void UpdateLightIntensitiesAndShadows(WeatherMakerCelestialObjectScript sun, ICollection<WeatherMakerCelestialObjectScript> moons,
             Dictionary<string, float> directionalLightIntensityModifiers,
             Dictionary<string, float> directionalLightShadowModifier)
         {
@@ -1006,7 +838,7 @@ namespace DigitalRuby.WeatherMaker
                 }
             }
 
-            // send events
+            // 이벤트 전송
             if ((current & WeatherMakerTimeOfDayCategory.Day) == WeatherMakerTimeOfDayCategory.None && (TimeOfDayCategory & WeatherMakerTimeOfDayCategory.Day) != WeatherMakerTimeOfDayCategory.None)
             {
                 WeatherMakerScript.Instance.DayBegin.Invoke(this);
@@ -1075,7 +907,7 @@ namespace DigitalRuby.WeatherMaker
                     }
                     catch
                     {
-                        // eat exceptions
+                        // 예외 무시
                     }
                 }
 
@@ -1110,7 +942,7 @@ namespace DigitalRuby.WeatherMaker
             }
             if (AdjustDateWhenDayEnds)
             {
-                // handle wrapping of time of day
+                // 하루 시간이 랩핑되는 경우 처리
                 if (TimeOfDay < 0.0f)
                 {
                     TimeOfDay += SecondsPerDay;
@@ -1138,7 +970,7 @@ namespace DigitalRuby.WeatherMaker
             }
             TimeOfDayTimespan = TimeSpan.FromSeconds(TimeOfDay);
 
-            // send events
+            // 이벤트 전송
             if (prevDt.Year != Year)
             {
                 WeatherMakerScript.Instance.YearChanged.Invoke(this);
@@ -1283,7 +1115,8 @@ namespace DigitalRuby.WeatherMaker
                     Shader.SetGlobalColor(WMS._WeatherMakerAmbientLightColorSky, ambientLightSky);
                     Shader.SetGlobalColor(WMS._WeatherMakerAmbientLightColorGround, ambientLightGround);
                     Shader.SetGlobalColor(WMS._WeatherMakerAmbientLightColorEquator, ambientLightEquator);
-                } break;
+                }
+                break;
 
                 case WeatherMakerDayNightAmbientColorMode.DynamicGIUpdateOnly:
                     if (Mathf.Abs(TimeOfDay - lastTimeOfDayForDynamicGIUpdate) > DynamicGIUpdateThresholdSeconds)
@@ -1325,9 +1158,9 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Update day night cycle using profile settings and light manager state
+        /// 프로필 설정과 라이트 매니저 상태를 사용하여 낮/밤 주기 업데이트
         /// </summary>
-        /// <param name="updateTimeOfDay"></param>
+        /// <param name="updateTimeOfDay">하루 시간을 업데이트할지 여부</param>
         public void UpdateFromProfile(bool updateTimeOfDay)
         {
             if (WeatherMakerScript.Instance == null)
@@ -1363,89 +1196,89 @@ namespace DigitalRuby.WeatherMaker
     }
 
     /// <summary>
-    /// Day / night cycle ambient color mode
+    /// 낮/밤 주기 앰비언트 색상 모드
     /// </summary>
     public enum WeatherMakerDayNightAmbientColorMode
     {
         /// <summary>
-        /// Do not use ambient colors, set them all to black. No Unity ambient light.
+        /// 앰비언트 색상 사용 안함, 모두 검정색으로 설정. Unity 앰비언트 라이트 없음.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Use the ambient color for ambient, sky, equator and ground. Use Unity flat ambient lighting.
+        /// 앰비언트 색상을 앰비언트, 하늘, 적도 및 지면 색상으로 사용. Unity 평면 앰비언트 조명 사용.
         /// </summary>
         AmbientColor = 1,
 
         /// <summary>
-        /// Use the ambient sky color only, all other ambient colors are black. Use Unity flat ambient lighting.
+        /// 앰비언트 하늘 색상만 사용, 나머지 앰비언트 색상은 검정색. Unity 평면 앰비언트 조명 사용.
         /// </summary>
         SkyOnly = 2,
 
         /// <summary>
-        /// Use the ambient sky, equator and ground. Ambient color is black. Use Unity trilight ambient lighting.
+        /// 앰비언트 하늘, 적도 및 지면 색상 사용. 앰비언트 색상은 검정색. Unity 삼중 조명 앰비언트 조명 사용.
         /// </summary>
         SkyEquatorGround = 4,
 
         /// <summary>
-        /// Use the ambient color plus ambient sky, equator and ground. Ambient color is added to sky, equator and ground. Use Unity trilight ambient lighting.
+        /// 앰비언트 색상, 하늘, 적도 및 지면 색상 사용. 앰비언트 색상이 하늘, 적도 및 지면에 추가됨. Unity 삼중 조명 앰비언트 조명 사용.
         /// </summary>
         All = 8,
 
         /// <summary>
-        /// Only call DynamicGI.UpdateEnvironment periodically, using DynamicGIUpdateThresholdSeconds constant. Do not modify ambient colors or settings.
+        /// 동적 GI 업데이트만 주기적으로 호출, DynamicGIUpdateThresholdSeconds 상수를 사용. 앰비언트 색상이나 설정을 변경하지 않음.
         /// </summary>
         DynamicGIUpdateOnly = 16,
 
         /// <summary>
-        /// Leave Unity ambient mode as is. Use the ambient color plus ambient sky, equator and ground. Ambient color is added to sky, equator and ground.
+        /// Unity 앰비언트 모드를 그대로 유지. 앰비언트 색상, 하늘, 적도 및 지면 색상 사용. 앰비언트 색상이 하늘, 적도 및 지면에 추가됨.
         /// </summary>
         AllWithUnityMode = 32,
 
         /// <summary>
-        /// Use existing ambient color settings, ignore day night cycle profile ambient settings.
+        /// 기존 앰비언트 색상 설정을 사용, 낮/밤 주기 프로필 앰비언트 설정 무시.
         /// </summary>
         UnityAmbientSettings = 64
     }
 
     /// <summary>
-    /// Time of day category
+    /// 하루 시간 범주
     /// </summary>
     [Flags]
     public enum WeatherMakerTimeOfDayCategory
     {
         /// <summary>
-        /// None
+        /// 없음
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Dawn
+        /// 새벽
         /// </summary>
         Dawn = 1,
 
         /// <summary>
-        /// Day
+        /// 낮
         /// </summary>
         Day = 2,
 
         /// <summary>
-        /// Dusk
+        /// 황혼
         /// </summary>
         Dusk = 4,
 
         /// <summary>
-        /// Night
+        /// 밤
         /// </summary>
         Night = 8,
 
         /// <summary>
-        /// Sunrise
+        /// 일출
         /// </summary>
         Sunrise = 16,
 
         /// <summary>
-        /// Sunset
+        /// 일몰
         /// </summary>
         Sunset = 32
     }
