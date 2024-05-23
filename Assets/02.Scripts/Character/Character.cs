@@ -41,6 +41,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             stream.SendNext(Stat.Health);
             stream.SendNext(Stat.Mental);
             stream.SendNext(Stat.Hunger);
+            stream.SendNext(Stat.Temperature);
             stream.SendNext(Stat.Stamina);
         }
         else if (stream.IsReading)   // 데이터를 수신하는 상황
@@ -49,6 +50,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             Stat.Health = (int)stream.ReceiveNext();
             Stat.Mental = (int)stream.ReceiveNext();
             Stat.Hunger = (int)stream.ReceiveNext();
+            Stat.Temperature = (int)stream.ReceiveNext();
             Stat.Stamina = (float)stream.ReceiveNext();
         }
         // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
@@ -59,6 +61,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         UI_RoomInfo.Instance.AddLog(logMessage);
     }
 
+    // 체력
     [PunRPC]
     public void Damaged(int damage)
     {
@@ -94,11 +97,47 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             return;
         }
+
+        // 시간이 흐르면 배고픔이 차는 코드 (hunger가 올라가는)
         Stat.Hunger -= hunger;
         if (Stat.Hunger <= 0)
         {
+            // 정신력이 10초마다 -10
             
-            
+        }
+    }
+
+    [PunRPC]
+    public void Temperature(int temperature)
+    {
+        if (State == State.Death)
+        {
+            return;
+        }
+        Stat.Temperature -= temperature;
+        if (Stat.Temperature <= 0 || Stat.Temperature >= 30)
+        {
+            // 정신력이 10초마다 -5
+        }
+        if (Stat.Temperature <= -10 || Stat.Temperature >= 40)
+        {
+            // 정신력이 10초마다 - 10
+        }
+
+    }
+
+    [PunRPC]
+    public void Mental(int mental)
+    {
+        if (State == State.Death)
+        {
+            return;
+        }
+
+        if (Stat.Mental <= 0)
+        {
+            // 체력이 10초마다 -10
+            Stat.Health -= mental;
         }
     }
 
