@@ -17,6 +17,8 @@ public class UI_Clock : MonoBehaviour
     {
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
 
+        Debug.Log(dayNightCycleManager.TimeOfDay);
+
         ClockSlider.maxValue = 86400f;
 
         Sun.rectTransform.anchoredPosition = Vector2.zero;
@@ -27,10 +29,18 @@ public class UI_Clock : MonoBehaviour
     {
         if (dayNightCycleManager != null)
         {
-            ClockSlider.value = dayNightCycleManager.TimeOfDay  ;
+            // 슬라이더 값을 현재 시간으로 설정 (하루의 중간 시간인 43200초를 기준으로)
+            float timeOfDay = dayNightCycleManager.TimeOfDay - 31600;
+
+            // 음수 값을 방지하고 0-86400 사이의 값으로 조정
+            if (timeOfDay < 0)
+            {
+                timeOfDay += 86400f;
+            }
+
+            ClockSlider.value = timeOfDay % 86400f;
 
             UpdateSunAndMoonVisibility();
-            Debug.Log(dayNightCycleManager.TimeOfDay);
         }
     }
 

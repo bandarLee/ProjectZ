@@ -111,7 +111,7 @@ namespace DigitalRuby.WeatherMaker
         /// </summary>
         [Range(0.0f, SecondsPerDay)]
         [Tooltip("현재 하루의 시간 (초).")]
-        public float TimeOfDay = SecondsPerDay * 0.5f; // 기본값은 정오
+        public float TimeOfDay = SecondsPerDay; // 기본값은 정오
 
 #if UNITY_EDITOR
 #pragma warning disable 0414
@@ -983,12 +983,12 @@ namespace DigitalRuby.WeatherMaker
         private void UpdateDayNightState()
         {
             // 하루 시간을 기준으로 새벽, 일출, 낮, 일몰, 밤 상태 설정
-            float dawnStart = 6 * 3600; // 새벽 시작 시간 (예: 06:00)
-            float sunriseStart = 7 * 3600; // 일출 시작 시간 (예: 07:00)
-            float dayStart = 9 * 3600; // 낮 시작 시간 (예: 09:00)
-            float sunsetStart = 18 * 3600; // 일몰 시작 시간 (예: 18:00)
-            float duskStart = 19 * 3600; // 황혼 시작 시간 (예: 19:00)
-            float nightStart = 20 * 3600; // 밤 시작 시간 (예: 20:00)
+            float dawnStart =1 * 3600; // 새벽 시작 시간 (예: 06:00)
+            float sunriseStart = 2 * 3600; // 일출 시작 시간 (예: 07:00)
+            float dayStart = 3 * 3600; // 낮 시작 시간 (예: 09:00)
+            float sunsetStart = 4 * 3600; // 일몰 시작 시간 (예: 18:00)
+            float duskStart =5 * 3600; // 황혼 시작 시간 (예: 19:00)
+            float nightStart = 6 * 3600; // 밤 시작 시간 (예: 20:00)
 
             if (TimeOfDay >= dawnStart && TimeOfDay < sunriseStart)
             {
