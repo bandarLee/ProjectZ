@@ -72,18 +72,21 @@ public class UI_Clock : MonoBehaviour
                 Sun.gameObject.SetActive(true);
                 Moon.gameObject.SetActive(false);
                 Mystery.gameObject.SetActive(false);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(255, 145, 0, 255); // 주황색
                 break;
 
             case TimeType.Night:
                 Sun.gameObject.SetActive(false);
                 Moon.gameObject.SetActive(true);
                 Mystery.gameObject.SetActive(false);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(30, 100, 255, 255); // 파란색
                 break;
 
             case TimeType.Mystery:
                 Sun.gameObject.SetActive(false);
                 Moon.gameObject.SetActive(false);
                 Mystery.gameObject.SetActive(true);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(135, 50, 128, 255); // 보라색
                 break;
         }
     }
