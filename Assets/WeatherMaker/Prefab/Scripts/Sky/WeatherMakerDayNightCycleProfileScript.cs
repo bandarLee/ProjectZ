@@ -1268,39 +1268,18 @@ namespace DigitalRuby.WeatherMaker
     [Flags]
     public enum WeatherMakerTimeOfDayCategory
     {
-        /// <summary>
-        /// 绝澜
-        /// </summary>
         None = 0,
 
-        /// <summary>
-        /// 货寒
-        /// </summary>
         Dawn = 1,
 
-        /// <summary>
-        /// 撤
-        /// </summary>
         Day = 2,
 
-        /// <summary>
-        /// 炔去
-        /// </summary>
         Dusk = 4,
 
-        /// <summary>
-        /// 广
-        /// </summary>
         Night = 8,
 
-        /// <summary>
-        /// 老免
-        /// </summary>
         Sunrise = 16,
 
-        /// <summary>
-        /// 老隔
-        /// </summary>
         Sunset = 32
     }
 }
