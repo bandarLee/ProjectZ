@@ -49,5 +49,5 @@ public class UI_PlaceholderModel : MonoBehaviour
         MaleCharacter.SetActive(SelectedCharacterType == CharacterType.Male);
     }
 
-   
+
 }
