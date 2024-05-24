@@ -1,20 +1,3 @@
-//
-// Weather Maker for Unity
-// (c) 2016 Digital Ruby, LLC
-// Source code may be used for personal or commercial projects.
-// Source code may NOT be redistributed or sold.
-// 
-// *** A NOTE ABOUT PIRACY ***
-// 
-// If you got this asset from a pirate site, please consider buying it from the Unity asset store at https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL. This asset is only legally available from the Unity Asset Store.
-// 
-// I'm a single indie dev supporting my family by spending hundreds and thousands of hours on this and other assets. It's very offensive, rude and just plain evil to steal when I (and many others) put so much hard work into the software.
-// 
-// Thank you.
-//
-// *** END NOTE ABOUT PIRACY ***
-//
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,19 +188,3 @@ namespace DigitalRuby.WeatherMaker
         }
     }
 }
-
-// resources:
-// https://en.wikipedia.org/wiki/Position_of_the_Sun
-// http://stackoverflow.com/questions/8708048/position-of-the-sun-given-time-of-day-latitude-and-longitude
-// http://www.grasshopper3d.com/forum/topics/solar-calculation-plugin
-// http://guideving.blogspot.nl/2010/08/sun-position-in-c.html
-// https://github.com/mourner/suncalc
-// http://stackoverflow.com/questions/1058342/rough-estimate-of-the-time-offset-from-gmt-from-latitude-longitude
-// http://www.stjarnhimlen.se/comp/tutorial.html
-// http://www.suncalc.net/#/40.7608,-111.891,12/2000.09.21/12:46
-// http://www.suncalc.net/scripts/suncalc.js
-
-// total eclipse:
-// 43.7678
-// -111.8323
-// Maximum eclipse : 	2017/08/21	17:34:18.6	49.5°	133.1°
