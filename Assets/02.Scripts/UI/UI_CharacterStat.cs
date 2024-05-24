@@ -25,7 +25,7 @@ public class UI_CharacterStat : MonoBehaviour
 
     private void Update()
     {
-        if (MyCharacterAbility == null)
+        if (MyCharacterAbility == null || MyCharacterAbility.Stat == null)
         {
             return;
         }

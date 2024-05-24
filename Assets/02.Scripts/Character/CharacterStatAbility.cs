@@ -10,8 +10,10 @@ public class CharacterStatAbility : CharacterAbility
 
     private void Start()
     {
+
         if (Owner.PhotonView.IsMine)
         {
+            UI_CharacterStat.Instance.MyCharacterAbility = this;
 
             StartCoroutine(HungerRoutine());
             StartCoroutine(DecreaseMentalRoutine());
