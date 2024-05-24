@@ -6930,7 +6930,6 @@ MonoBehaviour:
   - {fileID: 136611090}
   - {fileID: 15996132}
   quickSlotItems: []
-  inventory: {fileID: 9138099167174580527}
 --- !u!1 &1395792092
 GameObject:
   m_ObjectHideFlags: 0
@@ -15467,7 +15466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2371774322933922906
 Transform:
   m_ObjectHideFlags: 0
@@ -34874,6 +34873,7 @@ MonoBehaviour:
     itemType: 0
     itemEffect: 
     itemDescription: 
+    uniqueId: 
   inventorySlots:
   - {fileID: 5961282859596500170}
   - {fileID: 1087148113608759688}

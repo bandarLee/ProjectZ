@@ -40,13 +40,16 @@ public class QuickSlotManager : MonoBehaviour
         quickSlotItems[slotIndex] = item;
         quickSlotImages[slotIndex].sprite = item.icon;
         quickSlotImages[slotIndex].gameObject.SetActive(true);
+        string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC
+                          ? item.uniqueId : item.itemName;
+
         if (item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC)
         {
             quickSlotQuantities[slotIndex].text = ""; // 빈 칸으로 설정
         }
         else
         {
-            quickSlotQuantities[slotIndex].text = inventory.itemQuantities[item.itemName].ToString(); // 수량 표시
+            quickSlotQuantities[slotIndex].text = inventory.itemQuantities[itemName].ToString(); // 수량 표시
         }
     }
 
@@ -54,10 +57,18 @@ public class QuickSlotManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
-        Debug.Log("아이템 사용" + quickSlotItems[slotIndex].itemName);
+        Debug.Log("아이템 사용: " + quickSlotItems[slotIndex].itemName);
 
-        // 인벤토리에서 아이템 수량 감소
-        string itemName = quickSlotItems[slotIndex].itemName;
+        string itemName = quickSlotItems[slotIndex].itemType == ItemType.Weapon || quickSlotItems[slotIndex].itemType == ItemType.ETC
+                          ? quickSlotItems[slotIndex].uniqueId : quickSlotItems[slotIndex].itemName;
+
+        // 아이템이 딕셔너리에 있는지 확인
+        if (!inventory.itemQuantities.ContainsKey(itemName))
+        {
+            Debug.LogError("KeyNotFoundException: The given key '" + itemName + "' was not present in the dictionary.");
+            return;
+        }
+
         inventory.itemQuantities[itemName]--;
         if (inventory.itemQuantities[itemName] <= 0)
         {
@@ -66,9 +77,8 @@ public class QuickSlotManager : MonoBehaviour
             quickSlotItems[slotIndex] = null;
             quickSlotImages[slotIndex].sprite = null;
             quickSlotImages[slotIndex].gameObject.SetActive(false);
-            quickSlotQuantities[slotIndex].text = ""; // 수량 텍스트 숨기기
+            quickSlotQuantities[slotIndex].text = "";
 
-            // 아이템 수량이 0이 되면 ItemInfo 창 닫기
             if (inventory.inventoryUI.currentSelectedItem != null && inventory.inventoryUI.currentSelectedItem.itemName == itemName)
             {
                 inventory.inventoryUI.CloseItemInfo();
@@ -78,15 +88,14 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (quickSlotItems[slotIndex].itemType == ItemType.Weapon || quickSlotItems[slotIndex].itemType == ItemType.ETC)
             {
-                quickSlotQuantities[slotIndex].text = ""; // 빈 칸으로 설정
+                quickSlotQuantities[slotIndex].text = "";
             }
             else
             {
-                quickSlotQuantities[slotIndex].text = inventory.itemQuantities[itemName].ToString(); // 수량 업데이트
+                quickSlotQuantities[slotIndex].text = inventory.itemQuantities[itemName].ToString();
             }
         }
 
-        // 인벤토리 UI 업데이트
         inventory.inventoryUI.UpdateInventoryUI();
     }
 
@@ -110,13 +119,16 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (quickSlotItems[i] != null)
             {
+                string itemName = quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC
+                                  ? quickSlotItems[i].uniqueId : quickSlotItems[i].itemName;
+
                 if (quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC)
                 {
                     quickSlotQuantities[i].text = ""; // 빈 칸으로 설정
                 }
                 else
                 {
-                    quickSlotQuantities[i].text = inventory.itemQuantities[quickSlotItems[i].itemName].ToString();
+                    quickSlotQuantities[i].text = inventory.itemQuantities[itemName].ToString();
                 }
             }
             else
