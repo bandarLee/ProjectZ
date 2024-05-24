@@ -39,7 +39,7 @@ public class UI_CharacterStat : MonoBehaviour
         HealthSliderUI.value = (float)stat.Health / (float)stat.MaxHealth;
         MentalSliderUI.value = (float)stat.Mental / (float)stat.MaxMental;
         HungerSliderUI.value = (float)stat.Hunger / (float)stat.MaxHunger;
-        Debug.Log(HungerSliderUI.value);
+        //Debug.Log(HungerSliderUI.value);
 
         HealthTextUI.text = $"{(int)(HealthSliderUI.value * 100)}%";
         MentalTextUI.text = $"{(int)(MentalSliderUI.value * 100)}%";
