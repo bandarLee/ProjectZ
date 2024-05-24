@@ -6,14 +6,13 @@ using System.Linq;
 public class QuickSlotManager : MonoBehaviour
 {
     public Image[] quickSlotImages;
-    public TMP_Text[] quickSlotQuantities; // 아이템 수량 텍스트 배열
+    public TMP_Text[] quickSlotQuantities;
     public Item[] quickSlotItems;
 
-    private Inventory inventory; // Inventory 인스턴스
+    public Inventory inventory; 
 
     private void Start()
     {
-        inventory = FindObjectOfType<Inventory>(); // Inventory 인스턴스 가져오기
         quickSlotItems = new Item[quickSlotImages.Length];
         foreach (Image image in quickSlotImages)
         {
@@ -32,7 +31,7 @@ public class QuickSlotManager : MonoBehaviour
                 quickSlotItems[i] = null;
                 quickSlotImages[i].sprite = null;
                 quickSlotImages[i].gameObject.SetActive(false);
-                quickSlotQuantities[i].text = ""; // 수량 텍스트 숨기기
+                quickSlotQuantities[i].text = "";
                 break;
             }
         }
@@ -45,7 +44,7 @@ public class QuickSlotManager : MonoBehaviour
 
         if (item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC)
         {
-            quickSlotQuantities[slotIndex].text = ""; // 빈 칸으로 설정
+            quickSlotQuantities[slotIndex].text = ""; 
         }
         else
         {
@@ -62,7 +61,6 @@ public class QuickSlotManager : MonoBehaviour
         string itemName = quickSlotItems[slotIndex].itemType == ItemType.Weapon || quickSlotItems[slotIndex].itemType == ItemType.ETC
                           ? quickSlotItems[slotIndex].uniqueId : quickSlotItems[slotIndex].itemName;
 
-        // 아이템이 딕셔너리에 있는지 확인
         if (!inventory.itemQuantities.ContainsKey(itemName))
         {
             Debug.LogError("KeyNotFoundException: The given key '" + itemName + "' was not present in the dictionary.");
