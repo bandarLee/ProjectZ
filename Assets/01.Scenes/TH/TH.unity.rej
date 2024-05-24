@@ -1,0 +1,10 @@
+diff a/Assets/01.Scenes/TH/TH.unity b/Assets/01.Scenes/TH/TH.unity	(rejected hunks)
+@@ -16307,6 +16307,8 @@
+     MaxHealth: 100
+     Mental: 0
+     MaxMental: 0
++    Hunger: 0
++    MaxHunger: 0
+     Damage: 20
+     Stamina: 100
+     MaxStamina: 100
