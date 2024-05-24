@@ -53,8 +53,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // ·ë Á¢¼Ó ½Ãµµ
     public void Connect()
     {
-        string nickname = NicknameInput.text;
-
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
         if (PhotonNetwork.IsConnected)
         {
