@@ -51,7 +51,14 @@ public class InventoryUI : MonoBehaviour
                     slot.highlightedIcon.transform.localScale = new Vector3(2, 2, 2);
                     slot.pressedIcon.transform.localScale = new Vector3(2, 2, 2);
 
-                    slot.quantityText.text = currentQuantity.ToString();
+                    if (currentItem.itemType == ItemType.Weapon || currentItem.itemType == ItemType.ETC)
+                    {
+                        slot.quantityText.text = "";
+                    }
+                    else
+                    {
+                        slot.quantityText.text = currentQuantity.ToString();
+                    }
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -62,9 +69,9 @@ public class InventoryUI : MonoBehaviour
             {
                 if (slot != null)
                 {
-                    slot.normalIcon.sprite = slot.normalIcon.sprite;
-                    slot.highlightedIcon.sprite = slot.highlightedIcon.sprite;
-                    slot.pressedIcon.sprite = slot.pressedIcon.sprite;
+                    slot.normalIcon.sprite = null;
+                    slot.highlightedIcon.sprite = null;
+                    slot.pressedIcon.sprite = null;
 
                     slot.normalIcon.transform.localScale = new Vector3(0, 0, 0);
                     slot.highlightedIcon.transform.localScale = new Vector3(0, 0, 0);
@@ -77,14 +84,22 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        quickSlotManager.UpdateQuickSlotUI(); // Äü½½·Ô UI ¾÷µ¥ÀÌÆ®
+        quickSlotManager.UpdateQuickSlotUI();
     }
 
     public void UseSelectedItem()
     {
         if (currentSelectedItem == null) return;
 
-        string itemName = currentSelectedItem.itemName;
+        string itemName = currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC
+                          ? currentSelectedItem.uniqueId : currentSelectedItem.itemName;
+
+        if (!inventory.itemQuantities.ContainsKey(itemName))
+        {
+            Debug.LogError("KeyNotFoundException: The given key '" + itemName + "' was not present in the dictionary.");
+            return;
+        }
+
         inventory.itemQuantities[itemName]--;
         if (inventory.itemQuantities[itemName] <= 0)
         {

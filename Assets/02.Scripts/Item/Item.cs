@@ -8,6 +8,7 @@ public class Item
     public ItemType itemType;
     public string itemEffect;
     public string itemDescription;
+    public string uniqueId;
 }
 
 public enum ItemType
