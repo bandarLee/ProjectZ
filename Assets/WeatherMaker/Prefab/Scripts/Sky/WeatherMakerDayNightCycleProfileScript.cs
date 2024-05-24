@@ -903,9 +903,7 @@ namespace DigitalRuby.WeatherMaker
             prevDt = DateTime;
 
 #if UNITY_EDITOR
-
             TimeOfDayLabel = DateTime.Today.Add(TimeSpan.FromSeconds(TimeOfDay)).ToString("hh:mm tt");
-
 #endif
 
             if (!updateTimeOfDay || !Application.isPlaying)
@@ -913,6 +911,7 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
+            // 시간 업데이트
             if (NightMultiplier != 1.0f && Speed != 0.0f)
             {
                 TimeOfDay += (Speed * accumulatedTime);
@@ -951,6 +950,9 @@ namespace DigitalRuby.WeatherMaker
             }
             TimeOfDayTimespan = TimeSpan.FromSeconds(TimeOfDay);
 
+            // 낮/밤 상태 업데이트
+            UpdateDayNightState();
+
             // 이벤트 전송
             if (prevDt.Year != Year)
             {
@@ -977,6 +979,43 @@ namespace DigitalRuby.WeatherMaker
                 WeatherMakerScript.Instance.SecondChanged.Invoke(this);
             }
         }
+
+        private void UpdateDayNightState()
+        {
+            // 하루 시간을 기준으로 새벽, 일출, 낮, 일몰, 밤 상태 설정
+            float dawnStart = 6 * 3600; // 새벽 시작 시간 (예: 06:00)
+            float sunriseStart = 7 * 3600; // 일출 시작 시간 (예: 07:00)
+            float dayStart = 9 * 3600; // 낮 시작 시간 (예: 09:00)
+            float sunsetStart = 18 * 3600; // 일몰 시작 시간 (예: 18:00)
+            float duskStart = 19 * 3600; // 황혼 시작 시간 (예: 19:00)
+            float nightStart = 20 * 3600; // 밤 시작 시간 (예: 20:00)
+
+            if (TimeOfDay >= dawnStart && TimeOfDay < sunriseStart)
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Dawn;
+            }
+            else if (TimeOfDay >= sunriseStart && TimeOfDay < dayStart)
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Sunrise;
+            }
+            else if (TimeOfDay >= dayStart && TimeOfDay < sunsetStart)
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Day;
+            }
+            else if (TimeOfDay >= sunsetStart && TimeOfDay < duskStart)
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Sunset;
+            }
+            else if (TimeOfDay >= duskStart && TimeOfDay < nightStart)
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Dusk;
+            }
+            else
+            {
+                TimeOfDayCategory = WeatherMakerTimeOfDayCategory.Night;
+            }
+        }
+
 
         private void UpdateAmbientColors(float l)
         {
@@ -1174,6 +1213,7 @@ namespace DigitalRuby.WeatherMaker
                 UpdateLightIntensitiesAndShadows(sun, moons, directionalLightIntensityModifiers, directionalLightShadowModifier);
             }
         }
+
     }
 
     /// <summary>

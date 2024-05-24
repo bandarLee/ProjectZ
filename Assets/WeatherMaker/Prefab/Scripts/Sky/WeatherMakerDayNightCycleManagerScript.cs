@@ -81,11 +81,9 @@ namespace DigitalRuby.WeatherMaker
             // 게임이 실행 중일 때만 시간을 진행
             if (Application.isPlaying)
             {
-                DayNightProfile.UpdateFromProfile(WeatherMakerScript.Instance != null && WeatherMakerScript.Instance.NetworkConnection.IsServer);
-
-                // 하루 주기를 10초로 설정
+                // 하루 주기를 15분(900초)로 설정
                 float secondsInDay = 86400f;
-                float dayDurationInSeconds = 10f; // 하루가 10초
+                float dayDurationInSeconds = 900f; // 하루가 900초 (15분)
                 float timeIncrement = secondsInDay / dayDurationInSeconds * Time.deltaTime;
                 TimeOfDay += timeIncrement;
 
@@ -95,11 +93,16 @@ namespace DigitalRuby.WeatherMaker
                     TimeOfDay -= secondsInDay;
                 }
 
+                // 낮/밤 프로필 업데이트
+                DayNightProfile.UpdateFromProfile(WeatherMakerScript.Instance != null && WeatherMakerScript.Instance.NetworkConnection.IsServer);
+
 #if UNITY_EDITOR
                 TimeOfDayLabel = DayNightProfile.TimeOfDayLabel;
 #endif
             }
         }
+
+
 
         private void OnDestroy()
         {
