@@ -2892,6 +2892,7 @@ GameObject:
   - component: {fileID: 8349035265593133369}
   - component: {fileID: 6868937196769392597}
   - component: {fileID: 2553871074119320547}
+  - component: {fileID: 7222324434126787683}
   m_Layer: 0
   m_Name: Character_F
   m_TagString: Untagged
@@ -3639,11 +3640,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7222324434126787683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3718133280236988569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c460b75187e5cf42822de98268d1869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Stat:
     Health: 100
     MaxHealth: 100
     Mental: 100
     MaxMental: 100
+    Hunger: 100
+    MaxHunger: 100
+    Temperature: 20
+    StandardTemperature: 20
     Damage: 20
     Stamina: 100
     MaxStamina: 100
@@ -3656,6 +3673,7 @@ MonoBehaviour:
     AttackConsumeStamina: 10
     JumpPower: 3
     JumpConsumeStamina: 0
+  State: 0
 --- !u!1 &3889724884095023368
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,8 @@ public class UI_CharacterStat : MonoBehaviour
 {
     public static UI_CharacterStat Instance { get; private set; }
 
-    public Character MyCharacter;
+    public CharacterStatAbility MyCharacterAbility;
+
     public Slider HealthSliderUI;
     public Slider MentalSliderUI;
     public Slider HungerSliderUI;
@@ -24,13 +25,21 @@ public class UI_CharacterStat : MonoBehaviour
 
     private void Update()
     {
-        if (MyCharacter == null)
+        if (MyCharacterAbility == null)
         {
             return;
         }
-        HealthSliderUI.value = (float)MyCharacter.Stat.Health / MyCharacter.Stat.MaxHealth;
-        MentalSliderUI.value = MyCharacter.Stat.Mental / MyCharacter.Stat.MaxMental;
-        HungerSliderUI.value = MyCharacter.Stat.Hunger / MyCharacter.Stat.MaxHunger;
+
+        UpdateUI(MyCharacterAbility.Stat);
+
+    }
+
+    private void UpdateUI(Stat stat)
+    {
+        HealthSliderUI.value = (float)stat.Health / (float)stat.MaxHealth;
+        MentalSliderUI.value = (float)stat.Mental / (float)stat.MaxMental;
+        HungerSliderUI.value = (float)stat.Hunger / (float)stat.MaxHunger;
+        Debug.Log(HungerSliderUI.value);
 
         HealthTextUI.text = $"{(int)(HealthSliderUI.value * 100)}%";
         MentalTextUI.text = $"{(int)(MentalSliderUI.value * 100)}%";
