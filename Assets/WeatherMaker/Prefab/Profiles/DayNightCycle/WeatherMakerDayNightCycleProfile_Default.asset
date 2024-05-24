@@ -15,8 +15,8 @@ MonoBehaviour:
   Speed: 0
   NightSpeed: 0
   UpdateInterval: 0.03
-  TimeOfDay: 47190.77
-  TimeOfDayLabel: 01:06 PM
+  TimeOfDay: 31600
+  TimeOfDayLabel: "06:00 \uC624\uC804"
   Year: 2017
   Month: 3
   Day: 13

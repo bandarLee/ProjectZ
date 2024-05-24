@@ -102,8 +102,6 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-
-
         private void OnDestroy()
         {
             WeatherMakerScript.ReleaseInstance(ref instance);
