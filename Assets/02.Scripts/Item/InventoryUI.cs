@@ -94,14 +94,8 @@ public class InventoryUI : MonoBehaviour
         string itemName = currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC
                           ? currentSelectedItem.uniqueId : currentSelectedItem.itemName;
 
-        if (!inventory.itemQuantities.ContainsKey(itemName))
-        {
-            Debug.LogError("KeyNotFoundException: The given key '" + itemName + "' was not present in the dictionary.");
-            return;
-        }
 
-        // 아이템 사용 효과를 다른 스크립트로 전달
-        ApplyItemEffect(currentSelectedItem);
+        ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
 
         inventory.itemQuantities[itemName]--;
         if (inventory.itemQuantities[itemName] <= 0)
@@ -116,24 +110,6 @@ public class InventoryUI : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    private void ApplyItemEffect(Item item)
-    {
-        // 아이템 사용 효과를 적용하는 로직을 여기에 작성
-        // 예시: 플레이어의 배고픔 20 증가
-        if (item.itemType == ItemType.Food)
-        {
-            Debug.Log("Player hunger increased by 20.");
-            // 실제 로직은 주석 처리
-            // PlayerStatus.Instance.IncreaseHunger(20);
-        }
-        else if (item.itemType == ItemType.Heal)
-        {
-            Debug.Log("Player health increased by 20.");
-            // 실제 로직은 주석 처리
-            // PlayerStatus.Instance.IncreaseHealth(20);
-        }
-        // 다른 아이템 효과도 여기에 추가
-    }
 
     public void ShowItemInfo(int index)
     {

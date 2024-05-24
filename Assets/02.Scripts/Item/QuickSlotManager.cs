@@ -8,6 +8,7 @@ public class QuickSlotManager : MonoBehaviour
     public Image[] quickSlotImages;
     public TMP_Text[] quickSlotQuantities;
     public Item[] quickSlotItems;
+    private Item currentEquippedItem; 
 
     public Inventory inventory; 
 
@@ -56,46 +57,18 @@ public class QuickSlotManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
-        Debug.Log("아이템 사용: " + quickSlotItems[slotIndex].itemName);
+        Debug.Log("아이템 장착: " + quickSlotItems[slotIndex].itemName);
 
-        string itemName = quickSlotItems[slotIndex].itemType == ItemType.Weapon || quickSlotItems[slotIndex].itemType == ItemType.ETC
-                          ? quickSlotItems[slotIndex].uniqueId : quickSlotItems[slotIndex].itemName;
+        currentEquippedItem = quickSlotItems[slotIndex]; // 현재 장착한 아이템 설정
 
-        if (!inventory.itemQuantities.ContainsKey(itemName))
-        {
-            Debug.LogError("KeyNotFoundException: The given key '" + itemName + "' was not present in the dictionary.");
-            return;
-        }
+        // 여기서 아이템을 플레이어 손에 SetActive(true) 시킴
+        // 아이템 수량 감소는 하지 않음
+/*        GameObject playerHand = ...; // 플레이어 손 오브젝트 참조
+        playerHand.SetActive(true); // 아이템 장착 예시*/
 
-        inventory.itemQuantities[itemName]--;
-        if (inventory.itemQuantities[itemName] <= 0)
-        {
-            inventory.items.Remove(itemName);
-            inventory.itemQuantities.Remove(itemName);
-            quickSlotItems[slotIndex] = null;
-            quickSlotImages[slotIndex].sprite = null;
-            quickSlotImages[slotIndex].gameObject.SetActive(false);
-            quickSlotQuantities[slotIndex].text = "";
-
-            if (inventory.inventoryUI.currentSelectedItem != null && inventory.inventoryUI.currentSelectedItem.itemName == itemName)
-            {
-                inventory.inventoryUI.CloseItemInfo();
-            }
-        }
-        else
-        {
-            if (quickSlotItems[slotIndex].itemType == ItemType.Weapon || quickSlotItems[slotIndex].itemType == ItemType.ETC)
-            {
-                quickSlotQuantities[slotIndex].text = "";
-            }
-            else
-            {
-                quickSlotQuantities[slotIndex].text = inventory.itemQuantities[itemName].ToString();
-            }
-        }
-
-        inventory.inventoryUI.UpdateInventoryUI();
+        // 필요에 따라 추가적인 아이템 장착 로직을 여기에 작성
     }
+
 
     public void RemoveItemFromQuickSlots(Item item)
     {
@@ -153,6 +126,30 @@ public class QuickSlotManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             UseQuickSlotItem(3);
+        }
+        if (Input.GetMouseButtonDown(0)) // 좌클릭
+        {
+            if (currentEquippedItem != null)
+            {
+                ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
+
+                string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
+                                  ? currentEquippedItem.uniqueId : currentEquippedItem.itemName;
+
+                if (inventory.itemQuantities.ContainsKey(itemName))
+                {
+                    inventory.itemQuantities[itemName]--;
+                    if (inventory.itemQuantities[itemName] <= 0)
+                    {
+                        inventory.items.Remove(itemName);
+                        inventory.itemQuantities.Remove(itemName);
+                        RemoveItemFromQuickSlots(currentEquippedItem);
+                        currentEquippedItem = null;
+                    }
+                }
+
+                inventory.inventoryUI.UpdateInventoryUI();
+            }
         }
     }
 }
