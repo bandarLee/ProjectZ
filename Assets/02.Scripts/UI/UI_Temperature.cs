@@ -34,25 +34,33 @@ public class UI_Temperature : MonoBehaviour
         }
         else if (temperature <= 0)
         {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, -30);
-            temperatureBar.localPosition = new Vector3(-225, 136, 0);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, -25);
+            temperatureBar.localPosition = new Vector3(-225, 130, 0);
         }
         else if (temperature >= 40)
         {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, -30);
-            temperatureBar.localPosition = new Vector3(215, -133, 0);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, -20);
+            temperatureBar.localPosition = new Vector3(230, -100, 0);
         }
         else if (temperature >= 30)
         {
             temperatureBar.localEulerAngles = new Vector3(0, 0, 30);
             temperatureBar.localPosition = new Vector3(225, 136, 0);
         }
-        else
+        else if (temperature > 15)
+        {
+            temperatureBar.localEulerAngles = new Vector3(0, 0, 75);
+            temperatureBar.localPosition = new Vector3(73, 250, 0);
+        }
+        else if (temperature == 15)
         {
             temperatureBar.localEulerAngles = new Vector3(0, 0, 90);
             temperatureBar.localPosition = new Vector3(0, 250, 0);
-
-            // 온도가 0과 30 사이일 때 나눠서 부드럽게 회전 처리
+        }
+        else
+        {
+            temperatureBar.localEulerAngles = new Vector3(0, 0, -60);
+            temperatureBar.localPosition = new Vector3(-133, 250, 0);
         }
 
     }
