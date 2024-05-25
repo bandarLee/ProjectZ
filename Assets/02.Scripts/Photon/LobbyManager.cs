@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Screen.SetResolution(1920, 1080, false);
+
         PhotonNetwork.GameVersion = gameVersion; 
         PhotonNetwork.ConnectUsingSettings(); 
 

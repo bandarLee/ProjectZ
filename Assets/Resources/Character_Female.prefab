@@ -3615,13 +3615,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.8
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!114 &5896102324169018307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3746,17 +3746,11 @@ MonoBehaviour:
     Temperature: 20
     StandardTemperature: 20
     Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
     MoveSpeed: 4
     RunSpeed: 7
     RotationSpeed: 200
     AttackCoolTime: 1
-    AttackConsumeStamina: 10
     JumpPower: 3
-    JumpConsumeStamina: 0
   State: 0
   gameTime: {fileID: 0}
 --- !u!114 &1219129497678289804

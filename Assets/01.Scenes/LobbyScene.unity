@@ -5605,7 +5605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: -71}
+  m_AnchoredPosition: {x: 87, y: -71}
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &182050964
@@ -50658,7 +50658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1383.7062
+      value: 1383.7063
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -73352,7 +73352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1383.7062
+      value: 1383.7063
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -87180,17 +87180,11 @@ MonoBehaviour:
     Temperature: 0
     StandardTemperature: 0
     Damage: 0
-    Stamina: 0
-    MaxStamina: 0
-    RunConsumeStamina: 0
-    RecoveryStamina: 0
     MoveSpeed: 0
     RunSpeed: 0
     RotationSpeed: 0
     AttackCoolTime: 0
-    AttackConsumeStamina: 0
     JumpPower: 0
-    JumpConsumeStamina: 0
   State: 0
   gameTime: {fileID: 0}
 --- !u!114 &8351557395001884317
@@ -88375,17 +88369,11 @@ MonoBehaviour:
     Temperature: 0
     StandardTemperature: 0
     Damage: 0
-    Stamina: 0
-    MaxStamina: 0
-    RunConsumeStamina: 0
-    RecoveryStamina: 0
     MoveSpeed: 0
     RunSpeed: 0
     RotationSpeed: 0
     AttackCoolTime: 0
-    AttackConsumeStamina: 0
     JumpPower: 0
-    JumpConsumeStamina: 0
   State: 0
   gameTime: {fileID: 0}
 --- !u!114 &9066169755507066976
