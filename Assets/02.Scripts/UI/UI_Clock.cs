@@ -17,7 +17,7 @@ public class UI_Clock : MonoBehaviour
     private void Start()
     {
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
-        gameTimeScript = FindObjectOfType<GameTime>(); // 씬에서 GameTime 스크립트를 찾습니다.
+        gameTimeScript = FindObjectOfType<GameTime>();
 
         Debug.Log(dayNightCycleManager.TimeOfDay);
 
