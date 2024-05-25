@@ -12,19 +12,12 @@ public class UI_Clock : MonoBehaviour
     public Image Mystery;
 
     private WeatherMakerDayNightCycleManagerScript dayNightCycleManager;
-
-    public enum TimeType
-    {
-        Day,
-        Mystery,
-        Night,
-    }
-
-    public TimeType timeType = TimeType.Day;
+    private GameTime gameTimeScript;
 
     private void Start()
     {
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
+        gameTimeScript = FindObjectOfType<GameTime>(); // 씬에서 GameTime 스크립트를 찾습니다.
 
         Debug.Log(dayNightCycleManager.TimeOfDay);
 
@@ -41,48 +34,49 @@ public class UI_Clock : MonoBehaviour
 
     private void UpdateSunAndMoonVisibility()
     {
-        
-            // 슬라이더 값을 현재 시간으로 설정 (하루의 중간 시간인 43200초를 기준으로)
-            float timeOfDay = dayNightCycleManager.TimeOfDay - 31600;
+        // 슬라이더 값을 현재 시간으로 설정 (하루의 중간 시간인 43200초를 기준으로)
+        float timeOfDay = dayNightCycleManager.TimeOfDay - 31600;
 
-            // 음수 값을 방지하고 0-86400 사이의 값으로 조정
-            if (timeOfDay < 0)
-            {
-                timeOfDay += 86400f;
-            }
-      
+        // 음수 값을 방지하고 0-86400 사이의 값으로 조정
+        if (timeOfDay < 0)
+        {
+            timeOfDay += 86400f;
+        }
+
         ClockSlider.value = timeOfDay % 86400f;
-        // 낮일 때 해 이미지를 표시하고 밤일 때 달 이미지를 표시
+
+        // 현재 시간에 따라 gameTimeScript의 CurrentTimeType 업데이트
         if (dayNightCycleManager.TimeOfDay >= 42240f && dayNightCycleManager.TimeOfDay < 44160f)
         {
-            timeType = TimeType.Mystery;
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Mystery;
         }
         else if (dayNightCycleManager.TimeOfDayCategory.HasFlag(WeatherMakerTimeOfDayCategory.Day))
         {
-            timeType = TimeType.Day;
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Day;
         }
         else
         {
-            timeType = TimeType.Night;
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Night;
         }
 
-        switch (timeType)
+        // CurrentTimeType에 따라 UI 업데이트
+        switch (gameTimeScript.CurrentTimeType)
         {
-            case TimeType.Day:
+            case GameTime.TimeType.Day:
                 Sun.gameObject.SetActive(true);
                 Moon.gameObject.SetActive(false);
                 Mystery.gameObject.SetActive(false);
                 ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(255, 145, 0, 255); // 주황색
                 break;
 
-            case TimeType.Night:
+            case GameTime.TimeType.Night:
                 Sun.gameObject.SetActive(false);
                 Moon.gameObject.SetActive(true);
                 Mystery.gameObject.SetActive(false);
                 ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(30, 100, 255, 255); // 파란색
                 break;
 
-            case TimeType.Mystery:
+            case GameTime.TimeType.Mystery:
                 Sun.gameObject.SetActive(false);
                 Moon.gameObject.SetActive(false);
                 Mystery.gameObject.SetActive(true);
@@ -91,4 +85,3 @@ public class UI_Clock : MonoBehaviour
         }
     }
 }
-
