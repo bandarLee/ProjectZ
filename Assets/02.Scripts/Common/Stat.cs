@@ -17,21 +17,13 @@ public class Stat
 
     public int Damage;
 
-    public float Stamina;
-    public float MaxStamina;
-    public float RunConsumeStamina;
-    public float RecoveryStamina;
-
     public float MoveSpeed;
     public float RunSpeed;
-
     public float RotationSpeed;
 
     public float AttackCoolTime;
-    public float AttackConsumeStamina;
 
     public float JumpPower;
-    public float JumpConsumeStamina;
 
     public void Init()
     {
@@ -39,6 +31,5 @@ public class Stat
         Mental = MaxMental;
         Hunger = MaxHunger;
         Temperature = StandardTemperature;
-        Stamina = MaxStamina;
     }
 }

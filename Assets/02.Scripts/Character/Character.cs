@@ -46,7 +46,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             stream.SendNext(Stat.Mental);
             stream.SendNext(Stat.Hunger);
             stream.SendNext(Stat.Temperature);
-            stream.SendNext(Stat.Stamina);
         }
         else if (stream.IsReading)   // 데이터를 수신하는 상황
         {
@@ -55,7 +54,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             Stat.Mental = (int)stream.ReceiveNext();
             Stat.Hunger = (int)stream.ReceiveNext();
             Stat.Temperature = (int)stream.ReceiveNext();
-            Stat.Stamina = (float)stream.ReceiveNext();
         }
         // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
     }

@@ -8,12 +8,7 @@ public class CharacterMoveAbility : CharacterAbility
     CharacterController _characterController;
     Animator _animator;
     /*public float MoveSpeed = 5f;
-    public float RunSpeed = 8f;
-
-    public float Stamina = 100f;
-    public float MaxStamina = 100f;
-    public float RunConsumeStamina = 5f;
-    public float RecoveryStamina = 7f;*/
+    public float RunSpeed = 8f;*/
 
     private float _yVelocity = 0f;
     private float _gravity = -9.8f;
@@ -45,14 +40,23 @@ public class CharacterMoveAbility : CharacterAbility
         _yVelocity += _gravity * Time.deltaTime;
         Vector3 finalDir = new Vector3(horizontalDir.x, _yVelocity, horizontalDir.z);
 
+        // 루트 회전 오프셋 설정
+        if (Mathf.Abs(h) > 0.1f) // 좌우 이동 감지
+        {
+            float rootRotationOffset = h > 0 ? -90f : 90f;
+            _animator.SetFloat("RootRotationOffset", rootRotationOffset);
+        }
+        else
+        {
+            _animator.SetFloat("RootRotationOffset", 0f);
+        }
 
         // 4. 달리기 적용
         float speed = Owner.Stat.MoveSpeed;
-        if (Input.GetKey(KeyCode.LeftShift) && Owner.Stat.Stamina > 0)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = Owner.Stat.RunSpeed;
             _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
-            Owner.Stat.Stamina -= Time.deltaTime * Owner.Stat.RunConsumeStamina;
         }
         else
         {
@@ -65,10 +69,7 @@ public class CharacterMoveAbility : CharacterAbility
             {
                 _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
             }
-            Owner.Stat.Stamina += Time.deltaTime * Owner.Stat.RecoveryStamina;
         }
-
-        Owner.Stat.Stamina = Mathf.Clamp(Owner.Stat.Stamina, 0, Owner.Stat.MaxStamina);
 
         // 3. 이동하기
         _characterController.Move(finalDir * speed * Time.deltaTime);

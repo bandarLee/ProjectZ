@@ -96950,17 +96950,11 @@ MonoBehaviour:
     Temperature: 20
     StandardTemperature: 20
     Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
     MoveSpeed: 4
     RunSpeed: 7
     RotationSpeed: 200
     AttackCoolTime: 1
-    AttackConsumeStamina: 10
     JumpPower: 3
-    JumpConsumeStamina: 0
   State: 0
   gameTime: {fileID: 0}
 --- !u!95 &1233776242624843914
@@ -100199,17 +100193,11 @@ MonoBehaviour:
     Temperature: 20
     StandardTemperature: 20
     Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
     MoveSpeed: 4
     RunSpeed: 7
     RotationSpeed: 200
     AttackCoolTime: 1
-    AttackConsumeStamina: 10
     JumpPower: 3
-    JumpConsumeStamina: 0
   State: 0
   gameTime: {fileID: 0}
 --- !u!1 &3820596172798767814
@@ -105247,7 +105235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &7220554810203623450
 GameObject:
   m_ObjectHideFlags: 0
