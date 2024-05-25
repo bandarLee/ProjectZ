@@ -5,11 +5,10 @@ namespace DigitalRuby.WeatherMaker
 {
     public class WeatherController : MonoBehaviour
     {
-        [Tooltip("Precipitation profile for rain")]
         public WeatherMakerPrecipitationProfileScript RainProfile;
-
-        [Tooltip("Precipitation profile for snow")]
         public WeatherMakerPrecipitationProfileScript SnowProfile;
+        public WeatherMakerPrecipitationProfileScript NoneProfile;
+        //public WeatherMakerPrecipitationProfileScript Thunder;
 
         private WeatherMakerPrecipitationManagerScript precipitationManager;
 
@@ -22,10 +21,10 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
-            // 게임 시작 시 비가 내리도록 설정
+            // 게임 시작 날씨 : 비
             SetWeather(RainProfile);
 
-            // 6분 후부터 날씨를 랜덤하게 변경하는 코루틴 시작
+            // n분 후부터 날씨를 랜덤하게 변경하는 코루틴 시작
             StartCoroutine(DailyWeatherRoutine());
         }
 
@@ -43,22 +42,22 @@ namespace DigitalRuby.WeatherMaker
         private void SetDailyWeather()
         {
             float randomValue = Random.Range(0f, 1f);
-            Debug.Log("Random Value for Weather: " + randomValue);
+            Debug.Log("날씨 랜덤");
 
             if (randomValue < 0.2f)
             {
-                Debug.Log("Setting Weather to Rain");
+                Debug.Log("날씨 : 비");
                 SetWeather(RainProfile);
             }
             else if (randomValue < 0.4f)
             {
-                Debug.Log("Setting Weather to Snow");
+                Debug.Log("날씨 : 눈보라");
                 SetWeather(SnowProfile);
             }
             else
             {
-                Debug.Log("Setting Weather to None");
-                SetWeather(null);
+                Debug.Log("날씨 : 맑음");
+                SetWeather(NoneProfile);
             }
         }
 
