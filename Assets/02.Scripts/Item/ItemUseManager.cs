@@ -122,6 +122,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("플레이어가 도끼를 들었음");
                 // 실제 로직은 주석 처리
                 // Player.Instance.EquipWeapon(axe);
+
                 break;
             case "총":
                 Debug.Log("Player equipped with gun.");

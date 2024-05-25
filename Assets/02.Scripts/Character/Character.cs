@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterMoveAbility))]
 [RequireComponent(typeof(CharacterRotateAbility))]
 [RequireComponent(typeof(CharacterStatAbility))]
+[RequireComponent(typeof(CharacterAttackAbility))]
 [RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(Animator))]
 
