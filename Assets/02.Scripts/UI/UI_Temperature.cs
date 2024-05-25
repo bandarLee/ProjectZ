@@ -29,32 +29,31 @@ public class UI_Temperature : MonoBehaviour
         // 온도에 따른 UI 회전값 조정
         if (temperature <= -10)
         {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, 223);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, 30);
+            temperatureBar.localPosition = new Vector3(-221, -133, 0);
         }
         else if (temperature <= 0)
         {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, 170);
-        }
-        else if (temperature >= 30)
-        {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, 10);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, -30);
+            temperatureBar.localPosition = new Vector3(-225, 136, 0);
         }
         else if (temperature >= 40)
         {
-            temperatureBar.localEulerAngles = new Vector3(0, 0, -10);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, -30);
+            temperatureBar.localPosition = new Vector3(215, -133, 0);
+        }
+        else if (temperature >= 30)
+        {
+            temperatureBar.localEulerAngles = new Vector3(0, 0, 30);
+            temperatureBar.localPosition = new Vector3(225, 136, 0);
         }
         else
         {
-            // 온도가 0과 30 사이일 때 부드럽게 회전 처리
-            float rotation = Map(temperature, 0, 30, 170, 10); // 예) 20도, 0도, 30도, 170각도, 10각도
-            temperatureBar.localEulerAngles = new Vector3(0, 0, rotation);
+            temperatureBar.localEulerAngles = new Vector3(0, 0, 90);
+            temperatureBar.localPosition = new Vector3(0, 250, 0);
+
+            // 온도가 0과 30 사이일 때 나눠서 부드럽게 회전 처리
         }
 
-    }
-
-    // 수치를 범위에 맞게 매핑하는 함수
-    float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget)
-    {
-        return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
     }
 }
