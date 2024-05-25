@@ -8,8 +8,11 @@ public class CharacterStatAbility : CharacterAbility
     public Stat Stat;
     public State State;
 
+    public GameTime gameTime;  
+
     private void Start()
     {
+        gameTime = FindObjectOfType<GameTime>();
 
         if (Owner.PhotonView.IsMine)
         {
@@ -57,6 +60,12 @@ public class CharacterStatAbility : CharacterAbility
             if (Stat.Hunger <= 0 || Stat.Temperature <= -10 || Stat.Temperature >= 40)
             {
                 Stat.Mental -= 10; // 정신력 10 감소
+            }
+
+            //  밤일 때 정신력 감소(10초마다 5씩 감소)
+            if(gameTime.CurrentTimeType == GameTime.TimeType.Night)
+            {
+                Stat.Mental -= 5;       
             }
 
             if (Stat.Mental <= 0)
