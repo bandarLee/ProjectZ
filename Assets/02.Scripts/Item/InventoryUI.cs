@@ -94,21 +94,28 @@ public class InventoryUI : MonoBehaviour
         string itemName = currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC
                           ? currentSelectedItem.uniqueId : currentSelectedItem.itemName;
 
-
-        ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
-
-        inventory.itemQuantities[itemName]--;
-        if (inventory.itemQuantities[itemName] <= 0)
+        if (currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC)
         {
-            inventory.items.Remove(itemName);
-            inventory.itemQuantities.Remove(itemName);
-            quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
-            currentSelectedItem = null;
-            CloseItemInfo();
+            ItemUseManager.Instance.EquipItem(currentSelectedItem);
+        }
+        else
+        {
+            ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
+
+            inventory.itemQuantities[itemName]--;
+            if (inventory.itemQuantities[itemName] <= 0)
+            {
+                inventory.items.Remove(itemName);
+                inventory.itemQuantities.Remove(itemName);
+                quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
+                currentSelectedItem = null;
+                CloseItemInfo();
+            }
         }
 
         UpdateInventoryUI();
     }
+
 
 
     public void ShowItemInfo(int index)

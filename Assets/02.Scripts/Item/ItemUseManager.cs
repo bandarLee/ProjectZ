@@ -41,21 +41,128 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
+    public void EquipItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case ItemType.Food:
+                EquipFood(item.itemName);
+                break;
+            case ItemType.Heal:
+                EquipHeal(item.itemName);
+                break;
+            case ItemType.Mental:
+                EquipMental(item.itemName);
+                break;
+            case ItemType.Weapon:
+                EquipWeapon(item.itemName);
+                break;
+            case ItemType.ETC:
+                EquipEtc(item.itemName);
+                break;
+            default:
+                Debug.LogWarning("This item type cannot be equipped.");
+                break;
+        }
+    }
+
+    private void EquipFood(string itemName)
+    {
+        switch (itemName)
+        {
+            case "고기":
+                Debug.Log("고기를 들었음");
+                break;
+            case "빵":
+                Debug.Log("빵을들었음");
+                break;
+            default:
+                Debug.LogWarning("Unknown food item.");
+                break;
+        }
+    }
+
+    private void EquipHeal(string itemName)
+    {
+        switch (itemName)
+        {
+            case "구급상자":
+                Debug.Log("구상을 들었음");
+                break;
+            case "진통제":
+                Debug.Log("진통제를 들었음");
+                break;
+            default:
+                Debug.LogWarning("Unknown heal item.");
+                break;
+        }
+    }
+
+    private void EquipMental(string itemName)
+    {
+        switch (itemName)
+        {
+            case "술":
+                Debug.Log("술을 들었음");
+                break;
+            case "책":
+                Debug.Log("책을 들었음");
+                break;
+            default:
+                Debug.LogWarning("Unknown mental item.");
+                break;
+        }
+    }
+
+    private void EquipWeapon(string itemName)
+    {
+        switch (itemName)
+        {
+            case "도끼":
+                Debug.Log("플레이어가 도끼를 들었음");
+                // 실제 로직은 주석 처리
+                // Player.Instance.EquipWeapon(axe);
+                break;
+            case "총":
+                Debug.Log("Player equipped with gun.");
+                // 실제 로직은 주석 처리
+                // Player.Instance.EquipWeapon(gun);
+                break;
+            default:
+                Debug.LogWarning("Unknown weapon item.");
+                break;
+        }
+    }
+
+    private void EquipEtc(string itemName)
+    {
+        switch (itemName)
+        {
+            case "지도":
+                Debug.Log("Player found a map.");
+
+                break;
+            case "열쇠":
+                Debug.Log("Player found a key.");
+
+                break;
+            default:
+                Debug.LogWarning("Unknown etc item.");
+                break;
+        }
+    }
+
+
     private void ApplyFoodEffect(string itemName)
     {
         switch (itemName)
         {
-            case "Meat":
-                Debug.Log("Player hunger increased by 20.");
-                // 실제 로직은 주석 처리
-                // PlayerStatus.Instance.IncreaseHunger(20);
+            case "고기":
+                Debug.Log("배고픔 회복 20");
                 break;
-            case "Bread":
+            case "빵":
                 Debug.Log("Player hunger increased by 30.");
-                // 실제 로직은 주석 처리
-                // PlayerStatus.Instance.IncreaseHunger(30);
                 break;
-            // 다른 음식 아이템의 효과도 추가
             default:
                 Debug.LogWarning("Unknown food item.");
                 break;
@@ -66,17 +173,12 @@ public class ItemUseManager : MonoBehaviour
     {
         switch (itemName)
         {
-            case "Medkit":
+            case "구급상자":
                 Debug.Log("Player health increased by 50.");
-                // 실제 로직은 주석 처리
-                // PlayerStatus.Instance.IncreaseHealth(50);
                 break;
-            case "Bandage":
+            case "진통제":
                 Debug.Log("Player health increased by 20.");
-                // 실제 로직은 주석 처리
-                // PlayerStatus.Instance.IncreaseHealth(20);
                 break;
-            // 다른 치료 아이템의 효과도 추가
             default:
                 Debug.LogWarning("Unknown heal item.");
                 break;
@@ -87,17 +189,14 @@ public class ItemUseManager : MonoBehaviour
     {
         switch (itemName)
         {
-            case "Book":
+            case "술":
                 Debug.Log("Player mental state improved.");
-                // 실제 로직은 주석 처리
                 // PlayerStatus.Instance.IncreaseMentalState(20);
                 break;
-            case "Toy":
+            case "책":
                 Debug.Log("Player happiness increased.");
-                // 실제 로직은 주석 처리
                 // PlayerStatus.Instance.IncreaseHappiness(15);
                 break;
-            // 다른 정신력 아이템의 효과도 추가
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -106,20 +205,16 @@ public class ItemUseManager : MonoBehaviour
 
     private void ApplyWeaponEffect(string itemName)
     {
-        // 무기 아이템 사용 시의 효과 처리
         switch (itemName)
         {
             case "도끼":
-                Debug.Log("Player equipped with sword.");
-                // 실제 로직은 주석 처리
-                // Player.Instance.EquipWeapon(sword);
+                Debug.Log("플레이어가 도끼를 사용함");
+                // Player.Instance.UseWeapon(axe);
                 break;
-            case "Gun":
-                Debug.Log("Player equipped with bow.");
-                // 실제 로직은 주석 처리
-                // Player.Instance.EquipWeapon(bow);
+            case "총":
+                Debug.Log("Player used gun.");
+                // Player.Instance.UseWeapon(gun);
                 break;
-            // 다른 무기 아이템의 효과도 추가
             default:
                 Debug.LogWarning("Unknown weapon item.");
                 break;
@@ -130,17 +225,13 @@ public class ItemUseManager : MonoBehaviour
     {
         switch (itemName)
         {
-            case "Map":
-                Debug.Log("Player found a map.");
-                // 실제 로직은 주석 처리
-                // Player.Instance.ShowMap();
+            case "지도":
+                Debug.Log("Player used a map.");
+                // Player.Instance.UseMap();
                 break;
-            case "Key":
-                Debug.Log("Player found a key.");
-                // 실제 로직은 주석 처리
-                // Player.Instance.CollectKey();
+            case "열쇠":
+                Debug.Log("Player used a key.");
                 break;
-            // 다른 기타 아이템의 효과도 추가
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
