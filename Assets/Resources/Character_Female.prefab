@@ -2975,6 +2975,7 @@ GameObject:
   - component: {fileID: -5814765953578817013}
   - component: {fileID: 7182602128352118029}
   - component: {fileID: 682631391827014620}
+  - component: {fileID: 1219129497678289804}
   m_Layer: 0
   m_Name: Character_Female
   m_TagString: Untagged
@@ -3757,6 +3758,19 @@ MonoBehaviour:
     JumpPower: 3
     JumpConsumeStamina: 0
   State: 0
+  gameTime: {fileID: 0}
+--- !u!114 &1219129497678289804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4012018300584072314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4016208785205123976
 GameObject:
   m_ObjectHideFlags: 0

@@ -76933,6 +76933,7 @@ GameObject:
   - component: {fileID: 9066169755507066974}
   - component: {fileID: 140720527068937320}
   - component: {fileID: 9066169755507066975}
+  - component: {fileID: 9066169755507066976}
   m_Layer: 6
   m_Name: Character_F
   m_TagString: Untagged
@@ -81919,6 +81920,7 @@ GameObject:
   - component: {fileID: 5933141782070309858}
   - component: {fileID: 8351557395001884315}
   - component: {fileID: 8351557395001884316}
+  - component: {fileID: 8351557395001884317}
   m_Layer: 6
   m_Name: Character_Male
   m_TagString: Untagged
@@ -87204,6 +87206,19 @@ MonoBehaviour:
     JumpPower: 0
     JumpConsumeStamina: 0
   State: 0
+  gameTime: {fileID: 0}
+--- !u!114 &8351557395001884317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4640692527369166938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8357426534645232043
 GameObject:
   m_ObjectHideFlags: 0
@@ -88386,6 +88401,19 @@ MonoBehaviour:
     JumpPower: 0
     JumpConsumeStamina: 0
   State: 0
+  gameTime: {fileID: 0}
+--- !u!114 &9066169755507066976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232765993799833362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9083299667483302977
 GameObject:
   m_ObjectHideFlags: 0
