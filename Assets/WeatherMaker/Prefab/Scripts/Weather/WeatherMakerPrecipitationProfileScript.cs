@@ -1,20 +1,3 @@
-//
-// Weather Maker for Unity
-// (c) 2016 Digital Ruby, LLC
-// Source code may be used for personal or commercial projects.
-// Source code may NOT be redistributed or sold.
-// 
-// *** A NOTE ABOUT PIRACY ***
-// 
-// If you got this asset from a pirate site, please consider buying it from the Unity asset store at https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL. This asset is only legally available from the Unity Asset Store.
-// 
-// I'm a single indie dev supporting my family by spending hundreds and thousands of hours on this and other assets. It's very offensive, rude and just plain evil to steal when I (and many others) put so much hard work into the software.
-// 
-// Thank you.
-//
-// *** END NOTE ABOUT PIRACY ***
-//
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,71 +5,71 @@ using UnityEngine;
 namespace DigitalRuby.WeatherMaker
 {
     /// <summary>
-    /// Types of precipitation
+    /// 강수 유형을 정의하는 열거형
     /// </summary>
     public enum WeatherMakerPrecipitationType
     {
         /// <summary>
-        /// None
+        /// 없음
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Rain
+        /// 비
         /// </summary>
         Rain = 1,
 
         /// <summary>
-        /// Snow
+        /// 눈
         /// </summary>
         Snow = 2,
 
         /// <summary>
-        /// Sleet
+        /// 진눈깨비
         /// </summary>
         Sleet = 3,
 
         /// <summary>
-        /// Hail
+        /// 우박
         /// </summary>
         Hail = 4,
 
         /// <summary>
-        /// Custom precipitation
+        /// 사용자 정의 강수
         /// </summary>
         Custom = 127
     }
 
     /// <summary>
-    /// Precipitation profile, contains common precipitation rendering properties
+    /// 강수 프로필 클래스, 강수 렌더링 속성을 포함
     /// </summary>
     [CreateAssetMenu(fileName = "WeatherMakerPrecipitationProfile", menuName = "WeatherMaker/Precipitation Profile", order = 25)]
     [System.Serializable]
     public class WeatherMakerPrecipitationProfileScript : WeatherMakerBaseScriptableObjectScript
     {
-        /// <summary>Type of precipitation</summary>
+        /// <summary>강수 유형</summary>
         [Tooltip("Type of precipitation")]
         public WeatherMakerPrecipitationType PrecipitationType = WeatherMakerPrecipitationType.Rain;
 
-        /// <summary>Range of intensities</summary>
+        /// <summary>강도 범위</summary>
         [MinMaxSlider(0.0f, 1.0f, "Range of intensities")]
         public RangeOfFloats IntensityRange = new RangeOfFloats { Minimum = 0.1f, Maximum = 0.3f };
 
-        /// <summary>How often a new value from IntensityRange should be chosen</summary>
+        /// <summary>강도 범위에서 새로운 값을 선택하는 빈도</summary>
         [MinMaxSlider(0.0f, 120.0f, "How often a new value from IntensityRange should be chosen")]
         public RangeOfFloats IntensityRangeDuration = new RangeOfFloats { Minimum = 10.0f, Maximum = 60.0f };
 
-        /// <summary>Tint the precipitation, useful for acid rain or other magical effects.</summary>
+        /// <summary>강수 색조, 산성비 또는 마법 효과에 유용함</summary>
         [Tooltip("Tint the precipitation, useful for acid rain or other magical effects.")]
         [ColorUsage(true, true)]
         public Color PrecipitationTintColor = Color.white;
 
-        /// <summary>Tint the precipitation mist, useful for acid rain or other magical effects.</summary>
+        /// <summary>강수 미스트 색조, 산성비 또는 마법 효과에 유용함</summary>
         [Tooltip("Tint the precipitation mist, useful for acid rain or other magical effects.")]
         [ColorUsage(true, true)]
         public Color PrecipitationMistTintColor = Color.white;
 
-        /// <summary>Tint the precipitation secondary, useful for acid rain or other magical effects.</summary>
+        /// <summary>강수 2차 색조, 산성비 또는 마법 효과에 유용함</summary>
         [Tooltip("Tint the precipitation secondary, useful for acid rain or other magical effects.")]
         [ColorUsage(true, true)]
         public Color PrecipitationSecondaryTintColor = Color.white;

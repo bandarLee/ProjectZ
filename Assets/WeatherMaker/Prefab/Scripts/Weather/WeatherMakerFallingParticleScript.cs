@@ -1,194 +1,118 @@
-//
-// Weather Maker for Unity
-// (c) 2016 Digital Ruby, LLC
-// Source code may be used for personal or commercial projects.
-// Source code may NOT be redistributed or sold.
-// 
-// *** A NOTE ABOUT PIRACY ***
-// 
-// If you got this asset from a pirate site, please consider buying it from the Unity asset store at https://assetstore.unity.com/packages/slug/60955?aid=1011lGnL. This asset is only legally available from the Unity Asset Store.
-// 
-// I'm a single indie dev supporting my family by spending hundreds and thousands of hours on this and other assets. It's very offensive, rude and just plain evil to steal when I (and many others) put so much hard work into the software.
-// 
-// Thank you.
-//
-// *** END NOTE ABOUT PIRACY ***
-//
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
     /// <summary>
-    /// Precipitation script that uses particle systems
+    /// 파티클 시스템을 사용하여 강수를 구현하는 스크립트
     /// </summary>
     public class WeatherMakerFallingParticleScript : MonoBehaviour
     {
-        /// <summary>Light particle looping audio source</summary>
+        // 각 강수 강도에 따른 오디오 소스
         [Tooltip("Light particle looping audio source")]
         public AudioSource LoopSourceLight;
 
-        /// <summary>Medium particle looping audio source</summary>
         [Tooltip("Medium particle looping audio source")]
         public AudioSource LoopSourceMedium;
 
-        /// <summary>Heavy particle looping audio source</summary>
         [Tooltip("Heavy particle looping audio source")]
         public AudioSource LoopSourceHeavy;
 
-        /// <summary>Intensity threshold for medium looping sound</summary>
+        // 중간 강도 오디오 임계값
         [Tooltip("Intensity threshold for medium looping sound")]
         public float SoundMediumIntensityThreshold = 0.33f;
 
-        /// <summary>Intensity threshold for heavy loop sound</summary>
+        // 강한 강도 오디오 임계값
         [Tooltip("Intensity threshold for heavy loop sound")]
         public float SoundHeavyIntensityThreshold = 0.67f;
 
-        /// <summary>Overall intensity of the system (0-1)</summary>
+        // 전체 강도 (0-1)
         [Tooltip("Overall intensity of the system (0-1)")]
         [Range(0.0f, 1.0f)]
         public float Intensity;
 
-        /// <summary>Intensity multiplier for fewer or extra particles</summary>
+        // 강도 배율
         [Tooltip("Intensity multiplier for fewer or extra particles")]
         [Range(0.1f, 10.0f)]
         public float IntensityMultiplier = 1.0f;
 
-        /// <summary>Intensity multiplier for fewer or extra secondary particles</summary>
         [Tooltip("Intensity multiplier for fewer or extra secondary particles")]
         [Range(0.1f, 10.0f)]
         public float SecondaryIntensityMultiplier = 1.0f;
 
-        /// <summary>Intensity multiplier for fewer or extra mist particles</summary>
         [Tooltip("Intensity multiplier for fewer or extra mist particles")]
         [Range(0.1f, 10.0f)]
         public float MistIntensityMultiplier = 1.0f;
 
-        /// <summary>External intensity modifier, for example if the player goes in a cave, this could be reduced to slow or stop particles.</summary>
+        // 외부 강도 배율
         [Tooltip("External intensity modifier, for example if the player goes in a cave, this could be reduced to slow or stop particles.")]
         [Range(0.0f, 1.0f)]
         public float ExternalIntensityMultiplier = 1.0f;
 
-        /// <summary>Base number of particles to emit per second. This is multiplied by intensity and intensity multiplier.</summary>
+        // 기본 파티클 방출률
         [Tooltip("Base number of particles to emit per second. This is multiplied by intensity and intensity multiplier.")]
         [Range(100, 10000)]
         public int BaseEmissionRate = 1000;
 
-        /// <summary>Base number of secondary particles to emit per second. This is multiplied by intensity and intensity multiplier.</summary>
         [Tooltip("Base number of secondary particles to emit per second. This is multiplied by intensity and intensity multiplier.")]
         [Range(100, 10000)]
         public int BaseEmissionRateSecondary = 100;
 
-        /// <summary>Base number of mist particles to emit per second. This is multiplied by intensity and intensity multiplier.</summary>
         [Tooltip("Base number of mist particles to emit per second. This is multiplied by intensity and intensity multiplier.")]
         [Range(5, 500)]
         public int BaseMistEmissionRate = 50;
 
-        /// <summary>Precipitation tint color</summary>
+        // 강수 색상 설정
         [Tooltip("Precipitation tint color")]
         public Color PrecipitationTintColor = Color.white;
 
-        /// <summary>Precipitation mist tint color</summary>
         [Tooltip("Precipitation mist tint color")]
         public Color PrecipitationMistTintColor = Color.white;
 
-        /// <summary>Precipitation secondary tint color</summary>
         [Tooltip("Precipitation secondary tint color")]
         public Color PrecipitationSecondaryTintColor = Color.white;
 
-        /// <summary>Particle system</summary>
+        // 파티클 시스템 설정
         [Tooltip("Particle system")]
         public ParticleSystem ParticleSystem;
 
-        /// <summary>Particle system that is secondary and optional</summary>
         [Tooltip("Particle system that is secondary and optional")]
         public ParticleSystem ParticleSystemSecondary;
 
-        /// <summary>Particle system to use for mist</summary>
         [Tooltip("Particle system to use for mist")]
         public ParticleSystem MistParticleSystem;
 
-        /// <summary>Particles system for when particles hit something</summary>
         [Tooltip("Particles system for when particles hit something")]
         public ParticleSystem ExplosionParticleSystem;
 
-        /// <summary>The threshold that Intensity must pass for secondary particles to appear (0 - 1). Set to 1 for no secondary particles. Set this before changing Intensity.</summary>
         [Tooltip("The threshold that Intensity must pass for secondary particles to appear (0 - 1). Set to 1 for no secondary particles. Set this before changing Intensity.")]
         [Range(0.0f, 1.0f)]
         public float SecondaryThreshold = 0.75f;
 
-        /// <summary>The threshold that Intensity must pass for mist particles to appear (0 - 1). Set to 1 for no mist. Set this before changing Intensity.</summary>
         [Tooltip("The threshold that Intensity must pass for mist particles to appear (0 - 1). Set to 1 for no mist. Set this before changing Intensity.")]
         [Range(0.0f, 1.0f)]
         public float MistThreshold = 0.5f;
 
-        /// <summary>Particle dithering factor</summary>
         [Tooltip("Particle dithering factor")]
         [Range(0.0f, 1.0f)]
         public float DitherLevel = 0.002f;
 
-        /// <summary>
-        /// AudioSourceLight
-        /// </summary>
+        // 내부 상태 추적을 위한 변수들
         public WeatherMakerLoopingAudioSource AudioSourceLight { get; private set; }
-
-        /// <summary>
-        /// AudioSourceMedium
-        /// </summary>
         public WeatherMakerLoopingAudioSource AudioSourceMedium { get; private set; }
-
-        /// <summary>
-        /// AudioSourceHeavy
-        /// </summary>
         public WeatherMakerLoopingAudioSource AudioSourceHeavy { get; private set; }
-
-        /// <summary>
-        /// AudioSourceCurrent
-        /// </summary>
         public WeatherMakerLoopingAudioSource AudioSourceCurrent { get; private set; }
 
-        /// <summary>
-        /// ParticleSystemRenderer
-        /// </summary>
         public ParticleSystemRenderer ParticleSystemRenderer { get; private set; }
-
-        /// <summary>
-        /// MistParticleSystemRenderer
-        /// </summary>
         public ParticleSystemRenderer MistParticleSystemRenderer { get; private set; }
-
-        /// <summary>
-        /// ExplosionParticleSystemRenderer
-        /// </summary>
         public ParticleSystemRenderer ExplosionParticleSystemRenderer { get; private set; }
-
-        /// <summary>
-        /// ParticleSystemSecondaryRenderer
-        /// </summary>
         public ParticleSystemRenderer ParticleSystemSecondaryRenderer { get; private set; }
 
-        /// <summary>
-        /// Material
-        /// </summary>
         public Material Material { get; private set; }
-
-        /// <summary>
-        /// MaterialSecondary
-        /// </summary>
         public Material MaterialSecondary { get; private set; }
-
-        /// <summary>
-        /// ExplosionMaterial
-        /// </summary>
         public Material ExplosionMaterial { get; private set; }
-
-        /// <summary>
-        /// MistMaterial
-        /// </summary>
         public Material MistMaterial { get; private set; }
 
         private float lastIntensityValue = -1.0f;
@@ -199,6 +123,7 @@ namespace DigitalRuby.WeatherMaker
 
         private readonly Dictionary<ParticleSystem, bool> wasPlayingDictionary = new Dictionary<ParticleSystem, bool>();
 
+        // 파티클 색상 조정 함수
         private void TintParticleSystem(ParticleSystem p, Color tintColor)
         {
             if (p == null)
@@ -217,6 +142,7 @@ namespace DigitalRuby.WeatherMaker
             m.startColor = startColor;
         }
 
+        // 파티클 시스템 재생 함수
         private void PlayParticleSystem(ParticleSystem p, int baseEmissionRate, float intensityMultiplier, Color tintColor)
         {
             var e = p.emission;
@@ -233,6 +159,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 외부 강도 수정자 업데이트
         private void UpdateExternalModifiers()
         {
             if (WeatherMakerScript.Instance != null)
@@ -249,6 +176,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 강도 변경 확인 및 처리
         private void CheckForIntensityChange()
         {
             if (lastIntensityValue == Intensity &&
@@ -268,6 +196,7 @@ namespace DigitalRuby.WeatherMaker
 
             if (Intensity < 0.01f)
             {
+                // 강도가 낮을 경우 모든 오디오 및 파티클 시스템 정지
                 if (AudioSourceCurrent != null)
                 {
                     AudioSourceCurrent.Stop();
@@ -288,6 +217,7 @@ namespace DigitalRuby.WeatherMaker
             }
             else
             {
+                // 강도에 따라 오디오 소스 전환 및 재생
                 WeatherMakerLoopingAudioSource newSource;
                 if (Intensity >= SoundHeavyIntensityThreshold)
                 {
@@ -317,6 +247,7 @@ namespace DigitalRuby.WeatherMaker
                 {
                     AudioSourceCurrent.SecondaryVolumeModifier = Mathf.Pow(Intensity, 0.3f);
                 }
+                // 각 파티클 시스템 재생
                 if (ParticleSystem != null)
                 {
                     PlayParticleSystem(ParticleSystem, BaseEmissionRate, IntensityMultiplier * ExternalIntensityMultiplier, PrecipitationTintColor);
@@ -347,6 +278,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 파티클 시스템 유효성 검사
         private void CheckForParticleSystem()
         {
 
@@ -362,6 +294,7 @@ namespace DigitalRuby.WeatherMaker
 
         }
 
+        // 초기 파티클 시스템 값 업데이트
         private void UpdateInitialParticleSystemValues(ParticleSystem p, System.Action<Vector2> startSpeed, System.Action<KeyValuePair<Vector3, Vector3>> startSize)
         {
             if (p != null)
@@ -376,6 +309,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 파티클 시스템 재생 상태 복구
         private void ResumeParticleSystem(ParticleSystem p)
         {
             if (p != null && wasPlayingDictionary.ContainsKey(p) && wasPlayingDictionary[p])
@@ -384,6 +318,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 파티클 시스템 재생 상태 업데이트
         private void UpdateParticleSystemPlayState()
         {
             if (ParticleSystem != null)
@@ -400,6 +335,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 카메라 사전 컬 이벤트 처리
         private void CameraPreCull(Camera camera)
         {
             if (Application.isPlaying && !WeatherMakerScript.ShouldIgnoreCamera(this, camera) && WeatherMakerCommandBufferManagerScript.CameraStackCount < 2)
@@ -408,6 +344,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 카메라 후처리 이벤트 처리
         private void CameraPostRender(Camera camera)
         {
             if (Application.isPlaying && !WeatherMakerScript.ShouldIgnoreCamera(this, camera) && WeatherMakerCommandBufferManagerScript.CameraStackCount < 2)
@@ -417,7 +354,7 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Fires when collision enable changes
+        /// 충돌 활성화 변경 시 호출
         /// </summary>
         protected virtual void OnCollisionEnabledChanged() { }
 
@@ -431,6 +368,7 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
+            // 파티클 시스템 유효성 검사 및 초기값 설정
             CheckForParticleSystem();
             UpdateInitialParticleSystemValues(ParticleSystem, (f) => InitialStartSpeed = f, (f) => InitialStartSize = f);
             UpdateInitialParticleSystemValues(ParticleSystemSecondary, (f) => InitialStartSpeedSecondary = f, (f) => InitialStartSizeSecondary = f);
@@ -459,6 +397,7 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
+            // 외부 수정자 업데이트 및 강도 변경 확인
             UpdateExternalModifiers();
             CheckForIntensityChange();
             if (AudioSourceLight != null)
@@ -491,6 +430,7 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
+            // 카메라 이벤트 등록 및 파티클 시스템 복구
             if (WeatherMakerCommandBufferManagerScript.Instance != null)
             {
                 WeatherMakerCommandBufferManagerScript.Instance.RegisterPreCull(CameraPreCull, this);
@@ -546,6 +486,7 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
+            // 카메라 이벤트 해제
             if (WeatherMakerCommandBufferManagerScript.Instance != null)
             {
                 WeatherMakerCommandBufferManagerScript.Instance.UnregisterPreCull(this);
@@ -568,55 +509,55 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Camera pre cull event
+        /// 카메라 사전 컬 이벤트 처리
         /// </summary>
-        /// <param name="c">Camera</param>
+        /// <param name="c">카메라</param>
         protected virtual void OnCameraPreCull(Camera c)
         {
         }
 
         /// <summary>
-        /// Camera post render event
+        /// 카메라 후처리 이벤트 처리
         /// </summary>
-        /// <param name="c">Camera</param>
+        /// <param name="c">카메라</param>
         protected virtual void OnCameraPostRender(Camera c)
         {
         }
 
         /// <summary>
-        /// Start speed
+        /// 초기 속도
         /// </summary>
         protected Vector2 InitialStartSpeed { get; private set; }
 
         /// <summary>
-        /// Start size
+        /// 초기 크기
         /// </summary>
         protected KeyValuePair<Vector3, Vector3> InitialStartSize { get; private set; }
 
         /// <summary>
-        /// Start speed secondary
+        /// 초기 속도(보조)
         /// </summary>
         protected Vector2 InitialStartSpeedSecondary { get; private set; }
 
         /// <summary>
-        /// Start size secondary
+        /// 초기 크기(보조)
         /// </summary>
         protected KeyValuePair<Vector3, Vector3> InitialStartSizeSecondary { get; private set; }
 
         /// <summary>
-        /// Start speed mist
+        /// 초기 속도(안개)
         /// </summary>
         protected Vector2 InitialStartSpeedMist { get; private set; }
 
         /// <summary>
-        /// Start size mist
+        /// 초기 크기(안개)
         /// </summary>
         protected KeyValuePair<Vector3, Vector3> InitialStartSizeMist { get; private set; }
 
         /// <summary>
-        /// Show/hide particle systems
+        /// 파티클 시스템 표시/숨기기
         /// </summary>
-        /// <param name="visible">True to show, false to hide</param>
+        /// <param name="visible">true면 표시, false면 숨김</param>
         public void SetParticleSystemsVisible(bool visible)
         {
             if (ParticleSystemRenderer != null)
@@ -638,9 +579,9 @@ namespace DigitalRuby.WeatherMaker
         }
 
         /// <summary>
-        /// Set a new volume modifier
+        /// 볼륨 수정자 설정
         /// </summary>
-        /// <param name="modifier">New modifier</param>
+        /// <param name="modifier">새 수정자</param>
         public void SetVolumeModifier(float modifier)
         {
             if (AudioSourceLight == null)
@@ -653,7 +594,7 @@ namespace DigitalRuby.WeatherMaker
         private bool? collisionEnabled;
 
         /// <summary>
-        /// Whether collision is enabled
+        /// 충돌 활성화 여부
         /// </summary>
         public bool CollisionEnabled
         {

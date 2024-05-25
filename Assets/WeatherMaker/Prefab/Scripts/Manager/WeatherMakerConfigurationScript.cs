@@ -6,33 +6,36 @@ namespace DigitalRuby.WeatherMaker
 {
     public class WeatherMakerConfigurationScript : MonoBehaviour
     {
-        public bool ShowFPS = true;
-        public bool ShowTimeOfDay = true;
-        public bool AutoAddLightsOnStart = true;
-        public GameObject ConfigurationPanel;
-        public UnityEngine.UI.Text LabelFPS;
-        public UnityEngine.UI.Slider TransitionDurationSlider;
-        public UnityEngine.UI.Slider IntensitySlider;
-        public UnityEngine.UI.Toggle MouseLookEnabledCheckBox;
-        public UnityEngine.UI.Toggle FlashlightToggle;
-        public UnityEngine.UI.Toggle TimeOfDayEnabledCheckBox;
-        public UnityEngine.UI.Toggle CollisionToggle;
-        public UnityEngine.UI.Slider DawnDuskSlider;
-        public UnityEngine.UI.Text TimeOfDayText;
-        public UnityEngine.UI.Text TimeOfDayCategoryText;
-        public UnityEngine.UI.Dropdown CloudDropdown;
-        public UnityEngine.UI.RawImage WeatherMapImage;
-        public UnityEngine.EventSystems.EventSystem EventSystem;
-        public GameObject SidePanel;
+        // 공개 필드, Inspector에서 설정 가능
+        public bool ShowFPS = true; // FPS 표시 여부
+        public bool ShowTimeOfDay = true; // 현재 시간 표시 여부
+        public bool AutoAddLightsOnStart = true; // 시작 시 자동으로 조명을 추가할지 여부
+        public GameObject ConfigurationPanel; // 설정 패널
+        public UnityEngine.UI.Text LabelFPS; // FPS를 표시할 텍스트 UI 요소
+        public UnityEngine.UI.Slider TransitionDurationSlider; // 전환 지속 시간 슬라이더
+        public UnityEngine.UI.Slider IntensitySlider; // 강도 슬라이더
+        public UnityEngine.UI.Toggle MouseLookEnabledCheckBox; // 마우스 보기 활성화 체크박스
+        public UnityEngine.UI.Toggle FlashlightToggle; // 손전등 토글
+        public UnityEngine.UI.Toggle TimeOfDayEnabledCheckBox; // 시간 진행 활성화 체크박스
+        public UnityEngine.UI.Toggle CollisionToggle; // 충돌 활성화 토글
+        public UnityEngine.UI.Slider DawnDuskSlider; // 새벽/황혼 슬라이더
+        public UnityEngine.UI.Text TimeOfDayText; // 현재 시간을 표시할 텍스트 UI 요소
+        public UnityEngine.UI.Text TimeOfDayCategoryText; // 시간대를 표시할 텍스트 UI 요소
+        public UnityEngine.UI.Dropdown CloudDropdown; // 구름 드롭다운
+        public UnityEngine.UI.RawImage WeatherMapImage; // 날씨 맵 이미지
+        public UnityEngine.EventSystems.EventSystem EventSystem; // 이벤트 시스템
+        public GameObject SidePanel; // 사이드 패널
 
+        // 내부 상태를 추적하기 위한 변수들
         private int frameCount = 0;
         private float nextFrameUpdate = 0.0f;
         private float fps = 0.0f;
-        private float frameUpdateRate = 4.0f; // 4 per second
+        private float frameUpdateRate = 4.0f; // 초당 4번 업데이트
         private int frameCounter;
         private WeatherMakerCloudType clouds;
         private WeatherMakerCloudType lastClouds;
 
+        // 시간 업데이트 함수
         private void UpdateTimeOfDay()
         {
             if (WeatherMakerDayNightCycleManagerScript.HasInstance())
@@ -46,6 +49,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // FPS 표시 함수
         private void DisplayFPS()
         {
             if (LabelFPS != null && ShowFPS)
@@ -61,6 +65,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 초기화 함수
         private void Start()
         {
             if (WeatherMakerPrecipitationManagerScript.HasInstance())
@@ -109,6 +114,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 업데이트 함수
         private void Update()
         {
             DisplayFPS();
@@ -189,6 +195,7 @@ namespace DigitalRuby.WeatherMaker
             frameCounter++;
         }
 
+        // 구름 업데이트 함수
         private void UpdateClouds()
         {
             if (clouds == lastClouds)
@@ -222,12 +229,13 @@ namespace DigitalRuby.WeatherMaker
                 }
                 else
                 {
-                    // custom clouds, do not modify current cloud script state
+                    // 사용자 정의 구름, 현재 상태를 변경하지 않음
                 }
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 비 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void RainToggleChanged(bool isOn)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -237,7 +245,8 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 눈 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void SnowToggleChanged(bool isOn)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -247,7 +256,8 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 우박 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void HailToggleChanged(bool isOn)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -257,7 +267,8 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 진눈깨비 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void SleetToggleChanged(bool isOn)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -267,6 +278,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 구름 토글 변경 이벤트 핸들러
         public void CloudToggleChanged()
         {
             string text = CloudDropdown.captionText.text;
@@ -275,7 +287,8 @@ namespace DigitalRuby.WeatherMaker
             UpdateClouds();
         }
 
-        /// <param name="isOn">True if on</param>
+        // 번개 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void LightningToggleChanged(bool isOn)
         {
             if (WeatherMakerThunderAndLightningScript.Instance != null)
@@ -284,7 +297,8 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 충돌 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void CollisionToggleChanged(bool isOn)
         {
             if (WeatherMakerScript.Instance != null)
@@ -293,7 +307,8 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
-        /// <param name="isOn">True if on</param>
+        // 바람 토글 변경 이벤트 핸들러
+        /// <param name="isOn">토글 상태</param>
         public void WindToggleChanged(bool isOn)
         {
             if (WeatherMakerScript.Instance == null || WeatherMakerPrecipitationManagerScript.Instance == null || WeatherMakerWindScript.Instance == null)
@@ -304,7 +319,7 @@ namespace DigitalRuby.WeatherMaker
             float duration = WeatherMakerPrecipitationManagerScript.Instance.PrecipitationChangeDuration;
             if (isOn)
             {
-                // make a copy to avoid changes during runtime, drag in a profile to inspector manually to edit at runtime
+                // 복사본을 만들어 런타임 중 변경을 방지
                 WeatherMakerWindScript.Instance.SetWindProfileAnimated(WeatherMakerScript.Instance.LoadResource<WeatherMakerWindProfileScript>("WeatherMakerWindProfile_MediumWind"), 0.0f, duration);
             }
             else
@@ -313,10 +328,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 전환 지속 시간 슬라이더 변경 이벤트 핸들러
         /// <summary>
         /// Transition duration slider change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void TransitionDurationSliderChanged(float val)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -325,10 +341,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 강도 슬라이더 변경 이벤트 핸들러
         /// <summary>
         /// Intensity duration slider change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void IntensitySliderChanged(float val)
         {
             if (WeatherMakerPrecipitationManagerScript.Instance != null)
@@ -337,10 +354,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 마우스 보기 활성화 체크박스 변경 이벤트 핸들러
         /// <summary>
         /// Mouse look value change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void MouseLookEnabledChanged(bool val)
         {
             MouseLookEnabledCheckBox.isOn = val;
@@ -358,10 +376,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 손전등 체크박스 변경 이벤트 핸들러
         /// <summary>
         /// Flashlight value change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void FlashlightChanged(bool val)
         {
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
@@ -386,29 +405,31 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 안개 체크박스 변경 이벤트 핸들러
         /// <summary>
         /// Fog change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void FogChanged(bool val)
         {
             if (WeatherMakerFullScreenFogScript.Instance == null || WeatherMakerFullScreenFogScript.Instance.FogProfile == null)
             {
-                Debug.LogError("Fog is not setup. If using 2D, fog is not yet supported.");
+                Debug.LogError("안개가 설정되지 않았습니다. 2D를 사용하는 경우, 안개는 아직 지원되지 않습니다.");
             }
             else
             {
-                // if fog is not active, set the start fog density to 0, otherwise start at whatever density it is at
+                // 안개가 활성화되지 않은 경우 시작 안개 밀도를 0으로 설정
                 float startFogDensity = WeatherMakerFullScreenFogScript.Instance.FogProfile.FogDensity;
                 float endFogDensity = (startFogDensity == 0.0f ? 0.007f : 0.0f);
                 WeatherMakerFullScreenFogScript.Instance.TransitionFogDensity(startFogDensity, endFogDensity, TransitionDurationSlider.value);
             }
         }
 
+        // 자동 날씨 체크박스 변경 이벤트 핸들러
         /// <summary>
         /// Automatic weather value change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void ManagerChanged(bool val)
         {
             if (WeatherMakerScript.Instance != null)
@@ -426,10 +447,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 시간 진행 체크박스 변경 이벤트 핸들러
         /// <summary>
         /// Auto time of day value change
         /// </summary>
-        /// <param name="val">New value</param>
+        /// <param name="val">새 값</param>
         public void TimeOfDayEnabledChanged(bool val)
         {
             if (WeatherMakerDayNightCycleManagerScript.HasInstance())
@@ -438,6 +460,7 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 번개 버튼 클릭 이벤트 핸들러
         /// <summary>
         /// Lightning bolt button click handler
         /// </summary>
@@ -449,10 +472,11 @@ namespace DigitalRuby.WeatherMaker
             }
         }
 
+        // 새벽/황혼 슬라이더 변경 이벤트 핸들러
         /// <summary>
         /// Time of day slider change handler
         /// </summary>
-        /// <param name="val">New value in seconds, 0 to 86400</param>
+        /// <param name="val">새 값 (초), 0 ~ 86400</param>
         public void DawnDuskSliderChanged(float val)
         {
             // 자동 주기에서는 슬라이더 값에 따라 변경하지 않음
