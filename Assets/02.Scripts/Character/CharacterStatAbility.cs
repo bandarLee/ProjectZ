@@ -17,6 +17,7 @@ public class CharacterStatAbility : CharacterAbility
         if (Owner.PhotonView.IsMine)
         {
             UI_CharacterStat.Instance.MyCharacterAbility = this;
+            UI_Temperature.Instance.MyCharacterAbility = this;
 
             StartCoroutine(HungerRoutine());
             StartCoroutine(DecreaseMentalRoutine());
