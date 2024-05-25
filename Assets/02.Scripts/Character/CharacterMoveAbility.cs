@@ -12,6 +12,7 @@ public class CharacterMoveAbility : CharacterAbility
 
     private float _yVelocity = 0f;
     private float _gravity = -9.8f;
+    private float _velocitySmoothing;
     //public float JumpPower = 3f;
 
     private void Start()
@@ -37,7 +38,8 @@ public class CharacterMoveAbility : CharacterAbility
         horizontalDir = Camera.main.transform.TransformDirection(horizontalDir);
 
         // 3-1. 중력값 적용
-        _yVelocity += _gravity * Time.deltaTime;
+        //_yVelocity += _gravity * Time.deltaTime;
+        _yVelocity = Mathf.SmoothDamp(_yVelocity, _gravity * Time.deltaTime, ref _velocitySmoothing, 0.4f);
         Vector3 finalDir = new Vector3(horizontalDir.x, _yVelocity, horizontalDir.z);
 
         // 루트 회전 오프셋 설정
