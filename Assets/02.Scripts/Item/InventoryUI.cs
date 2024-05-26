@@ -8,7 +8,7 @@ public class InventoryUI : MonoBehaviour
     public Item currentSelectedItem;
 
     public GameObject[] inventorySlots;
-    private Inventory inventory;
+    public Inventory inventory;
 
     public GameObject ItemInfo;
 
@@ -17,7 +17,7 @@ public class InventoryUI : MonoBehaviour
     public TMP_Text itemEffectText;
     public TMP_Text itemDescriptionText;
     public Image itemIconImage;
-    public GameObject inventoryobject;
+    public GameObject inventoryObject;
     public QuickSlotManager quickSlotManager;
 
     private void Start()
@@ -101,7 +101,6 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            ItemUseManager.Instance.EquipItem(currentSelectedItem);
             ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
             quickSlotManager.currentEquippedItem = currentSelectedItem;
 
@@ -111,7 +110,7 @@ public class InventoryUI : MonoBehaviour
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
-                currentSelectedItem = null;
+                currentSelectedItem = null; // 설정 currentSelectedItem을 null로 설정
                 CloseItemInfo();
             }
         }
@@ -162,6 +161,6 @@ public class InventoryUI : MonoBehaviour
 
     public void CloseInventory()
     {
-        inventoryobject.SetActive(false);
+        inventoryObject.SetActive(false);
     }
 }

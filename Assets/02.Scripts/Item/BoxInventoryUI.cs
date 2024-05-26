@@ -7,8 +7,7 @@ public class BoxInventoryUI : MonoBehaviour
 {
     public Item currentSelectedItem;
     public GameObject[] inventorySlots;
-    private BoxInventory boxInventory;
-    private Inventory playerInventory;
+    private BoxInventory currentBoxInventory;
 
     public GameObject ItemInfo;
     public TMP_Text itemNameText;
@@ -20,16 +19,21 @@ public class BoxInventoryUI : MonoBehaviour
 
     private void Start()
     {
-        boxInventory = FindObjectOfType<BoxInventory>();
-        playerInventory = FindObjectOfType<Inventory>();
-        UpdateInventoryUI();
         ItemInfo.SetActive(false);
+    }
+
+    public void SetBoxInventory(BoxInventory boxInventory)
+    {
+        currentBoxInventory = boxInventory;
+        UpdateInventoryUI();
     }
 
     public void UpdateInventoryUI()
     {
-        var itemList = boxInventory.items.Keys.ToList();
-        var itemQuantities = boxInventory.itemQuantities;
+        if (currentBoxInventory == null) return;
+
+        var itemList = currentBoxInventory.items.Keys.ToList();
+        var itemQuantities = currentBoxInventory.itemQuantities;
 
         for (int i = 0; i < inventorySlots.Length; i++)
         {
@@ -37,7 +41,7 @@ public class BoxInventoryUI : MonoBehaviour
             if (i < itemList.Count)
             {
                 var itemName = itemList[i];
-                var currentItem = boxInventory.items[itemName];
+                var currentItem = currentBoxInventory.items[itemName];
                 int currentQuantity = itemQuantities.ContainsKey(itemName) ? itemQuantities[itemName] : 0;
 
                 if (slot != null)
@@ -81,7 +85,7 @@ public class BoxInventoryUI : MonoBehaviour
     {
         ItemInfo.SetActive(true);
 
-        var itemList = boxInventory.items.Values.ToList();
+        var itemList = currentBoxInventory.items.Values.ToList();
         if (index < itemList.Count)
         {
             Item item = itemList[index];
@@ -98,35 +102,54 @@ public class BoxInventoryUI : MonoBehaviour
     {
         if (currentSelectedItem == null) return;
 
-        string itemName = currentSelectedItem.itemName;
-        boxInventory.RemoveItem(itemName);
+        string itemName = currentSelectedItem.uniqueId;
+        currentBoxInventory.RemoveItem(itemName);
+        var playerInventory = FindObjectOfType<Inventory>();
         playerInventory.AddItem(currentSelectedItem);
+        playerInventory.quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem); // 추가
 
-        // 아이템 타입에 관계없이 모두 가져온 경우 아이템 인포 창을 끔
-        if (!boxInventory.items.ContainsKey(itemName))
-        {
-            currentSelectedItem = null;
-            ItemInfo.SetActive(false);
-        }
+        currentSelectedItem = null;
+        ItemInfo.SetActive(false);
+
+        UpdateInventoryUI();
+
+        playerInventory.inventoryUI.UpdateInventoryUI();
     }
 
     public void TransferToBoxInventory()
     {
-        if (playerInventory.inventoryUI.currentSelectedItem == null) return;
+        var playerInventoryUI = FindObjectOfType<InventoryUI>();
+        if (playerInventoryUI.currentSelectedItem == null) return;
 
-        Item item = playerInventory.inventoryUI.currentSelectedItem;
+        Item item = playerInventoryUI.currentSelectedItem;
         string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC
                           ? item.uniqueId : item.itemName;
 
-        playerInventory.RemoveItem(itemName);
-        boxInventory.AddItem(item);
-
-        // 아이템 타입에 관계없이 모두 보관한 경우 아이템 인포 창을 끔
-        if (!playerInventory.items.ContainsKey(itemName))
+        if (item.itemType == ItemType.Food || item.itemType == ItemType.Heal || item.itemType == ItemType.Mental)
         {
-            playerInventory.inventoryUI.currentSelectedItem = null;
-            playerInventory.inventoryUI.CloseItemInfo();
+            playerInventoryUI.inventory.itemQuantities[itemName]--;
+            if (playerInventoryUI.inventory.itemQuantities[itemName] <= 0)
+            {
+                playerInventoryUI.inventory.items.Remove(itemName);
+                playerInventoryUI.inventory.itemQuantities.Remove(itemName);
+                playerInventoryUI.quickSlotManager.RemoveItemFromQuickSlots(item); // 추가
+                playerInventoryUI.currentSelectedItem = null; // 설정 currentSelectedItem을 null로 설정
+                playerInventoryUI.CloseItemInfo();
+            }
         }
+        else
+        {
+            playerInventoryUI.inventory.RemoveItem(itemName);
+            playerInventoryUI.quickSlotManager.RemoveItemFromQuickSlots(item); // 추가
+            playerInventoryUI.currentSelectedItem = null; // 설정 currentSelectedItem을 null로 설정
+            playerInventoryUI.CloseItemInfo();
+        }
+
+        currentBoxInventory.AddItem(item);
+
+        UpdateInventoryUI();
+
+        playerInventoryUI.UpdateInventoryUI();
     }
 
     public string GetItemType(ItemType itemType)

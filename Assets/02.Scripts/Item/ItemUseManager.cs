@@ -39,6 +39,8 @@ public class ItemUseManager : MonoBehaviour
                 Debug.LogWarning("Unknown item type.");
                 break;
         }
+        FindObjectOfType<InventoryUI>().UpdateInventoryUI();
+        FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
     }
 
     public void EquipItem(Item item)
@@ -92,6 +94,9 @@ public class ItemUseManager : MonoBehaviour
             case "진통제":
                 Debug.Log("진통제를 들었음");
                 break;
+            case "붕대":
+                Debug.Log("붕대를 들었음");
+                break;
             default:
                 Debug.LogWarning("Unknown heal item.");
                 break;
@@ -108,6 +113,7 @@ public class ItemUseManager : MonoBehaviour
             case "책":
                 Debug.Log("책을 들었음");
                 break;
+
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -179,6 +185,9 @@ public class ItemUseManager : MonoBehaviour
             case "진통제":
                 Debug.Log("Player health increased by 20.");
                 break;
+            case "붕대":
+                Debug.Log("플레이어 체력 회복 10");
+                break;
             default:
                 Debug.LogWarning("Unknown heal item.");
                 break;
@@ -190,7 +199,7 @@ public class ItemUseManager : MonoBehaviour
         switch (itemName)
         {
             case "술":
-                Debug.Log("Player mental state improved.");
+                Debug.Log("플레이어의 정신력이 올라갔다");
                 // PlayerStatus.Instance.IncreaseMentalState(20);
                 break;
             case "책":

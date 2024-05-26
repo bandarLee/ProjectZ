@@ -6,10 +6,12 @@ public class Inventory : MonoBehaviour
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
+    public QuickSlotManager quickSlotManager; // 추가
 
     private void Start()
     {
         inventoryUI = FindObjectOfType<InventoryUI>();
+        quickSlotManager = FindObjectOfType<QuickSlotManager>(); // 추가
     }
 
     public void AddItem(Item newItem)
@@ -48,11 +50,15 @@ public class Inventory : MonoBehaviour
             {
                 items.Remove(itemName);
                 itemQuantities.Remove(itemName);
+
+                quickSlotManager.RemoveItemFromQuickSlots(items[itemName]);
             }
         }
         else
         {
             items.Remove(itemName);
+
+            quickSlotManager.RemoveItemFromQuickSlots(items[itemName]);
         }
 
         inventoryUI.UpdateInventoryUI();

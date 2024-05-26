@@ -59,7 +59,6 @@ public class QuickSlotManager : MonoBehaviour
         currentEquippedItem = quickSlotItems[slotIndex];
 
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
-
     }
 
     public void DropEquippedItem()
@@ -79,13 +78,12 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
-                currentEquippedItem = null;
+                currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
             }
 
             inventory.inventoryUI.UpdateInventoryUI();
         }
     }
-
 
     public void RemoveItemFromQuickSlots(Item item)
     {
@@ -98,6 +96,11 @@ public class QuickSlotManager : MonoBehaviour
                 quickSlotImages[i].gameObject.SetActive(false);
                 quickSlotQuantities[i].text = "";
             }
+        }
+
+        if (currentEquippedItem == item)
+        {
+            currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
         }
     }
 
@@ -148,7 +151,6 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (currentEquippedItem != null)
             {
-
                 if (currentEquippedItem.itemType == ItemType.Food || currentEquippedItem.itemType == ItemType.Heal || currentEquippedItem.itemType == ItemType.Mental)
                 {
                     ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
@@ -164,7 +166,7 @@ public class QuickSlotManager : MonoBehaviour
                             inventory.items.Remove(itemName);
                             inventory.itemQuantities.Remove(itemName);
                             RemoveItemFromQuickSlots(currentEquippedItem);
-                            currentEquippedItem = null;
+                            currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
                         }
                     }
                 }
