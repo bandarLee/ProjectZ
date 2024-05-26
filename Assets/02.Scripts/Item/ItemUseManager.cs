@@ -39,8 +39,8 @@ public class ItemUseManager : MonoBehaviour
                 Debug.LogWarning("Unknown item type.");
                 break;
         }
-        FindObjectOfType<InventoryUI>().UpdateInventoryUI();
-        FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
+
+        UpdateUI();
     }
 
     public void EquipItem(Item item)
@@ -244,6 +244,21 @@ public class ItemUseManager : MonoBehaviour
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
+        }
+    }
+
+    public void UpdateUI()
+    {
+        var inventoryUI = FindObjectOfType<InventoryUI>(true);
+        if (inventoryUI != null)
+        {
+            inventoryUI.UpdateInventoryUI();
+        }
+
+        var quickSlotManager = FindObjectOfType<QuickSlotManager>(true);
+        if (quickSlotManager != null)
+        {
+            quickSlotManager.UpdateQuickSlotUI();
         }
     }
 }

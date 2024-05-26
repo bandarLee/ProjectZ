@@ -11,6 +11,8 @@ public class QuickSlotManager : MonoBehaviour
 
     public Inventory inventory;
 
+    private InventoryManager inventoryManager;
+
     private void Start()
     {
         quickSlotItems = new Item[quickSlotImages.Length];
@@ -18,6 +20,8 @@ public class QuickSlotManager : MonoBehaviour
         {
             image.gameObject.SetActive(false);
         }
+
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
@@ -57,7 +61,6 @@ public class QuickSlotManager : MonoBehaviour
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
         currentEquippedItem = quickSlotItems[slotIndex];
-
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
     }
 
@@ -78,10 +81,10 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
-                currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
+                currentEquippedItem = null;
             }
 
-            inventory.inventoryUI.UpdateInventoryUI();
+            inventoryManager.UpdateAllInventories();
         }
     }
 
@@ -97,11 +100,13 @@ public class QuickSlotManager : MonoBehaviour
                 quickSlotQuantities[i].text = "";
             }
         }
+        UpdateQuickSlotUI();
+    }
 
-        if (currentEquippedItem == item)
-        {
-            currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
-        }
+    public void UnEquipCurrentItem()
+    {
+        currentEquippedItem = null;
+        UpdateQuickSlotUI();
     }
 
     public void UpdateQuickSlotUI()
@@ -166,7 +171,7 @@ public class QuickSlotManager : MonoBehaviour
                             inventory.items.Remove(itemName);
                             inventory.itemQuantities.Remove(itemName);
                             RemoveItemFromQuickSlots(currentEquippedItem);
-                            currentEquippedItem = null; // 설정 currentEquippedItem을 null로 설정
+                            currentEquippedItem = null;
                         }
                     }
                 }
@@ -175,7 +180,7 @@ public class QuickSlotManager : MonoBehaviour
                     ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
                 }
 
-                inventory.inventoryUI.UpdateInventoryUI();
+                inventoryManager.UpdateAllInventories();
             }
         }
 

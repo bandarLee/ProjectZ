@@ -9,6 +9,8 @@ public class InventoryManager : MonoBehaviour
     {
         playerInventoryUI.CloseInventory();
         boxInventoryUI.CloseInventory();
+        CloseItemInfo();
+
     }
 
     public void OpenBoxInventory(BoxInventory boxInventory)
@@ -16,5 +18,16 @@ public class InventoryManager : MonoBehaviour
         boxInventoryUI.SetBoxInventory(boxInventory);
         playerInventoryUI.inventoryObject.SetActive(true);
         boxInventoryUI.inventoryObject.SetActive(true);
+    }
+    public void CloseItemInfo()
+    {
+        playerInventoryUI.CloseItemInfo();
+        boxInventoryUI.CloseItemInfo();
+    }
+
+    public void UpdateAllInventories()
+    {
+        playerInventoryUI.UpdateInventoryUI();
+        boxInventoryUI.UpdateInventoryUI();
     }
 }

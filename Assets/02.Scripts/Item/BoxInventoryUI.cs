@@ -16,7 +16,7 @@ public class BoxInventoryUI : MonoBehaviour
     public TMP_Text itemDescriptionText;
     public Image itemIconImage;
     public GameObject inventoryObject;
-
+    public GameObject boxinventoryUIobject;
     private void Start()
     {
         ItemInfo.SetActive(false);
@@ -104,16 +104,13 @@ public class BoxInventoryUI : MonoBehaviour
 
         string itemName = currentSelectedItem.uniqueId;
         currentBoxInventory.RemoveItem(itemName);
-        var playerInventory = FindObjectOfType<Inventory>();
-        playerInventory.AddItem(currentSelectedItem);
-        playerInventory.quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem); // 추가
-
+        FindObjectOfType<Inventory>().AddItem(currentSelectedItem);
         currentSelectedItem = null;
         ItemInfo.SetActive(false);
 
         UpdateInventoryUI();
 
-        playerInventory.inventoryUI.UpdateInventoryUI();
+        FindObjectOfType<InventoryUI>().UpdateInventoryUI();
     }
 
     public void TransferToBoxInventory()
@@ -132,20 +129,26 @@ public class BoxInventoryUI : MonoBehaviour
             {
                 playerInventoryUI.inventory.items.Remove(itemName);
                 playerInventoryUI.inventory.itemQuantities.Remove(itemName);
-                playerInventoryUI.quickSlotManager.RemoveItemFromQuickSlots(item); // 추가
-                playerInventoryUI.currentSelectedItem = null; // 설정 currentSelectedItem을 null로 설정
+                playerInventoryUI.currentSelectedItem = null;
                 playerInventoryUI.CloseItemInfo();
             }
         }
         else
         {
             playerInventoryUI.inventory.RemoveItem(itemName);
-            playerInventoryUI.quickSlotManager.RemoveItemFromQuickSlots(item); // 추가
-            playerInventoryUI.currentSelectedItem = null; // 설정 currentSelectedItem을 null로 설정
+            playerInventoryUI.currentSelectedItem = null;
             playerInventoryUI.CloseItemInfo();
         }
 
         currentBoxInventory.AddItem(item);
+
+        // 퀵슬롯에서 아이템 제거 및 장착 해제
+        var quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        if (quickSlotManager != null)
+        {
+            quickSlotManager.RemoveItemFromQuickSlots(item);
+            quickSlotManager.UnEquipCurrentItem();
+        }
 
         UpdateInventoryUI();
 
@@ -179,5 +182,6 @@ public class BoxInventoryUI : MonoBehaviour
     public void CloseInventory()
     {
         inventoryObject.SetActive(false);
+        boxinventoryUIobject.SetActive(false);
     }
 }

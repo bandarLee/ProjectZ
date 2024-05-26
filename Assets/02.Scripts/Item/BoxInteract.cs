@@ -37,6 +37,8 @@ public class BoxInteract : MonoBehaviour
                 if (boxInventory != null)
                 {
                     inventoryManager.OpenBoxInventory(boxInventory);
+                    inventoryManager.boxInventoryUI.boxinventoryUIobject.SetActive(true);
+
                 }
                 break;
             }
