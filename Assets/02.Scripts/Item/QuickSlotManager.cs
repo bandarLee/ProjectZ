@@ -62,6 +62,31 @@ public class QuickSlotManager : MonoBehaviour
 
     }
 
+    public void DropEquippedItem()
+    {
+        if (currentEquippedItem == null) return;
+
+        string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
+                          ? currentEquippedItem.uniqueId : currentEquippedItem.itemName;
+
+        if (inventory.itemQuantities.ContainsKey(itemName))
+        {
+            Debug.Log("드랍 아이템: " + currentEquippedItem.itemName);
+
+            inventory.itemQuantities[itemName]--;
+            if (inventory.itemQuantities[itemName] <= 0)
+            {
+                inventory.items.Remove(itemName);
+                inventory.itemQuantities.Remove(itemName);
+                RemoveItemFromQuickSlots(currentEquippedItem);
+                currentEquippedItem = null;
+            }
+
+            inventory.inventoryUI.UpdateInventoryUI();
+        }
+    }
+
+
     public void RemoveItemFromQuickSlots(Item item)
     {
         for (int i = 0; i < quickSlotItems.Length; i++)
@@ -71,7 +96,7 @@ public class QuickSlotManager : MonoBehaviour
                 quickSlotItems[i] = null;
                 quickSlotImages[i].sprite = null;
                 quickSlotImages[i].gameObject.SetActive(false);
-                quickSlotQuantities[i].text = ""; 
+                quickSlotQuantities[i].text = "";
             }
         }
     }
@@ -87,7 +112,7 @@ public class QuickSlotManager : MonoBehaviour
 
                 if (quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC)
                 {
-                    quickSlotQuantities[i].text = ""; 
+                    quickSlotQuantities[i].text = "";
                 }
                 else
                 {
@@ -150,6 +175,11 @@ public class QuickSlotManager : MonoBehaviour
 
                 inventory.inventoryUI.UpdateInventoryUI();
             }
+        }
+
+        if (Input.GetMouseButtonDown(1)) // 우클릭
+        {
+            DropEquippedItem();
         }
     }
 }

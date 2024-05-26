@@ -119,6 +119,30 @@ public class InventoryUI : MonoBehaviour
         UpdateInventoryUI();
     }
 
+    public void DropSelectedItem()
+    {
+        if (currentSelectedItem == null) return;
+
+        string itemName = currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC
+                          ? currentSelectedItem.uniqueId : currentSelectedItem.itemName;
+
+        if (inventory.itemQuantities.ContainsKey(itemName))
+        {
+            Debug.Log("드랍 아이템: " + currentSelectedItem.itemName);
+
+            inventory.itemQuantities[itemName]--;
+            if (inventory.itemQuantities[itemName] <= 0)
+            {
+                inventory.items.Remove(itemName);
+                inventory.itemQuantities.Remove(itemName);
+                quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
+                currentSelectedItem = null;
+                CloseItemInfo();
+            }
+
+            UpdateInventoryUI();
+        }
+    }
 
 
     public void ShowItemInfo(int index)

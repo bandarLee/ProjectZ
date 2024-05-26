@@ -4088,13 +4088,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4068512824730977415}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 8872838007490279108}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: DropSelectedItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6500,6 +6500,13 @@ MonoBehaviour:
   - {fileID: 136611090}
   - {fileID: 15996132}
   quickSlotItems: []
+  currentEquippedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
+    uniqueId: 
   inventory: {fileID: 8540718594649566877}
 --- !u!1 &1395792092
 GameObject:
@@ -14938,18 +14945,13 @@ MonoBehaviour:
     Temperature: 20
     StandardTemperature: 20
     Damage: 20
-    Stamina: 100
-    MaxStamina: 100
-    RunConsumeStamina: 5
-    RecoveryStamina: 7
     MoveSpeed: 4
     RunSpeed: 7
     RotationSpeed: 200
     AttackCoolTime: 1
-    AttackConsumeStamina: 10
     JumpPower: 3
-    JumpConsumeStamina: 0
   State: 0
+  gameTime: {fileID: 0}
 --- !u!224 &2410433086904395213 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1339458747890221452, guid: ae6730f35c47a3f4c83be567c9e84597, type: 3}
@@ -34293,12 +34295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e53da8c190fcc64693a9a03b09347e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  textObject: {fileID: 6847668230992625073}
-  keepAlphaValue: 0
-  useCustomColor: 0
-  colorType: 1
-  fontType: 4
 --- !u!4 &7612935296911077567
 Transform:
   m_ObjectHideFlags: 0
@@ -35282,6 +35278,7 @@ GameObject:
   - component: {fileID: 7381084223043225062}
   - component: {fileID: 2388338292106728038}
   - component: {fileID: 8540718594649566877}
+  - component: {fileID: 8540718594649566878}
   m_Layer: 0
   m_Name: Character_F (1)
   m_TagString: Player
@@ -35302,6 +35299,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 8872838007490279108}
+--- !u!114 &8540718594649566878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8540718594649566876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8542879003463971303
 GameObject:
   m_ObjectHideFlags: 0
