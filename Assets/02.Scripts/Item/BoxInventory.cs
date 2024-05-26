@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class BoxInventory : MonoBehaviour
 {
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
-    public InventoryUI inventoryUI;
+    public BoxInventoryUI boxInventoryUI;
 
     private void Start()
     {
-        inventoryUI = FindObjectOfType<InventoryUI>();
+        boxInventoryUI = FindObjectOfType<BoxInventoryUI>();
     }
 
     public void AddItem(Item newItem)
@@ -34,27 +34,20 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        inventoryUI.UpdateInventoryUI();
+        boxInventoryUI.UpdateInventoryUI();
     }
 
     public void RemoveItem(string itemName)
     {
         if (!items.ContainsKey(itemName)) return;
 
-        if (itemQuantities.ContainsKey(itemName))
-        {
-            itemQuantities[itemName]--;
-            if (itemQuantities[itemName] <= 0)
-            {
-                items.Remove(itemName);
-                itemQuantities.Remove(itemName);
-            }
-        }
-        else
+        itemQuantities[itemName]--;
+        if (itemQuantities[itemName] <= 0)
         {
             items.Remove(itemName);
+            itemQuantities.Remove(itemName);
         }
 
-        inventoryUI.UpdateInventoryUI();
+        boxInventoryUI.UpdateInventoryUI();
     }
 }

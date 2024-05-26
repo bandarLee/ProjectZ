@@ -3,34 +3,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class InventoryUI : MonoBehaviour
+public class BoxInventoryUI : MonoBehaviour
 {
     public Item currentSelectedItem;
-
     public GameObject[] inventorySlots;
-    private Inventory inventory;
+    private BoxInventory boxInventory;
+    private Inventory playerInventory;
 
     public GameObject ItemInfo;
-
     public TMP_Text itemNameText;
     public TMP_Text itemTypeText;
     public TMP_Text itemEffectText;
     public TMP_Text itemDescriptionText;
     public Image itemIconImage;
-    public GameObject inventoryobject;
-    public QuickSlotManager quickSlotManager;
+    public GameObject inventoryObject;
 
     private void Start()
     {
-        inventory = FindObjectOfType<Inventory>();
+        boxInventory = FindObjectOfType<BoxInventory>();
+        playerInventory = FindObjectOfType<Inventory>();
         UpdateInventoryUI();
         ItemInfo.SetActive(false);
     }
 
     public void UpdateInventoryUI()
     {
-        var itemList = inventory.items.Keys.ToList();
-        var itemQuantities = inventory.itemQuantities;
+        var itemList = boxInventory.items.Keys.ToList();
+        var itemQuantities = boxInventory.itemQuantities;
 
         for (int i = 0; i < inventorySlots.Length; i++)
         {
@@ -38,7 +37,7 @@ public class InventoryUI : MonoBehaviour
             if (i < itemList.Count)
             {
                 var itemName = itemList[i];
-                var currentItem = inventory.items[itemName];
+                var currentItem = boxInventory.items[itemName];
                 int currentQuantity = itemQuantities.ContainsKey(itemName) ? itemQuantities[itemName] : 0;
 
                 if (slot != null)
@@ -51,14 +50,7 @@ public class InventoryUI : MonoBehaviour
                     slot.highlightedIcon.transform.localScale = new Vector3(2, 2, 2);
                     slot.pressedIcon.transform.localScale = new Vector3(2, 2, 2);
 
-                    if (currentItem.itemType == ItemType.Weapon || currentItem.itemType == ItemType.ETC)
-                    {
-                        slot.quantityText.text = "";
-                    }
-                    else
-                    {
-                        slot.quantityText.text = currentQuantity.ToString();
-                    }
+                    slot.quantityText.text = currentQuantity.ToString();
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -83,47 +75,13 @@ public class InventoryUI : MonoBehaviour
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
             }
         }
-
-        quickSlotManager.UpdateQuickSlotUI();
-    }
-
-    public void UseSelectedItem()
-    {
-        if (currentSelectedItem == null) return;
-
-        string itemName = currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC
-                          ? currentSelectedItem.uniqueId : currentSelectedItem.itemName;
-
-        if (currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC)
-        {
-            ItemUseManager.Instance.EquipItem(currentSelectedItem);
-            quickSlotManager.currentEquippedItem = currentSelectedItem;
-        }
-        else
-        {
-            ItemUseManager.Instance.EquipItem(currentSelectedItem);
-            ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
-            quickSlotManager.currentEquippedItem = currentSelectedItem;
-
-            inventory.itemQuantities[itemName]--;
-            if (inventory.itemQuantities[itemName] <= 0)
-            {
-                inventory.items.Remove(itemName);
-                inventory.itemQuantities.Remove(itemName);
-                quickSlotManager.RemoveItemFromQuickSlots(currentSelectedItem);
-                currentSelectedItem = null;
-                CloseItemInfo();
-            }
-        }
-
-        UpdateInventoryUI();
     }
 
     public void ShowItemInfo(int index)
     {
         ItemInfo.SetActive(true);
 
-        var itemList = inventory.items.Values.ToList();
+        var itemList = boxInventory.items.Values.ToList();
         if (index < itemList.Count)
         {
             Item item = itemList[index];
@@ -133,6 +91,41 @@ public class InventoryUI : MonoBehaviour
             itemEffectText.text = item.itemEffect;
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
+        }
+    }
+
+    public void TransferToPlayerInventory()
+    {
+        if (currentSelectedItem == null) return;
+
+        string itemName = currentSelectedItem.itemName;
+        boxInventory.RemoveItem(itemName);
+        playerInventory.AddItem(currentSelectedItem);
+
+        // 아이템 타입에 관계없이 모두 가져온 경우 아이템 인포 창을 끔
+        if (!boxInventory.items.ContainsKey(itemName))
+        {
+            currentSelectedItem = null;
+            ItemInfo.SetActive(false);
+        }
+    }
+
+    public void TransferToBoxInventory()
+    {
+        if (playerInventory.inventoryUI.currentSelectedItem == null) return;
+
+        Item item = playerInventory.inventoryUI.currentSelectedItem;
+        string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC
+                          ? item.uniqueId : item.itemName;
+
+        playerInventory.RemoveItem(itemName);
+        boxInventory.AddItem(item);
+
+        // 아이템 타입에 관계없이 모두 보관한 경우 아이템 인포 창을 끔
+        if (!playerInventory.items.ContainsKey(itemName))
+        {
+            playerInventory.inventoryUI.currentSelectedItem = null;
+            playerInventory.inventoryUI.CloseItemInfo();
         }
     }
 
@@ -162,6 +155,6 @@ public class InventoryUI : MonoBehaviour
 
     public void CloseInventory()
     {
-        inventoryobject.SetActive(false);
+        inventoryObject.SetActive(false);
     }
 }

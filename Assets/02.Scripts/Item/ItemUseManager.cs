@@ -165,7 +165,6 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player hunger increased by 30.");
                 break;
             default:
-                Debug.LogWarning("Unknown food item.");
                 break;
         }
     }
