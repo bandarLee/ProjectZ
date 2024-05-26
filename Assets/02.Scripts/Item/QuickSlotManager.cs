@@ -7,7 +7,7 @@ public class QuickSlotManager : MonoBehaviour
     public Image[] quickSlotImages;
     public TMP_Text[] quickSlotQuantities;
     public Item[] quickSlotItems;
-    private Item currentEquippedItem;
+    public Item currentEquippedItem;
 
     public Inventory inventory;
 
@@ -123,6 +123,7 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (currentEquippedItem != null)
             {
+
                 if (currentEquippedItem.itemType == ItemType.Food || currentEquippedItem.itemType == ItemType.Heal || currentEquippedItem.itemType == ItemType.Mental)
                 {
                     ItemUseManager.Instance.ApplyEffect(currentEquippedItem);

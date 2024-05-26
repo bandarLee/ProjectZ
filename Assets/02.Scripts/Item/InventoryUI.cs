@@ -97,10 +97,13 @@ public class InventoryUI : MonoBehaviour
         if (currentSelectedItem.itemType == ItemType.Weapon || currentSelectedItem.itemType == ItemType.ETC)
         {
             ItemUseManager.Instance.EquipItem(currentSelectedItem);
+            quickSlotManager.currentEquippedItem = currentSelectedItem;
         }
         else
         {
+            ItemUseManager.Instance.EquipItem(currentSelectedItem);
             ItemUseManager.Instance.ApplyEffect(currentSelectedItem);
+            quickSlotManager.currentEquippedItem = currentSelectedItem;
 
             inventory.itemQuantities[itemName]--;
             if (inventory.itemQuantities[itemName] <= 0)
