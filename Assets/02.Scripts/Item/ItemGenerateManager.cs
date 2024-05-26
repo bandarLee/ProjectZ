@@ -6,9 +6,10 @@ public class ItemGenerateManager : MonoBehaviour
 {
     public ItemPresets itemPresetsContainer; // ItemPresets 스크립트를 참조합니다.
     public List<BoxInventory> allBoxInventories;
-
+    public List<BoxTypeConfig> boxTypeConfigs; // 각 BoxType에 대한 설정 리스트
     private void Start()
     {
+
         if (itemPresetsContainer == null)
         {
             Debug.LogError("ItemPresetsContainer is not set.");
@@ -25,11 +26,12 @@ public class ItemGenerateManager : MonoBehaviour
 
     public void GenerateItemsForBox(BoxInventory box)
     {
-        int itemCount = GetItemCountForBoxType(box.boxType);
+        var config = boxTypeConfigs.FirstOrDefault(c => c.boxType == box.boxType);
+        if (config.boxType != box.boxType) return; // 설정이 없으면 리턴
 
-        for (int i = 0; i < itemCount; i++)
+        for (int i = 0; i < config.itemCount; i++)
         {
-            Item randomItem = GetRandomItem();
+            Item randomItem = GetRandomItem(config);
             if (randomItem != null)
             {
                 box.AddItem(randomItem);
@@ -41,25 +43,33 @@ public class ItemGenerateManager : MonoBehaviour
         }
     }
 
-    private int GetItemCountForBoxType(BoxType boxType)
+    private Item GetRandomItem(BoxTypeConfig config)
     {
-        switch (boxType)
-        {
-            case BoxType.Small:
-                return 2;
-            case BoxType.Medium:
-                return 3;
-            case BoxType.Large:
-                return 4;
-            default:
-                return 0;
-        }
-    }
+        float totalProbability = config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.etcProbability;
+        float randomValue = Random.Range(0, totalProbability);
 
-    private Item GetRandomItem()
-    {
-        // 아이템을 랜덤하게 가져오는 로직
-        Item randomItem = itemPresetsContainer.GenerateRandomItem((ItemType)Random.Range(0, System.Enum.GetValues(typeof(ItemType)).Length));
-        return randomItem;
+        ItemType selectedType;
+        if (randomValue < config.foodProbability)
+        {
+            selectedType = ItemType.Food;
+        }
+        else if (randomValue < config.foodProbability + config.weaponProbability)
+        {
+            selectedType = ItemType.Weapon;
+        }
+        else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability)
+        {
+            selectedType = ItemType.Heal;
+        }
+        else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability)
+        {
+            selectedType = ItemType.Mental;
+        }
+        else
+        {
+            selectedType = ItemType.ETC;
+        }
+
+        return itemPresetsContainer.GenerateRandomItem(selectedType);
     }
 }
