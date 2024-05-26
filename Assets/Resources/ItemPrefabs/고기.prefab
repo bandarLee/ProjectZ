@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6879173013696926371}
   - component: {fileID: 7554895018210942214}
   - component: {fileID: 5709605227918010828}
-  - component: {fileID: 1564606305969993155}
   - component: {fileID: 2543689553143448929}
+  - component: {fileID: 4162116909795266481}
   m_Layer: 0
-  m_Name: Meat_Drop
+  m_Name: "\uACE0\uAE30"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,28 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1564606305969993155
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6069844887605053465}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2289302216510678445, guid: b14a55b14cee5c14a898ca3d073787ab, type: 3}
 --- !u!114 &2543689553143448929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +103,25 @@ MonoBehaviour:
     itemType: 0
     itemEffect: "\uD5C8\uAE30+1"
     itemDescription: "\uB9DB\uC788\uB294 \uC74C\uC2DD"
+    uniqueId: 
+--- !u!65 &4162116909795266481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6069844887605053465}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.42991528, y: 0.29749757, z: 0.50934243}
+  m_Center: {x: 0.01057227, y: 0.028554916, z: -0.034351297}

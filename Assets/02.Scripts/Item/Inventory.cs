@@ -7,10 +7,6 @@ public class Inventory : MonoBehaviour
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
 
-    private void Start()
-    {
-        inventoryUI = FindObjectOfType<InventoryUI>();
-    }
 
     public void AddItem(Item newItem)
     {

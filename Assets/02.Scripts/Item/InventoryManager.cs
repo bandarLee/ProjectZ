@@ -4,7 +4,10 @@ public class InventoryManager : MonoBehaviour
 {
     public InventoryUI playerInventoryUI;
     public BoxInventoryUI boxInventoryUI;
-
+    public void Start()
+    {
+        CloseAllInventories();
+    }
     public void CloseAllInventories()
     {
         playerInventoryUI.CloseInventory();
@@ -29,5 +32,16 @@ public class InventoryManager : MonoBehaviour
     {
         playerInventoryUI.UpdateInventoryUI();
         boxInventoryUI.UpdateInventoryUI();
+    }
+    public void TogglePlayerInventory()
+    {
+        if (playerInventoryUI.inventoryObject.activeSelf)
+        {
+            playerInventoryUI.CloseInventory();
+        }
+        else
+        {
+            playerInventoryUI.inventoryObject.SetActive(true);
+        }
     }
 }

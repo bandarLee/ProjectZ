@@ -81,13 +81,31 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
+                DropItemPrefab(currentEquippedItem);
                 currentEquippedItem = null;
             }
 
             inventoryManager.UpdateAllInventories();
         }
     }
-
+    private void DropItemPrefab(Item item)
+    {
+        GameObject itemPrefab = Resources.Load<GameObject>("ItemPrefabs/" + item.itemName);
+        if (itemPrefab != null)
+        {
+            Vector3 dropPosition = inventory.gameObject.transform.position + transform.forward * 2f + transform.up * 1.5f; ;
+            GameObject droppedItem = Instantiate(itemPrefab, dropPosition, Quaternion.identity);
+            ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
+            if (itemPickup != null)
+            {
+                itemPickup.item = item;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Item prefab not found in Resources/ItemPrefabs: " + item.itemName);
+        }
+    }
     public void RemoveItemFromQuickSlots(Item item)
     {
         for (int i = 0; i < quickSlotItems.Length; i++)
@@ -187,6 +205,10 @@ public class QuickSlotManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1)) // 우클릭
         {
             DropEquippedItem();
+        }
+        if (Input.GetKeyDown(KeyCode.I)) // 'I' 키로 인벤토리 토글
+        {
+            inventoryManager.TogglePlayerInventory();
         }
     }
 }
