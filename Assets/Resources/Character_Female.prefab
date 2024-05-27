@@ -3763,7 +3763,7 @@ MonoBehaviour:
     RunSpeed: 7
     RotationSpeed: 200
     AttackCoolTime: 1
-    JumpPower: 3
+    JumpPower: 2
   State: 0
   gameTime: {fileID: 0}
 --- !u!114 &1219129497678289804

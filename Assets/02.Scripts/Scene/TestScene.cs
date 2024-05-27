@@ -17,8 +17,6 @@ public class TestScene : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Screen.SetResolution(1920, 1080, false);
-
         if (PhotonNetwork.InRoom)
         {
             if (!_init)

@@ -5628,7 +5628,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c39355bfc52ad3e40a53b4e60b1fd42f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4b4f4fbd99ebe54886a90a97cd93dca, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -50658,7 +50658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1383.7063
+      value: 1383.7062
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -73352,7 +73352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1383.7063
+      value: 1383.7062
       objectReference: {fileID: 0}
     - target: {fileID: 224962817517893130, guid: 7ea731f501442984589dad30e8f89c28, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -83923,6 +83923,15 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack1
+  - Type: 1
+    SynchronizeType: 0
+    Name: RootRotationOffset
+  - Type: 1
+    SynchronizeType: 0
+    Name: Forward
+  - Type: 1
+    SynchronizeType: 0
+    Name: Strafe
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -85743,7 +85752,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232765993799833362}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e7a2aa13e50638746834e52af1e25dcc, type: 2}
+  m_Avatar: {fileID: 9000000, guid: b59c4ea0985bcf542b6b88f7bf1dbb4a, type: 3}
   m_Controller: {fileID: 9100000, guid: 469bdb8f26ca8a84482d9536b5f048cf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

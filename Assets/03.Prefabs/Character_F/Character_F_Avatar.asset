@@ -2369,13 +2369,13 @@ Avatar:
     4159735061: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_L/Upperarm_L/UpperarmAdjustTwist_L
     2718238916: Root/Global/Position/Hips/LowerBack/Thigh_R/Calf_R/Foot_R
     1885650016: Root/Global/Position/Hips/LowerBack/Thigh_L/Calf_L/Foot_L/Toes_L/Toe01_001_L/Toe01_002_L
-    2891060860: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/Ear01_R
     3947004835: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_R/Upperarm_R/Lowerarm_R/hand_R/carpal_000_R/index_001_R
     3089301763: Root/Global/Position/Hips/LowerBack/Thigh_R/Calf_R/CalfAdjustTwist_R
-    2575973730: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/Mandible/LowerMouth/Tongue
     3099313882: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_R/Upperarm_R/UpperarmAdjust_R
+    2891060860: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/Ear01_R
     2244671467: Root/Global/Position/Hips/LowerBack/Thigh_L/ThighAdjust_L
     2526719053: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/Mandible/LowerMouth
+    2575973730: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/Mandible/LowerMouth/Tongue
     3371722019: Root/Global/Position/Hips/LowerBack/Thigh_L/ThighAdjustTwist_L
     1200368780: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/NoseTip
     2278025589: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_R/Upperarm_R/Lowerarm_R/hand_R/carpal_003_R
@@ -2389,12 +2389,12 @@ Avatar:
     24286193: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/UpperMouth/LipUpperCorner_L
     168050449: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_L/Upperarm_L/Lowerarm_L/hand_L/carpal_003_L/pinky_001_L/pinky_002_L/pinky_003_L
     0: 
-    3669670261: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/EyebrowLow_L
     944920251: Root/Global/Position/Hips/LowerBack/Thigh_R/Calf_R/Foot_R/Toes_R/Toe01_001_R/Toe01_002_R
-    4272349301: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_R/Upperarm_R/Lowerarm_R/hand_R/carpal_000_R/index_001_R/index_002_R/index_003_R
+    3669670261: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/EyebrowLow_L
     1208382309: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_L/Upperarm_L/Lowerarm_L/hand_L/carpal_002_L
     3990228049: Root/Global/Position/Hips/LowerBack/Thigh_R/Calf_R/CalfAdjust_R
     2616078067: Root/Global/Position/Hips/LowerBack/GluteusAdjust_R
+    4272349301: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Clavicle_R/Upperarm_R/Lowerarm_R/hand_R/carpal_000_R/index_001_R/index_002_R/index_003_R
     2641478983: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/EyeSocket_R/LidUpper_R
     3605940535: Root/Global/Position/Hips
     2186790598: Root/Global/Position/Hips/LowerBack/Spine/Spine1/Neck/Head/EyeSocket_L/LidUpper_L
