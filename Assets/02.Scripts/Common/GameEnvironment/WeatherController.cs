@@ -30,12 +30,12 @@ namespace DigitalRuby.WeatherMaker
 
         private IEnumerator DailyWeatherRoutine()
         {
-            yield return new WaitForSeconds(10f); // 6분 대기
+            yield return new WaitForSeconds(10f); // 10초 대기
 
             while (true)
             {
                 SetDailyWeather();
-                yield return new WaitForSeconds(10f); // 6분마다 날씨 변경
+                yield return new WaitForSeconds(10f); // 10초마다 날씨 변경
             }
         }
 
@@ -48,16 +48,19 @@ namespace DigitalRuby.WeatherMaker
             {
                 Debug.Log("날씨 : 비");
                 SetWeather(RainProfile);
+                UI_Temperature.Instance.SetTemperature(-5); // 추움
             }
             else if (randomValue < 0.4f)
             {
                 Debug.Log("날씨 : 눈보라");
                 SetWeather(SnowProfile);
+                UI_Temperature.Instance.SetTemperature(-15); // 매우 추움
             }
             else
             {
                 Debug.Log("날씨 : 맑음");
                 SetWeather(NoneProfile);
+                UI_Temperature.Instance.SetTemperature(15); // 보통
             }
         }
 
