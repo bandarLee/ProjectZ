@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void AddItem(Item newItem)
     {
+        inventoryUI = FindObjectOfType<InventoryUI>();
+
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
         {
             string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
