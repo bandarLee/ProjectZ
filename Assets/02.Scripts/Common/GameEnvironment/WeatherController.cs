@@ -30,17 +30,18 @@ namespace DigitalRuby.WeatherMaker
 
         private IEnumerator DailyWeatherRoutine()
         {
-            yield return new WaitForSeconds(10f); // 6ºÐ ´ë±â
+            yield return new WaitForSeconds(10f); // 10ÃÊ ´ë±â
 
             while (true)
             {
                 SetDailyWeather();
-                yield return new WaitForSeconds(10f); // 6ºÐ¸¶´Ù ³¯¾¾ º¯°æ
+                yield return new WaitForSeconds(10f); // 10ÃÊ¸¶´Ù ³¯¾¾ º¯°æ
             }
         }
 
         private void SetDailyWeather()
         {
+
             float randomValue = Random.Range(0f, 1f);
             Debug.Log("³¯¾¾ ·£´ý");
 
@@ -48,16 +49,19 @@ namespace DigitalRuby.WeatherMaker
             {
                 Debug.Log("³¯¾¾ : ºñ");
                 SetWeather(RainProfile);
+                UI_Temperature.Instance.SetTemperature(-5); // Ãß¿ò
             }
             else if (randomValue < 0.4f)
             {
                 Debug.Log("³¯¾¾ : ´«º¸¶ó");
                 SetWeather(SnowProfile);
+                UI_Temperature.Instance.SetTemperature(-15); // ¸Å¿ì Ãß¿ò
             }
             else
             {
                 Debug.Log("³¯¾¾ : ¸¼À½");
                 SetWeather(NoneProfile);
+                UI_Temperature.Instance.SetTemperature(15); // º¸Åë
             }
         }
 
