@@ -22,8 +22,8 @@ public class QuickSlotManager : MonoBehaviour
         }
 
         inventoryManager = FindObjectOfType<InventoryManager>();
+        inventory = FindObjectOfType<Inventory>();
 
-        // 만약 찾지 못했다면, 로그를 출력합니다.
         if (inventoryManager == null)
         {
             Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
