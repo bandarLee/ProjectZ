@@ -1,8 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Microwave : MonoBehaviour
 {
+    public Slider ArrowImageSlider;
 
+    private void Start()
+    {
+        StartCoroutine(FillSliderOverTime(5f)); // 5초에 걸쳐 슬라이더 채우기 시작
+    }
+
+    private IEnumerator FillSliderOverTime(float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            ArrowImageSlider.value = Mathf.Clamp01(elapsedTime / duration);
+            yield return null;
+        }
+        ArrowImageSlider.value = 1f; // 슬라이더를 완전히 채움
+    }
 }
