@@ -18,6 +18,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public Stat Stat { get; private set; }
     public State State { get; private set; } = State.Live;
     private Animator _animator;
+    private InventoryManager _inventoryManager;
 
     private void Awake()
     {
@@ -26,6 +27,13 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         Stat.Init();
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
+        _inventoryManager = FindObjectOfType<InventoryManager>();
+
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();
+
+        }
     }
 
     private void Start()

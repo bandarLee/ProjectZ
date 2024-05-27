@@ -4,15 +4,19 @@ public class InventoryManager : MonoBehaviour
 {
     public InventoryUI playerInventoryUI;
     public BoxInventoryUI boxInventoryUI;
+    public CharacterRotateAbility characterRotateAbility;
+
     public void Start()
     {
         CloseAllInventories();
+
     }
     public void CloseAllInventories()
     {
         playerInventoryUI.CloseInventory();
         boxInventoryUI.CloseInventory();
         CloseItemInfo();
+        characterRotateAbility.SetMouseLock(true);
 
     }
 
@@ -21,6 +25,8 @@ public class InventoryManager : MonoBehaviour
         boxInventoryUI.SetBoxInventory(boxInventory);
         playerInventoryUI.inventoryObject.SetActive(true);
         boxInventoryUI.inventoryObject.SetActive(true);
+        characterRotateAbility.SetMouseLock(false);
+
     }
     public void CloseItemInfo()
     {
@@ -38,10 +44,14 @@ public class InventoryManager : MonoBehaviour
         if (playerInventoryUI.inventoryObject.activeSelf)
         {
             playerInventoryUI.CloseInventory();
+            characterRotateAbility.SetMouseLock(true);
+
         }
         else
         {
             playerInventoryUI.inventoryObject.SetActive(true);
+            characterRotateAbility.SetMouseLock(false);
+
         }
     }
 }

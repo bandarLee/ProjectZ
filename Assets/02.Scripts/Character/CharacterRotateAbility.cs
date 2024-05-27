@@ -12,8 +12,9 @@ public class CharacterRotateAbility : CharacterAbility
 
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        SetMouseLock(true);
+
+
         if (Owner.PhotonView.IsMine)
         {
             GameObject.FindWithTag("FollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = CameraRoot;
@@ -45,7 +46,19 @@ public class CharacterRotateAbility : CharacterAbility
         // 4. 시네머신- virtual 카메라
 
     }
-
+    public void SetMouseLock(bool isLocked)
+    {
+        if (isLocked)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
     public void SetRandomRotation()
     {
         _mx = Random.Range(0, 360);
