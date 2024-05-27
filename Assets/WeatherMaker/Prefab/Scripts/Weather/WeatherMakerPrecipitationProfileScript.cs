@@ -9,34 +9,16 @@ namespace DigitalRuby.WeatherMaker
     /// </summary>
     public enum WeatherMakerPrecipitationType
     {
-        /// <summary>
-        /// 없음
-        /// </summary>
         None = 0,
 
-        /// <summary>
-        /// 비
-        /// </summary>
         Rain = 1,
 
-        /// <summary>
-        /// 눈
-        /// </summary>
         Snow = 2,
 
-        /// <summary>
-        /// 진눈깨비
-        /// </summary>
         Sleet = 3,
 
-        /// <summary>
-        /// 우박
-        /// </summary>
         Hail = 4,
 
-        /// <summary>
-        /// 사용자 정의 강수
-        /// </summary>
         Custom = 127
     }
 
