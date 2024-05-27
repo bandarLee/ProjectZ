@@ -41,10 +41,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (inventoryUI != null)
-        {
-            inventoryUI.UpdateInventoryUI();
-        }
+        inventoryUI.UpdateInventoryUI();
     }
 
     public void RemoveItem(string itemName)
@@ -65,11 +62,7 @@ public class Inventory : MonoBehaviour
             items.Remove(itemName);
         }
 
-        if (inventoryUI != null)
-        {
-            inventoryUI.UpdateInventoryUI();
-        }
-
+        inventoryUI.UpdateInventoryUI();
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
     }
 }

@@ -1,0 +1,27 @@
+diff a/Assets/Resources/ItemPrefabs/고기.prefab b/Assets/Resources/ItemPrefabs/고기.prefab	(rejected hunks)
+@@ -126,3 +126,25 @@
+   serializedVersion: 3
+   m_Size: {x: 0.42991528, y: 0.29749757, z: 0.50934243}
+   m_Center: {x: 0.01057227, y: 0.028554916, z: -0.034351297}
++--- !u!114 &-3881380097147645349
++MonoBehaviour:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 6069844887605053465}
++  m_Enabled: 1
++  m_EditorHideFlags: 0
++  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
++  m_Name: 
++  m_EditorClassIdentifier: 
++  ObservedComponentsFoldoutOpen: 1
++  Group: 0
++  prefixField: -1
++  Synchronization: 3
++  OwnershipTransfer: 0
++  observableSearch: 2
++  ObservedComponents: []
++  sceneViewId: 0
++  InstantiationId: 0
++  isRuntimeInstantiated: 0

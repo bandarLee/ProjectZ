@@ -1,16 +1,15 @@
-using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Collections.Generic;
 
-public class ItemGenerateManager : MonoBehaviourPunCallbacks
+public class ItemGenerateManager : MonoBehaviour
 {
-    public ItemPresets itemPresetsContainer;
+    public ItemPresets itemPresetsContainer; // ItemPresets ��ũ��Ʈ�� �����մϴ�.
     public List<BoxInventory> allBoxInventories;
-    public List<BoxTypeConfig> boxTypeConfigs;
-
+    public List<BoxTypeConfig> boxTypeConfigs; // �� BoxType�� ���� ���� ����Ʈ
     private void Start()
     {
+
         if (itemPresetsContainer == null)
         {
             Debug.LogError("ItemPresetsContainer is not set.");
@@ -19,26 +18,23 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
 
         allBoxInventories = FindObjectsOfType<BoxInventory>().ToList();
 
-        if (PhotonNetwork.IsMasterClient)
+        foreach (var box in allBoxInventories)
         {
-            foreach (var box in allBoxInventories)
-            {
-                GenerateItemsForBox(box);
-            }
+            GenerateItemsForBox(box);
         }
     }
 
     public void GenerateItemsForBox(BoxInventory box)
     {
         var config = boxTypeConfigs.FirstOrDefault(c => c.boxType == box.boxType);
-        if (config.boxType != box.boxType) return;
+        if (config.boxType != box.boxType) return; // ������ ������ ����
 
         for (int i = 0; i < config.itemCount; i++)
         {
             Item randomItem = GetRandomItem(config);
             if (randomItem != null)
             {
-                photonView.RPC("AddItemToBox", RpcTarget.AllBuffered, box.photonView.ViewID, randomItem.itemName);
+                box.AddItem(randomItem);
             }
             else
             {
@@ -75,16 +71,5 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         }
 
         return itemPresetsContainer.GenerateRandomItem(selectedType);
-    }
-
-    [PunRPC]
-    public void AddItemToBox(int boxViewID, string itemName)
-    {
-        var box = PhotonView.Find(boxViewID).GetComponent<BoxInventory>();
-        var item = itemPresetsContainer.GenerateRandomItem((ItemType)System.Enum.Parse(typeof(ItemType), itemName));
-        if (box != null && item != null)
-        {
-            box.AddItem(item);
-        }
     }
 }

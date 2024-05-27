@@ -1,4 +1,3 @@
-using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,12 +30,10 @@ public class BoxInventory : MonoBehaviour
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public BoxInventoryUI boxInventoryUI;
-    public PhotonView photonView;
 
     private void Start()
     {
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
-        photonView = GetComponent<PhotonView>();
         if (boxInventoryUI != null)
         {
             boxInventoryUI.SetBoxInventory(this);

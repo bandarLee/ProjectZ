@@ -2979,7 +2979,7 @@ GameObject:
   - component: {fileID: 3166254146192652543}
   m_Layer: 0
   m_Name: Character_Female
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3700,6 +3700,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 0
     Name: RootRotationOffset
+  - Type: 1
+    SynchronizeType: 0
+    Name: Forward
+  - Type: 1
+    SynchronizeType: 0
+    Name: Strafe
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

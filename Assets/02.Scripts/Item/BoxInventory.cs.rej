@@ -1,0 +1,6 @@
+diff a/Assets/02.Scripts/Item/BoxInventory.cs b/Assets/02.Scripts/Item/BoxInventory.cs	(rejected hunks)
+@@ -2,3 +3,4 @@
++using Photon.Pun;
+ using System.Collections.Generic;
+ using UnityEngine;
+ 

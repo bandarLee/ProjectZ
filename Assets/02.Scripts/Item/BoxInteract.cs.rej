@@ -1,0 +1,9 @@
+diff a/Assets/02.Scripts/Item/BoxInteract.cs b/Assets/02.Scripts/Item/BoxInteract.cs	(rejected hunks)
+@@ -1,5 +1,7 @@
+ using System.Collections;
+ using UnityEngine;
++using Photon.Pun;
++
+ 
+ public class BoxInteract : MonoBehaviour
+ {
