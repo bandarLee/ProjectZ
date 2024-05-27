@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class QuickSlotManager : MonoBehaviour
     public Inventory inventory;
 
     private InventoryManager inventoryManager;
+    private CharacterItemAbility characterItemAbility;
 
     private void Start()
     {
@@ -22,11 +24,24 @@ public class QuickSlotManager : MonoBehaviour
         }
 
         inventoryManager = FindObjectOfType<InventoryManager>();
-        inventory = FindObjectOfType<Inventory>();
 
         if (inventoryManager == null)
         {
             Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
+        }
+
+        inventory = FindObjectOfType<Inventory>();
+
+        if (inventory == null)
+        {
+            Debug.LogError("Inventory를 찾을 수 없습니다. 씬에 Inventory가 있는지 확인하세요.");
+        }
+
+        characterItemAbility = inventory.GetComponent<CharacterItemAbility>();
+
+        if (characterItemAbility == null)
+        {
+            Debug.LogError("CharacterItemAbility를 찾을 수 없습니다. Player 객체에 CharacterItemAbility가 있는지 확인하세요.");
         }
     }
 
@@ -87,30 +102,14 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
-                DropItemPrefab(currentEquippedItem);
+
+                // CharacterItemAbility를 사용하여 RPC 호출
+                characterItemAbility.PhotonView.RPC("DropItemPraefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
+
                 currentEquippedItem = null;
             }
 
             inventoryManager.UpdateAllInventories();
-        }
-    }
-
-    private void DropItemPrefab(Item item)
-    {
-        GameObject itemPrefab = Resources.Load<GameObject>("ItemPrefabs/" + item.itemName);
-        if (itemPrefab != null)
-        {
-            Vector3 dropPosition = inventory.gameObject.transform.position + transform.forward * 2f + transform.up * 1.5f;
-            GameObject droppedItem = Instantiate(itemPrefab, dropPosition, Quaternion.identity);
-            ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
-            if (itemPickup != null)
-            {
-                itemPickup.item = item;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Item prefab not found in Resources/ItemPrefabs: " + item.itemName);
         }
     }
 
@@ -178,7 +177,7 @@ public class QuickSlotManager : MonoBehaviour
         {
             UseQuickSlotItem(3);
         }
-        if (Input.GetMouseButtonDown(0)) // 좌클릭
+        if (Input.GetMouseButtonDown(0))
         {
             if (currentEquippedItem != null)
             {
@@ -210,11 +209,11 @@ public class QuickSlotManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1)) // 우클릭
+        if (Input.GetMouseButtonDown(1))
         {
             DropEquippedItem();
         }
-        if (Input.GetKeyDown(KeyCode.I)) // 'I' 키로 인벤토리 토글
+        if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryManager.TogglePlayerInventory();
         }

@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
 
-public class ItemGenerateManager : MonoBehaviour
+public class ItemGenerateManager : MonoBehaviourPunCallbacks
 {
-    public ItemPresets itemPresetsContainer; // ItemPresets ��ũ��Ʈ�� �����մϴ�.
+    public ItemPresets itemPresetsContainer; // ItemPresets 스크립트를 참조합니다.
     public List<BoxInventory> allBoxInventories;
-    public List<BoxTypeConfig> boxTypeConfigs; // �� BoxType�� ���� ���� ����Ʈ
+    public List<BoxTypeConfig> boxTypeConfigs; // 각 BoxType에 대한 설정 리스트
+
     private void Start()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return; 
+        }
 
         if (itemPresetsContainer == null)
         {
@@ -27,7 +33,7 @@ public class ItemGenerateManager : MonoBehaviour
     public void GenerateItemsForBox(BoxInventory box)
     {
         var config = boxTypeConfigs.FirstOrDefault(c => c.boxType == box.boxType);
-        if (config.boxType != box.boxType) return; // ������ ������ ����
+        if (config.boxType != box.boxType) return; // 설정이 없으면 리턴
 
         for (int i = 0; i < config.itemCount; i++)
         {

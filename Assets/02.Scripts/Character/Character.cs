@@ -9,6 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStatAbility))]
 [RequireComponent(typeof(CharacterAttackAbility))]
 [RequireComponent(typeof(CharacterAbility))]
+[RequireComponent(typeof(CharacterItemAbility))]
+
 [RequireComponent(typeof(Animator))]
 
 public class Character : MonoBehaviour, IPunObservable, IDamaged
