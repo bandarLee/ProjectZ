@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 792488204890244226}
+  - component: {fileID: 2759689775074174475}
   m_Layer: 0
   m_Name: MicroWave 1
   m_TagString: Untagged
@@ -116,6 +117,19 @@ Transform:
   - {fileID: 4598387311605275196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2759689775074174475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317625510412975277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a769a3d2041f024c98996be5931d1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrowImageSlider: {fileID: 0}
 --- !u!1 &6955562207610331962
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,8 +458,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6126056261078315703, guid: 546446e2800972749b5f94959ea0bdfe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5038637760637465278}
   m_SourcePrefab: {fileID: 100100000, guid: 546446e2800972749b5f94959ea0bdfe, type: 3}
+--- !u!1 &250912756371503704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6126056261078315703, guid: 546446e2800972749b5f94959ea0bdfe, type: 3}
+  m_PrefabInstance: {fileID: 6232828385412925679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5038637760637465278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250912756371503704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a769a3d2041f024c98996be5931d1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrowImageSlider: {fileID: 0}
 --- !u!4 &1529511529798191579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4847736618796056884, guid: 546446e2800972749b5f94959ea0bdfe, type: 3}
