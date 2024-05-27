@@ -714,6 +714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Police_Cabinet2
       objectReference: {fileID: 0}
+    - target: {fileID: 3785743396499595383, guid: be17a4a32f5342444bcb43413118a52a, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2505,6 +2509,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4561532502798139642, guid: 04f47c737a812a448b7822c5c274456b, type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5097267968836557087, guid: 04f47c737a812a448b7822c5c274456b, type: 3}
       propertyPath: m_Name
       value: Warehouse_Cabinet2
@@ -3533,6 +3541,10 @@ PrefabInstance:
     - target: {fileID: 531026836639225704, guid: 3c6ce25cbc7ef154cb3c0da1d06909d9, type: 3}
       propertyPath: m_Name
       value: Police_Cabinet
+      objectReference: {fileID: 0}
+    - target: {fileID: 3195430880524286198, guid: 3c6ce25cbc7ef154cb3c0da1d06909d9, type: 3}
+      propertyPath: sceneViewId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3862957751129751495, guid: 3c6ce25cbc7ef154cb3c0da1d06909d9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5724,6 +5736,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Postoffice_Cabinet
       objectReference: {fileID: 0}
+    - target: {fileID: 5648716408611762424, guid: e86b336ad3a9189439190eb660dafec1, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6154334047364596319, guid: e86b336ad3a9189439190eb660dafec1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -36.08235
@@ -6500,6 +6516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PostOffice_Cabinet2
       objectReference: {fileID: 0}
+    - target: {fileID: 5693119885595432461, guid: 3318f7a113af38d43864a631133021cb, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6934,6 +6954,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4343839484502949119, guid: dd84e339529c96849a62a6ac4e348dd4, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8044941430123091701, guid: dd84e339529c96849a62a6ac4e348dd4, type: 3}
       propertyPath: m_Name
       value: Warehouse_cabinet
@@ -44148,6 +44172,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 39818487520846307, guid: 037b675a0a917164487e0afce816485c, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2679858516062360366, guid: 037b675a0a917164487e0afce816485c, type: 3}
       propertyPath: m_Name
       value: Diner_Cabinet2

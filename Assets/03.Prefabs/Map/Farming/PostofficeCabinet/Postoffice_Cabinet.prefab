@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 1320547547052366422}
   - component: {fileID: 2508826856154188089}
   - component: {fileID: 3633776220891216713}
+  - component: {fileID: 5648716408611762424}
   m_Layer: 0
   m_Name: Postoffice_Cabinet_Area
   m_TagString: Untagged
@@ -216,6 +217,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 1.0000001, z: 1}
   m_Center: {x: 0.0000009536743, y: 0, z: 0.00000047683716}
+--- !u!114 &5648716408611762424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343695590179482447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &817474913103604775
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,6 +47,8 @@ MonoBehaviour:
   - Mental
   - Temperature
   - PlayAttackAnimation
+  - AddItemToBox
+  - DropItemPrefab
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

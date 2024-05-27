@@ -1,18 +1,19 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviourPunCallbacks
 {
     public Item item;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && photonView.IsMine)
         {
             Inventory inventory = other.GetComponent<Inventory>();
             if (inventory != null)
             {
                 inventory.AddItem(item);
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }

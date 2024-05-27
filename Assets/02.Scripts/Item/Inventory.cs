@@ -7,6 +7,17 @@ public class Inventory : MonoBehaviour
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
 
+    private void Awake()
+    {
+        // 동적으로 InventoryUI를 찾아 할당
+        inventoryUI = FindObjectOfType<InventoryUI>(true);
+
+        // 만약 찾지 못했다면, 로그를 출력합니다.
+        if (inventoryUI == null)
+        {
+            Debug.LogError("InventoryUI를 찾을 수 없습니다. 씬에 InventoryUI가 있는지 확인하세요.");
+        }
+    }
 
     public void AddItem(Item newItem)
     {
@@ -30,7 +41,10 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        inventoryUI.UpdateInventoryUI();
+        if (inventoryUI != null)
+        {
+            inventoryUI.UpdateInventoryUI();
+        }
     }
 
     public void RemoveItem(string itemName)
@@ -51,7 +65,11 @@ public class Inventory : MonoBehaviour
             items.Remove(itemName);
         }
 
-        inventoryUI.UpdateInventoryUI();
+        if (inventoryUI != null)
+        {
+            inventoryUI.UpdateInventoryUI();
+        }
+
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
     }
 }

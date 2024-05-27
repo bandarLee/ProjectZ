@@ -22,6 +22,12 @@ public class QuickSlotManager : MonoBehaviour
         }
 
         inventoryManager = FindObjectOfType<InventoryManager>();
+
+        // 만약 찾지 못했다면, 로그를 출력합니다.
+        if (inventoryManager == null)
+        {
+            Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
+        }
     }
 
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
@@ -88,12 +94,13 @@ public class QuickSlotManager : MonoBehaviour
             inventoryManager.UpdateAllInventories();
         }
     }
+
     private void DropItemPrefab(Item item)
     {
         GameObject itemPrefab = Resources.Load<GameObject>("ItemPrefabs/" + item.itemName);
         if (itemPrefab != null)
         {
-            Vector3 dropPosition = inventory.gameObject.transform.position + transform.forward * 2f + transform.up * 1.5f; ;
+            Vector3 dropPosition = inventory.gameObject.transform.position + transform.forward * 2f + transform.up * 1.5f;
             GameObject droppedItem = Instantiate(itemPrefab, dropPosition, Quaternion.identity);
             ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
             if (itemPickup != null)
@@ -106,6 +113,7 @@ public class QuickSlotManager : MonoBehaviour
             Debug.LogWarning("Item prefab not found in Resources/ItemPrefabs: " + item.itemName);
         }
     }
+
     public void RemoveItemFromQuickSlots(Item item)
     {
         for (int i = 0; i < quickSlotItems.Length; i++)

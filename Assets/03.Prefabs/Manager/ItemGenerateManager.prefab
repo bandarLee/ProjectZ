@@ -47,4 +47,53 @@ MonoBehaviour:
   itemPresetsContainer: {fileID: 0}
   allBoxInventories:
   - {fileID: 0}
-  boxTypeConfigs: []
+  boxTypeConfigs:
+  - boxType: 0
+    itemCount: 3
+    foodProbability: 50
+    weaponProbability: 10
+    healProbability: 10
+    mentalProbability: 20
+    etcProbability: 10
+  - boxType: 1
+    itemCount: 4
+    foodProbability: 30
+    weaponProbability: 30
+    healProbability: 20
+    mentalProbability: 10
+    etcProbability: 10
+  - boxType: 2
+    itemCount: 2
+    foodProbability: 30
+    weaponProbability: 30
+    healProbability: 20
+    mentalProbability: 10
+    etcProbability: 10
+  - boxType: 5
+    itemCount: 4
+    foodProbability: 30
+    weaponProbability: 10
+    healProbability: 25
+    mentalProbability: 25
+    etcProbability: 10
+  - boxType: 6
+    itemCount: 2
+    foodProbability: 30
+    weaponProbability: 10
+    healProbability: 25
+    mentalProbability: 25
+    etcProbability: 10
+  - boxType: 3
+    itemCount: 4
+    foodProbability: 25
+    weaponProbability: 15
+    healProbability: 30
+    mentalProbability: 15
+    etcProbability: 15
+  - boxType: 4
+    itemCount: 2
+    foodProbability: 25
+    weaponProbability: 15
+    healProbability: 30
+    mentalProbability: 15
+    etcProbability: 15
