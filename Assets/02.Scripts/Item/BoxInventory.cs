@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public enum BoxType
 {
@@ -24,15 +25,17 @@ public struct BoxTypeConfig
 }
 
 
-public class BoxInventory : MonoBehaviour
+public class BoxInventory : MonoBehaviourPunCallbacks
 {
     public BoxType boxType;
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public BoxInventoryUI boxInventoryUI;
+    private PhotonView photonView;
 
     private void Start()
     {
+        photonView = GetComponent<PhotonView>();
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -73,6 +76,32 @@ public class BoxInventory : MonoBehaviour
             }
             UpdateInventoryUI();
         }
+    }
+
+    public void TransferToPlayerInventory(string itemName)
+    {
+        var item = items[itemName];
+        RemoveItem(itemName);
+        photonView.RPC("RPC_TransferToPlayerInventory", RpcTarget.AllBuffered, itemName, item.itemType.ToString(), item.icon.name, item.itemEffect, item.itemDescription, item.uniqueId);
+    }
+
+    [PunRPC]
+    public void RPC_TransferToPlayerInventory(string itemName, string itemType, string iconName, string itemEffect, string itemDescription, string uniqueId)
+    {
+        var itemTypeEnum = (ItemType)System.Enum.Parse(typeof(ItemType), itemType);
+        var icon = Resources.Load<Sprite>("Icons/" + iconName);
+
+        var item = new Item
+        {
+            itemName = itemName,
+            itemType = itemTypeEnum,
+            icon = icon,
+            itemEffect = itemEffect,
+            itemDescription = itemDescription,
+            uniqueId = uniqueId
+        };
+
+        FindObjectOfType<Inventory>().AddItem(item);
     }
 
     public void UpdateInventoryUI()
