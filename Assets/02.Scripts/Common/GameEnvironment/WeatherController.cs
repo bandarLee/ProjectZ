@@ -41,6 +41,7 @@ namespace DigitalRuby.WeatherMaker
 
         private void SetDailyWeather()
         {
+
             float randomValue = Random.Range(0f, 1f);
             Debug.Log("³¯¾¾ ·£´ý");
 
