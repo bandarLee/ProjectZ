@@ -50,6 +50,9 @@ MonoBehaviour:
   - AddItemToBox
   - DropItemPrefab
   - RPC_TransferToPlayerInventory
+  - RPC_AddItem
+  - RPC_RemoveItem
+  - RPC_AddItemToBox
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

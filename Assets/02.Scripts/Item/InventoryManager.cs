@@ -8,7 +8,6 @@ public class InventoryManager : MonoBehaviour
 
     public void Start()
     {
-        CloseAllInventories();
 
     }
     public void CloseAllInventories()
