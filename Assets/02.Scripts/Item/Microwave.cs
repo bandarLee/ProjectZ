@@ -8,7 +8,7 @@ public class Microwave : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FillSliderOverTime(5f)); // 5초에 걸쳐 슬라이더 채우기 시작
+        StartCoroutine(FillSliderOverTime(5f)); 
     }
 
     private IEnumerator FillSliderOverTime(float duration)
@@ -20,6 +20,6 @@ public class Microwave : MonoBehaviour
             ArrowImageSlider.value = Mathf.Clamp01(elapsedTime / duration);
             yield return null;
         }
-        ArrowImageSlider.value = 1f; // 슬라이더를 완전히 채움
+        ArrowImageSlider.value = 1f; 
     }
 }
