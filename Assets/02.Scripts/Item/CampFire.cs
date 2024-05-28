@@ -8,6 +8,7 @@ public class CampFire : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("¸ð´ÚºÒ¿¡ Æ®¸®°Å!");
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
             if (characterStatAbility != null)
             {
@@ -20,6 +21,8 @@ public class CampFire : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("¸ð´ÚºÒÀ» ¹þ¾î³²!");
+
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
             if (characterStatAbility != null)
             {

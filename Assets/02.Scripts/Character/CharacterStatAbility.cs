@@ -97,8 +97,8 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (true)
         {
-            yield return new WaitForSeconds(5); // 5초마다 실행
-            Stat.Temperature += 10; // 온도 증가
+            yield return new WaitForSeconds(5); 
+            Stat.Temperature += 5; 
             if (Owner.PhotonView.IsMine)
             {
                 UI_Temperature.Instance.SetTemperature(Stat.Temperature);
