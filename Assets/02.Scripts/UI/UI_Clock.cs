@@ -27,7 +27,6 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         Sun.rectTransform.anchoredPosition = Vector2.zero;
         Moon.rectTransform.anchoredPosition = Vector2.zero;
 
-        // 마스터 클라이언트가 아닌 경우 마스터 클라이언트에 현재 시간 요청
         if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
@@ -42,7 +41,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private void UpdateSunAndMoonVisibility()
+    private void UpdateSunAndMoonVisibility() // 현재 시간을 기준으로 슬라이더와 UI를 업데이트
     {
         // 슬라이더 값을 현재 시간으로 설정 (하루의 중간 시간인 43200초를 기준으로)
         float timeOfDay = dayNightCycleManager.TimeOfDay - 31600;
@@ -96,7 +95,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    private void RequestTimeFromMaster()
+    private void RequestTimeFromMaster() // 마스터 클라이언트에게 현재 시간을 요청
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -105,13 +104,14 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    private void SyncTime(float masterTimeOfDay, int masterTimeType)
+    private void SyncTime(float masterTimeOfDay, int masterTimeType) // 마스터 클라이언트에서 시간을 받아와 동기화
     {
         dayNightCycleManager.TimeOfDay = masterTimeOfDay;
         gameTimeScript.CurrentTimeType = (GameTime.TimeType)masterTimeType;
-        UpdateSunAndMoonVisibility();
+        UpdateSunAndMoonVisibility(); // 받은 시간으로 UI 업데이트
     }
 
+    // 포톤의 IPunObservable 인터페이스 사용해 마스터 클라이언트가 현재 시간을 전송하고, 다른 클라이언트가 이것을 받아오게 함
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting && PhotonNetwork.IsMasterClient)
@@ -123,7 +123,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         {
             dayNightCycleManager.TimeOfDay = (float)stream.ReceiveNext();
             gameTimeScript.CurrentTimeType = (GameTime.TimeType)stream.ReceiveNext();
-            UpdateSunAndMoonVisibility();
+            UpdateSunAndMoonVisibility(); // 받은 시간으로 UI 업데이트
         }
     }
 }
