@@ -14,18 +14,15 @@ public class CharacterItemAbility : CharacterAbility
     [PunRPC]
     public void DropItemPrefab(string itemName, Vector3 position, Vector3 forward)
     {
-        Debug.Log($"Attempting to drop item: {itemName} at position: {position} with forward: {forward}");
 
         GameObject itemPrefab = Resources.Load<GameObject>("ItemPrefabs/" + itemName);
         if (itemPrefab != null)
         {
-            Debug.Log($"Prefab {itemName} loaded successfully.");
             Vector3 dropPosition = position + forward * 2f + Vector3.up * 1.5f;
             GameObject droppedItem = Instantiate(itemPrefab, dropPosition, Quaternion.identity);
             ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
             if (itemPickup != null)
             {
-                Debug.Log($"ItemPickup component found on prefab {itemName}.");
                 itemPickup.item = new Item
                 {
                     itemName = itemName,
@@ -35,16 +32,9 @@ public class CharacterItemAbility : CharacterAbility
                     itemDescription = "",
                     uniqueId = System.Guid.NewGuid().ToString()
                 };
-                Debug.Log($"Item {itemName} initialized successfully.");
             }
-            else
-            {
-                Debug.LogWarning($"ItemPickup component not found on prefab {itemName}.");
-            }
+
         }
-        else
-        {
-            Debug.LogWarning("Item prefab not found in Resources/ItemPrefabs: " + itemName);
-        }
+   
     }
 }

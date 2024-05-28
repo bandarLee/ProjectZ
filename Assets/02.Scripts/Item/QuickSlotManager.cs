@@ -103,9 +103,14 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
 
-                // CharacterItemAbility를 사용하여 RPC 호출
-                characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
-
+                if (characterItemAbility != null && characterItemAbility.PhotonView != null)
+                {
+                    characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
+                }
+                else
+                {
+                    Debug.LogError("CharacterItemAbility 또는 PhotonView가 null입니다. RPC를 호출할 수 없습니다.");
+                }
                 currentEquippedItem = null;
             }
 

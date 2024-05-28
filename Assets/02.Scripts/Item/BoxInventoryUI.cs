@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using Photon.Pun;
 
 public class BoxInventoryUI : MonoBehaviour
 {
