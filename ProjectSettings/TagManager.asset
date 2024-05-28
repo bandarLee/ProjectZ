@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UMAIgnore
   - FollowCamera
+  - CampFire
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,5 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStatAbility : CharacterAbility
@@ -8,7 +7,7 @@ public class CharacterStatAbility : CharacterAbility
     public Stat Stat;
     public State State;
 
-    public GameTime gameTime;  
+    public GameTime gameTime;
 
     private void Start()
     {
@@ -32,7 +31,6 @@ public class CharacterStatAbility : CharacterAbility
             return;
         }
         Stat.Temperature += temperature;
-
     }
 
     private IEnumerator HungerRoutine()
@@ -71,7 +69,7 @@ public class CharacterStatAbility : CharacterAbility
             //  밤일 때 정신력 감소(10초마다 5씩 감소)
             if (gameTime.CurrentTimeType == GameTime.TimeType.Night)
             {
-                Stat.Mental -= 5;       
+                Stat.Mental -= 5;
             }
 
             if (Stat.Mental <= 0)
@@ -91,6 +89,19 @@ public class CharacterStatAbility : CharacterAbility
             if (Stat.Health <= 0)
             {
                 Stat.Health = 0;
+            }
+        }
+    }
+
+    public IEnumerator IncreaseTemperatureRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5); // 5초마다 실행
+            Stat.Temperature += 10; // 온도 증가
+            if (Owner.PhotonView.IsMine)
+            {
+                UI_Temperature.Instance.SetTemperature(Stat.Temperature);
             }
         }
     }

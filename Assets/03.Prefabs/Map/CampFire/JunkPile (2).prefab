@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4942309239365788813}
   - component: {fileID: 8647768359123256528}
+  - component: {fileID: 3033762277221041244}
   m_Layer: 7
   m_Name: JunkPile (2)
-  m_TagString: Untagged
+  m_TagString: CampFire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,6 +65,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.914166
   m_Center: {x: 0.26493883, y: 0.7072072, z: -0.036401752}
+--- !u!114 &3033762277221041244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369539204680685480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb04f088244d794dafa19096b375b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3791998515605167
 PrefabInstance:
   m_ObjectHideFlags: 0
