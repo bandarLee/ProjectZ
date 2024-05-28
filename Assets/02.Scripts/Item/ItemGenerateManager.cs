@@ -3,12 +3,14 @@ using UnityEngine;
 using System.Linq;
 using Photon.Pun;
 using ExitGames.Client.Photon;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ItemGenerateManager : MonoBehaviourPunCallbacks
 {
-    public ItemPresets itemPresetsContainer; // ItemPresets 스크립트를 참조합니다.
+    public ItemPresets itemPresetsContainer;
     public List<BoxInventory> allBoxInventories;
-    public List<BoxTypeConfig> boxTypeConfigs; // 각 BoxType에 대한 설정 리스트
+    public List<BoxTypeConfig> boxTypeConfigs;
 
     private Dictionary<int, List<ItemData>> generatedItemsData = new Dictionary<int, List<ItemData>>();
 
@@ -32,7 +34,7 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            LoadGeneratedItemsFromRoomProperties();
+            StartCoroutine(LoadGeneratedItemsAfterDelay()); 
         }
     }
 
@@ -50,7 +52,10 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
                 {
                     ItemName = randomItem.itemName,
                     ItemTypeString = randomItem.itemType.ToString(),
-                    UniqueId = randomItem.uniqueId
+                    UniqueId = randomItem.uniqueId,
+                    IconPath = randomItem.iconPath,
+                    ItemEffect = randomItem.itemEffect,
+                    ItemDescription = randomItem.itemDescription
                 };
                 boxItemsData.Add(itemData);
                 box.AddItem(randomItem);
@@ -101,7 +106,11 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
     }
-
+    private IEnumerator LoadGeneratedItemsAfterDelay()
+    {
+        yield return new WaitForSeconds(1f); 
+        LoadGeneratedItemsFromRoomProperties();
+    }
     private void LoadGeneratedItemsFromRoomProperties()
     {
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GeneratedItemsData", out object serializedData))
@@ -114,11 +123,26 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
                 {
                     foreach (var itemData in itemDataList)
                     {
+                        string iconPath = itemData.IconPath;
+                        Debug.Log($"Loading icon from path: {iconPath}");
+                        Sprite icon = Resources.Load<Sprite>(iconPath);
+                        if (icon == null)
+                        {
+                            Debug.LogError($"Failed to load icon at path: {iconPath}");
+                        }
+                        else
+                        {
+                            Debug.Log($"Successfully loaded icon at path: {iconPath}");
+                        }
+
                         box.AddItem(new Item
                         {
                             itemName = itemData.ItemName,
                             itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString),
-                            uniqueId = itemData.UniqueId
+                            uniqueId = itemData.UniqueId,
+                            icon = icon,
+                            itemEffect = itemData.ItemEffect,
+                            itemDescription = itemData.ItemDescription
                         });
                     }
                 }
@@ -126,12 +150,15 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         }
     }
 
+
     [System.Serializable]
     public struct ItemData
     {
         public string ItemName;
         public string ItemTypeString;
         public string UniqueId;
+        public string IconPath;
+        public string ItemEffect;
+        public string ItemDescription;
     }
 }
-
