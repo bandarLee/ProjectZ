@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,32 +9,11 @@ public class ItemPreset
     public ItemType itemType;
     public string itemEffect;
     public string itemDescription;
-    public string iconPath;
 }
 
 public class ItemPresets : MonoBehaviour
 {
     public ItemPreset[] presets;
-    private Dictionary<string, Sprite> iconCache = new Dictionary<string, Sprite>();
-
-    private void Start()
-    {
-        foreach (var preset in presets)
-        {
-            if (!iconCache.ContainsKey(preset.iconPath))
-            {
-                Sprite icon = Resources.Load<Sprite>(preset.iconPath);
-                if (icon != null)
-                {
-                    iconCache[preset.iconPath] = icon;
-                }
-                else
-                {
-                    Debug.LogError($"Failed to load icon at path: {preset.iconPath}");
-                }
-            }
-        }
-    }
 
     public Item GenerateRandomItem(ItemType type)
     {
@@ -46,12 +24,17 @@ public class ItemPresets : MonoBehaviour
         return new Item
         {
             itemName = preset.itemName,
-            iconPath = preset.iconPath,
-            icon = iconCache.ContainsKey(preset.iconPath) ? iconCache[preset.iconPath] : null,
+            icon = preset.icon,
             itemType = preset.itemType,
             itemEffect = preset.itemEffect,
             itemDescription = preset.itemDescription,
             uniqueId = System.Guid.NewGuid().ToString()
         };
+    }
+
+    public Sprite GetIconByName(string itemName)
+    {
+        var preset = presets.FirstOrDefault(p => p.itemName == itemName);
+        return preset != null ? preset.icon : null;
     }
 }

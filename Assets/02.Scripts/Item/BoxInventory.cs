@@ -2,28 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public enum BoxType
-{
-    Diner,
-    PoliceLarge,
-    PoliceSmall,
-    PostOfficeLarge,
-    PostOfficeSmall,
-    WarehouseLarge,
-    WarehouseSmall
-}
 
-[System.Serializable]
-public struct BoxTypeConfig
-{
-    public BoxType boxType;
-    public int itemCount;
-    public float foodProbability;
-    public float weaponProbability;
-    public float healProbability;
-    public float mentalProbability;
-    public float etcProbability;
-}
 
 public class BoxInventory : MonoBehaviourPunCallbacks
 {
@@ -34,7 +13,6 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonView photonView = GetComponent<PhotonView>();
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -44,21 +22,22 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void AddItemRPC(string itemName, string itemType, string uniqueId, string iconPath, string itemEffect, string itemDescription)
+    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
     {
+        var icon = FindObjectOfType<ItemPresets>().GetIconByName(itemName);
         Item newItem = new Item
         {
             itemName = itemName,
             itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType),
             uniqueId = uniqueId,
-            icon = Resources.Load<Sprite>(iconPath),
+            icon = icon,
             itemEffect = itemEffect,
             itemDescription = itemDescription
         };
         AddItem(newItem, false);
     }
 
-    public void AddItem(Item newItem, bool sync = true)
+    public void AddItem(Item newItem, bool synchronize = true)
     {
         string itemName = newItem.uniqueId;
         items[itemName] = newItem;
@@ -72,12 +51,12 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             itemQuantities[itemName] = 1;
         }
 
-        UpdateInventoryUI();
-
-        if (sync)
+        if (synchronize)
         {
-            photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.icon.name, newItem.itemEffect, newItem.itemDescription);
+            photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
         }
+
+        UpdateInventoryUI();
     }
 
     [PunRPC]
@@ -86,7 +65,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         RemoveItem(itemName, false);
     }
 
-    public void RemoveItem(string itemName, bool sync = true)
+    public void RemoveItem(string itemName, bool synchronize = true)
     {
         if (items.ContainsKey(itemName))
         {
@@ -99,12 +78,13 @@ public class BoxInventory : MonoBehaviourPunCallbacks
                 items.Remove(itemName);
                 itemQuantities.Remove(itemName);
             }
-            UpdateInventoryUI();
 
-            if (sync)
+            if (synchronize)
             {
                 photonView.RPC("RemoveItemRPC", RpcTarget.OthersBuffered, itemName);
             }
+
+            UpdateInventoryUI();
         }
     }
 
