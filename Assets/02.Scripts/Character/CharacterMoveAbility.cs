@@ -42,17 +42,6 @@ public class CharacterMoveAbility : CharacterAbility
         _yVelocity = Mathf.SmoothDamp(_yVelocity, _gravity * Time.deltaTime, ref _velocitySmoothing, 0.4f);
         Vector3 finalDir = new Vector3(horizontalDir.x, _yVelocity, horizontalDir.z);
 
-        // 루트 회전 오프셋 설정
-        if (Mathf.Abs(h) > 0.1f) // 좌우 이동 감지
-        {
-            float rootRotationOffset = h > 0 ? -90f : 90f;
-            _animator.SetFloat("RootRotationOffset", rootRotationOffset);
-        }
-        else
-        {
-            _animator.SetFloat("RootRotationOffset", 0f);
-        }
-
         // 4. 달리기 적용
         float speed = Owner.Stat.MoveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
