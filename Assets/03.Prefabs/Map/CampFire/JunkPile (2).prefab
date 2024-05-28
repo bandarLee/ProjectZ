@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4942309239365788813}
+  - component: {fileID: 8647768359123256528}
   m_Layer: 7
   m_Name: JunkPile (2)
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3369539204680685480}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.032649726, y: -0.84595406, z: 0.047204684, w: 0.53015804}
+  m_LocalRotation: {x: -0.03264958, y: -0.84595263, z: 0.047201198, w: 0.53016055}
   m_LocalPosition: {x: 1219.649, y: 105.675, z: 1078.719}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -42,6 +43,27 @@ Transform:
   - {fileID: 5199706839406084793}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 2.5930002, y: -115.712006, z: 6.05}
+--- !u!135 &8647768359123256528
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369539204680685480}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.914166
+  m_Center: {x: 0.26493883, y: 0.7072072, z: -0.036401752}
 --- !u!1001 &3791998515605167
 PrefabInstance:
   m_ObjectHideFlags: 0
