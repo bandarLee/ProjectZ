@@ -1,14 +1,14 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
-    public class WeatherController : MonoBehaviour
+    public class WeatherController : MonoBehaviourPun
     {
         public WeatherMakerPrecipitationProfileScript RainProfile;
         public WeatherMakerPrecipitationProfileScript SnowProfile;
         public WeatherMakerPrecipitationProfileScript NoneProfile;
-        //public WeatherMakerPrecipitationProfileScript Thunder;
 
         private WeatherMakerPrecipitationManagerScript precipitationManager;
 
@@ -21,53 +21,86 @@ namespace DigitalRuby.WeatherMaker
                 return;
             }
 
-            // 게임 시작 날씨 : 비
-            SetWeather(RainProfile);
-
-            // n분 후부터 날씨를 랜덤하게 변경하는 코루틴 시작
-            StartCoroutine(DailyWeatherRoutine());
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(DailyWeatherRoutine());
+            }
         }
 
         private IEnumerator DailyWeatherRoutine()
         {
-            yield return new WaitForSeconds(10f); // 10초 대기
+            yield return new WaitForSeconds(20f); // 10초 대기
 
             while (true)
             {
                 SetDailyWeather();
-                yield return new WaitForSeconds(10f); // 10초마다 날씨 변경
+                yield return new WaitForSeconds(20f); // 10초마다 날씨 변경
+                
             }
         }
 
         private void SetDailyWeather()
         {
-
             float randomValue = Random.Range(0f, 1f);
-            Debug.Log("날씨 랜덤");
+            int weatherType = 0;
 
             if (randomValue < 0.2f)
             {
-                Debug.Log("날씨 : 비");
                 SetWeather(RainProfile);
-                UI_Temperature.Instance.SetTemperature(-5); // 추움
+                SetTemperatureSafely(-5); // 추움
+                weatherType = 1;
             }
             else if (randomValue < 0.4f)
             {
-                Debug.Log("날씨 : 눈보라");
                 SetWeather(SnowProfile);
-                UI_Temperature.Instance.SetTemperature(-15); // 매우 추움
+                SetTemperatureSafely(-15); // 매우 추움
+                weatherType = 2;
             }
             else
             {
-                Debug.Log("날씨 : 맑음");
                 SetWeather(NoneProfile);
-                UI_Temperature.Instance.SetTemperature(15); // 보통
+                SetTemperatureSafely(15); // 보통
+                weatherType = 0;
+            }
+            Debug.Log($"날씨 랜덤 :{weatherType}");
+            photonView.RPC("SyncWeather", RpcTarget.Others, weatherType);
+        }
+
+        [PunRPC]
+        private void SyncWeather(int weatherType)
+        {
+            switch (weatherType)
+            {
+                case 1:
+                    SetWeather(RainProfile);
+                    SetTemperatureSafely(-5);
+                    break;
+                case 2:
+                    SetWeather(SnowProfile);
+                    SetTemperatureSafely(-15);
+                    break;
+                default:
+                    SetWeather(NoneProfile);
+                    SetTemperatureSafely(15);
+                    break;
             }
         }
 
         private void SetWeather(WeatherMakerPrecipitationProfileScript profile)
         {
             precipitationManager.SetPrecipitationProfile(profile);
+        }
+
+        private void SetTemperatureSafely(int temperature)
+        {
+            if (UI_Temperature.Instance != null)
+            {
+                UI_Temperature.Instance.SetTemperature(temperature);
+            }
+            else
+            {
+                Debug.LogWarning("UI_Temperature.Instance is null.");
+            }
         }
     }
 }
