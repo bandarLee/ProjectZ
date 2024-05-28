@@ -17,9 +17,4 @@ public class GameTime : MonoBehaviour
     {
         CurrentTimeType = TimeType.Day;
     }
-
-    void Update()
-    {
-
-    }
 }
