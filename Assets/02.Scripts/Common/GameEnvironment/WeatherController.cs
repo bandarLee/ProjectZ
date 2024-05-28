@@ -29,12 +29,12 @@ namespace DigitalRuby.WeatherMaker
 
         private IEnumerator DailyWeatherRoutine()
         {
-            yield return new WaitForSeconds(20f); // 10초 대기
+            yield return new WaitForSeconds(20f); // 20초 대기
 
             while (true)
             {
                 SetDailyWeather();
-                yield return new WaitForSeconds(20f); // 10초마다 날씨 변경
+                yield return new WaitForSeconds(20f); // 20초마다 날씨 변경
                 
             }
         }
