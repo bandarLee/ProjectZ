@@ -60,6 +60,7 @@ MonoBehaviour:
   - RequestTimeFromMaster
   - SyncTime
   - SyncGeneratedItems
+  - RemoveItemRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

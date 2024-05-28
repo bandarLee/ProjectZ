@@ -34,7 +34,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonView photonview = GetComponent<PhotonView>();
+        PhotonView photonView = GetComponent<PhotonView>();
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -51,16 +51,14 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             itemName = itemName,
             itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType),
             uniqueId = uniqueId,
-            iconPath = iconPath,
-            icon = Resources.Load<Sprite>(iconPath), 
+            icon = Resources.Load<Sprite>(iconPath),
             itemEffect = itemEffect,
             itemDescription = itemDescription
         };
-        AddItem(newItem);
+        AddItem(newItem, false);
     }
 
-
-    public void AddItem(Item newItem)
+    public void AddItem(Item newItem, bool sync = true)
     {
         string itemName = newItem.uniqueId;
         items[itemName] = newItem;
@@ -75,9 +73,20 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         }
 
         UpdateInventoryUI();
+
+        if (sync)
+        {
+            photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.icon.name, newItem.itemEffect, newItem.itemDescription);
+        }
     }
 
-    public void RemoveItem(string itemName)
+    [PunRPC]
+    public void RemoveItemRPC(string itemName)
+    {
+        RemoveItem(itemName, false);
+    }
+
+    public void RemoveItem(string itemName, bool sync = true)
     {
         if (items.ContainsKey(itemName))
         {
@@ -91,6 +100,11 @@ public class BoxInventory : MonoBehaviourPunCallbacks
                 itemQuantities.Remove(itemName);
             }
             UpdateInventoryUI();
+
+            if (sync)
+            {
+                photonView.RPC("RemoveItemRPC", RpcTarget.OthersBuffered, itemName);
+            }
         }
     }
 
