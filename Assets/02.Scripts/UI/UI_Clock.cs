@@ -19,7 +19,7 @@ public class UI_Clock : MonoBehaviour
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
         gameTimeScript = FindObjectOfType<GameTime>();
 
-        Debug.Log(dayNightCycleManager.TimeOfDay);
+        //Debug.Log(dayNightCycleManager.TimeOfDay);
 
         ClockSlider.maxValue = 86400f;
 

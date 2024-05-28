@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CampFire : MonoBehaviour
 {
+    private Dictionary<CharacterStatAbility, Coroutine> activeCoroutines = new Dictionary<CharacterStatAbility, Coroutine>();
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             Debug.Log("¸ð´ÚºÒ¿¡ Æ®¸®°Å!");
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
-            if (characterStatAbility != null)
+            if (characterStatAbility != null && !activeCoroutines.ContainsKey(characterStatAbility))
             {
-                characterStatAbility.StartCoroutine(characterStatAbility.IncreaseTemperatureRoutine());
+                Coroutine coroutine = characterStatAbility.StartCoroutine(characterStatAbility.IncreaseTemperatureRoutine());
+                activeCoroutines.Add(characterStatAbility, coroutine);
             }
         }
     }
@@ -22,11 +25,11 @@ public class CampFire : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("¸ð´ÚºÒÀ» ¹þ¾î³²!");
-
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
-            if (characterStatAbility != null)
+            if (characterStatAbility != null && activeCoroutines.ContainsKey(characterStatAbility))
             {
-                characterStatAbility.StopCoroutine(characterStatAbility.IncreaseTemperatureRoutine());
+                characterStatAbility.StopCoroutine(activeCoroutines[characterStatAbility]);
+                activeCoroutines.Remove(characterStatAbility);
             }
         }
     }

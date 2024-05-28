@@ -31,7 +31,6 @@ public class UI_CharacterStat : MonoBehaviour
         }
 
         UpdateUI(MyCharacterAbility.Stat);
-
     }
 
     private void UpdateUI(Stat stat)
@@ -43,5 +42,14 @@ public class UI_CharacterStat : MonoBehaviour
         HealthTextUI.text = $"{(int)(HealthSliderUI.value * 100)}%";
         MentalTextUI.text = $"{(int)(MentalSliderUI.value * 100)}%";
         HungerTextUI.text = $"{(int)(HungerSliderUI.value * 100)}%";
+    }
+
+    public void SetMental(int mental)
+    {
+        if (MyCharacterAbility != null && MyCharacterAbility.Stat != null)
+        {
+            MyCharacterAbility.Stat.Mental = mental;
+            UpdateUI(MyCharacterAbility.Stat); 
+        }
     }
 }

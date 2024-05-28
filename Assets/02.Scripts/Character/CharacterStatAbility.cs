@@ -37,8 +37,8 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (State != State.Death)
         {
-            yield return new WaitForSeconds(3); // 10초마다 실행
-            Stat.Hunger -= 1; // 배고픔 수치
+            yield return new WaitForSeconds(3);
+            Stat.Hunger -= 1;
             if (Stat.Hunger < 0)
             {
                 Stat.Hunger = 0;
@@ -50,23 +50,22 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (State != State.Death)
         {
-            yield return new WaitForSeconds(10); // 10초마다 실행
+            yield return new WaitForSeconds(10);
             if (Stat.Temperature <= 0 || Stat.Temperature >= 30)
             {
-                Stat.Mental -= 5; // 정신력 5 감소
+                Stat.Mental -= 5;
             }
 
             if (Stat.Hunger <= 0)
             {
-                Stat.Mental -= 10; // 정신력 10 감소
+                Stat.Mental -= 10;
             }
 
             if (Stat.Temperature <= -10 || Stat.Temperature >= 40)
             {
-                Stat.Mental -= 10; // 정신력 10 감소
+                Stat.Mental -= 10;
             }
 
-            //  밤일 때 정신력 감소(10초마다 5씩 감소)
             if (gameTime.CurrentTimeType == GameTime.TimeType.Night)
             {
                 Stat.Mental -= 5;
@@ -75,7 +74,7 @@ public class CharacterStatAbility : CharacterAbility
             if (Stat.Mental <= 0)
             {
                 Stat.Mental = 0;
-                StartCoroutine(DecreaseHealthRoutine()); // 체력 감소 시작
+                StartCoroutine(DecreaseHealthRoutine());
             }
         }
     }
@@ -84,8 +83,8 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (Stat.Mental <= 0 && State != State.Death)
         {
-            yield return new WaitForSeconds(10); // 10초마다 실행
-            Stat.Health -= 10; // 체력 감소
+            yield return new WaitForSeconds(10);
+            Stat.Health -= 10;
             if (Stat.Health <= 0)
             {
                 Stat.Health = 0;
@@ -97,12 +96,45 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (true)
         {
-            yield return new WaitForSeconds(5); 
-            Stat.Temperature += 5; 
+            yield return new WaitForSeconds(5);
+            Stat.Temperature += 5;
+
+            // 정신력 증가
+            Stat.Mental += 5;
+            if (Stat.Mental > 100)
+            {
+                Stat.Mental = 100;
+            }
+
             if (Owner.PhotonView.IsMine)
             {
                 UI_Temperature.Instance.SetTemperature(Stat.Temperature);
+                // 정신력 UI 업데이트
+                UI_CharacterStat.Instance.SetMental(Stat.Mental);
             }
         }
+    }
+
+    private IEnumerator IncreaseMentalRoutine(int amount)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+            Stat.Mental += amount;
+            if (Stat.Mental > 100)
+            {
+                Stat.Mental = 100;
+            }
+
+            if (Owner.PhotonView.IsMine)
+            {
+                UI_CharacterStat.Instance.SetMental(Stat.Mental); // 정신력 UI 업데이트
+            }
+        }
+    }
+
+    public void StartIncreaseMentalRoutine(int amount)
+    {
+        StartCoroutine(IncreaseMentalRoutine(amount));
     }
 }

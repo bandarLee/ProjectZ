@@ -1,9 +1,10 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 namespace DigitalRuby.WeatherMaker
 {
-    public class WeatherMakerPrecipitationManagerScript : MonoBehaviour, IPrecipitationManager
+    public class WeatherMakerPrecipitationManagerScript : MonoBehaviourPun, IPrecipitationManager, IWeatherMakerManager
     {
         private WeatherMakerPrecipitationType precipitation = WeatherMakerPrecipitationType.None;
 
@@ -57,13 +58,51 @@ namespace DigitalRuby.WeatherMaker
         private Color precipitationSecondaryTintColor = Color.white;
         private bool transitionInProgress;
 
+        private static WeatherMakerPrecipitationManagerScript instance;
+        public static WeatherMakerPrecipitationManagerScript Instance
+        {
+            get { return WeatherMakerScript.FindOrCreateInstance(ref instance); }
+        }
+
+        public static bool HasInstance()
+        {
+            return instance != null;
+        }
+
+        public float RainIntensity
+        {
+            get { return RainScript != null ? RainScript.Intensity : 0.0f; }
+            set { if (RainScript != null) RainScript.Intensity = value; }
+        }
+
+        public float SnowIntensity
+        {
+            get { return SnowScript != null ? SnowScript.Intensity : 0.0f; }
+            set { if (SnowScript != null) SnowScript.Intensity = value; }
+        }
+
+        public float HailIntensity
+        {
+            get { return HailScript != null ? HailScript.Intensity : 0.0f; }
+            set { if (HailScript != null) HailScript.Intensity = value; }
+        }
+
+        public float SleetIntensity
+        {
+            get { return SleetScript != null ? SleetScript.Intensity : 0.0f; }
+            set { if (SleetScript != null) SleetScript.Intensity = value; }
+        }
+
+        public float CustomIntensity
+        {
+            get { return CustomPrecipitationScript != null ? CustomPrecipitationScript.Intensity : 0.0f; }
+            set { if (CustomPrecipitationScript != null) CustomPrecipitationScript.Intensity = value; }
+        }
+
         private void OnEnable()
         {
             WeatherMakerScript.EnsureInstance(this, ref instance);
-            StartCoroutine(ChangeWeatherRandomly());
-            
         }
-
 
         private void LateUpdate()
         {
@@ -178,59 +217,36 @@ namespace DigitalRuby.WeatherMaker
             CheckForPrecipitationChange();
         }
 
+        [PunRPC]
+        public void SyncPrecipitation(int weatherType, float intensity, float nextIntensityChangeSeconds)
+        {
+            switch (weatherType)
+            {
+                case 1:
+                    Precipitation = WeatherMakerPrecipitationType.Rain;
+                    break;
+                case 2:
+                    Precipitation = WeatherMakerPrecipitationType.Snow;
+                    break;
+                default:
+                    Precipitation = WeatherMakerPrecipitationType.None;
+                    break;
+            }
+
+            PrecipitationIntensity = intensity;
+            this.nextIntensityChangeSeconds = nextIntensityChangeSeconds;
+            CheckForPrecipitationChange();
+        }
+
+        public void SyncWeatherWithClients()
+        {
+            int weatherType = (int)Precipitation;
+            photonView.RPC("SyncPrecipitation", RpcTarget.Others, weatherType, PrecipitationIntensity, nextIntensityChangeSeconds);
+        }
+
         public void WeatherProfileChanged(WeatherMakerProfileScript oldProfile, WeatherMakerProfileScript newProfile, float transitionDelay, float transitionDuration)
         {
             SetPrecipitationProfile(newProfile.PrecipitationProfile);
-        }
-
-        private IEnumerator ChangeWeatherRandomly()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(360f); // 6분마다 실행
-
-                int randomWeather = Random.Range(0, 3);
-                switch (randomWeather)
-                {
-                    case 0:
-                        Precipitation = WeatherMakerPrecipitationType.None;
-                        break;
-                    case 1:
-                        Precipitation = WeatherMakerPrecipitationType.Rain;
-                        break;
-                    case 2:
-                        Precipitation = WeatherMakerPrecipitationType.Snow;
-                        break;
-                }
-                Debug.Log($"날씨 : {randomWeather}");
-                CheckForPrecipitationChange();
-            }
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void InitOnLoad()
-        {
-            WeatherMakerScript.ReleaseInstance(ref instance);
-        }
-
-        public void GetSnowIntensityUnity(WeatherMakerOutputParameterFloat value) { value.Value = SnowIntensity; }
-        public void GetWetnessIntensityUnity(WeatherMakerOutputParameterFloat value) { value.Value = Mathf.Max(RainIntensity, SleetIntensity); }
-
-        public float RainIntensity { get { return RainScript.Intensity; } }
-        public float SnowIntensity { get { return SnowScript.Intensity; } }
-        public float HailIntensity { get { return HailScript.Intensity; } }
-        public float SleetIntensity { get { return SleetScript.Intensity; } }
-        public float CustomIntensity { get { return CustomPrecipitationScript.Intensity; } }
-
-        private static WeatherMakerPrecipitationManagerScript instance;
-        public static WeatherMakerPrecipitationManagerScript Instance
-        {
-            get { return WeatherMakerScript.FindOrCreateInstance(ref instance); }
-        }
-
-        public static bool HasInstance()
-        {
-            return instance != null;
         }
     }
 }
