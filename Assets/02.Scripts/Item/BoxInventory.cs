@@ -34,12 +34,6 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonView photonView = GetComponent<PhotonView>();
-        if (photonView == null)
-        {
-            Debug.LogError($"PhotonView가 {gameObject.name}에 없습니다.");
-        }
-
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -96,28 +90,4 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             boxInventoryUI.UpdateInventoryUI();
         }
     }
-
-    [PunRPC]
-    public void SyncGeneratedItems(ItemData[] itemsData)
-    {
-        foreach (var itemData in itemsData)
-        {
-            ItemType itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString);
-            Item item = new Item
-            {
-                itemName = itemData.ItemName,
-                itemType = itemType,
-                uniqueId = itemData.UniqueId
-            };
-            AddItem(item);
-        }
-    }
-}
-
-[System.Serializable]
-public class ItemData
-{
-    public string ItemName;
-    public string ItemTypeString;
-    public string UniqueId;
 }
