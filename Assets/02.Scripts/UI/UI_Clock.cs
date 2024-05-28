@@ -1,10 +1,11 @@
 using DigitalRuby.WeatherMaker;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Clock : MonoBehaviour
+public class UI_Clock : MonoBehaviourPun, IPunObservable
 {
     public Slider ClockSlider;
     public Image Sun;
@@ -19,20 +20,27 @@ public class UI_Clock : MonoBehaviour
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
         gameTimeScript = FindObjectOfType<GameTime>();
 
-        //Debug.Log(dayNightCycleManager.TimeOfDay);
-
+        // 슬라이더 최대값
         ClockSlider.maxValue = 86400f;
 
         Sun.rectTransform.anchoredPosition = Vector2.zero;
         Moon.rectTransform.anchoredPosition = Vector2.zero;
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
+        }
     }
 
     private void Update()
     {
-        UpdateSunAndMoonVisibility();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UpdateSunAndMoonVisibility();
+        }
     }
 
-    private void UpdateSunAndMoonVisibility()
+    private void UpdateSunAndMoonVisibility()           // 현재 시간을 기준으로 슬라이더와 UI를 업데이트
     {
         // 슬라이더 값을 현재 시간으로 설정 (하루의 중간 시간인 43200초를 기준으로)
         float timeOfDay = dayNightCycleManager.TimeOfDay - 31600;
@@ -82,6 +90,34 @@ public class UI_Clock : MonoBehaviour
                 Mystery.gameObject.SetActive(true);
                 ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(174, 0, 128, 255); // 보라색
                 break;
+        }
+    }
+
+    [PunRPC]
+    private void RequestTimeFromMaster()        // 마스터 클라이언트에게 현재 시간을 요청
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("SyncTime", RpcTarget.Others, dayNightCycleManager.TimeOfDay);
+        }
+    }
+
+    [PunRPC]
+    private void SyncTime(float masterTimeOfDay)        // 마스터 클라이언트에서 시간을 받아와 동기화
+    {
+        dayNightCycleManager.TimeOfDay = masterTimeOfDay;
+    }
+
+    // 포톤의 IPunObservable 인터페이스 사용해 마스터 클라이언트가 현재 시간을 전송하고, 다른 클라이언트가 이것을 받아오게 함
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)     
+    {
+        if (stream.IsWriting && PhotonNetwork.IsMasterClient)
+        {
+            stream.SendNext(dayNightCycleManager.TimeOfDay);
+        }
+        else if (stream.IsReading)
+        {
+            dayNightCycleManager.TimeOfDay = (float)stream.ReceiveNext();
         }
     }
 }
