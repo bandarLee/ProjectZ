@@ -10,8 +10,8 @@ public class CharacterRotateAbility : CharacterAbility
     private float _my;
     //public float RotationSpeed = 200f;
 
-    public float sideViewRotationOffset = 30f;  // 카메라의 추가 회전 오프셋
-    public float smoothTime = 0.3f;  // 카메라 회전의 부드러운 전환 시간
+    public float sideViewRotationOffset = 90f;  // 카메라의 추가 회전 오프셋
+    public float smoothTime = 1f;  // 카메라 회전의 부드러운 전환 시간
     private float _targetRotation; // 목표 회전 각도
     private float _rotationVelocity; // 회전 속도 (부드러운 전환을 위한 내부 변수)
     private bool isSideViewActive = false;
