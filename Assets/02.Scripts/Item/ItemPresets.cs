@@ -9,6 +9,7 @@ public class ItemPreset
     public ItemType itemType;
     public string itemEffect;
     public string itemDescription;
+    public string iconPath;
 }
 
 public class ItemPresets : MonoBehaviour
@@ -24,7 +25,7 @@ public class ItemPresets : MonoBehaviour
         return new Item
         {
             itemName = preset.itemName,
-            icon = preset.icon,
+            iconPath = preset.iconPath, 
             itemType = preset.itemType,
             itemEffect = preset.itemEffect,
             itemDescription = preset.itemDescription,

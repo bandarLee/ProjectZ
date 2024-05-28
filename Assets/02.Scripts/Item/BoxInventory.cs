@@ -34,6 +34,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonView photonview = GetComponent<PhotonView>();
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -43,11 +44,21 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void AddItemRPC(string itemName, string itemType, string uniqueId)
+    public void AddItemRPC(string itemName, string itemType, string uniqueId, string iconPath, string itemEffect, string itemDescription)
     {
-        Item newItem = new Item { itemName = itemName, itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType), uniqueId = uniqueId };
+        Item newItem = new Item
+        {
+            itemName = itemName,
+            itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType),
+            uniqueId = uniqueId,
+            iconPath = iconPath,
+            icon = Resources.Load<Sprite>(iconPath), 
+            itemEffect = itemEffect,
+            itemDescription = itemDescription
+        };
         AddItem(newItem);
     }
+
 
     public void AddItem(Item newItem)
     {

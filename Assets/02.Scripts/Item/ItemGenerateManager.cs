@@ -6,9 +6,9 @@ using ExitGames.Client.Photon;
 
 public class ItemGenerateManager : MonoBehaviourPunCallbacks
 {
-    public ItemPresets itemPresetsContainer; // ItemPresets 스크립트를 참조합니다.
+    public ItemPresets itemPresetsContainer;
     public List<BoxInventory> allBoxInventories;
-    public List<BoxTypeConfig> boxTypeConfigs; // 각 BoxType에 대한 설정 리스트
+    public List<BoxTypeConfig> boxTypeConfigs;
 
     private Dictionary<int, List<ItemData>> generatedItemsData = new Dictionary<int, List<ItemData>>();
 
@@ -50,7 +50,10 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
                 {
                     ItemName = randomItem.itemName,
                     ItemTypeString = randomItem.itemType.ToString(),
-                    UniqueId = randomItem.uniqueId
+                    UniqueId = randomItem.uniqueId,
+                    IconPath = randomItem.iconPath,
+                    ItemEffect = randomItem.itemEffect,
+                    ItemDescription = randomItem.itemDescription
                 };
                 boxItemsData.Add(itemData);
                 box.AddItem(randomItem);
@@ -118,7 +121,11 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
                         {
                             itemName = itemData.ItemName,
                             itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString),
-                            uniqueId = itemData.UniqueId
+                            uniqueId = itemData.UniqueId,
+                            icon = Resources.Load<Sprite>(itemData.IconPath),
+
+                            itemEffect = itemData.ItemEffect,
+                            itemDescription = itemData.ItemDescription
                         });
                     }
                 }
@@ -132,6 +139,8 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         public string ItemName;
         public string ItemTypeString;
         public string UniqueId;
+        public string IconPath;
+        public string ItemEffect;
+        public string ItemDescription;
     }
 }
-
