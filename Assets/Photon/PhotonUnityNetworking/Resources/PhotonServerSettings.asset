@@ -56,6 +56,7 @@ MonoBehaviour:
   - BroadcastWeather
   - SyncWeather
   - SyncPrecipitation
+  - AddItemRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
