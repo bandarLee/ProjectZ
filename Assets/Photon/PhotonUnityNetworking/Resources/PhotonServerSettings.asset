@@ -53,6 +53,7 @@ MonoBehaviour:
   - RPC_AddItem
   - RPC_RemoveItem
   - RPC_AddItemToBox
+  - BroadcastWeather
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
