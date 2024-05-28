@@ -40,22 +40,40 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
 
         foreach (var box in allBoxInventories)
         {
-            List<ItemData> boxItemsData = box.items.Select(kvp => new ItemData
+            PhotonView boxPhotonView = box.GetComponent<PhotonView>();
+            if (boxPhotonView == null)
             {
-                ItemName = kvp.Value.itemName,
-                ItemTypeString = kvp.Value.itemType.ToString(),
-                UniqueId = kvp.Value.uniqueId
+                Debug.LogError($"PhotonView가 {box.gameObject.name}에 없습니다. 아이템을 동기화할 수 없습니다.");
+                continue;
+            }
+
+            List<ItemData> boxItemsData = box.items.Values.Select(item => new ItemData
+            {
+                ItemName = item.itemName,
+                ItemTypeString = item.itemType.ToString(),
+                UniqueId = item.uniqueId
             }).ToList();
 
-            generatedItemsData[box.photonView.ViewID] = boxItemsData;
+            generatedItemsData[boxPhotonView.ViewID] = boxItemsData;
         }
 
         ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable
-        {
-            { "GeneratedItems", generatedItemsData }
-        };
+    {
+        { "GeneratedItems", generatedItemsData }
+    };
         PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+
+        foreach (var kvp in generatedItemsData)
+        {
+            PhotonView boxView = PhotonView.Find(kvp.Key);
+            if (boxView != null)
+            {
+                boxView.RPC("SyncGeneratedItems", RpcTarget.AllBuffered, kvp.Value.ToArray());
+            }
+        }
     }
+
+
 
     private void LoadGeneratedItemsFromRoomProperties()
     {

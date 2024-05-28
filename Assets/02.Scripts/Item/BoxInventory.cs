@@ -34,7 +34,12 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonView photonview = GetComponent<PhotonView>();
+        PhotonView photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+        {
+            Debug.LogError($"PhotonView가 {gameObject.name}에 없습니다.");
+        }
+
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
@@ -93,7 +98,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SyncGeneratedItems(List<ItemData> itemsData)
+    public void SyncGeneratedItems(ItemData[] itemsData)
     {
         foreach (var itemData in itemsData)
         {
