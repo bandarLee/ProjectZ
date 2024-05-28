@@ -12,6 +12,7 @@ public enum BoxType
     WarehouseLarge,
     WarehouseSmall
 }
+
 [System.Serializable]
 public struct BoxTypeConfig
 {
@@ -33,13 +34,20 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-     
+        PhotonView photonview = GetComponent<PhotonView>();
         boxInventoryUI = GetComponentInChildren<BoxInventoryUI>();
         if (boxInventoryUI != null)
         {
             boxInventoryUI.SetBoxInventory(this);
         }
         UpdateInventoryUI();
+    }
+
+    [PunRPC]
+    public void AddItemRPC(string itemName, string itemType, string uniqueId)
+    {
+        Item newItem = new Item { itemName = itemName, itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType), uniqueId = uniqueId };
+        AddItem(newItem);
     }
 
     public void AddItem(Item newItem)
@@ -83,4 +91,28 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             boxInventoryUI.UpdateInventoryUI();
         }
     }
+
+    [PunRPC]
+    public void SyncGeneratedItems(List<ItemData> itemsData)
+    {
+        foreach (var itemData in itemsData)
+        {
+            ItemType itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString);
+            Item item = new Item
+            {
+                itemName = itemData.ItemName,
+                itemType = itemType,
+                uniqueId = itemData.UniqueId
+            };
+            AddItem(item);
+        }
+    }
+}
+
+[System.Serializable]
+public class ItemData
+{
+    public string ItemName;
+    public string ItemTypeString;
+    public string UniqueId;
 }
