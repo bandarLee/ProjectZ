@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Photon.Pun;
+using ExitGames.Client.Photon;
 
 public class ItemGenerateManager : MonoBehaviourPunCallbacks
 {
-    public ItemPresets itemPresetsContainer;
+    public ItemPresets itemPresetsContainer; // ItemPresets 스크립트를 참조합니다.
     public List<BoxInventory> allBoxInventories;
-    public List<BoxTypeConfig> boxTypeConfigs;
+    public List<BoxTypeConfig> boxTypeConfigs; // 각 BoxType에 대한 설정 리스트
+
+    private Dictionary<int, List<ItemData>> generatedItemsData = new Dictionary<int, List<ItemData>>();
 
     private void Start()
     {
@@ -18,7 +21,6 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         }
 
         allBoxInventories = FindObjectsOfType<BoxInventory>().ToList();
-
         if (PhotonNetwork.IsMasterClient)
         {
             foreach (var box in allBoxInventories)
@@ -34,87 +36,23 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SyncGeneratedItemsWithRoomProperties()
-    {
-        Dictionary<int, List<ItemData>> generatedItemsData = new Dictionary<int, List<ItemData>>();
-
-        foreach (var box in allBoxInventories)
-        {
-            PhotonView boxPhotonView = box.GetComponent<PhotonView>();
-            if (boxPhotonView == null)
-            {
-                Debug.LogError($"PhotonView가 {box.gameObject.name}에 없습니다. 아이템을 동기화할 수 없습니다.");
-                continue;
-            }
-
-            List<ItemData> boxItemsData = box.items.Values.Select(item => new ItemData
-            {
-                ItemName = item.itemName,
-                ItemTypeString = item.itemType.ToString(),
-                UniqueId = item.uniqueId
-            }).ToList();
-
-            generatedItemsData[boxPhotonView.ViewID] = boxItemsData;
-        }
-
-        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable
-    {
-        { "GeneratedItems", generatedItemsData }
-    };
-        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-
-        foreach (var kvp in generatedItemsData)
-        {
-            PhotonView boxView = PhotonView.Find(kvp.Key);
-            if (boxView != null)
-            {
-                boxView.RPC("SyncGeneratedItems", RpcTarget.AllBuffered, kvp.Value.ToArray());
-            }
-        }
-    }
-
-
-
-    private void LoadGeneratedItemsFromRoomProperties()
-    {
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GeneratedItems", out var generatedItemsObject))
-        {
-            var generatedItemsData = (Dictionary<int, List<ItemData>>)generatedItemsObject;
-
-            foreach (var kvp in generatedItemsData)
-            {
-                PhotonView boxView = PhotonView.Find(kvp.Key);
-                if (boxView != null)
-                {
-                    BoxInventory boxInventory = boxView.GetComponent<BoxInventory>();
-                    if (boxInventory != null)
-                    {
-                        foreach (var itemData in kvp.Value)
-                        {
-                            ItemType itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString);
-                            Item item = new Item
-                            {
-                                itemName = itemData.ItemName,
-                                itemType = itemType,
-                                uniqueId = itemData.UniqueId
-                            };
-                            boxInventory.AddItem(item);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public void GenerateItemsForBox(BoxInventory box)
     {
         var config = boxTypeConfigs.FirstOrDefault(c => c.boxType == box.boxType);
 
+        List<ItemData> boxItemsData = new List<ItemData>();
         for (int i = 0; i < config.itemCount; i++)
         {
             Item randomItem = GetRandomItem(config);
             if (randomItem != null)
             {
+                ItemData itemData = new ItemData
+                {
+                    ItemName = randomItem.itemName,
+                    ItemTypeString = randomItem.itemType.ToString(),
+                    UniqueId = randomItem.uniqueId
+                };
+                boxItemsData.Add(itemData);
                 box.AddItem(randomItem);
             }
             else
@@ -122,6 +60,7 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
                 Debug.LogWarning("Item preset is empty or null. Cannot add item to box.");
             }
         }
+        generatedItemsData[box.photonView.ViewID] = boxItemsData;
     }
 
     private Item GetRandomItem(BoxTypeConfig config)
@@ -154,11 +93,45 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         return itemPresetsContainer.GenerateRandomItem(selectedType);
     }
 
+    private void SyncGeneratedItemsWithRoomProperties()
+    {
+        Hashtable roomProperties = new Hashtable
+        {
+            { "GeneratedItemsData", SerializationUtils.Serialize(generatedItemsData) }
+        };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+    }
+
+    private void LoadGeneratedItemsFromRoomProperties()
+    {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GeneratedItemsData", out object serializedData))
+        {
+            generatedItemsData = SerializationUtils.Deserialize<Dictionary<int, List<ItemData>>>((byte[])serializedData);
+
+            foreach (var box in allBoxInventories)
+            {
+                if (generatedItemsData.TryGetValue(box.photonView.ViewID, out List<ItemData> itemDataList))
+                {
+                    foreach (var itemData in itemDataList)
+                    {
+                        box.AddItem(new Item
+                        {
+                            itemName = itemData.ItemName,
+                            itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemData.ItemTypeString),
+                            uniqueId = itemData.UniqueId
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     [System.Serializable]
-    public class ItemData
+    public struct ItemData
     {
         public string ItemName;
         public string ItemTypeString;
         public string UniqueId;
     }
 }
+
