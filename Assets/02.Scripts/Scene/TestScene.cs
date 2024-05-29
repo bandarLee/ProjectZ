@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class TestScene : MonoBehaviourPunCallbacks
@@ -51,7 +52,6 @@ public class TestScene : MonoBehaviourPunCallbacks
         Quaternion spawnRotation = Quaternion.identity;
 
         PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
-
 
     }
 }
