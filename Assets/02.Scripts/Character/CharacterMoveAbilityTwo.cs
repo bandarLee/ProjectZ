@@ -49,7 +49,6 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             {
                 StartCoroutine(JumpCoroutine());
 
-                _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
                 _canJump = false;
             }
         }
@@ -87,8 +86,9 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     public IEnumerator JumpCoroutine()
     {
         _animator.SetTrigger("Jump");
+        _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(2.6f);
+        yield return new WaitForSeconds(2.2f);
         _canJump = true;
 
 
