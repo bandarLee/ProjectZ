@@ -75,7 +75,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
     // Ã¼·Â
     [PunRPC]
-    public void Damaged(int damage)
+    public void Damaged(int damage, int actorNumber)
     {
         if (State == State.Death)
         {
