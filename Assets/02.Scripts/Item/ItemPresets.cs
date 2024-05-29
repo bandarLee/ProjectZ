@@ -37,4 +37,9 @@ public class ItemPresets : MonoBehaviour
         var preset = presets.FirstOrDefault(p => p.itemName == itemName);
         return preset != null ? preset.icon : null;
     }
+
+    public ItemPreset GetItemPreset(string itemName)
+    {
+        return presets.FirstOrDefault(p => p.itemName == itemName);
+    }
 }
