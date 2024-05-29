@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class CharacterMoveAbilityTwo : CharacterAbility
@@ -43,7 +42,17 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
         float speed = Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed;
         Vector3 moveVelocity = horizontalDir * speed;
+        if (_canJump)
+        {
+            // 점프 로직
+            if (Input.GetKey(KeyCode.Space))
+            {
+                StartCoroutine(JumpCoroutine());
 
+                _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                _canJump = false;
+            }
+        }
         // 4. 달리기 적용
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -63,24 +72,9 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             }
         }
 
-        if (_canJump)
-        {
-            // 점프 로직
-            if (Input.GetKeyDown(KeyCode.Space) && Time.time - _lastJumpTime >= JumpCOOLTIME)
-            {
-                _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, JumpPower, _rigidbody.velocity.z);
-                _lastJumpTime = Time.time;  // 점프 시간 업데이트
-                _canJump = false;
-                _animator.SetTrigger("Jump");
-            }
-        }
+ 
             
 
-        // 점프 쿨타임 체크
-        if (Time.time - _lastJumpTime >= JumpCOOLTIME && _rigidbody.velocity.y <= 0.1)
-        {
-            _canJump = true;  // 쿨타임이 지나면 다시 점프 가능
-        }
 
 
         /*// 수평 이동 로직
@@ -90,6 +84,14 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
-    
+    public IEnumerator JumpCoroutine()
+    {
+        _animator.SetTrigger("Jump");
+
+        yield return new WaitForSeconds(2.6f);
+        _canJump = true;
+
+
+    }
 
 }
