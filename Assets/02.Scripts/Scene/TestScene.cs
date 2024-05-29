@@ -47,7 +47,7 @@ public class TestScene : MonoBehaviourPunCallbacks
 
         //PhotonNetwork.LocalPlayer.CustomProperties["CharacterClass"];
         int characterType = (int)PhotonNetwork.LocalPlayer.CustomProperties["CharacterType"];
-        string characterName = characterType == 0 ? "Character_Female" : "Character_Male"; 
+        string characterName = characterType == 0 ? "Character_Female_rigid_collid" : "Character_Male"; 
         Vector3 spawnPosition = SpawnPoints[0].transform.position;
         Quaternion spawnRotation = Quaternion.identity;
 
