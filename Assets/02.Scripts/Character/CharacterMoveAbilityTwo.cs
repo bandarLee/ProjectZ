@@ -38,8 +38,13 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         Vector3 moveVelocity = horizontalDir * speed;
         moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
 
+        _animator.SetFloat("Horizontal", h);
+       // _animator.SetBool("IsRunning", Input.GetKey(KeyCode.LeftShift));
 
-        // 4. 달리기 적용
+        float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) ? 1f : 0.5f) : 0f;
+        _animator.SetFloat("Speed", speedValue);
+
+        /*// 4. 달리기 적용
         if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))
         {
             speed = Owner.Stat.RunSpeed;
@@ -60,7 +65,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             {
                 _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
             }
-        }
+        }*/
 
         if (_canJump)
         {
