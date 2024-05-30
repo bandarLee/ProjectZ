@@ -4,7 +4,6 @@ using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 {
