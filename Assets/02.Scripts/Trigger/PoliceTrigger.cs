@@ -106,16 +106,6 @@ public class PoliceTrigger : MonoBehaviour
                 return item;
             }
         }
-
-        for (int i = 0; i < quickSlotManager.quickSlotItems.Length; i++)
-        {
-            var quickSlotItem = quickSlotManager.quickSlotItems[i];
-            if (quickSlotItem != null && quickSlotItem.itemType == ItemType.ETC && quickSlotItem.itemName == "¿­¼è")
-            {
-                return quickSlotItem;
-            }
-        }
-
         return null;
     }
 
