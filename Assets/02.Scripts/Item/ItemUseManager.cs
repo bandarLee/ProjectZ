@@ -159,7 +159,6 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-
     private void ApplyFoodEffect(string itemName)
     {
         switch (itemName)
@@ -249,12 +248,18 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("Player used a Book");
+                var bookTrigger = FindObjectOfType<BookTrigger>();
+                if (bookTrigger != null)
+                {
+                    bookTrigger.UpdateMissionText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                }
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
         }
     }
+
     private void DecreaseItemQuantity(Item item)
     {
         var inventory = FindObjectOfType<Inventory>();
