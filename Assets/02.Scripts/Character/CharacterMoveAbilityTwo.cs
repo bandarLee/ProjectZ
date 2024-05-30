@@ -52,10 +52,14 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             }
         }
         // 4. 달리기 적용
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))
         {
             speed = Owner.Stat.RunSpeed;
-            _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
+            if (!_canJump)
+            {
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
+            }
+           
         }
         else
         {
