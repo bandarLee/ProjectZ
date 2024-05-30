@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoveItemRPC(string itemName)
     {
-        RemoveItem(itemName, false); // UpdateInventoryUI 호출 방지
+        RemoveItem(itemName, false);
     }
 
     public void RemoveItem(string itemName, bool synchronize = true)
@@ -105,4 +105,5 @@ public class Inventory : MonoBehaviourPunCallbacks
         inventoryUI.UpdateInventoryUI();
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
     }
+
 }

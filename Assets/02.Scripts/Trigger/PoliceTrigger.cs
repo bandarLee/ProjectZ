@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PoliceTrigger : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class PoliceTrigger : MonoBehaviour
     public float moveDuration = 2f; // 이동 시간
 
     private bool isPlayerInTrigger = false;
-    private bool isDoorMoving = false; 
-    private bool hasDoorOpened = false; 
+    private bool isDoorMoving = false;
+    private bool hasDoorOpened = false;
 
     private Inventory playerInventory;
     private QuickSlotManager quickSlotManager;
-
+    private InventoryUI inventoryUI;
+    private InventoryManager inventoryManager;
+    private ItemUseManager itemUseManager;
     private Coroutine noKeyTextCoroutine;
 
     private void Start()
@@ -28,6 +31,9 @@ public class PoliceTrigger : MonoBehaviour
 
         playerInventory = FindObjectOfType<Inventory>();
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        itemUseManager = FindObjectOfType<ItemUseManager>();
 
         if (playerInventory == null)
         {
@@ -37,6 +43,16 @@ public class PoliceTrigger : MonoBehaviour
         if (quickSlotManager == null)
         {
             Debug.LogError("QuickSlotManager not found");
+        }
+
+        if (inventoryUI == null)
+        {
+            Debug.LogError("InventoryUI not found");
+        }
+
+        if (itemUseManager == null)
+        {
+            Debug.LogError("ItemUseManager not found");
         }
     }
 
@@ -61,11 +77,13 @@ public class PoliceTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E) && !isDoorMoving && !hasDoorOpened)
+        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E))
         {
-            if (HasKeyItem(true))
+            // 아이템 사용 매니저를 통해 키 아이템을 사용
+            Item keyItem = GetKeyItem();
+            if (keyItem != null)
             {
-                StartCoroutine(MoveDoor());
+                itemUseManager.ApplyEffect(keyItem);
             }
             else
             {
@@ -79,39 +97,34 @@ public class PoliceTrigger : MonoBehaviour
         }
     }
 
-    private bool HasKeyItem(bool removeAfterUse = false)
+    private Item GetKeyItem()
     {
-        // 인벤에서열쇠 찾기
         foreach (var item in playerInventory.items.Values)
         {
             if (item.itemType == ItemType.ETC && item.itemName == "열쇠")
             {
-                if (removeAfterUse)
-                {
-                    playerInventory.RemoveItem(item.itemName);
-                }
-                return true;
+                return item;
             }
         }
 
-        // 퀵슬롯에서 열쇠 찾기
         for (int i = 0; i < quickSlotManager.quickSlotItems.Length; i++)
         {
             var quickSlotItem = quickSlotManager.quickSlotItems[i];
             if (quickSlotItem != null && quickSlotItem.itemType == ItemType.ETC && quickSlotItem.itemName == "열쇠")
             {
-                if (removeAfterUse)
-                {
-                    quickSlotManager.quickSlotItems[i] = null;
-                    quickSlotManager.quickSlotImages[i].sprite = null;
-                    quickSlotManager.quickSlotImages[i].gameObject.SetActive(false);
-                    quickSlotManager.quickSlotQuantities[i].text = "";
-                }
-                return true;
+                return quickSlotItem;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    public void UseKeyToOpenDoor()
+    {
+        if (isPlayerInTrigger && !isDoorMoving && !hasDoorOpened)
+        {
+            StartCoroutine(MoveDoor());
+        }
     }
 
     private IEnumerator HideNoKeyTextAfterDelay(float delay)
@@ -123,7 +136,7 @@ public class PoliceTrigger : MonoBehaviour
     private IEnumerator MoveDoor()
     {
         isDoorMoving = true;
-        hasDoorOpened = true; 
+        hasDoorOpened = true;
 
         Vector3 startPos = DoorPrefab.transform.position;
         Vector3 endPos = startPos + Vector3.forward * moveDistance;

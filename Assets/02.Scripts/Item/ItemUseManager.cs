@@ -33,7 +33,7 @@ public class ItemUseManager : MonoBehaviour
                 ApplyWeaponEffect(item.itemName);
                 break;
             case ItemType.ETC:
-                ApplyEtcEffect(item.itemName);
+                ApplyEtcEffect(item.itemName, item);
                 break;
             default:
                 Debug.LogWarning("Unknown item type.");
@@ -230,7 +230,7 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void ApplyEtcEffect(string itemName)
+    private void ApplyEtcEffect(string itemName, Item item)
     {
         switch (itemName)
         {
@@ -240,10 +240,48 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "¿­¼è":
                 Debug.Log("Player used a key.");
+                var policeTrigger = FindObjectOfType<PoliceTrigger>();
+                if (policeTrigger != null)
+                {
+                    policeTrigger.UseKeyToOpenDoor();
+                }
+                DecreaseItemQuantity(item);
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
+        }
+    }
+    private void DecreaseItemQuantity(Item item)
+    {
+        var inventory = FindObjectOfType<Inventory>();
+        if (inventory != null)
+        {
+            string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC ? item.uniqueId : item.itemName;
+
+            if (inventory.itemQuantities.ContainsKey(itemName))
+            {
+                inventory.itemQuantities[itemName]--;
+                if (inventory.itemQuantities[itemName] <= 0)
+                {
+                    inventory.items.Remove(itemName);
+                    inventory.itemQuantities.Remove(itemName);
+                }
+                RemoveItemFromQuickSlots(item);
+                var inventoryUI = FindObjectOfType<InventoryUI>(true);
+
+                inventoryUI.CloseItemInfo();
+
+            }
+        }
+    }
+
+    private void RemoveItemFromQuickSlots(Item item)
+    {
+        var quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        if (quickSlotManager != null)
+        {
+            quickSlotManager.RemoveItemFromQuickSlots(item);
         }
     }
 
