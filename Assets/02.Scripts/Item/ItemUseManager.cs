@@ -247,6 +247,9 @@ public class ItemUseManager : MonoBehaviour
                 }
                 DecreaseItemQuantity(item);
                 break;
+            case "å":
+                Debug.Log("Player used a Book");
+                break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
