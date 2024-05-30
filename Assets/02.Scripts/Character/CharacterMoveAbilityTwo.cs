@@ -13,10 +13,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     private float _velocitySmoothing;
 
     public float JumpPower = 4f;
-    private float JumpCOOLTIME = 2.6f;
-    private float _lastJumpTime;
     private bool _canJump = true;
-    private bool _isJump = false;
 
     private void Start()
     {
@@ -40,8 +37,10 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
 
-        float speed = Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed;
+        float speed = (Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed) * horizontalDir.magnitude;
         Vector3 moveVelocity = horizontalDir * speed;
+        moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
+
         if (_canJump)
         {
             // 점프 로직
@@ -71,15 +70,6 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             }
         }
 
- 
-            
-
-
-
-        /*// 수평 이동 로직
-        moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지
-        _rigidbody.velocity = moveVelocity;*/
-
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
@@ -90,8 +80,6 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
         yield return new WaitForSeconds(2.2f);
         _canJump = true;
-
-
     }
 
 }
