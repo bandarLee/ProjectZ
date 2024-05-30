@@ -6146,8 +6146,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraRoot: {fileID: 5796785261949354064}
-  sideViewRotationOffset: 90
-  smoothTime: 1
 --- !u!114 &4445782170285678535
 MonoBehaviour:
   m_ObjectHideFlags: 0
