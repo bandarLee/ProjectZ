@@ -8,12 +8,12 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     Animator _animator;
     Rigidbody _rigidbody;
 
-    private float _yVelocity = 0f;
+    /*private float _yVelocity = 0f;
     private float _gravity = -9.8f;
-    private float _velocitySmoothing;
-
-    public float JumpPower = 4f;
+    private float _velocitySmoothing;*/
+    public float JumpPower = 6f;
     private bool _canJump = true;
+
 
     private void Start()
     {
