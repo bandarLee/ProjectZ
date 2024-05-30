@@ -52,24 +52,51 @@ public class CharacterMoveAbilityTwo : CharacterAbility
             }
         }
         // 4. 달리기 적용
-        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))
+        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0)) // 달리기
         {
-            speed = Owner.Stat.RunSpeed;
-            if (!_canJump)
+            //speed = Owner.Stat.RunSpeed;
+            
+            //if (!_canJump)
             {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
+                if(h != 0)
+                {
+                    _animator.SetBool("RunRight", h > 0);
+                    _animator.SetBool("RunLeft", h < 0);
+                    _animator.SetBool("WalkRight", false);
+                    _animator.SetBool("WalkLeft", false);
+                }
+                else
+                {
+                    _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
+                }
+                
             }
-           
         }
         else
         {
-            speed = Owner.Stat.MoveSpeed;
-            if (horizontalDir.magnitude > 0)
+            //speed = Owner.Stat.MoveSpeed;
+            if (horizontalDir.magnitude > 0) // 걷기
             {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
+
+                if (h != 0)
+                {
+                    _animator.SetBool("WalkRight", h > 0);
+                    _animator.SetBool("WalkLeft", h < 0);
+                    _animator.SetBool("RunRight", false);
+                    _animator.SetBool("RunLeft", false);
+                }
+                else
+                {
+                    _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
+                }
+                
             }
-            else
+            else // Idle 상태
             {
+                _animator.SetBool("WalkRight", false);
+                _animator.SetBool("WalkLeft", false);
+                _animator.SetBool("RunRight", false);
+                _animator.SetBool("RunLeft", false);
                 _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
             }
         }
