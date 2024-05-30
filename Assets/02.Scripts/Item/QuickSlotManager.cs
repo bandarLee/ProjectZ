@@ -116,6 +116,8 @@ public class QuickSlotManager : MonoBehaviour
 
             inventoryManager.UpdateAllInventories();
         }
+        inventoryManager.CloseItemInfo();
+
     }
 
     public void RemoveItemFromQuickSlots(Item item)

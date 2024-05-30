@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterMoveAbility))]
 [RequireComponent(typeof(CharacterRotateAbility))]
 [RequireComponent(typeof(CharacterStatAbility))]
 [RequireComponent(typeof(CharacterAttackAbility))]
@@ -75,7 +74,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
     // Ã¼·Â
     [PunRPC]
-    public void Damaged(int damage)
+    public void Damaged(int damage, int actorNumber)
     {
         if (State == State.Death)
         {

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Photon.Pun;
 
 public class BoxInventoryUI : MonoBehaviour
 {
@@ -17,9 +18,16 @@ public class BoxInventoryUI : MonoBehaviour
     public Image itemIconImage;
     public GameObject inventoryObject;
     public GameObject boxinventoryUIobject;
+    private Inventory playerInventory; // 추가된 변수
+
     private void Start()
     {
         ItemInfo.SetActive(false);
+        playerInventory = FindObjectOfType<Inventory>(); // Inventory 초기화
+        if (playerInventory == null)
+        {
+            Debug.LogError("Player Inventory not found!");
+        }
     }
 
     public void SetBoxInventory(BoxInventory boxInventory)
@@ -104,55 +112,32 @@ public class BoxInventoryUI : MonoBehaviour
 
         string itemName = currentSelectedItem.uniqueId;
         currentBoxInventory.RemoveItem(itemName);
-        FindObjectOfType<Inventory>().AddItem(currentSelectedItem);
-        currentSelectedItem = null;
-        ItemInfo.SetActive(false);
 
-        UpdateInventoryUI();
-
-        FindObjectOfType<InventoryUI>().UpdateInventoryUI();
-    }
-
-    public void TransferToBoxInventory()
-    {
-        var playerInventoryUI = FindObjectOfType<InventoryUI>();
-        if (playerInventoryUI.currentSelectedItem == null) return;
-
-        Item item = playerInventoryUI.currentSelectedItem;
-        string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC
-                          ? item.uniqueId : item.itemName;
-
-        if (item.itemType == ItemType.Food || item.itemType == ItemType.Heal || item.itemType == ItemType.Mental)
+        if (playerInventory == null)
         {
-            playerInventoryUI.inventory.itemQuantities[itemName]--;
-            if (playerInventoryUI.inventory.itemQuantities[itemName] <= 0)
+            playerInventory = FindObjectOfType<Inventory>();
+        }
+
+        if (playerInventory != null)
+        {
+            playerInventory.AddItem(currentSelectedItem);
+
+            // BoxInventory의 PhotonView를 통해 RPC 호출
+            if (currentBoxInventory.photonView != null)
             {
-                playerInventoryUI.inventory.items.Remove(itemName);
-                playerInventoryUI.inventory.itemQuantities.Remove(itemName);
-                playerInventoryUI.currentSelectedItem = null;
-                playerInventoryUI.CloseItemInfo();
+                currentBoxInventory.photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.icon.name, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
             }
+
+            currentSelectedItem = null;
+            ItemInfo.SetActive(false);
+
+            UpdateInventoryUI();
+            playerInventory.inventoryUI.UpdateInventoryUI();
         }
         else
         {
-            playerInventoryUI.inventory.RemoveItem(itemName);
-            playerInventoryUI.currentSelectedItem = null;
-            playerInventoryUI.CloseItemInfo();
+            Debug.LogError("Player Inventory not found when trying to transfer item!");
         }
-
-        currentBoxInventory.AddItem(item);
-
-        // 퀵슬롯에서 아이템 제거 및 장착 해제
-        var quickSlotManager = FindObjectOfType<QuickSlotManager>();
-        if (quickSlotManager != null)
-        {
-            quickSlotManager.RemoveItemFromQuickSlots(item);
-            quickSlotManager.UnEquipCurrentItem();
-        }
-
-        UpdateInventoryUI();
-
-        playerInventoryUI.UpdateInventoryUI();
     }
 
     public string GetItemType(ItemType itemType)

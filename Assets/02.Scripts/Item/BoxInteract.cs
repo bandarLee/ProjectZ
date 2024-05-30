@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class BoxInteract : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             StartCoroutine(WaitForInteraction(other));
         }
@@ -20,7 +21,7 @@ public class BoxInteract : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
             inventoryManager.CloseAllInventories();
@@ -38,7 +39,6 @@ public class BoxInteract : MonoBehaviour
                 {
                     inventoryManager.OpenBoxInventory(boxInventory);
                     inventoryManager.boxInventoryUI.boxinventoryUIobject.SetActive(true);
-
                 }
                 break;
             }
