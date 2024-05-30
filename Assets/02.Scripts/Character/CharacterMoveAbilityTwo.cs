@@ -78,7 +78,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         _animator.SetTrigger("Jump");
         _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.25f);
         _canJump = true;
     }
 
