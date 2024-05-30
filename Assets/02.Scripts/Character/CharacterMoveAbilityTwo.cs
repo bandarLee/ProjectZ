@@ -8,12 +8,8 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     Animator _animator;
     Rigidbody _rigidbody;
 
-    /*private float _yVelocity = 0f;
-    private float _gravity = -9.8f;
-    private float _velocitySmoothing;*/
     public float JumpPower = 6f;
     private bool _canJump = true;
-
 
     private void Start()
     {
@@ -33,6 +29,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        // 2. 방향구하기
         Vector3 horizontalDir = Camera.main.transform.TransformDirection(new Vector3(h, 0, v));
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
@@ -40,6 +37,30 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         float speed = (Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed) * horizontalDir.magnitude;
         Vector3 moveVelocity = horizontalDir * speed;
         moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
+
+
+        // 4. 달리기 적용
+        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))
+        {
+            speed = Owner.Stat.RunSpeed;
+            if (!_canJump)
+            {
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
+            }
+
+        }
+        else
+        {
+            speed = Owner.Stat.MoveSpeed;
+            if (horizontalDir.magnitude > 0)
+            {
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
+            }
+            else
+            {
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
+            }
+        }
 
         if (_canJump)
         {
@@ -51,59 +72,11 @@ public class CharacterMoveAbilityTwo : CharacterAbility
                 _canJump = false;
             }
         }
-        // 4. 달리기 적용
-        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0)) // 달리기
-        {
-            //speed = Owner.Stat.RunSpeed;
-            
-            //if (!_canJump)
-            {
-                if(h != 0)
-                {
-                    _animator.SetBool("RunRight", h > 0);
-                    _animator.SetBool("RunLeft", h < 0);
-                    _animator.SetBool("WalkRight", false);
-                    _animator.SetBool("WalkLeft", false);
-                }
-                else
-                {
-                    _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
-                }
-                
-            }
-        }
-        else if(horizontalDir.magnitude > 0) // 걷기
-        {
-
-            if (h != 0)
-            {
-                _animator.SetBool("WalkRight", h > 0);
-                _animator.SetBool("WalkLeft", h < 0);
-                _animator.SetBool("RunRight", false);
-                _animator.SetBool("RunLeft", false);
-            }
-            else
-            {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
-            }
-
-        }
-        
-            //speed = Owner.Stat.MoveSpeed;
-            
-        else // Idle 상태
-        {
-                _animator.SetBool("WalkRight", false);
-                _animator.SetBool("WalkLeft", false);
-                _animator.SetBool("RunRight", false);
-                _animator.SetBool("RunLeft", false);
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
-        }
-       
 
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
+
     public IEnumerator JumpCoroutine()
     {
         _animator.SetTrigger("Jump");
@@ -112,5 +85,4 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         yield return new WaitForSeconds(1.25f);
         _canJump = true;
     }
-
 }
