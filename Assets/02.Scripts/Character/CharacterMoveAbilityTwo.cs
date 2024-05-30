@@ -12,7 +12,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     private float _gravity = -9.8f;
     private float _velocitySmoothing;
 
-    public float JumpPower = 4f;
+    public float JumpPower = 6f;
     private bool _canJump = true;
 
     private void Start()
