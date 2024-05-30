@@ -72,34 +72,34 @@ public class CharacterMoveAbilityTwo : CharacterAbility
                 
             }
         }
-        else
+        else if(horizontalDir.magnitude > 0) // 걷기
         {
-            //speed = Owner.Stat.MoveSpeed;
-            if (horizontalDir.magnitude > 0) // 걷기
-            {
 
-                if (h != 0)
-                {
-                    _animator.SetBool("WalkRight", h > 0);
-                    _animator.SetBool("WalkLeft", h < 0);
-                    _animator.SetBool("RunRight", false);
-                    _animator.SetBool("RunLeft", false);
-                }
-                else
-                {
-                    _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
-                }
-                
-            }
-            else // Idle 상태
+            if (h != 0)
             {
+                _animator.SetBool("WalkRight", h > 0);
+                _animator.SetBool("WalkLeft", h < 0);
+                _animator.SetBool("RunRight", false);
+                _animator.SetBool("RunLeft", false);
+            }
+            else
+            {
+                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
+            }
+
+        }
+        
+            //speed = Owner.Stat.MoveSpeed;
+            
+        else // Idle 상태
+        {
                 _animator.SetBool("WalkRight", false);
                 _animator.SetBool("WalkLeft", false);
                 _animator.SetBool("RunRight", false);
                 _animator.SetBool("RunLeft", false);
                 _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
-            }
         }
+       
 
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;

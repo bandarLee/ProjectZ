@@ -216,7 +216,7 @@ public class QuickSlotManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             DropEquippedItem();
         }
