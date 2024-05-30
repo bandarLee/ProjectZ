@@ -22,6 +22,7 @@ public class CharacterRotateAbility : CharacterAbility
     }
 
     private void Update()
+
     {
         if (!Owner.PhotonView.IsMine)
         {
