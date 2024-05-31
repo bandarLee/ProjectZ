@@ -33,12 +33,8 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         Vector3 horizontalDir = Camera.main.transform.TransformDirection(new Vector3(h, 0, v));
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
-        _animator.SetFloat("Horizontal", h);
-        _animator.SetFloat("Vertical", v);
-
-        // 방향을 각도로 변환
-        /*float direction = Mathf.Atan2(horizontalDir.x, horizontalDir.z) * Mathf.Rad2Deg;
-        _animator.SetFloat("Direction", direction);*/
+        _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), h, Time.deltaTime * 8)); 
+        _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), v, Time.deltaTime * 8));
 
         float speed = (Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed) * horizontalDir.magnitude;
         Vector3 moveVelocity = horizontalDir * speed;
@@ -66,10 +62,15 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public IEnumerator JumpCoroutine()
     {
-        _animator.SetTrigger("Jump");
+        float height = 1;
+        _animator.SetFloat("Height", height);
+        //_animator.SetTrigger("Jump");
         _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.25f);
+        height = 0;
+        _animator.SetFloat("Height", height);
         _canJump = true;
+
     }
 }

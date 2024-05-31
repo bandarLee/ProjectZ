@@ -31,6 +31,7 @@ public class SubwayTrigger : MonoBehaviour
         {
             gameObject.SetActive(gameTime.CurrentTimeType == GameTime.TimeType.Mystery);
             Debug.Log("지하철 입구 등장 두둥~~");
+
         }
     }
 }
