@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,7 +11,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         Patrol,
         Chase,
         Attack,
-        Return,
         Death
     }
 
@@ -20,20 +18,24 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public NavMeshAgent agent;
     public float detectRange = 30f;
     public float attackRange = 3f;
-    public float patrolRadius = 200f;
-    public float patrolInterval = 5f;
+    public float patrolRadius = 20f;
     public Stat stat;
 
-    private MonsterState state = MonsterState.Patrol;
+    public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
     private Vector3 initialPosition;
-    private float patrolTimer;
 
     private void Start()
     {
         agent.speed = stat.MoveSpeed;
+        agent.avoidancePriority = Random.Range(0, 100);
         initialPosition = transform.position;
-        patrolTimer = patrolInterval;
+
+        SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
+        collisionAvoidanceCollider.isTrigger = true;
+        collisionAvoidanceCollider.radius = 3.0f;
+
+        MoveToRandomPosition(); // 초기 위치 설정
     }
 
     private void Update()
@@ -54,9 +56,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             case MonsterState.Attack:
                 Attack();
                 break;
-            case MonsterState.Return:
-                Return();
-                break;
+
             case MonsterState.Death:
                 break;
         }
@@ -64,11 +64,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Patrol()
     {
-        patrolTimer += Time.deltaTime;
-
-        if (patrolTimer >= patrolInterval)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            patrolTimer = 0f;
             MoveToRandomPosition();
         }
 
@@ -77,10 +74,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Chase()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
+        if (targetCharacter == null || !IsTargetOnNavMesh(targetCharacter.transform.position) || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
         {
-            state = MonsterState.Return;
+            state = MonsterState.Patrol;
             animator.SetBool("IsChasing", false);
+            MoveToRandomPosition(); // 플레이어를 놓쳤을 때 다시 무작위로 이동
             return;
         }
 
@@ -110,16 +108,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    private void Return()
-    {
-        agent.SetDestination(initialPosition);
-
-        if (Vector3.Distance(transform.position, initialPosition) <= 0.1f)
-        {
-            state = MonsterState.Patrol;
-        }
-    }
-
     private void FindTarget()
     {
         Character nearestCharacter = null;
@@ -128,7 +116,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         foreach (var player in FindObjectsOfType<Character>())
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance < nearestDistance)
+            if (distance < nearestDistance && IsTargetOnNavMesh(player.transform.position))
             {
                 nearestCharacter = player;
                 nearestDistance = distance;
@@ -141,6 +129,12 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             state = MonsterState.Chase;
             animator.SetBool("IsChasing", true);
         }
+    }
+
+    private bool IsTargetOnNavMesh(Vector3 position)
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(position, out hit, 1.0f, NavMesh.AllAreas);
     }
 
     private void MoveToRandomPosition()
@@ -196,5 +190,15 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     {
         yield return new WaitForSeconds(3f);
         PhotonNetwork.Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Monster") && other.gameObject != this.gameObject)
+        {
+            Vector3 avoidDirection = transform.position - other.transform.position;
+            Vector3 newPos = transform.position + avoidDirection.normalized * 10f;
+            agent.SetDestination(newPos);
+        }
     }
 }
