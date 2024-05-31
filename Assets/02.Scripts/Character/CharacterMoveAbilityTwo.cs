@@ -43,33 +43,10 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         Vector3 moveVelocity = horizontalDir * speed;
         moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
 
-        float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) ? 1f : 0.5f) : 0f;
+        float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) && _canJump ? 1f : 0.5f) : 0f;
         float lerpTime = speedValue == 1f ? Time.deltaTime * 3 : speedValue == 0.5f ? Time.deltaTime * 5 : Time.deltaTime * 8;
         _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, lerpTime));
-
-
-        /*// 4. 달리기 적용
-        if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))
-        {
-            speed = Owner.Stat.RunSpeed;
-            if (!_canJump)
-            {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 1.0f, Time.deltaTime * 3));
-            }
-
-        }
-        else
-        {
-            speed = Owner.Stat.MoveSpeed;
-            if (horizontalDir.magnitude > 0)
-            {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0.5f, Time.deltaTime * 5));
-            }
-            else
-            {
-                _animator.SetFloat("Move", Mathf.Lerp(_animator.GetFloat("Move"), 0f, Time.deltaTime * 8));
-            }
-        }*/
+        
 
         if (_canJump)
         {
