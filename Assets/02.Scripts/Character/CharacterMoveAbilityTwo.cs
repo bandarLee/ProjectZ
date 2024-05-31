@@ -62,10 +62,15 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public IEnumerator JumpCoroutine()
     {
-        _animator.SetTrigger("Jump");
+        float height = 1;
+        _animator.SetFloat("Height", height);
+        //_animator.SetTrigger("Jump");
         _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.25f);
+        height = 0;
+        _animator.SetFloat("Height", height);
         _canJump = true;
+
     }
 }
