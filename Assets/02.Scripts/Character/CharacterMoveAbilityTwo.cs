@@ -34,6 +34,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
         _animator.SetFloat("Horizontal", h);
+        _animator.SetFloat("Vertical", v);
 
         // 방향을 각도로 변환
         /*float direction = Mathf.Atan2(horizontalDir.x, horizontalDir.z) * Mathf.Rad2Deg;
