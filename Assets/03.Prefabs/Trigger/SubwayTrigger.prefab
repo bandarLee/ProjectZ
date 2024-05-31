@@ -9864,6 +9864,8 @@ GameObject:
   - component: {fileID: 2287109163511634352}
   - component: {fileID: 6057434079883966939}
   - component: {fileID: 4688316390374376481}
+  - component: {fileID: 8704947906399510557}
+  - component: {fileID: 8114032848088144034}
   m_Layer: 0
   m_Name: SubwayTrigger
   m_TagString: Untagged
@@ -14745,6 +14747,39 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8704947906399510557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869340858376000184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c305c3180a8cdb347853e05c96d7868f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &8114032848088144034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869340858376000184}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3.3, z: 3}
+  m_Center: {x: -0.03859572, y: 0.005049882, z: 0.47853914}
 --- !u!1 &6729322802970468736
 GameObject:
   m_ObjectHideFlags: 0
