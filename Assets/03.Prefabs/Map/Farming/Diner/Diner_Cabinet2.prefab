@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8997726262677736152}
   - component: {fileID: 6110878632603816237}
   - component: {fileID: 39818487520846307}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Diner_Cabinet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 3713119728651186332}
   - component: {fileID: 2898249294542184139}
   - component: {fileID: 4110199740605276174}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

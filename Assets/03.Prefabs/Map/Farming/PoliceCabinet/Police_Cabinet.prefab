@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7144821891164429852}
   - component: {fileID: 2994015219352940463}
   - component: {fileID: 9101960138684539885}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_door_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3862957751129751495}
   - component: {fileID: 7598580569619095893}
   - component: {fileID: 862889887362322296}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Police_Cabinet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1462257699625623455}
   - component: {fileID: 7095231812958437284}
   - component: {fileID: 2388112559554288420}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_door_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 5921786036317207946}
   - component: {fileID: 5205805098375362203}
   - component: {fileID: 7733683960926605851}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_door_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 6172028361003080178}
   - component: {fileID: 8847142556347779814}
   - component: {fileID: 758894681743678491}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_drawer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 6852672241560481866}
   - component: {fileID: 437687251506146193}
   - component: {fileID: 8043218150585179090}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Police_Cabinet_Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 2878927787434630985}
   - component: {fileID: 4906369521813399734}
   - component: {fileID: 4828634101687561887}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_door_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 1611255755952283974}
   - component: {fileID: 4354370025300697210}
   - component: {fileID: 5054176200095702826}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: cabinet_drawer_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

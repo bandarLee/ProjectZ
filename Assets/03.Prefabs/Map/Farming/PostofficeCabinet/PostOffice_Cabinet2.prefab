@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2095381146515445659}
   - component: {fileID: 7930155138186393496}
   - component: {fileID: 5693119885595432461}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Postoffice_Cabinet2_Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 2063602638231240316}
   - component: {fileID: 1985728619262662881}
   - component: {fileID: 919794354833485037}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PostOffice_Cabinet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

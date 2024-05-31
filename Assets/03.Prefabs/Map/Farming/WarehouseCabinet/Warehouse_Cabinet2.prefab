@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2261628064629506466}
   - component: {fileID: 8819080202071963250}
   - component: {fileID: 4561532502798139642}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Warehouse_Cabinet2_Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 365008705775158426}
   - component: {fileID: 5198392887952272624}
   - component: {fileID: 1366781735931071983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Warehouse_Cabinet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
