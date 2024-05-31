@@ -7,14 +7,12 @@ using UnityEngine.SceneManagement;
 public class BackToCityCircle : MonoBehaviour
 {
     public TextMeshProUGUI OpenText;
-    public GameObject BackToCityCirclePrefab;
 
     private bool isPlayerInTrigger = false;
 
     private void Start()
     {
         OpenText.gameObject.SetActive(false);
-        BackToCityCirclePrefab.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +41,6 @@ public class BackToCityCircle : MonoBehaviour
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E))
         {
             OpenText.gameObject.SetActive(false);
-            BackToCityCirclePrefab.SetActive(true);
             StartCoroutine(BackToCityWaitForSeconds());
         }
     }
