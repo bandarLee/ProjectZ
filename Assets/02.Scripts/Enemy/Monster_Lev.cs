@@ -74,7 +74,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Chase()
     {
-        if (targetCharacter == null || !IsTargetOnNavMesh(targetCharacter.transform.position) || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
         {
             state = MonsterState.Patrol;
             animator.SetBool("IsChasing", false);
