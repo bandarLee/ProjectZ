@@ -20,7 +20,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public NavMeshAgent agent;
     public float detectRange = 30f;
     public float attackRange = 3f;
-    public float patrolRadius = 20f;
+    public float patrolRadius = 200f;
     public float patrolInterval = 5f;
     public Stat stat;
 
