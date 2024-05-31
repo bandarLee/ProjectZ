@@ -37,7 +37,7 @@ public class CharacterRotateAbility : CharacterAbility
         // 2. 회전 값을 마우스 입력에 따라 미리 누적한다.
         _mx += mouseX * Owner.Stat.RotationSpeed * Time.deltaTime;
         _my += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
-        _my = Mathf.Clamp(_my, -90f, 90f);
+        _my = Mathf.Clamp(_my, -50f, 20f);
 
         // 3. 카메라(3인칭)와 캐릭터를 회전 방향으로 회전시킨다. 
         transform.eulerAngles = new Vector3(0, _mx, 0f); // X와 Z 축은 0으로 고정, 회전은 Y축을 중심으로만 
