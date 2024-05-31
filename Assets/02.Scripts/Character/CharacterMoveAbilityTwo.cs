@@ -33,16 +33,20 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         Vector3 horizontalDir = Camera.main.transform.TransformDirection(new Vector3(h, 0, v));
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
+        _animator.SetFloat("Horizontal", h);
+
+        // 방향을 각도로 변환
+        /*float direction = Mathf.Atan2(horizontalDir.x, horizontalDir.z) * Mathf.Rad2Deg;
+        _animator.SetFloat("Direction", direction);*/
 
         float speed = (Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed) * horizontalDir.magnitude;
         Vector3 moveVelocity = horizontalDir * speed;
         moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
 
-        _animator.SetFloat("Horizontal", h);
-       // _animator.SetBool("IsRunning", Input.GetKey(KeyCode.LeftShift));
-
         float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) ? 1f : 0.5f) : 0f;
-        _animator.SetFloat("Speed", speedValue);
+        float lerpTime = speedValue == 1f ? Time.deltaTime * 3 : speedValue == 0.5f ? Time.deltaTime * 5 : Time.deltaTime * 8;
+        _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, lerpTime));
+
 
         /*// 4. 달리기 적용
         if (Input.GetKey(KeyCode.LeftShift) && (h != 0 || v != 0))

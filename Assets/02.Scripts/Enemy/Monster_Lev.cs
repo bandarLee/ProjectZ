@@ -58,7 +58,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
                 Return();
                 break;
             case MonsterState.Death:
-                // 죽은 상태에서는 아무 동작도 하지 않음
                 break;
         }
     }
