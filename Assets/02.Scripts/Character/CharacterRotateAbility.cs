@@ -24,7 +24,7 @@ public class CharacterRotateAbility : CharacterAbility
     private void Update()
 
     {
-        if (!Owner.PhotonView.IsMine)
+        if (Owner.State == State.Death || !Owner.PhotonView.IsMine)
         {
             return;
         }

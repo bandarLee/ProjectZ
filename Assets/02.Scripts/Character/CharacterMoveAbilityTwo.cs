@@ -20,7 +20,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     private void Update()
     {
-        if (!Owner.PhotonView.IsMine)
+        if (Owner.State == State.Death || !Owner.PhotonView.IsMine)
         {
             return;
         }
@@ -33,6 +33,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         Vector3 horizontalDir = Camera.main.transform.TransformDirection(new Vector3(h, 0, v));
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
+
         _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), h, Time.deltaTime * 8)); 
         _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), v, Time.deltaTime * 8));
 
@@ -68,5 +69,20 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         yield return new WaitForSeconds(1.25f);
         _canJump = true;
 
+    }
+
+
+    public void Teleport(Vector3 newPosition)
+    {
+        Vector3 originalVelocity = _rigidbody.velocity; // 현재 리지드바디의 속도와 각속도를 저장
+        Vector3 originalAngularVelocity = _rigidbody.angularVelocity;
+
+        _rigidbody.velocity = Vector3.zero; // 리지드바디의 속도와 각속도를 일시적으로 0으로 설정
+        _rigidbody.angularVelocity = Vector3.zero;
+
+        transform.position = newPosition; // 캐릭터의 위치를 새로운 위치로 갱신
+
+        _rigidbody.velocity = originalVelocity; // 리지드바디의 속도와 각속도를 원래대로 복구
+        _rigidbody.angularVelocity = originalAngularVelocity;
     }
 }

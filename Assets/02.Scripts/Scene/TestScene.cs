@@ -16,6 +16,11 @@ public class TestScene : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+    public Vector3 GetSpawnPoint()
+    {
+        return SpawnPoints[0].position;
+    }
+
     private void Start()
     {
         if (PhotonNetwork.InRoom)

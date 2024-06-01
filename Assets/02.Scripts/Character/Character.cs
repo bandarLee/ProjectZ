@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterMoveAbilityTwo))]
 [RequireComponent(typeof(CharacterRotateAbility))]
 [RequireComponent(typeof(CharacterStatAbility))]
 [RequireComponent(typeof(CharacterAttackAbility))]
@@ -112,8 +113,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
         State = State.Death;
 
-        /*GetComponent<Animator>().SetTrigger($"Die");
-        GetComponent<CharacterAttackAbility>().InActiveCollider();*/
+        GetComponent<Animator>().SetTrigger($"Die");
+        GetComponent<CharacterAttackAbility>().InActiveCollider();
 
         // 죽고나서 5초후 리스폰
         if (PhotonView.IsMine)
@@ -133,5 +134,26 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     {
         yield return new WaitForSeconds(5f);
 
+        SetSpawnPoint();
+        PhotonView.RPC(nameof(Live), RpcTarget.All);
+    }
+
+    private void SetSpawnPoint()
+    {
+        Vector3 spawnPoint = TestScene.Instance.GetSpawnPoint();
+        GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
+        GetComponent<CharacterRotateAbility>().SetRandomRotation();
+    }
+
+    [PunRPC]
+    private void Live()
+    {
+        State = State.Live;
+
+        CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
+        Stat = ability.Stat;
+        Stat.Init();
+
+        GetComponent<Animator>().SetTrigger("Live");
     }
 }
