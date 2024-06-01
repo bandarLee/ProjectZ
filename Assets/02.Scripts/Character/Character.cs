@@ -93,9 +93,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             /* Death();*/
             PhotonView.RPC(nameof(Death), RpcTarget.All); // Death 함수를 호출
         }
-
-        //GetComponent<CharacterShakeAbility>().Shake();
-        // GetComponent<Animator>().SetTrigger($"Damage");
+        GetComponent<Animator>().SetTrigger($"Damage");
 
     }
 
