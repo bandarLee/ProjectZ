@@ -44,6 +44,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             return;
         }
+
+        SetSpawnPoint();
     }
 
     // 데이터 동기화를 위해 데이터 전송 및 수신 기능을 가진 약속
@@ -93,6 +95,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
 
         //GetComponent<CharacterShakeAbility>().Shake();
+        // GetComponent<Animator>().SetTrigger($"Damage");
 
     }
 

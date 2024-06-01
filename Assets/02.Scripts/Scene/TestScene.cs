@@ -18,7 +18,8 @@ public class TestScene : MonoBehaviourPunCallbacks
 
     public Vector3 GetSpawnPoint()
     {
-        return SpawnPoints[0].position;
+        int randomIndex = Random.Range(0, SpawnPoints.Count);
+        return SpawnPoints[randomIndex].position;
     }
 
     private void Start()
@@ -52,8 +53,9 @@ public class TestScene : MonoBehaviourPunCallbacks
 
         //PhotonNetwork.LocalPlayer.CustomProperties["CharacterClass"];
         int characterType = (int)PhotonNetwork.LocalPlayer.CustomProperties["CharacterType"];
-        string characterName = characterType == 0 ? "Character_Female_rigid_collid" : "Character_Male"; 
-        Vector3 spawnPosition = SpawnPoints[0].transform.position;
+        string characterName = characterType == 0 ? "Character_Female_rigid_collid" : "Character_Male";
+        int randomIndex = Random.Range(0, SpawnPoints.Count);
+        Vector3 spawnPosition = SpawnPoints[randomIndex].transform.position;
         Quaternion spawnRotation = Quaternion.identity;
 
         PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
