@@ -4938,7 +4938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5447543813037872736
 Transform:
   m_ObjectHideFlags: 0
@@ -6273,8 +6273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponCollider: {fileID: 1082257923855369236}
-  WeaponObject: {fileID: 6935806010064311723}
+  WeaponCollider: {fileID: 5941061427532128487, guid: d7c7b7ba8920e6b459bce4da6ee6c49a, type: 3}
+  WeaponObject: {fileID: 9206253188489657683, guid: d7c7b7ba8920e6b459bce4da6ee6c49a, type: 3}
 --- !u!114 &3394129554567082972
 MonoBehaviour:
   m_ObjectHideFlags: 0

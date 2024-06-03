@@ -1,14 +1,24 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class ItemUseManager : MonoBehaviour
 {
     public static ItemUseManager Instance;
 
+    private PhotonView photonView;
+
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            photonView = GetComponent<PhotonView>();
+
+            if (photonView == null)
+            {
+                Debug.LogError("PhotonView component is missing from the manager object!");
+            }
         }
         else
         {
@@ -122,22 +132,27 @@ public class ItemUseManager : MonoBehaviour
 
     private void EquipWeapon(string itemName)
     {
-        switch (itemName)
+        if (photonView != null && photonView.IsMine) // 로컬 플레이어인지 확인
         {
-            case "도끼":
-                Debug.Log("플레이어가 도끼를 들었음");
-                WeaponManager.Instance.EquipWeapon(itemName);
+            CharacterAttackAbility attackAbility = GetComponent<CharacterAttackAbility>();
 
-                break;
-            case "총":
-                Debug.Log("Player equipped with gun.");
-                // 실제 로직은 주석 처리
-                // Player.Instance.EquipWeapon(gun);
-                break;
-            default:
-                Debug.LogWarning("Unknown weapon item.");
-                break;
+            switch (itemName)
+            {
+                case "도끼":
+                    Debug.Log("플레이어가 도끼를 들었음");
+                    attackAbility.WeaponActive(0);
+                    break;
+                case "총":
+                    Debug.Log("Player equipped with gun.");
+                    // 실제 로직은 주석 처리
+                    // Player.Instance.EquipWeapon(gun);
+                    break;
+                default:
+                    Debug.LogWarning("Unknown weapon item.");
+                    break;
+            }
         }
+           
     }
 
     private void EquipEtc(string itemName)
