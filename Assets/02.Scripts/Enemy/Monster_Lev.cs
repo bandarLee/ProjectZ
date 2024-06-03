@@ -24,6 +24,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
     private Vector3 initialPosition;
+    private float attackTimer = 0f;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
 
-        MoveToRandomPosition(); // 초기 위치 설정
+        MoveToRandomPosition();
     }
 
     private void Update()
@@ -78,7 +79,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             state = MonsterState.Patrol;
             animator.SetBool("IsChasing", false);
-            MoveToRandomPosition(); // 플레이어를 놓쳤을 때 다시 무작위로 이동
+            MoveToRandomPosition();
             return;
         }
 
@@ -106,6 +107,55 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         targetDirection.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= stat.AttackCoolTime)
+        {
+            attackTimer = 0f;
+            RequestPlayAnimation("Attack");
+        }
+    }
+
+    public void AttackAction() 
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        List<Character> targets = FindTargets(attackRange + 0.1f);
+        foreach (Character target in targets)
+        {
+            Vector3 dir = (target.transform.position - transform.position).normalized;
+            int viewAngle = 160 / 2;
+            float angle = Vector3.Angle(transform.forward, dir);
+            Debug.Log(angle);
+            if (Vector3.Angle(transform.forward, dir) < viewAngle)
+            {
+                target.PhotonView.RPC("Damaged", RpcTarget.All, stat.Damage, -1);
+            }
+        }
+    }
+
+    private List<Character> FindTargets(float distance)
+    {
+        List<Character> characters = new List<Character>();
+        Vector3 myPosition = transform.position;
+
+        foreach (Character character in FindObjectsOfType<Character>())
+        {
+            if (character.State == State.Death)
+            {
+                continue;
+            }
+
+            if (Vector3.Distance(character.transform.position, myPosition) <= distance)
+            {
+                characters.Add(character);
+            }
+        }
+
+        return characters;
     }
 
     private void FindTarget()
@@ -200,5 +250,16 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             Vector3 newPos = transform.position + avoidDirection.normalized * 10f;
             agent.SetDestination(newPos);
         }
+    }
+
+    private void RequestPlayAnimation(string animationName)
+    {
+        GetComponent<PhotonView>().RPC(nameof(PlayAnimation), RpcTarget.All, animationName);
+    }
+
+    [PunRPC]
+    private void PlayAnimation(string animationName)
+    {
+        animator.Play(animationName);
     }
 }
