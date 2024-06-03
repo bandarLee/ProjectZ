@@ -1,7 +1,9 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public enum CityZoneType
 {
@@ -16,26 +18,7 @@ public enum CityZoneType
 public class CitySceneMove : MonoBehaviour
 {
     public CityZoneType currentZone;
-    private static GameObject playerInstance;
     private static string nextSpawnPointName;
-
-    private void Awake()
-    {
-        if (playerInstance == null)
-        {
-            playerInstance = GameObject.FindWithTag("Player");
-            if (playerInstance != null)
-            {
-                DontDestroyOnLoad(playerInstance);
-            }
-        }
-        else
-        {
-            Destroy(GameObject.FindWithTag("Player"));
-        }
-
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     private void OnTriggerEnter(Collider other)
     {

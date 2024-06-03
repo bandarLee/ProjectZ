@@ -31,6 +31,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _animator = GetComponent<Animator>();
         _inventoryManager = FindObjectOfType<InventoryManager>();
 
+        DontDestroyOnLoad(this.gameObject);
+
         if (_inventoryManager != null)
         {
             _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();

@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterRotateAbility : CharacterAbility
 {
@@ -9,8 +10,19 @@ public class CharacterRotateAbility : CharacterAbility
     private float _mx; // °¢µµ
     private float _my;
     //public float RotationSpeed = 200f;
-
     private void Start()
+    {
+        SetMouseLock(true);
+
+
+        if (Owner.PhotonView.IsMine)
+        {
+            GameObject.FindWithTag("FollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = CameraRoot;
+        }
+    }
+
+
+    private void OnLevelWasLoaded()
     {
         SetMouseLock(true);
 
