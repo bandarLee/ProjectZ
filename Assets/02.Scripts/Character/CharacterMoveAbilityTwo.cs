@@ -79,7 +79,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     [PunRPC]
     private void PlayAnimation(string animationName)
     {
-        _animator.Play(animationName);
+        _animator.SetTrigger(animationName);
     }
 
 
