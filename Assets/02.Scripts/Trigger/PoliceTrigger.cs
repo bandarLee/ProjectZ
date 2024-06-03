@@ -8,7 +8,7 @@ public class PoliceTrigger : MonoBehaviour
 {
     public TextMeshProUGUI OpenText;
     public TextMeshProUGUI NoKeyText;
-    public TextMeshProUGUI BackToCityText;
+    //public TextMeshProUGUI BackToCityText;
 
     public GameObject DoorPrefab;
     public float moveDistance = 5f; // 이동 거리
@@ -29,7 +29,7 @@ public class PoliceTrigger : MonoBehaviour
     {
         OpenText.gameObject.SetActive(false);
         NoKeyText.gameObject.SetActive(false);
-        BackToCityText.gameObject.SetActive(false);
+        //BackToCityText.gameObject.SetActive(false);
 
         playerInventory = FindObjectOfType<Inventory>();
         quickSlotManager = FindObjectOfType<QuickSlotManager>();

@@ -1,6 +1,5 @@
 using Photon.Pun;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class TestScene : MonoBehaviourPunCallbacks
@@ -10,16 +9,22 @@ public class TestScene : MonoBehaviourPunCallbacks
     public List<Transform> SpawnPoints;
 
     public bool _init = false;
+    public string specificSpawnPointName = null;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public Vector3 GetSpawnPoint()
+    public Vector3 GetRandomSpawnPoint()
     {
         int randomIndex = Random.Range(0, SpawnPoints.Count);
         return SpawnPoints[randomIndex].position;
+    }
+
+    public Transform GetSpawnPointByName(string spawnPointName)
+    {
+        return SpawnPoints.Find(sp => sp.name == spawnPointName);
     }
 
     private void Start()
@@ -51,14 +56,22 @@ public class TestScene : MonoBehaviourPunCallbacks
             return;
         }
 
-        //PhotonNetwork.LocalPlayer.CustomProperties["CharacterClass"];
         int characterType = (int)PhotonNetwork.LocalPlayer.CustomProperties["CharacterType"];
         string characterName = characterType == 0 ? "Character_Female_rigid_collid" : "Character_Male";
-        int randomIndex = Random.Range(0, SpawnPoints.Count);
-        Vector3 spawnPosition = SpawnPoints[randomIndex].transform.position;
+
+        Vector3 spawnPosition;
+        if (!string.IsNullOrEmpty(specificSpawnPointName))
+        {
+            Transform spawnPoint = GetSpawnPointByName(specificSpawnPointName);
+            spawnPosition = spawnPoint != null ? spawnPoint.position : GetRandomSpawnPoint();
+            specificSpawnPointName = null; // reset after use
+        }
+        else
+        {
+            spawnPosition = GetRandomSpawnPoint();
+        }
+
         Quaternion spawnRotation = Quaternion.identity;
-
         PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
-
     }
 }

@@ -16,65 +16,76 @@ public enum CityZoneType
 public class CitySceneMove : MonoBehaviour
 {
     public CityZoneType currentZone;
+    private static GameObject playerInstance;
+    private static string nextSpawnPointName;
 
-    // 씬 이동하는 코드
+    private void Awake()
+    {
+        if (playerInstance == null)
+        {
+            playerInstance = GameObject.FindWithTag("Player");
+            if (playerInstance != null)
+            {
+                DontDestroyOnLoad(playerInstance);
+            }
+        }
+        else
+        {
+            Destroy(GameObject.FindWithTag("Player"));
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("City_2로 이동");
+            Debug.Log("씬 전환 준비");
             switch (currentZone)
             {
-                // City_1
                 case CityZoneType.City1_3:
+                    Debug.Log("City_2로 이동합니다");
+                    nextSpawnPointName = "SpawnPoint1";
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene("City_2");
                     break;
                 case CityZoneType.City1_4:
-                    //SceneManager.LoadScene("City_4");
+                    // SceneManager.LoadScene("City_4");
                     break;
 
-                // City_2
                 case CityZoneType.City2_1:
+                    Debug.Log("City_1으로 이동합니다");
+                    nextSpawnPointName = "SpawnPoint3";
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene("City_1");
                     break;
-            
+
                 default:
                     break;
             }
         }
     }
 
-    // 스폰 포인트로 이동하는 코드
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "City_2")
+        if (!string.IsNullOrEmpty(nextSpawnPointName))
         {
-
-            GameObject player = GameObject.FindWithTag("Player");
-            GameObject spawnPoint = GameObject.Find("SpawnPoint1");
-
-            if (player != null && spawnPoint != null)
-            {
-                player.transform.position = spawnPoint.transform.position;
-                player.transform.rotation = spawnPoint.transform.rotation;
-            }
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            MovePlayerToSpawnPoint(nextSpawnPointName);
+            nextSpawnPointName = null;
         }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
-        if (scene.name == "City_1")
+    private void MovePlayerToSpawnPoint(string spawnPointName)
+    {
+        Transform spawnPoint = TestScene.Instance.GetSpawnPointByName(spawnPointName);
+        GameObject player = playerInstance ?? GameObject.FindWithTag("Player");
+
+        if (player != null && spawnPoint != null)
         {
-
-            GameObject player = GameObject.FindWithTag("Player");
-            GameObject spawnPoint = GameObject.Find("SpawnPoint3");
-
-            if (player != null && spawnPoint != null)
-            {
-                player.transform.position = spawnPoint.transform.position;
-                player.transform.rotation = spawnPoint.transform.rotation;
-            }
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            player.transform.position = spawnPoint.position;
+            player.transform.rotation = spawnPoint.rotation;
         }
     }
 }
