@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using System.Collections;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -22,6 +23,14 @@ public class QuickSlotManager : MonoBehaviour
         {
             image.gameObject.SetActive(false);
         }
+        StartCoroutine(InitializeInventory());
+
+       
+
+    }
+    private IEnumerator InitializeInventory()
+    {
+        yield return new WaitForSeconds(1.0f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
 
@@ -44,7 +53,6 @@ public class QuickSlotManager : MonoBehaviour
             Debug.LogError("CharacterItemAbility를 찾을 수 없습니다. Player 객체에 CharacterItemAbility가 있는지 확인하세요.");
         }
     }
-
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length) return;
