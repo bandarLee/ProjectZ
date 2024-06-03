@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,15 +61,25 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
+    private void RequestPlayAnimation(string animationName)
+    {
+        GetComponent<PhotonView>().RPC(nameof(PlayAnimation), RpcTarget.All, animationName);
+    }
 
     public IEnumerator JumpCoroutine()
     {
-        _animator.SetTrigger("Jump");
+        RequestPlayAnimation("Jump");
+
         _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.25f);
         _canJump = true;
 
+    }
+    [PunRPC]
+    private void PlayAnimation(string animationName)
+    {
+        _animator.Play(animationName);
     }
 
 
