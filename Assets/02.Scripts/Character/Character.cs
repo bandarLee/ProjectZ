@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Pun.Demo.SlotRacer.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -117,7 +118,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         State = State.Death;
 
         GetComponent<Animator>().SetTrigger("Die");
-        GetComponent<CharacterAttackAbility>().InActiveCollider();
+        GetComponent<CharacterAttackAbility>().DeactivateAllColliders();
 
         if (PhotonView.IsMine)
         {

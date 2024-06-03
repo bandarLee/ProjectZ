@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5941061427532128487}
   - component: {fileID: -6993729119863267520}
   - component: {fileID: 7818124294449833712}
+  - component: {fileID: -8715319207643224398}
   m_Layer: 0
   m_Name: "\uB3C4\uB07C"
   m_TagString: Untagged
@@ -189,3 +190,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-8715319207643224398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206253188489657683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01d9b0a1fa82284ea13c468ebc019e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCharacterAttackAbility: {fileID: 0}

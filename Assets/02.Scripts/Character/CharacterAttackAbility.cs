@@ -3,15 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class CharacterAttackAbility : CharacterAbility
 {
     private Animator _animator;
     private float _attackTimer = 0;
-
-    public Collider WeaponCollider;
-    public GameObject WeaponObject;
+    public Collider[] WeaponCollider;
+    public GameObject[] WeaponObject;
 
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
@@ -44,6 +42,17 @@ public class CharacterAttackAbility : CharacterAbility
         _animator.SetTrigger($"Attack{index}");
     }
 
+    public void WeaponActive(int WeaponNumber)
+    {
+        foreach (GameObject weapon in WeaponObject)
+        {
+            weapon.SetActive(false);
+
+        }
+        WeaponObject[WeaponNumber].SetActive(true);
+    }
+
+
     public void OnTriggerEnter(Collider other)
     {
         if (Owner.PhotonView.IsMine == false || other.transform == transform)
@@ -75,14 +84,24 @@ public class CharacterAttackAbility : CharacterAbility
         }
     }
 
-    public void ActiveCollider()
+    public void ActiveCollider(int index)
     {
-        WeaponCollider.enabled = true;
+        WeaponCollider[index].enabled = true;
 
     }
-    public void InActiveCollider()
+    public void InActiveCollider(int index)
     {
-        WeaponCollider.enabled = false;
+        WeaponCollider[index].enabled = false;
         _damagedList.Clear();
+    }
+
+    // 새로운 메서드: 모든 콜라이더를 비활성화
+    public void DeactivateAllColliders()
+    {
+        foreach (Collider collider in WeaponCollider)
+        {
+            collider.enabled = false;
+        }
+        _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
     }
 }
