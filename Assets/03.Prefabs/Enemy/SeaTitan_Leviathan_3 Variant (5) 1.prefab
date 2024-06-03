@@ -1728,7 +1728,7 @@ MonoBehaviour:
   - {fileID: 3265220361401884573}
   - {fileID: 8072003678232290550}
   - {fileID: 4106860725945240303}
-  sceneViewId: 17
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &3265220361401884573
