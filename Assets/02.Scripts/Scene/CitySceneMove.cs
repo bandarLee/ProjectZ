@@ -53,14 +53,12 @@ public class CitySceneMove : MonoBehaviour
                 case CityZoneType.City1_4:
                     // SceneManager.LoadScene("City_4");
                     break;
-
                 case CityZoneType.City2_1:
                     Debug.Log("City_1으로 이동합니다");
                     nextSpawnPointName = "SpawnPoint3";
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene("City_1");
                     break;
-
                 default:
                     break;
             }
@@ -79,8 +77,8 @@ public class CitySceneMove : MonoBehaviour
 
     private void MovePlayerToSpawnPoint(string spawnPointName)
     {
-        Transform spawnPoint = TestScene.Instance.GetSpawnPointByName(spawnPointName);
-        GameObject player = playerInstance ?? GameObject.FindWithTag("Player");
+        GameObject player = GameObject.FindWithTag("Player");
+        Transform spawnPoint = GameObject.Find(spawnPointName).transform;
 
         if (player != null && spawnPoint != null)
         {
