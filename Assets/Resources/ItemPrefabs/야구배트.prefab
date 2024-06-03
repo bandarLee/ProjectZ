@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5941061427532128487}
   - component: {fileID: -6993729119863267520}
   - component: {fileID: 7818124294449833712}
+  - component: {fileID: -5330723020782909137}
   m_Layer: 0
   m_Name: "\uC57C\uAD6C\uBC30\uD2B8"
   m_TagString: Untagged
@@ -45,7 +46,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9206253188489657683}
-  m_Mesh: {fileID: 4300000, guid: 9f1810da5391ad942b0710778d90f7d2, type: 3}
+  m_Mesh: {fileID: 4300002, guid: 1635ebc29fd2c874e9d6a39015dec246, type: 3}
 --- !u!23 &331403570329144756
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ MonoBehaviour:
     itemName: "\uC57C\uAD6C\uBC30\uD2B8"
     icon: {fileID: 21300000, guid: 40d526b51d159064f851539ce7779eec, type: 3}
     itemType: 1
-    itemEffect: "\uACF5\uACA9\uB825 +10"
+    itemEffect: "\uACF5\uACA9\uB825 +30"
     itemDescription: "\uB9DE\uC73C\uBA74 \uC544\uD50C \uAC83\uAC19\uB2E4."
     uniqueId: 
 --- !u!65 &5941061427532128487
@@ -189,3 +190,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-5330723020782909137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206253188489657683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01d9b0a1fa82284ea13c468ebc019e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCharacterAttackAbility: {fileID: 0}
