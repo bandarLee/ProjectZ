@@ -145,7 +145,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
     private void SetSpawnPoint()
     {
-        Vector3 spawnPoint = TestScene.Instance.GetSpawnPoint();
+        Vector3 spawnPoint = TestScene.Instance.GetRandomSpawnPoint();
         GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
         GetComponent<CharacterRotateAbility>().SetRandomRotation();
     }
