@@ -2,9 +2,9 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScene : MonoBehaviourPunCallbacks
+public class GameManager : MonoBehaviourPunCallbacks
 {
-    public static TestScene Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
     public List<Transform> SpawnPoints;
 
