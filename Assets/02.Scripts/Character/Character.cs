@@ -3,6 +3,7 @@ using Photon.Pun.Demo.SlotRacer.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterMoveAbilityTwo))]
 [RequireComponent(typeof(CharacterRotateAbility))]
@@ -10,7 +11,6 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterAttackAbility))]
 [RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(CharacterItemAbility))]
-
 [RequireComponent(typeof(Animator))]
 
 public class Character : MonoBehaviour, IPunObservable, IDamaged
@@ -34,7 +34,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         if (_inventoryManager != null)
         {
             _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();
-
         }
     }
 
@@ -45,37 +44,38 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             return;
         }
 
-        SetSpawnPoint();
+        // 로비 씬에서 생성될 때 스폰 포인트 설정
+        if (SceneManager.GetActiveScene().name == "Lobby")
+        {
+            SetSpawnPoint();
+        }
     }
 
     // 데이터 동기화를 위해 데이터 전송 및 수신 기능을 가진 약속
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        // stream(통로)은 서버에서 주고받을 데이터가 담겨있는 변수
-        if (stream.IsWriting)        // 데이터를 전송하는 상황
+        if (stream.IsWriting)
         {
             stream.SendNext(Stat.Health);
             stream.SendNext(Stat.Mental);
             stream.SendNext(Stat.Hunger);
             stream.SendNext(Stat.Temperature);
         }
-        else if (stream.IsReading)   // 데이터를 수신하는 상황
+        else if (stream.IsReading)
         {
-            // 데이터를 전송한 순서와 똑같이 받은 데이터를 캐스팅해야된다.
             Stat.Health = (int)stream.ReceiveNext();
             Stat.Mental = (int)stream.ReceiveNext();
             Stat.Hunger = (int)stream.ReceiveNext();
             Stat.Temperature = (int)stream.ReceiveNext();
         }
-        // info는 송수신 성공/실패 여부에 대한 메시지 담겨있다. 
     }
+
     [PunRPC]
     public void AddLog(string logMessage)
     {
         UI_RoomInfo.Instance.AddLog(logMessage);
     }
 
-    // 체력
     [PunRPC]
     public void Damaged(int damage, int actorNumber)
     {
@@ -90,15 +90,12 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             {
                 OnDeath();
             }
-            /* Death();*/
-            PhotonView.RPC(nameof(Death), RpcTarget.All); // Death 함수를 호출
+            PhotonView.RPC(nameof(Death), RpcTarget.All);
         }
         else
         {
-            GetComponent<Animator>().SetTrigger($"Damage");
+            GetComponent<Animator>().SetTrigger("Damage");
         }
-            
-
     }
 
     private void OnDeath()
@@ -106,7 +103,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         string logMessage = $"\n{PhotonView.Owner.NickName}이 운명을 다했습니다.";
         PhotonView.RPC(nameof(AddLog), RpcTarget.All, logMessage);
     }
-
 
     [PunRPC]
     private void Death()
@@ -118,10 +114,9 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
         State = State.Death;
 
-        GetComponent<Animator>().SetTrigger($"Die");
+        GetComponent<Animator>().SetTrigger("Die");
         GetComponent<CharacterAttackAbility>().InActiveCollider();
 
-        // 죽고나서 5초후 리스폰
         if (PhotonView.IsMine)
         {
             DropItems();
@@ -132,7 +127,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     [PunRPC]
     private void DropItems()
     {
-
+        // 아이템 드랍 로직
     }
 
     private IEnumerator Death_Coroutine()
