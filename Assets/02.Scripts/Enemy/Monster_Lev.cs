@@ -227,12 +227,12 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         if (stat.Health <= 0)
         {
             state = MonsterState.Death;
-            animator.SetTrigger("Die");
+            PlayAnimation("Die");
             StartCoroutine(DeathCoroutine());
         }
         else
         {
-            animator.SetTrigger("Hit");
+            PlayAnimation("Hit");
         }
     }
 
