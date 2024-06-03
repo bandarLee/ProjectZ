@@ -1593,6 +1593,7 @@ GameObject:
   - component: {fileID: 8072003678232290550}
   - component: {fileID: 6121618576588910877}
   - component: {fileID: 4106860725945240303}
+  - component: {fileID: 3813857886920481430}
   m_Layer: 0
   m_Name: SeaTitan_Leviathan_3 Variant (5) 1
   m_TagString: Monster
@@ -1820,6 +1821,29 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!136 &3813857886920481430
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229129766581273947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5.1010847
+  m_Height: 22.664156
+  m_Direction: 2
+  m_Center: {x: -0.077183224, y: 7.3203783, z: 2.1910582}
 --- !u!1 &4287569331310869420
 GameObject:
   m_ObjectHideFlags: 0
