@@ -39,6 +39,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
         if (PhotonNetwork.IsConnected)
         {
             int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
@@ -50,8 +52,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
             PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
-            PhotonNetwork.SendRate = 30;
-            PhotonNetwork.SerializationRate = 30;
+
         }
         else
         {
