@@ -16,18 +16,12 @@ public class WeaponManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //InitializeWeapons();
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
-
-    /*private void InitializeWeapons()
-    {
-        weapons.Add("도끼", axeGameObject);
-    }*/
 
     // 무기를 사전에 추가
     public void RegisterWeapon(string weaponName, GameObject weaponObject)
