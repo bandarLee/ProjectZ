@@ -26,40 +26,65 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 initialPosition;
     private float attackTimer = 0f;
 
+    // 동기화할 위치와 회전
+    private Vector3 syncPosition;
+    private Quaternion syncRotation;
+
+    // 보간 속도를 조절하기 위한 변수
+    private float lerpSpeed = 10f;
+
     private void Start()
     {
         agent.speed = stat.MoveSpeed;
         agent.avoidancePriority = Random.Range(0, 100);
         initialPosition = transform.position;
+        syncPosition = transform.position;
+        syncRotation = transform.rotation;
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            agent.enabled = false;
+        }
 
         SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
 
+        // Photon 네트워크 설정
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 15;
     }
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            return;
-        }
+            switch (state)
+            {
+                case MonsterState.Patrol:
+                    Patrol();
+                    break;
+                case MonsterState.Chase:
+                    Chase();
+                    break;
+                case MonsterState.Attack:
+                    Attack();
+                    break;
+                case MonsterState.Death:
+                    break;
+            }
 
-        switch (state)
+            // 동기화할 위치와 회전 갱신
+            syncPosition = transform.position;
+            syncRotation = transform.rotation;
+        }
+        else
         {
-            case MonsterState.Patrol:
-                Patrol();
-                break;
-            case MonsterState.Chase:
-                Chase();
-                break;
-            case MonsterState.Attack:
-                Attack();
-                break;
-
-            case MonsterState.Death:
-                break;
+            // 수신된 위치와 회전으로 보간 이동
+            transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
+        Debug.Log(stat.Health);
     }
 
     private void Patrol()
@@ -115,7 +140,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         }
     }
 
-    public void AttackAction() 
+    public void AttackAction()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
@@ -195,6 +220,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas);
 
         agent.SetDestination(hit.position);
+        syncPosition = hit.position; // 목표 위치 설정
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -203,12 +229,14 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             stream.SendNext((int)state);
             stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
             stream.SendNext(stat.Health);
         }
         else
         {
             state = (MonsterState)(int)stream.ReceiveNext();
-            transform.position = (Vector3)stream.ReceiveNext();
+            syncPosition = (Vector3)stream.ReceiveNext();
+            syncRotation = (Quaternion)stream.ReceiveNext();
             stat.Health = (int)stream.ReceiveNext();
         }
     }
@@ -248,6 +276,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             Vector3 avoidDirection = transform.position - other.transform.position;
             Vector3 newPos = transform.position + avoidDirection.normalized * 10f;
             agent.SetDestination(newPos);
+            syncPosition = newPos; // 목표 위치 설정
         }
     }
 

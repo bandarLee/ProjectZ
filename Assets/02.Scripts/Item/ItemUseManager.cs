@@ -126,8 +126,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "도끼":
                 Debug.Log("플레이어가 도끼를 들었음");
-                // 실제 로직은 주석 처리
-                // Player.Instance.EquipWeapon(axe);
+                WeaponManager.Instance.EquipWeapon(itemName);
 
                 break;
             case "총":
