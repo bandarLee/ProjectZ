@@ -714,6 +714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Police_Cabinet2
       objectReference: {fileID: 0}
+    - target: {fileID: 3221424392135993789, guid: be17a4a32f5342444bcb43413118a52a, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3785743396499595383, guid: be17a4a32f5342444bcb43413118a52a, type: 3}
       propertyPath: sceneViewId
       value: 3
@@ -3589,6 +3593,10 @@ PrefabInstance:
     - target: {fileID: 7181559734956952543, guid: 3c6ce25cbc7ef154cb3c0da1d06909d9, type: 3}
       propertyPath: m_Name
       value: Police_Cabinet
+      objectReference: {fileID: 0}
+    - target: {fileID: 8043218150585179090, guid: 3c6ce25cbc7ef154cb3c0da1d06909d9, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46236,6 +46244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponCollider: {fileID: 0}
+  WeaponObject: {fileID: 0}
 --- !u!1 &6304941558817488781
 GameObject:
   m_ObjectHideFlags: 0
@@ -53804,6 +53814,8 @@ GameObject:
   - component: {fileID: 5691005475380816117}
   - component: {fileID: 6298430452115030181}
   - component: {fileID: 7814723572503077846}
+  - component: {fileID: 9050537034286517804}
+  - component: {fileID: 9050537034286517803}
   m_Layer: 0
   m_Name: Character_Female
   m_TagString: Player
@@ -55190,6 +55202,8 @@ GameObject:
   - component: {fileID: 2388338292106728038}
   - component: {fileID: 8540718594649566877}
   - component: {fileID: 8540718594649566878}
+  - component: {fileID: 8540718594649566880}
+  - component: {fileID: 8540718594649566879}
   m_Layer: 0
   m_Name: Character_F (1)
   m_TagString: Player
@@ -55222,6 +55236,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb63c72162f3684b91b44681a189c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponCollider: {fileID: 0}
+  WeaponObject: {fileID: 0}
+--- !u!114 &8540718594649566879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8540718594649566876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b700a84f3befe24fa3d09609daa4006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8540718594649566880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8540718594649566876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b0e4ebde80e99439f8c4ba4b0c85b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpPower: 6
 --- !u!1 &8542879003463971303
 GameObject:
   m_ObjectHideFlags: 0
@@ -57853,6 +57894,31 @@ Transform:
   - {fileID: 2682954364817667356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &9050537034286517803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083468280933601107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b700a84f3befe24fa3d09609daa4006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9050537034286517804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083468280933601107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b0e4ebde80e99439f8c4ba4b0c85b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpPower: 6
 --- !u!222 &9053174083923301354
 CanvasRenderer:
   m_ObjectHideFlags: 0
