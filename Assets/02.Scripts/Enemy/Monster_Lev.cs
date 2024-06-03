@@ -36,7 +36,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
 
-        MoveToRandomPosition();
     }
 
     private void Update()
