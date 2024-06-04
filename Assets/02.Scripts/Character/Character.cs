@@ -1,8 +1,5 @@
 using Photon.Pun;
-using Photon.Pun.Demo.SlotRacer.Utils;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,8 +30,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _animator = GetComponent<Animator>();
         _inventoryManager = FindObjectOfType<InventoryManager>();
 
-        DontDestroyOnLoad(this.gameObject);
-
         if (_inventoryManager != null)
         {
             _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();
@@ -54,9 +49,17 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
 
         // 로비 씬에서 생성될 때 스폰 포인트 설정
-        if (SceneManager.GetActiveScene().name == "Lobby")
+        if (SceneManager.GetActiveScene().name != "Lobby")
         {
             SetSpawnPoint();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (PhotonView.IsMine && LocalPlayerInstance == this)
+        {
+            LocalPlayerInstance = null;
         }
     }
 
@@ -82,7 +85,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     [PunRPC]
     public void AddLog(string logMessage)
     {
-        UI_RoomInfo.Instance.AddLog(logMessage);
+        if (UI_RoomInfo.Instance != null)
+        {
+            UI_RoomInfo.Instance.AddLog(logMessage);
+        }
     }
 
     [PunRPC]
@@ -103,7 +109,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
         else
         {
-            GetComponent<Animator>().SetTrigger("Damage");
+            if (this != null) // 오브젝트가 파괴되었는지 확인
+            {
+                GetComponent<Animator>().SetTrigger("Damage");
+            }
         }
     }
 
@@ -123,8 +132,11 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
 
         State = State.Death;
 
-        GetComponent<Animator>().SetTrigger("Die");
-        GetComponent<CharacterAttackAbility>().DeactivateAllColliders();
+        if (this != null) // 오브젝트가 파괴되었는지 확인
+        {
+            GetComponent<Animator>().SetTrigger("Die");
+            GetComponent<CharacterAttackAbility>().DeactivateAllColliders();
+        }
 
         if (PhotonView.IsMine)
         {
@@ -143,11 +155,23 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     {
         yield return new WaitForSeconds(5f);
 
-        SetSpawnPoint();
-        PhotonView.RPC(nameof(Live), RpcTarget.All);
+        if (this != null) // 오브젝트가 파괴되었는지 확인
+        {
+            SetRespawnPoint();
+            PhotonView.RPC(nameof(Live), RpcTarget.All);
+        }
     }
 
+    // 로비 씬에서 플레이어를 랜덤한 섹터의 RespawnPoint에 스폰
     private void SetSpawnPoint()
+    {
+        Vector3 spawnPoint = GameManager.Instance.GetRandomSpawnPoint();
+        GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
+        GetComponent<CharacterRotateAbility>().SetRandomRotation();
+    }
+
+    // 플레이어가 죽었을 때 마지막으로 있던 섹터의 RespawnPoint에 리스폰
+    private void SetRespawnPoint()
     {
         Vector3 spawnPoint = GameManager.Instance.GetRandomSpawnPoint();
         GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
@@ -163,6 +187,9 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         Stat = ability.Stat;
         Stat.Init();
 
-        GetComponent<Animator>().SetTrigger("Live");
+        if (this != null) // 오브젝트가 파괴되었는지 확인
+        {
+            GetComponent<Animator>().SetTrigger("Live");
+        }
     }
 }

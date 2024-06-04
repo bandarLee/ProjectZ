@@ -1,31 +1,25 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance { get; private set; }
-
-    public List<Transform> SpawnPoints;
-
     public bool _init = false;
-    public string specificSpawnPointName = null;
 
+    public CityZoneType lastZone;
+
+    public GameObject[] SpawnPoints;
+    public GameObject[] Sectors;
+
+    public int Randomzone;
     private void Awake()
     {
         Instance = this;
+      
     }
 
-    public Vector3 GetRandomSpawnPoint()
-    {
-        int randomIndex = Random.Range(0, SpawnPoints.Count);
-        return SpawnPoints[randomIndex].position;
-    }
-
-    public Transform GetSpawnPointByName(string spawnPointName)
-    {
-        return SpawnPoints.Find(sp => sp.name == spawnPointName);
-    }
 
     private void Start()
     {
@@ -34,6 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (!_init)
             {
                 Init();
+                SpawnPlayer();
             }
         }
     }
@@ -43,35 +38,60 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!_init)
         {
             Init();
+            SpawnPlayer();
         }
     }
 
     public void Init()
     {
         _init = true;
+ 
+    }
 
-        if (SpawnPoints == null || SpawnPoints.Count == 0)
+    
+
+    private void SpawnPlayer()
+    {
+        Vector3 spawnPosition = GetRandomSpawnPoint();
+        PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
+
+        StartCoroutine(InactiveSector());
+    }
+
+    public Vector3 GetRandomSpawnPoint()
+    {
+        Randomzone = Random.Range(0, 6);
+        lastZone = (CityZoneType)Randomzone; // 마지막 섹터를 업데이트
+        return SpawnPoints[Randomzone].transform.position;
+    }
+
+
+    //10초뒤에 내가 있는섹터빼고 섹터 5개 끄기
+    private IEnumerator InactiveSector()
+    {
+        yield return new WaitForSeconds(10f);
+        for (int i = 0; i < 6; i++)
         {
-            Debug.LogError("Spawn points are not set!");
-            return;
+            if( i != Randomzone)
+            {
+                Sectors[i].SetActive(false);
+            }
         }
+    }
 
-        int characterType = (int)PhotonNetwork.LocalPlayer.CustomProperties["CharacterType"];
-        string characterName = characterType == 0 ? "Character_Female_rigid_collid" : "Character_Male";
-
-        Vector3 spawnPosition;
-        if (!string.IsNullOrEmpty(specificSpawnPointName))
+    public void ActiveSector(CityZoneType cityZoneType)
+    {
+        Randomzone = (int)cityZoneType;
+        lastZone = cityZoneType;
+        for (int i = 0; i < 6; i++)
         {
-            Transform spawnPoint = GetSpawnPointByName(specificSpawnPointName);
-            spawnPosition = spawnPoint != null ? spawnPoint.position : GetRandomSpawnPoint();
-            specificSpawnPointName = null; // reset after use
+            if (i != Randomzone)
+            {
+                Sectors[i].SetActive(false);
+            }
         }
-        else
-        {
-            spawnPosition = GetRandomSpawnPoint();
-        }
+        Sectors[Randomzone].SetActive(true);
 
-        Quaternion spawnRotation = Quaternion.identity;
-        PhotonNetwork.Instantiate(characterName, spawnPosition, spawnRotation);
+
     }
 }

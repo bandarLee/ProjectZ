@@ -8,6 +8,8 @@ TagManager:
   - FollowCamera
   - CampFire
   - Monster
+  - SpawnPoint
+  - RespawnPoint
   layers:
   - Default
   - TransparentFX
