@@ -17,7 +17,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public Animator animator;
     public NavMeshAgent agent;
     public float detectRange = 30f;
-    public float attackRange = 3f;
+    private float attackRange = 1.5f;
     public float patrolRadius = 20f;
     public Stat stat;
 
@@ -26,11 +26,9 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 initialPosition;
     private float attackTimer = 0f;
 
-    // 동기화할 위치와 회전
     private Vector3 syncPosition;
     private Quaternion syncRotation;
 
-    // 보간 속도를 조절하기 위한 변수
     private float lerpSpeed = 10f;
 
     private void Start()
@@ -50,9 +48,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
 
-        // Photon 네트워크 설정
-        PhotonNetwork.SendRate = 30;
-        PhotonNetwork.SerializationRate = 15;
+
     }
 
     private void Update()
@@ -74,17 +70,14 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
                     break;
             }
 
-            // 동기화할 위치와 회전 갱신
             syncPosition = transform.position;
             syncRotation = transform.rotation;
         }
         else
         {
-            // 수신된 위치와 회전으로 보간 이동
             transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
-        //Debug.Log(stat.Health);
     }
 
     private void Patrol()
@@ -109,7 +102,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         agent.SetDestination(targetCharacter.transform.position);
 
-        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
+        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange && attackTimer >= stat.AttackCoolTime)
         {
             state = MonsterState.Attack;
             animator.SetBool("IsAttacking", true);
@@ -121,7 +114,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
         {
             state = MonsterState.Chase;
-            animator.SetBool("IsAttacking", false);
             return;
         }
 
