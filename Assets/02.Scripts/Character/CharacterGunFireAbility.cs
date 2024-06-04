@@ -182,5 +182,7 @@ public class CharacterGunFireAbility : CharacterAbility
         MuzzleEffects[randomIndex].SetActive(false);
     }
 
+
+
     
 }
