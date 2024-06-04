@@ -84,7 +84,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
-        Debug.Log(stat.Health);
+        //Debug.Log(stat.Health);
     }
 
     private void Patrol()

@@ -13,9 +13,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterAbility))]
 [RequireComponent(typeof(CharacterItemAbility))]
 [RequireComponent(typeof(Animator))]
-
 public class Character : MonoBehaviour, IPunObservable, IDamaged
 {
+    public static Character LocalPlayerInstance;
+
     public PhotonView PhotonView { get; private set; }
 
     public Stat Stat { get; private set; }
@@ -37,6 +38,11 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         if (_inventoryManager != null)
         {
             _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();
+        }
+
+        if (PhotonView.IsMine)
+        {
+            LocalPlayerInstance = this;
         }
     }
 

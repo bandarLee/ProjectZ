@@ -28,31 +28,40 @@ public class QuickSlotManager : MonoBehaviour
        
 
     }
+
     private IEnumerator InitializeInventory()
     {
         yield return new WaitForSeconds(1.0f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
-
         if (inventoryManager == null)
         {
             Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
         }
 
-        inventory = FindObjectOfType<Inventory>();
-
-        if (inventory == null)
+        GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
+        if (localPlayer != null)
         {
-            Debug.LogError("Inventory를 찾을 수 없습니다. 씬에 Inventory가 있는지 확인하세요.");
+            inventory = localPlayer.GetComponent<Inventory>();
+            if (inventory == null)
+            {
+                Debug.LogError("Inventory를 찾을 수 없습니다. Player 객체에 Inventory가 있는지 확인하세요.");
+            }
+            else
+            {
+                characterItemAbility = localPlayer.GetComponent<CharacterItemAbility>();
+                if (characterItemAbility == null)
+                {
+                    Debug.LogError("CharacterItemAbility를 찾을 수 없습니다. Player 객체에 CharacterItemAbility가 있는지 확인하세요.");
+                }
+            }
         }
-
-        characterItemAbility = inventory.GetComponent<CharacterItemAbility>();
-
-        if (characterItemAbility == null)
+        else
         {
-            Debug.LogError("CharacterItemAbility를 찾을 수 없습니다. Player 객체에 CharacterItemAbility가 있는지 확인하세요.");
+            Debug.LogError("로컬 플레이어 오브젝트를 찾을 수 없습니다.");
         }
     }
+
     public void RegisterItemToQuickSlot(int slotIndex, Item item)
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length) return;

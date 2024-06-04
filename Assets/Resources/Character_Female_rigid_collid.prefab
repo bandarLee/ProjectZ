@@ -6954,6 +6954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6435888224370641055}
+  - component: {fileID: 1277948332743248408}
   m_Layer: 6
   m_Name: weapon
   m_TagString: Untagged
@@ -6977,6 +6978,19 @@ Transform:
   - {fileID: 5447543813037872736}
   m_Father: {fileID: 6060079724645699857}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+--- !u!114 &1277948332743248408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586849774638007366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01d9b0a1fa82284ea13c468ebc019e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCharacterAttackAbility: {fileID: 8035682637341063288}
 --- !u!1 &8679205435406962081
 GameObject:
   m_ObjectHideFlags: 0
