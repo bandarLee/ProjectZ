@@ -17,9 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
-      
     }
-
 
     private void Start()
     {
@@ -45,10 +43,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void Init()
     {
         _init = true;
- 
     }
 
-    
 
     private void SpawnPlayer()
     {
@@ -64,7 +60,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         lastZone = (CityZoneType)Randomzone; // 마지막 섹터를 업데이트
         return SpawnPoints[Randomzone].transform.position;
     }
-
 
     //10초뒤에 내가 있는섹터빼고 섹터 5개 끄기
     private IEnumerator InactiveSector()
