@@ -136,11 +136,11 @@ public class ItemUseManager : MonoBehaviour
                     attackAbility.WeaponActive(0);
                     break;
                 case "야구배트":
-                    Debug.Log("플레이어가 도끼를 들었음");
+                    Debug.Log("플레이어가 야구배트를 들었음");
                     attackAbility.WeaponActive(1);
                     break;
                 case "삽":
-                    Debug.Log("플레이어가 도끼를 들었음");
+                    Debug.Log("플레이어가 삽을 들었음");
                     attackAbility.WeaponActive(2);
                     break;
                 case "총":
