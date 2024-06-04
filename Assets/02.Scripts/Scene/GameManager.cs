@@ -16,8 +16,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int Randomzone;
     private void Awake()
     {
-        Instance = this;
-      
+        if ( Character.LocalPlayerInstance.PhotonView.IsMine == true)
+        {
+            Instance = this;
+
+        }
+
     }
 
 
