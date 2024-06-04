@@ -17,7 +17,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public Animator animator;
     public NavMeshAgent agent;
     public float detectRange = 30f;
-    private float attackRange = 1.5f;
+    public float attackRange = 3f;
     public float patrolRadius = 20f;
     public Stat stat;
 
@@ -102,7 +102,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         agent.SetDestination(targetCharacter.transform.position);
 
-        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange && attackTimer >= stat.AttackCoolTime)
+        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
         {
             state = MonsterState.Attack;
             animator.SetBool("IsAttacking", true);
@@ -114,6 +114,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
         {
             state = MonsterState.Chase;
+            animator.SetBool("IsAttacking", false);
             return;
         }
 
