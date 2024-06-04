@@ -10,6 +10,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private Animator _animator;
 
     public Gun CurrentGun; // 현재 들고있는 총
+    public GameObject[] GunObject;
 
     private float _shotTimer;
 
@@ -91,8 +92,8 @@ public class CharacterGunFireAbility : CharacterAbility
             }
         }
 
-        /* 재장전 */
-        // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소)
+        /* 재장전 */ 
+        // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) // todo.총알이 있을 때만!
         if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount)
         {
             if (!_isReloading)
@@ -183,6 +184,15 @@ public class CharacterGunFireAbility : CharacterAbility
     }
 
 
+    public void GunActive(int GunNumber)
+    {
+        foreach (GameObject weapon in GunObject)
+        {
+            weapon.SetActive(false);
 
-    
+        }
+        GunObject[GunNumber].SetActive(true);
+    }
+
+
 }
