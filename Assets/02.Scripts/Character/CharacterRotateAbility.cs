@@ -22,16 +22,7 @@ public class CharacterRotateAbility : CharacterAbility
     }
 
 
-    private void OnLevelWasLoaded()
-    {
-        SetMouseLock(true);
-
-
-        if (Owner.PhotonView.IsMine)
-        {
-            GameObject.FindWithTag("FollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = CameraRoot;
-        }
-    }
+   
 
     private void Update()
 

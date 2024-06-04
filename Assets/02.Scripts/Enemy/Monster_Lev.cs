@@ -26,11 +26,9 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 initialPosition;
     private float attackTimer = 0f;
 
-    // 동기화할 위치와 회전
     private Vector3 syncPosition;
     private Quaternion syncRotation;
 
-    // 보간 속도를 조절하기 위한 변수
     private float lerpSpeed = 10f;
 
     private void Start()
@@ -49,10 +47,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
-
-        // Photon 네트워크 설정
-        PhotonNetwork.SendRate = 30;
-        PhotonNetwork.SerializationRate = 15;
     }
 
     private void Update()
@@ -71,20 +65,18 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
                     Attack();
                     break;
                 case MonsterState.Death:
+                    // 죽음 상태에서는 아무것도 하지 않음
                     break;
             }
 
-            // 동기화할 위치와 회전 갱신
             syncPosition = transform.position;
             syncRotation = transform.rotation;
         }
         else
         {
-            // 수신된 위치와 회전으로 보간 이동
             transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
-        //Debug.Log(stat.Health);
     }
 
     private void Patrol()
@@ -101,8 +93,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     {
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
         {
-            state = MonsterState.Patrol;
-            animator.SetBool("IsChasing", false);
+            ChangeState(MonsterState.Patrol, "IsChasing", false);
             MoveToRandomPosition();
             return;
         }
@@ -111,8 +102,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
         {
-            state = MonsterState.Attack;
-            animator.SetBool("IsAttacking", true);
+            ChangeState(MonsterState.Attack, "IsAttacking", true);
         }
     }
 
@@ -120,8 +110,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     {
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
         {
-            state = MonsterState.Chase;
-            animator.SetBool("IsAttacking", false);
+            ChangeState(MonsterState.Chase, "IsAttacking", false);
             return;
         }
 
@@ -153,8 +142,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             Vector3 dir = (target.transform.position - transform.position).normalized;
             int viewAngle = 160 / 2;
             float angle = Vector3.Angle(transform.forward, dir);
-            Debug.Log(angle);
-            if (Vector3.Angle(transform.forward, dir) < viewAngle)
+            if (angle < viewAngle)
             {
                 target.PhotonView.RPC("Damaged", RpcTarget.All, stat.Damage, -1);
             }
@@ -200,8 +188,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         if (nearestCharacter != null && nearestDistance <= detectRange)
         {
             targetCharacter = nearestCharacter;
-            state = MonsterState.Chase;
-            animator.SetBool("IsChasing", true);
+            ChangeState(MonsterState.Chase, "IsChasing", true);
         }
     }
 
@@ -220,7 +207,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas);
 
         agent.SetDestination(hit.position);
-        syncPosition = hit.position; // 목표 위치 설정
+        syncPosition = hit.position;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -253,13 +240,12 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         if (stat.Health <= 0)
         {
-            state = MonsterState.Death;
-            PlayAnimation("Die");
+            ChangeState(MonsterState.Death, "Die", true);
             StartCoroutine(DeathCoroutine());
         }
         else
         {
-            PlayAnimation("Hit");
+            RequestPlayAnimation("Hit");
         }
     }
 
@@ -276,7 +262,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             Vector3 avoidDirection = transform.position - other.transform.position;
             Vector3 newPos = transform.position + avoidDirection.normalized * 10f;
             agent.SetDestination(newPos);
-            syncPosition = newPos; // 목표 위치 설정
+            syncPosition = newPos;
         }
     }
 
@@ -289,5 +275,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private void PlayAnimation(string animationName)
     {
         animator.Play(animationName);
+    }
+
+    private void ChangeState(MonsterState newState, string animationBool, bool value)
+    {
+        state = newState;
+        animator.SetBool(animationBool, value);
     }
 }

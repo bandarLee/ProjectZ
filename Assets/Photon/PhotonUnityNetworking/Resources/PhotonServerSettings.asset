@@ -64,6 +64,10 @@ MonoBehaviour:
   - StartControllingBoat
   - Live
   - PlayAnimation
+  - PlayGunAnimation
+  - PlayGunShotAnimation
+  - GunShotAnimation
+  - PlayShotAnimation
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -14,9 +14,16 @@ public class CharacterAttackAbility : CharacterAbility
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
 
+    protected override void Awake() // 이는 가상 메소드 또는 추상 메소드인 경우에만 사용할 수 있습니다.
+    {
+        base.Awake(); // 부모 클래스의 Awake 메소드 호출
+        DeactivateAllWeapons(); // 추가적인 자식 클래스 로직
+    }
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
     }
 
     private void Update()
@@ -103,5 +110,13 @@ public class CharacterAttackAbility : CharacterAbility
             collider.enabled = false;
         }
         _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
+    }
+
+    private void DeactivateAllWeapons()
+    {
+        foreach (GameObject weapon in WeaponObject)
+        {
+            weapon.SetActive(false);
+        }
     }
 }
