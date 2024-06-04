@@ -17,6 +17,8 @@ public class CharacterAttackAbility : CharacterAbility
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        DeactivateAllWeapons();
+
     }
 
     private void Update()
@@ -103,5 +105,13 @@ public class CharacterAttackAbility : CharacterAbility
             collider.enabled = false;
         }
         _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
+    }
+
+    private void DeactivateAllWeapons()
+    {
+        foreach (GameObject weapon in WeaponObject)
+        {
+            weapon.SetActive(false);
+        }
     }
 }
