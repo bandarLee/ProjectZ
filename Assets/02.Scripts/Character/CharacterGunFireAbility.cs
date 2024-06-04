@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CharacterGunFireAbility : CharacterAbility
@@ -10,7 +11,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
     public Gun CurrentGun; // ÇöÀç µé°íÀÖ´Â ÃÑ
 
-    private float _timer;
+    private float _shotTimer;
 
     /****/
     private const int DefaultFOV = 60;
@@ -41,7 +42,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private void Start()
     {
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
 
         foreach (GameObject muzzleEffect in MuzzleEffects)
         {
@@ -63,6 +64,11 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private void Update()
     {
+        if (Owner.State == State.Death || !Owner.PhotonView.IsMine)
+        {
+            return;
+        }
+
         /* ÁÜ¸ðµå */
         if (Input.GetMouseButtonDown(2))
         {
@@ -98,9 +104,9 @@ public class CharacterGunFireAbility : CharacterAbility
         }
 
         /* ÃÑ¾Ë¹ß»ç */
-        _timer += Time.deltaTime; // Fire ÄðÅ¸ÀÓ¶«¿¡
+        _shotTimer += Time.deltaTime; // Fire ÄðÅ¸ÀÓ¶«¿¡
 
-        if (Input.GetMouseButton(0) && _timer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0)
+        if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0)
         {
             // ÀçÀåÀü Ãë¼Ò
             if (_isReloading)
@@ -115,9 +121,41 @@ public class CharacterGunFireAbility : CharacterAbility
 
             CurrentGun.BulletRemainCount--;
             RefreshUI();
-            _timer = 0;
-        }
+            _shotTimer = 0;
+            StartCoroutine(MuzzleEffectOn_Coroutine());
 
+
+            /* Ã¼·Â ´â´Â ±â´É */
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); // ·¹ÀÌ »ý¼º- À§Ä¡¿Í ¹æÇâÀ» ¼³Á¤
+            RaycastHit other; // ·¹ÀÌ ºÎµúÈù ´ë»óÀÇ Á¤º¸ ¹Þ¾Æ¿È
+            bool isHit = Physics.Raycast(ray, out other);
+            if (isHit)
+            {
+                IDamaged damagedAbleObject = other.collider.GetComponent<IDamaged>();
+                if (damagedAbleObject != null)
+                {
+                    PhotonView photonView = other.collider.GetComponent<PhotonView>();
+                    if (photonView != null)
+                    {
+                        // ÇÇ°Ý ÀÌÆåÆ® »ý¼º
+                        Vector3 hitPosition = (transform.position + other.transform.position) / 2f + new Vector3(0f, 1f, 0f);
+                        //PhotonNetwork.Instantiate("HitEffect", hitPosition, Quaternion.identity);
+                        photonView.RPC("Damaged", RpcTarget.All, CurrentGun.Damage, Owner.PhotonView.OwnerActorNr);
+                    }
+                }
+
+                /* ÃÑ¾Ë Æ¢´Â ÀÌÆåÆ® */
+                HitEffect.gameObject.transform.position = other.point; // ºÎµúÈù À§Ä¡¿¡ ÀÌÆåÆ® À§Ä¡
+                HitEffect.gameObject.transform.forward = other.normal;
+                HitEffect.Play();
+            }
+        }
+    }
+
+    [PunRPC]
+    public void PlayShotAnimation(int index)
+    {
+        _animator.SetTrigger($"Shot{index}");
     }
 
     private IEnumerator Reload_Coroutine()
@@ -133,10 +171,16 @@ public class CharacterGunFireAbility : CharacterAbility
         _isReloading = false;
         yield break;
     }
-
-    [PunRPC]
-    public void PlayShotAnimation(int index)
+    private IEnumerator MuzzleEffectOn_Coroutine()
     {
-        _animator.SetTrigger($"Shot{index}");
+        // ÃÑ ÀÌÆåÆ® Áß ÇÏ³ª¸¦ ÄÑÁÜ
+        int randomIndex = UnityEngine.Random.Range(0, MuzzleEffects.Count);
+        MuzzleEffects[randomIndex].SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        MuzzleEffects[randomIndex].SetActive(false);
     }
+
+    
 }
