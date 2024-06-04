@@ -128,6 +128,7 @@ public class ItemUseManager : MonoBehaviour
     {
         
             CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
+            CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
 
             switch (itemName)
             {
@@ -144,9 +145,8 @@ public class ItemUseManager : MonoBehaviour
                     attackAbility.WeaponActive(2);
                     break;
                 case "총":
-                    Debug.Log("Player equipped with gun.");
-                    // 실제 로직은 주석 처리
-                    // Player.Instance.EquipWeapon(gun);
+                    Debug.Log("플레이어가 총을 들었음");
+                    gunFireAbility.GunActive(0);
                     break;
                 default:
                     Debug.LogWarning("Unknown weapon item.");

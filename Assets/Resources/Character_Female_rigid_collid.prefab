@@ -4561,7 +4561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5567075299604833945
 Transform:
   m_ObjectHideFlags: 0
@@ -4570,9 +4570,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5568934089759027223}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.188, y: -0.008, z: 0.035}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalRotation: {x: -0.00007865757, y: -0.00243934, z: -0.64703304, w: 0.76245815}
+  m_LocalPosition: {x: 0.165, y: 0.056, z: 0.036}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5567223413701584471}
@@ -4586,7 +4586,7 @@ Transform:
   - {fileID: 5574410828476052817}
   - {fileID: 5567118496245585903}
   m_Father: {fileID: 6435888224370641055}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: -0.188, y: -0.207, z: -80.636}
 --- !u!65 &8925032274574054710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6506,7 +6506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6736230897706637814
 Transform:
   m_ObjectHideFlags: 0
@@ -7364,6 +7364,7 @@ GameObject:
   - component: {fileID: 1937366128822270390}
   - component: {fileID: 7804651547424934481}
   - component: {fileID: -8237121396699763132}
+  - component: {fileID: 8982101939837002181}
   m_Layer: 6
   m_Name: Character_Female_rigid_collid
   m_TagString: Player
@@ -8248,6 +8249,26 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8982101939837002181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424561231724397829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92aeecf80a6caa64ba2c9f8c8417f89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentGun: {fileID: 0}
+  GunObject: []
+  CrosshairUI: {fileID: 0}
+  CrosshairZoomUI: {fileID: 0}
+  HitEffect: {fileID: 0}
+  MuzzleEffects: []
+  GunTextUI: {fileID: 0}
+  ReloadTextUI: {fileID: 0}
 --- !u!1 &7521882832342652688
 GameObject:
   m_ObjectHideFlags: 0
@@ -8641,7 +8662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3368925454005063249
 Transform:
   m_ObjectHideFlags: 0
