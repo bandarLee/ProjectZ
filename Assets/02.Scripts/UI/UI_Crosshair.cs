@@ -35,7 +35,6 @@ public class UI_Crosshair : MonoBehaviour
         ShrinkCrosshairToNormal();
     }
 
-
     // 크로스헤어를 기본 위치로 서서히 수축시키는 함수
     void ShrinkCrosshairToNormal() 
     {
