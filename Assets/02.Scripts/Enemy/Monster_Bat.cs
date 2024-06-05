@@ -18,7 +18,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     public float attackRange = 3f;
     public float moveSpeed = 5f;
     public Stat stat;
-    public Vector3 areaSize = new Vector3(50f, 20f, 50f); // 몬스터가 날아다닐 영역의 크기
+    public Vector3 areaSize = new Vector3(50f, 20f, 50f);
 
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;

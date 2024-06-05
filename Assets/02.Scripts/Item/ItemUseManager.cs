@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemUseManager : MonoBehaviour
 {
     public static ItemUseManager Instance;
-
+    public UseComputerTrigger computerTrigger;
 
 
     private void Awake()
@@ -18,6 +18,10 @@ public class ItemUseManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void Start()
+    {
+        computerTrigger = FindObjectOfType<UseComputerTrigger>();
     }
 
     public void ApplyEffect(Item item)
@@ -260,6 +264,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a map.");
                 // Player.Instance.UseMap();
                 break;
+
             case "열쇠":
                 Debug.Log("Player used a key.");
                 var policeTrigger = FindObjectOfType<PoliceTrigger>();
@@ -269,6 +274,7 @@ public class ItemUseManager : MonoBehaviour
                 }
                 DecreaseItemQuantity(item);
                 break;
+
             case "책":
                 Debug.Log("Player used a Book");
                 var bookTrigger = FindObjectOfType<BookTrigger>();
@@ -277,6 +283,36 @@ public class ItemUseManager : MonoBehaviour
                     bookTrigger.UpdateMissionText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 }
                 break;
+
+            case "디스크1":
+                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                {
+                    Debug.Log("Player used a Disk1");
+                    computerTrigger.UpdateMissionText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
+                    DecreaseItemQuantity(item);
+                }
+                break;
+
+            case "디스크2":
+                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                {
+                    Debug.Log("Player used a Disk2");
+                    computerTrigger.UpdateMissionText("마지막 생명과 함께 최후의 섬으로 가라.");
+                    DecreaseItemQuantity(item);
+                }
+                break;
+
+            case "디스크3":
+                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                {
+                    Debug.Log("Player used a Disk3");
+                    computerTrigger.UpdateMissionText("<The Last Yggdrasil>");
+                    DecreaseItemQuantity(item);
+                }
+                break;
+
+
+
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;

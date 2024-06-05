@@ -7348,6 +7348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6793797777160203443}
   - component: {fileID: 7126053338474154869}
+  - component: {fileID: 8982101939837002181}
   - component: {fileID: 2283545895190766293}
   - component: {fileID: 5988399009005817502}
   - component: {fileID: 2340119943211711328}
@@ -7364,7 +7365,6 @@ GameObject:
   - component: {fileID: 1937366128822270390}
   - component: {fileID: 7804651547424934481}
   - component: {fileID: -8237121396699763132}
-  - component: {fileID: 8982101939837002181}
   m_Layer: 6
   m_Name: Character_Female_rigid_collid
   m_TagString: Player
@@ -7480,6 +7480,27 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+--- !u!114 &8982101939837002181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424561231724397829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92aeecf80a6caa64ba2c9f8c8417f89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentGun: {fileID: 2808184796470113026}
+  GunObject:
+  - {fileID: 5568934089759027223}
+  CrosshairUI: {fileID: 0}
+  CrosshairZoomUI: {fileID: 0}
+  HitEffect: {fileID: 0}
+  MuzzleEffects: []
+  GunTextUI: {fileID: 0}
+  ReloadTextUI: {fileID: 0}
 --- !u!95 &2283545895190766293
 Animator:
   serializedVersion: 5
@@ -8251,27 +8272,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &8982101939837002181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7424561231724397829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92aeecf80a6caa64ba2c9f8c8417f89f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentGun: {fileID: 2808184796470113026}
-  GunObject:
-  - {fileID: 5568934089759027223}
-  CrosshairUI: {fileID: 0}
-  CrosshairZoomUI: {fileID: 0}
-  HitEffect: {fileID: 0}
-  MuzzleEffects: []
-  GunTextUI: {fileID: 0}
-  ReloadTextUI: {fileID: 0}
 --- !u!1 &7521882832342652688
 GameObject:
   m_ObjectHideFlags: 0
