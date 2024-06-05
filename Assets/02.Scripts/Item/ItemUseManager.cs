@@ -126,9 +126,9 @@ public class ItemUseManager : MonoBehaviour
 
     private void EquipWeapon(string itemName)
     {
-        
-            CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
-            CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
+        // todo.포톤 내 것일 때만 되게
+        CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
+        CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
 
             switch (itemName)
             {
