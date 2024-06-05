@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         Vector3 spawnPosition = GetRandomSpawnPoint();
         GameObject NewPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
 
-        StartCoroutine(InactiveSector(NewPlayer, spawnPosition));
+        StartCoroutine(InactiveSector(NewPlayer));
     }
 
     public Vector3 GetRandomSpawnPoint()
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     //10초뒤에 내가 있는섹터빼고 섹터 5개 끄기
-    private IEnumerator InactiveSector(GameObject newplayer, Vector3 position)
+    private IEnumerator InactiveSector(GameObject newplayer)
     {
         yield return new WaitForSeconds(10f);
         Vector3 currentPosition = newplayer.transform.position;
