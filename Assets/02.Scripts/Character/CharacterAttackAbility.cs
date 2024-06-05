@@ -10,6 +10,7 @@ public class CharacterAttackAbility : CharacterAbility
     private float _attackTimer = 0;
     public Collider[] WeaponCollider;
     public GameObject[] WeaponObject;
+    public int[] WeaponDamage;
 
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
@@ -87,9 +88,9 @@ public class CharacterAttackAbility : CharacterAbility
                 // 피격 이펙트 생성
                 Vector3 hitPosition = (transform.position + other.transform.position) / 2f + new Vector3(0f, 1f, 0f);
                 //PhotonNetwork.Instantiate("HitEffect", hitPosition, Quaternion.identity);
-                photonView.RPC("Damaged", RpcTarget.All, Owner.Stat.Damage, Owner.PhotonView.OwnerActorNr);
+                int damage = WeaponDamage[_activeWeaponIndex];
+                photonView.RPC("Damaged", RpcTarget.All, damage, Owner.PhotonView.OwnerActorNr);
             }
-            //damagedAbleObject.Damaged(Owner.Stat.Damage);
         }
     }
 

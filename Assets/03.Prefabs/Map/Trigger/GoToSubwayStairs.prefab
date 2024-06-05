@@ -444,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841170923062179101}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.017772425, y: -0.0048823347, z: -0.000112976515, w: -0.9998302}
+  m_LocalRotation: {x: 0.017775994, y: 0.004882583, z: 0.0001138355, w: 0.99983007}
   m_LocalPosition: {x: 1589.16, y: 110.94, z: 1041.65}
   m_LocalScale: {x: 2.2369, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1740,6 +1740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298445988153250371}
   - component: {fileID: 6083652343493477041}
+  - component: {fileID: 104164787848511665}
   m_Layer: 0
   m_Name: TPSubway
   m_TagString: Untagged
@@ -1783,6 +1784,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2710884, y: 3.1700912, z: 1.1076882}
   m_Center: {x: 0.19737239, y: -0.37700194, z: 1.856243}
+--- !u!114 &104164787848511665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8184207400450697398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56027b70cb9be5d49b248a9f362153d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8357314313205795849
 GameObject:
   m_ObjectHideFlags: 0
