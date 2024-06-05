@@ -49,6 +49,7 @@ public class CharacterAttackAbility : CharacterAbility
         _animator.SetTrigger($"Attack{index}");
     }
 
+    [PunRPC]
     public void WeaponActive(int WeaponNumber)
     {
         foreach (GameObject weapon in WeaponObject)
