@@ -20,7 +20,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public State State { get; private set; } = State.Live;
     private Animator _animator;
     private InventoryManager _inventoryManager;
-
+    public CharacterAttackAbility _attackability;
     private void Awake()
     {
         CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
@@ -29,6 +29,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
         _inventoryManager = FindObjectOfType<InventoryManager>();
+         _attackability= GetComponent<CharacterAttackAbility>();
 
         if (_inventoryManager != null)
         {

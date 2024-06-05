@@ -13,6 +13,7 @@ public class CharacterAttackAbility : CharacterAbility
 
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
+    private int _activeWeaponIndex = -1;
 
     protected override void Awake() // 이는 가상 메소드 또는 추상 메소드인 경우에만 사용할 수 있습니다.
     {
@@ -35,11 +36,10 @@ public class CharacterAttackAbility : CharacterAbility
 
         _attackTimer += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime)
+        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1)
         {
             _attackTimer = 0f;
             Owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, 1);
-            //PlayAttackAnimation(1);
         }
     }
 
@@ -58,6 +58,7 @@ public class CharacterAttackAbility : CharacterAbility
 
         }
         WeaponObject[WeaponNumber].SetActive(true);
+        _activeWeaponIndex = WeaponNumber;
     }
 
 
@@ -103,7 +104,7 @@ public class CharacterAttackAbility : CharacterAbility
         _damagedList.Clear();
     }
 
-    // 새로운 메서드: 모든 콜라이더를 비활성화
+    // 모든 콜라이더를 비활성화
     public void DeactivateAllColliders()
     {
         foreach (Collider collider in WeaponCollider)
@@ -113,11 +114,12 @@ public class CharacterAttackAbility : CharacterAbility
         _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
     }
 
-    private void DeactivateAllWeapons()
+    public void DeactivateAllWeapons()
     {
         foreach (GameObject weapon in WeaponObject)
         {
             weapon.SetActive(false);
         }
+        _activeWeaponIndex = -1;
     }
 }
