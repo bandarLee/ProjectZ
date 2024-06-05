@@ -5,7 +5,7 @@ public class ItemUseManager : MonoBehaviour
 {
     public static ItemUseManager Instance;
     public UseComputerTrigger computerTrigger;
-
+    public UI_HintLog hintLog;
 
     private void Awake()
     {
@@ -277,41 +277,38 @@ public class ItemUseManager : MonoBehaviour
 
             case "책":
                 Debug.Log("Player used a Book");
-                var bookTrigger = FindObjectOfType<BookTrigger>();
-                if (bookTrigger != null)
+                if (hintLog != null)
                 {
-                    bookTrigger.UpdateMissionText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                    hintLog.UpdateMissionText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 }
                 break;
 
             case "디스크1":
-                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk1");
-                    computerTrigger.UpdateMissionText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
+                    hintLog.UpdateMissionText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
                     DecreaseItemQuantity(item);
                 }
                 break;
 
             case "디스크2":
-                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk2");
-                    computerTrigger.UpdateMissionText("마지막 생명과 함께 최후의 섬으로 가라.");
+                    hintLog.UpdateMissionText("마지막 생명과 함께 최후의 섬으로 가라.");
                     DecreaseItemQuantity(item);
                 }
                 break;
 
             case "디스크3":
-                if (computerTrigger != null && computerTrigger.isPlayerInTrigger)
+                if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk3");
-                    computerTrigger.UpdateMissionText("<The Last Yggdrasil>");
+                    hintLog.UpdateMissionText("<The Last Yggdrasil>");
                     DecreaseItemQuantity(item);
                 }
                 break;
-
-
 
             default:
                 Debug.LogWarning("Unknown etc item.");
