@@ -103,7 +103,7 @@ public class CharacterAttackAbility : CharacterAbility
         _damagedList.Clear();
     }
 
-    // 새로운 메서드: 모든 콜라이더를 비활성화
+    // 모든 콜라이더를 비활성화
     public void DeactivateAllColliders()
     {
         foreach (Collider collider in WeaponCollider)

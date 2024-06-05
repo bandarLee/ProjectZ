@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1541482653758222006}
   - component: {fileID: 6392094520959994377}
-  - component: {fileID: 3047368857948749045}
   m_Layer: 0
   m_Name: Clean_shovel_collision (1)
   m_TagString: Untagged
@@ -75,28 +74,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3047368857948749045
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1569291321924555316}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 079f08b75e4edfb4e9c40ab9f08f07bd, type: 3}
 --- !u!1 &2040672677219441416
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +371,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5219417417308224328}
   - component: {fileID: 6897526225060500298}
-  - component: {fileID: 3003994391853290622}
   m_Layer: 0
   m_Name: Clean_shovel_collision (2)
   m_TagString: Untagged
@@ -459,28 +435,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3003994391853290622
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2474457687488369942}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 079f08b75e4edfb4e9c40ab9f08f07bd, type: 3}
 --- !u!1 &5625306003280632753
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +445,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5625306003280856977}
   - component: {fileID: 5625306003278431601}
-  - component: {fileID: 1721486368504289985}
   m_Layer: 0
   m_Name: Handle_collision
   m_TagString: Untagged
@@ -556,28 +509,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1721486368504289985
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5625306003280632753}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 079f08b75e4edfb4e9c40ab9f08f07bd, type: 3}
 --- !u!1 &5625306003280632755
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +519,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5625306003280856979}
   - component: {fileID: 5625306003278431603}
-  - component: {fileID: 1695593424497144742}
   m_Layer: 0
   m_Name: Clean_shovel_collision
   m_TagString: Untagged
@@ -653,28 +583,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1695593424497144742
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5625306003280632755}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 079f08b75e4edfb4e9c40ab9f08f07bd, type: 3}
 --- !u!1 &6311827724051288039
 GameObject:
   m_ObjectHideFlags: 0
