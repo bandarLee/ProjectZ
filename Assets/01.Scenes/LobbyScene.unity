@@ -75048,6 +75048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackability: {fileID: 0}
 --- !u!4 &152652157787387388
 Transform:
   m_ObjectHideFlags: 0
@@ -87199,6 +87200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackability: {fileID: 0}
 --- !u!114 &8351557395001884316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87244,6 +87246,7 @@ MonoBehaviour:
   - {fileID: 0}
   WeaponObject:
   - {fileID: 0}
+  WeaponDamage: 
 --- !u!114 &8351557395001884318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88462,6 +88465,7 @@ MonoBehaviour:
   - {fileID: 0}
   WeaponObject:
   - {fileID: 0}
+  WeaponDamage: 
 --- !u!114 &9066169755507066977
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -86,9 +86,9 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     [PunRPC]
     public void AddLog(string logMessage)
     {
-        if (UI_RoomInfo.Instance != null)
+        if (UI_HintLog.Instance != null)
         {
-            UI_RoomInfo.Instance.AddLog(logMessage);
+            UI_HintLog.Instance.AddLog(logMessage);
         }
     }
 
