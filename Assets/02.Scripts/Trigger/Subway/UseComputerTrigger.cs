@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class UseComputerTrigger : MonoBehaviour
 {
-    public TextMeshProUGUI MissionText;
     public TextMeshProUGUI UseComputerText;
     public TextMeshProUGUI NoDiskText;
 
@@ -98,14 +97,5 @@ public class UseComputerTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         NoDiskText.gameObject.SetActive(false);
-    }
-
-
-    public void UpdateMissionText(string newText)
-    {
-        if (MissionText != null)
-        {
-            MissionText.text = newText;
-        }
     }
 }
