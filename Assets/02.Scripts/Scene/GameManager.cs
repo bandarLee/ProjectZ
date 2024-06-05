@@ -63,17 +63,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     //10초뒤에 내가 있는섹터빼고 섹터 5개 끄기
-    private IEnumerator InactiveSector(GameObject newplayer,Vector3 position)
+    private IEnumerator InactiveSector(GameObject newplayer, Vector3 position)
     {
         yield return new WaitForSeconds(10f);
+        Vector3 currentPosition = newplayer.transform.position;
+
         for (int i = 0; i < 6; i++)
         {
-            if( i != Randomzone)
+            if (i != Randomzone)
             {
                 Sectors[i].SetActive(false);
             }
         }
-        newplayer.transform.position = position;
+
+        // Ensure player is at the correct position after sectors are deactivated
+        newplayer.transform.position = currentPosition;
     }
 
     public void ActiveSector(CityZoneType cityZoneType)
