@@ -234,6 +234,14 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("플레이어가 도끼를 사용함");
                 // Player.Instance.UseWeapon(axe);
                 break;
+            case "야구배트":
+                Debug.Log("플레이어가 야구배트를 사용함");
+                // Player.Instance.UseWeapon(bat);
+                break;
+            case "삽":
+                Debug.Log("플레이어가 삽을 사용함");
+                // Player.Instance.UseWeapon(shovel);
+                break;
             case "총":
                 Debug.Log("Player used gun.");
                 // Player.Instance.UseWeapon(gun);
