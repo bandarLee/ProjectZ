@@ -37,6 +37,8 @@ public class PoliceTrigger : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
         itemUseManager = FindObjectOfType<ItemUseManager>();
 
+        StartCoroutine(InitializingInventory());
+
         if (playerInventory == null)
         {
             Debug.LogError("Inventory not found");
@@ -55,6 +57,16 @@ public class PoliceTrigger : MonoBehaviour
         if (itemUseManager == null)
         {
             Debug.LogError("ItemUseManager not found");
+        }
+    }
+    private IEnumerator InitializingInventory()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        if (inventoryManager == null)
+        {
+            Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
         }
     }
 
