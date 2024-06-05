@@ -279,7 +279,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a Book");
                 if (hintLog != null)
                 {
-                    hintLog.UpdateMissionText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                    hintLog.UpdateHintText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 }
                 break;
 
@@ -287,7 +287,7 @@ public class ItemUseManager : MonoBehaviour
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk1");
-                    hintLog.UpdateMissionText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
+                    hintLog.UpdateHintText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
                     DecreaseItemQuantity(item);
                 }
                 break;
@@ -296,7 +296,7 @@ public class ItemUseManager : MonoBehaviour
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk2");
-                    hintLog.UpdateMissionText("마지막 생명과 함께 최후의 섬으로 가라.");
+                    hintLog.UpdateHintText("마지막 생명과 함께 최후의 섬으로 가라.");
                     DecreaseItemQuantity(item);
                 }
                 break;
@@ -305,7 +305,7 @@ public class ItemUseManager : MonoBehaviour
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk3");
-                    hintLog.UpdateMissionText("<The Last Yggdrasil>");
+                    hintLog.UpdateHintText("<The Last Yggdrasil>");
                     DecreaseItemQuantity(item);
                 }
                 break;

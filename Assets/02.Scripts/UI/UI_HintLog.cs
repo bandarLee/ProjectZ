@@ -18,7 +18,7 @@ public class UI_HintLog : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    public void UpdateMissionText(string newText)
+    public void UpdateHintText(string newText)
     {
         if (HintText != null)
         {
