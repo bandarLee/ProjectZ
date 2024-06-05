@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,9 +50,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void SpawnPlayer()
     {
         Vector3 spawnPosition = GetRandomSpawnPoint();
-        PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
+        GameObject NewPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
 
-        StartCoroutine(InactiveSector());
+        StartCoroutine(InactiveSector(NewPlayer, spawnPosition));
     }
 
     public Vector3 GetRandomSpawnPoint()
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     //10초뒤에 내가 있는섹터빼고 섹터 5개 끄기
-    private IEnumerator InactiveSector()
+    private IEnumerator InactiveSector(GameObject newplayer,Vector3 position)
     {
         yield return new WaitForSeconds(10f);
         for (int i = 0; i < 6; i++)
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 Sectors[i].SetActive(false);
             }
         }
+        newplayer.transform.position = position;
     }
 
     public void ActiveSector(CityZoneType cityZoneType)
