@@ -44,6 +44,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        DeactivateAllWeapons();
 
         foreach (GameObject muzzleEffect in MuzzleEffects)
         {
@@ -195,4 +196,11 @@ public class CharacterGunFireAbility : CharacterAbility
     }
 
 
+    private void DeactivateAllWeapons()
+    {
+        foreach (GameObject weapon in GunObject)
+        {
+            weapon.SetActive(false);
+        }
+    }
 }

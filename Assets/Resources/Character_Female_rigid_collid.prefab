@@ -4561,7 +4561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5567075299604833945
 Transform:
   m_ObjectHideFlags: 0
@@ -6506,7 +6506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6736230897706637814
 Transform:
   m_ObjectHideFlags: 0
@@ -8261,8 +8261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92aeecf80a6caa64ba2c9f8c8417f89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentGun: {fileID: 0}
-  GunObject: []
+  CurrentGun: {fileID: 2808184796470113026}
+  GunObject:
+  - {fileID: 5568934089759027223}
   CrosshairUI: {fileID: 0}
   CrosshairZoomUI: {fileID: 0}
   HitEffect: {fileID: 0}
@@ -8662,7 +8663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3368925454005063249
 Transform:
   m_ObjectHideFlags: 0
