@@ -13,6 +13,7 @@ public class CharacterAttackAbility : CharacterAbility
 
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
+    private int _activeWeaponIndex = -1;
 
     protected override void Awake() // 이는 가상 메소드 또는 추상 메소드인 경우에만 사용할 수 있습니다.
     {
@@ -35,11 +36,10 @@ public class CharacterAttackAbility : CharacterAbility
 
         _attackTimer += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime)
+        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1)
         {
             _attackTimer = 0f;
             Owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, 1);
-            //PlayAttackAnimation(1);
         }
     }
 
@@ -58,6 +58,7 @@ public class CharacterAttackAbility : CharacterAbility
 
         }
         WeaponObject[WeaponNumber].SetActive(true);
+        _activeWeaponIndex = WeaponNumber;
     }
 
 
@@ -119,5 +120,6 @@ public class CharacterAttackAbility : CharacterAbility
         {
             weapon.SetActive(false);
         }
+        _activeWeaponIndex = -1;
     }
 }
