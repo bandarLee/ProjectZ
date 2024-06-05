@@ -30,7 +30,7 @@ public class CitySectorMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             StartCoroutine(HandleTriggerEnter(other.gameObject));
         }
@@ -68,7 +68,7 @@ public class CitySectorMove : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     player.transform.position = SectorSpawnpoints[10].transform.position;
                 }
-                else if(ThisTriggerType == SectorTriggerType.Trigger3)
+                else if (ThisTriggerType == SectorTriggerType.Trigger3)
                 {
                     GameManager.Instance.ActiveSector(CityZoneType.Sector3);
                     yield return new WaitForSeconds(1f);
@@ -143,6 +143,4 @@ public class CitySectorMove : MonoBehaviour
                 break;
         }
     }
-
-    
 }
