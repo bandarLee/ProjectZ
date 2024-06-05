@@ -132,11 +132,23 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
+        RotateTowards(direction);
     }
 
     private void MoveTowardsTarget()
     {
+        Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        RotateTowards(direction);
+    }
+
+    private void RotateTowards(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 360 * Time.deltaTime);
+        }
     }
 
     private IEnumerator ChangeDirectionRoutine()
