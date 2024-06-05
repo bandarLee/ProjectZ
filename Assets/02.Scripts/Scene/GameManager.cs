@@ -78,6 +78,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Randomzone = (int)cityZoneType;
         lastZone = cityZoneType;
+        StartCoroutine(DeactivateAndActivateSectors());
+    }
+
+    private IEnumerator DeactivateAndActivateSectors()
+    {
         for (int i = 0; i < 6; i++)
         {
             if (i != Randomzone)
@@ -85,8 +90,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 Sectors[i].SetActive(false);
             }
         }
+        yield return null; // 다음 프레임까지 대기
         Sectors[Randomzone].SetActive(true);
-
-
     }
 }
