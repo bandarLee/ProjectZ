@@ -16,9 +16,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     public Animator animator;
     public float detectRange = 30f;
     public float attackRange = 3f;
-    public float patrolRadius = 20f;
     public float moveSpeed = 5f;
     public Stat stat;
+    public Vector3 areaSize = new Vector3(50f, 20f, 50f); // 몬스터가 날아다닐 영역의 크기
 
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
@@ -31,6 +31,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private float lerpSpeed = 10f;
 
     private Rigidbody rb;
+
+    private Vector3 targetPosition;
+    public float changeDirectionInterval = 2f; // 방향을 변경하는 간격
 
     private void Start()
     {
@@ -46,7 +49,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         }
 
         // 초기 순찰 위치 설정
-        MoveToRandomPosition();
+        StartCoroutine(ChangeDirectionRoutine());
     }
 
     private void Update()
@@ -81,11 +84,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Patrol()
     {
-        // 현재 위치와 목표 위치 사이의 거리가 매우 가까운 경우 새로운 목표 위치 설정
-        if (Vector3.Distance(transform.position, syncPosition) < 1f)
-        {
-            MoveToRandomPosition();
-        }
+        MoveTowardsTarget();
 
         // 타겟 탐색
         FindTarget();
@@ -96,7 +95,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
         {
             ChangeState(MonsterState.Patrol, "IsChasing", false);
-            MoveToRandomPosition();
             return;
         }
 
@@ -136,14 +134,26 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         rb.velocity = direction * moveSpeed;
     }
 
-    private void MoveToRandomPosition()
+    private void MoveTowardsTarget()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection += initialPosition;
-        randomDirection.y = initialPosition.y; // 고도는 유지
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    }
 
-        syncPosition = randomDirection;
-        MoveTowards(syncPosition);
+    private IEnumerator ChangeDirectionRoutine()
+    {
+        while (true)
+        {
+            SetRandomTargetPosition();
+            yield return new WaitForSeconds(changeDirectionInterval);
+        }
+    }
+
+    private void SetRandomTargetPosition()
+    {
+        float x = Random.Range(-areaSize.x / 2, areaSize.x / 2);
+        float y = Random.Range(0, areaSize.y);
+        float z = Random.Range(-areaSize.z / 2, areaSize.z / 2);
+        targetPosition = new Vector3(x, y, z) + initialPosition;
     }
 
     private void FindTarget()
