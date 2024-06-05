@@ -236,6 +236,8 @@ public class QuickSlotManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             DropEquippedItem();
+            Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
+
         }
         if (Input.GetKeyDown(KeyCode.I))
         {

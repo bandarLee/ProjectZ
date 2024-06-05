@@ -113,7 +113,7 @@ public class CharacterAttackAbility : CharacterAbility
         _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
     }
 
-    private void DeactivateAllWeapons()
+    public void DeactivateAllWeapons()
     {
         foreach (GameObject weapon in WeaponObject)
         {

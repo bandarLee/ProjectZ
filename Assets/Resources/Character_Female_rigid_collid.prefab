@@ -8096,6 +8096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackability: {fileID: 0}
 --- !u!114 &4577571689269186767
 MonoBehaviour:
   m_ObjectHideFlags: 0
