@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 877110521526339044}
   - component: {fileID: 1343564546116276924}
   - component: {fileID: 8983521300193964434}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: Police_Cabinet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &877110521526339044
 Transform:
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -4.836881, y: -4.7800646, z: 11.304897}
-  m_LocalScale: {x: 0.4161541, y: 0.41615412, z: 0.41615412}
+  m_LocalScale: {x: 0.50000006, y: 0.50000006, z: 0.50000006}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5796226911282116573}
@@ -105,7 +105,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5796226911282116573
 Transform:
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 7469327233240465084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.09079091, w: 0.99587005}
-  m_LocalPosition: {x: -3.0953183, y: 0.21368514, z: 1.5228505}
+  m_LocalPosition: {x: 0.22, y: -0.4, z: 1.52}
   m_LocalScale: {x: 2.8546395, y: 3.702859, z: 2.5596523}
   m_ConstrainProportionsScale: 0
   m_Children: []
