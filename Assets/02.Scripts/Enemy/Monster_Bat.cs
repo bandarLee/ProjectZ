@@ -98,6 +98,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             return;
         }
 
+
         MoveTowards(targetCharacter.transform.position);
 
         if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
@@ -114,8 +115,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             return;
         }
 
+        // 공격 시 목표를 향해 올바르게 회전하도록 수정
         Vector3 targetDirection = targetCharacter.transform.position - transform.position;
-        targetDirection.y = 0;
+        targetDirection.y = 0; // y축 회전만 고려
         Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 
@@ -131,8 +133,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private void MoveTowards(Vector3 targetPosition)
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
-        rb.velocity = direction * moveSpeed;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         RotateTowards(direction);
+
     }
 
     private void MoveTowardsTarget()
@@ -146,7 +149,8 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         if (direction != Vector3.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+            Vector3 lookDirection = new Vector3(direction.x, 0, direction.z);
+            Quaternion toRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 360 * Time.deltaTime);
         }
     }
@@ -187,6 +191,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         {
             targetCharacter = nearestCharacter;
             ChangeState(MonsterState.Chase, "IsChasing", true);
+            Debug.Log("Target found: " + targetCharacter.name);
         }
     }
 
