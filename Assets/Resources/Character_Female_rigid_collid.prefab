@@ -8146,6 +8146,7 @@ MonoBehaviour:
   - {fileID: 6651290898307221874}
   - {fileID: 7975061402788945803}
   - {fileID: 6736230897707058646}
+  WeaponDamage: 230000001e00000019000000
 --- !u!114 &3394129554567082972
 MonoBehaviour:
   m_ObjectHideFlags: 0
