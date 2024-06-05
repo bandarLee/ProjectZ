@@ -2323,6 +2323,7 @@ GameObject:
   - component: {fileID: 7167841178496525045}
   - component: {fileID: 6043471333780043644}
   - component: {fileID: 2678448499068123298}
+  - component: {fileID: 1171466306015538129}
   - component: {fileID: 3356263056025491726}
   - component: {fileID: 6985002557870536006}
   - component: {fileID: 5262805244594896826}
@@ -2401,6 +2402,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1171466306015538129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431444229148007069}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c491c9812d3c22e49b84e04b13e758d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  changeDirectionInterval: 2
+  areaSize: {x: 50, y: 20, z: 50}
 --- !u!136 &3356263056025491726
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2439,7 +2455,6 @@ MonoBehaviour:
   animator: {fileID: 6043471333780043644}
   detectRange: 30
   attackRange: 3
-  patrolRadius: 20
   moveSpeed: 5
   stat:
     Health: 100
@@ -2456,7 +2471,9 @@ MonoBehaviour:
     RotationSpeed: 60
     AttackCoolTime: 5
     JumpPower: 5
+  areaSize: {x: 50, y: 20, z: 50}
   state: 0
+  changeDirectionInterval: 2
 --- !u!114 &5262805244594896826
 MonoBehaviour:
   m_ObjectHideFlags: 0
