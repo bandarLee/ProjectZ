@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6993729119863267520}
   - component: {fileID: 7818124294449833712}
   m_Layer: 0
-  m_Name: "\uC57C\uAD6C\uBC30\uD2B8"
+  m_Name: "\uBC30\uD2B8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: "\uC57C\uAD6C\uBC30\uD2B8"
+    itemName: "\uBC30\uD2B8"
     icon: {fileID: 21300000, guid: 40d526b51d159064f851539ce7779eec, type: 3}
     itemType: 1
     itemEffect: "\uACF5\uACA9\uB825 +30"

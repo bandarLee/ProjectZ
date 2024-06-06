@@ -4556,7 +4556,7 @@ GameObject:
   - component: {fileID: 3354253024105832443}
   - component: {fileID: 2808184796470113026}
   m_Layer: 0
-  m_Name: RifleGun
+  m_Name: "\uCD1D_\uB77C\uC774\uD50C"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7496,7 +7496,6 @@ MonoBehaviour:
   GunObject:
   - {fileID: 5568934089759027223}
   CrosshairUI: {fileID: 0}
-  CrosshairZoomUI: {fileID: 0}
   HitEffect: {fileID: 0}
   MuzzleEffects: []
   GunTextUI: {fileID: 0}
@@ -8660,7 +8659,7 @@ GameObject:
   - component: {fileID: 1125752586917182872}
   - component: {fileID: 9012192101468390440}
   m_Layer: 0
-  m_Name: "\uC57C\uAD6C\uBC30\uD2B8"
+  m_Name: "\uBC30\uD2B8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
