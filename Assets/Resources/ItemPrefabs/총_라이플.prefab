@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: -3579423757241301112}
   - component: {fileID: 1575318932366867398}
   m_Layer: 0
-  m_Name: RifleGun
+  m_Name: "\uCD1D_\uB77C\uC774\uD50C"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: "\uCD1D"
+    itemName: "\uCD1D_\uB77C\uC774\uD50C"
     icon: {fileID: 21300000, guid: b86ae960abe6f09458798eaa0069a3f5, type: 3}
     itemType: 1
     itemEffect: "\uACF5\uACA9\uB825 +40"

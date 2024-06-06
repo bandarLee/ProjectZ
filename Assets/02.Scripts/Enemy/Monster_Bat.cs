@@ -18,7 +18,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     public float attackRange = 3f;
     public float moveSpeed = 5f;
     public Stat stat;
-    public Vector3 areaSize = new Vector3(50f, 20f, 50f);
 
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
@@ -34,6 +33,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private Vector3 targetPosition;
     public float changeDirectionInterval = 2f; // 방향을 변경하는 간격
+
+    public GameObject[] CanMoveArea;
+    public GameObject[] CantMoveArea;
 
     private void Start()
     {
@@ -98,7 +100,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             return;
         }
 
-
         MoveTowards(targetCharacter.transform.position);
 
         if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
@@ -132,10 +133,15 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void MoveTowards(Vector3 targetPosition)
     {
+        if (!IsPositionInCanMoveArea(targetPosition) || IsPositionInCantMoveArea(targetPosition))
+        {
+            SetRandomTargetPosition();
+            return;
+        }
+
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         RotateTowards(direction);
-
     }
 
     private void MoveTowardsTarget()
@@ -166,10 +172,59 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void SetRandomTargetPosition()
     {
-        float x = Random.Range(-areaSize.x / 2, areaSize.x / 2);
-        float y = Random.Range(0, areaSize.y);
-        float z = Random.Range(-areaSize.z / 2, areaSize.z / 2);
-        targetPosition = new Vector3(x, y, z) + initialPosition;
+        Vector3 randomPosition;
+        do
+        {
+            randomPosition = GetRandomPositionInCanMoveArea();
+        }
+        while (!IsPositionInCanMoveArea(randomPosition) || IsPositionInCantMoveArea(randomPosition));
+
+        targetPosition = randomPosition;
+    }
+
+    private Vector3 GetRandomPositionInCanMoveArea()
+    {
+        if (CanMoveArea.Length == 0)
+            return initialPosition;
+
+        var area = CanMoveArea[Random.Range(0, CanMoveArea.Length)];
+        var collider = area.GetComponent<Collider>();
+
+        if (collider == null)
+            return initialPosition;
+
+        Vector3 min = collider.bounds.min;
+        Vector3 max = collider.bounds.max;
+
+        return new Vector3(
+            Random.Range(min.x, max.x),
+            Random.Range(min.y, max.y),
+            Random.Range(min.z, max.z)
+        );
+    }
+
+    private bool IsPositionInCanMoveArea(Vector3 position)
+    {
+        foreach (var area in CanMoveArea)
+        {
+            if (area.GetComponent<Collider>().bounds.Contains(position))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsPositionInCantMoveArea(Vector3 position)
+    {
+        foreach (var area in CantMoveArea)
+        {
+            if (area.GetComponent<Collider>().bounds.Contains(position))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void FindTarget()
