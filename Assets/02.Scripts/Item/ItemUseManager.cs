@@ -38,7 +38,7 @@ public class ItemUseManager : MonoBehaviour
                 ApplyMentalEffect(item.itemName);
                 break;
             case ItemType.Weapon:
-                ApplyWeaponEffect(item.itemName);
+                ApplyWeaponEffect(item.itemName, item);
                 break;
             case ItemType.ETC:
                 ApplyEtcEffect(item.itemName, item);
@@ -230,7 +230,7 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void ApplyWeaponEffect(string itemName)
+    private void ApplyWeaponEffect(string itemName, Item item)
     {
         switch (itemName)
         {
@@ -249,6 +249,11 @@ public class ItemUseManager : MonoBehaviour
             case "ÃÑ":
                 Debug.Log("Player used gun.");
                 // Player.Instance.UseWeapon(gun);
+                break;
+            case "ÃÑ¾Ë":
+                Debug.Log("ÇÃ·¹ÀÌ¾î°¡ ÃÑ¾ËÀ» »ç¿ëÇÔ");
+                // Player.Instance.UseWeapon(bullet);
+                DecreaseItemQuantity(item);
                 break;
             default:
                 Debug.LogWarning("Unknown weapon item.");
