@@ -21,6 +21,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     private Animator _animator;
     private InventoryManager _inventoryManager;
     public CharacterAttackAbility _attackability;
+    public CharacterGunFireAbility _gunfireAbility;
     private void Awake()
     {
         CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
@@ -29,7 +30,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
         _inventoryManager = FindObjectOfType<InventoryManager>();
-         _attackability= GetComponent<CharacterAttackAbility>();
+        _attackability = GetComponent<CharacterAttackAbility>();
+        _gunfireAbility = GetComponent<CharacterGunFireAbility>();
 
         if (_inventoryManager != null)
         {
