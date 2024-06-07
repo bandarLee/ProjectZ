@@ -15,13 +15,8 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private float _shotTimer;
 
-    public GameObject CrosshairUI;
-    public GameObject HolographicDotSightUI;
 
-    // UI 위에 text로 표시하기 (ex. 30/30, 재장전 중입니다)
-    public TextMeshProUGUI GunTextUI;
-    public TextMeshProUGUI ReloadTextUI;
-
+    public UI_Gunfire uI_Gunfire;
     public ParticleSystem HitEffect; // 이펙트 파편 
     public List<GameObject> MuzzleEffects; // 이펙트 반짝 
 
@@ -31,6 +26,8 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private void Start()
     {
+        StartCoroutine(InitializeCrossHair());
+
         _animator = GetComponent<Animator>();
         DeactivateAllGuns();
 
@@ -39,15 +36,16 @@ public class CharacterGunFireAbility : CharacterAbility
             muzzleEffect.SetActive(false);
         }
 
-        RefreshUI();
         _playerinventory = Character.LocalPlayerInstance.GetComponent<Inventory>();
     }
-
-    public void RefreshUI()
+    private IEnumerator InitializeCrossHair()
     {
-        GunTextUI.text = $"{CurrentGun.BulletRemainCount}/{CurrentGun.BulletMaxCount}";
+        yield return new WaitForSeconds(1.0f);
+        uI_Gunfire = FindObjectOfType<UI_Gunfire>();
+        uI_Gunfire.RefreshUI();
 
     }
+
 
 
 
@@ -94,7 +92,7 @@ public class CharacterGunFireAbility : CharacterAbility
             // 재장전 취소
             if (_isReloading)
             {
-                ReloadTextUI.text = "";
+                uI_Gunfire.RemoveReloadUI();
                 StopAllCoroutines();
                 _isReloading = false;
             }
@@ -106,7 +104,7 @@ public class CharacterGunFireAbility : CharacterAbility
             Item bulletItem = GetBulletItem();
 
             ItemUseManager.Instance.UseConsumable(bulletItem);
-            RefreshUI();
+            uI_Gunfire.RefreshUI();
             _shotTimer = 0;
             StartCoroutine(MuzzleEffectOn_Coroutine());
 
@@ -149,7 +147,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private IEnumerator Reload_Coroutine()
     {
         _isReloading = true;
-        ReloadTextUI.text = $"재장전 중";
+        uI_Gunfire.MakeReloadUI();
         yield return new WaitForSeconds(CurrentGun.ReloadTime);
 
         Item bulletItem = GetBulletItem();
@@ -160,9 +158,8 @@ public class CharacterGunFireAbility : CharacterAbility
       
             CurrentGun.BulletRemainCount = bulletsToReload;
         }
-        RefreshUI();
-
-        ReloadTextUI.text = "";
+        uI_Gunfire.RefreshUI();
+        uI_Gunfire.RemoveReloadUI();
         _isReloading = false;
         yield break;
     }
