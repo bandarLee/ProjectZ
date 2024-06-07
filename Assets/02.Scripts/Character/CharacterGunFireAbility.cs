@@ -71,7 +71,7 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     void GunShoot() 
     {
-        uI_Gunfire.RefreshUI(); // 얘는 총알개수 -> 총을 장착했을 때만 뜨게 하기
+        uI_Gunfire.RefreshUI(); // 얘는 총알개수, -이제부터 총을 장착했을 때만 뜨는 내용들-
 
         /* 재장전 */
         // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) 
@@ -97,7 +97,6 @@ public class CharacterGunFireAbility : CharacterAbility
                 StopAllCoroutines();
                 _isReloading = false;
             }
-
 
             //Owner.PhotonView.RPC(nameof(PlayShotAnimation), RpcTarget.All, 1);
 
@@ -145,6 +144,7 @@ public class CharacterGunFireAbility : CharacterAbility
         _animator.SetTrigger($"Shot{index}");
     }
 
+
     private IEnumerator Reload_Coroutine()
     {
         _isReloading = true;
@@ -177,6 +177,7 @@ public class CharacterGunFireAbility : CharacterAbility
         }
 
     }
+
     private IEnumerator MuzzleEffectOn_Coroutine()
     {
         // 총 이펙트 중 하나를 켜줌

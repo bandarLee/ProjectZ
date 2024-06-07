@@ -82,7 +82,7 @@ public class CharacterRotateAbility : CharacterAbility
         _mx += mouseX * Owner.Stat.RotationSpeed * Time.deltaTime;
         _my += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
 
-        _my = Mathf.Clamp(_my, -50f, 20f);
+        _my = Mathf.Clamp(_my, -50f, 25f);
 
         transform.eulerAngles = new Vector3(0, _mx, 0f);
         CameraRoot.localEulerAngles = new Vector3(-_my, 0, 0f);
