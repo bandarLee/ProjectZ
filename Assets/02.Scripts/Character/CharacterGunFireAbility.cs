@@ -157,11 +157,7 @@ public class CharacterGunFireAbility : CharacterAbility
         if (bulletItem != null)
         {
             int bulletsToReload = CalculateRemainBullet(bulletItem);
-
-          
-            Mathf.Min(CurrentGun.BulletMaxCount, _playerinventory.itemQuantities[bulletItem.itemName]);
-            
-            
+      
             CurrentGun.BulletRemainCount = bulletsToReload;
         }
         RefreshUI();
