@@ -15,13 +15,14 @@ public class CharacterGunFireAbility : CharacterAbility
     private float _shotTimer;
 
     public GameObject CrosshairUI;
-
-    public ParticleSystem HitEffect; // 이펙트 파편 
-    public List<GameObject> MuzzleEffects; // 이펙트 반짝 
+    public GameObject HolographicDotSightUI;
 
     // UI 위에 text로 표시하기 (ex. 30/30, 재장전 중입니다)
     public TextMeshProUGUI GunTextUI;
     public TextMeshProUGUI ReloadTextUI;
+
+    public ParticleSystem HitEffect; // 이펙트 파편 
+    public List<GameObject> MuzzleEffects; // 이펙트 반짝 
 
     private bool _isReloading = false;
 
@@ -31,6 +32,11 @@ public class CharacterGunFireAbility : CharacterAbility
     {
         _animator = GetComponent<Animator>();
         DeactivateAllGuns();
+
+        CrosshairUI = transform.Find("UI_GunNew/Crosshair").gameObject;
+        HolographicDotSightUI = transform.Find("UI_GunNew/HolographicDotSight").gameObject;
+        ReloadTextUI = transform.Find("UI_GunNew/GunReloadText").GetComponent<TextMeshProUGUI>();
+        GunTextUI = transform.Find("UI_GunNew/PlayerGunText").GetComponent<TextMeshProUGUI>();
 
         foreach (GameObject muzzleEffect in MuzzleEffects)
         {
