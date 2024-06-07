@@ -128,7 +128,7 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void EquipWeapon(string itemName)
+    private void EquipWeapon(string itemName, Item item)
     {
         // todo.포톤 내 것일 때만 되게
         CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
@@ -152,7 +152,10 @@ public class ItemUseManager : MonoBehaviour
                     Debug.Log("플레이어가 총을 들었음");
                     gunFireAbility.GunActive(0);
                     break;
-                default:
+            case "총알":
+                Debug.Log("플레이어가 총알을 챙겼음");
+                break;
+            default:
                     Debug.LogWarning("Unknown weapon item.");
                     break;
             }

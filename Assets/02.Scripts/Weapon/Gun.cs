@@ -28,9 +28,5 @@ public class Gun : MonoBehaviour
     // - 재장전 시간
     public float ReloadTime = 1.5f;
 
-    private void Start()
-    {
-        // 총알 개수 초기화
-        BulletRemainCount = BulletMaxCount;
-    }
+
 }

@@ -7885,10 +7885,10 @@ MonoBehaviour:
   CurrentGun: {fileID: 2808184796470113026}
   GunObject:
   - {fileID: 5568934089759027223}
-  CrosshairUI: {fileID: 0}
-  HolographicDotSightUI: {fileID: 0}
-  GunTextUI: {fileID: 0}
-  ReloadTextUI: {fileID: 0}
+  CrosshairUI: {fileID: 5081846487317420105}
+  HolographicDotSightUI: {fileID: 2905930594281300658}
+  GunTextUI: {fileID: 1964535132202789586}
+  ReloadTextUI: {fileID: 4341606296035547130}
   HitEffect: {fileID: 0}
   MuzzleEffects: []
 --- !u!95 &2283545895190766293

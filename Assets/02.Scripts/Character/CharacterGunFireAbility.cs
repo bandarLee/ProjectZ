@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
 using UnityEngine;
 
 public class CharacterGunFireAbility : CharacterAbility
@@ -26,17 +25,12 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private bool _isReloading = false;
 
-
+    private Inventory _playerinventory;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
         DeactivateAllGuns();
-
-        CrosshairUI = transform.Find("UI_GunNew/Crosshair").gameObject;
-        HolographicDotSightUI = transform.Find("UI_GunNew/HolographicDotSight").gameObject;
-        ReloadTextUI = transform.Find("UI_GunNew/GunReloadText").GetComponent<TextMeshProUGUI>();
-        GunTextUI = transform.Find("UI_GunNew/PlayerGunText").GetComponent<TextMeshProUGUI>();
 
         foreach (GameObject muzzleEffect in MuzzleEffects)
         {
@@ -44,6 +38,7 @@ public class CharacterGunFireAbility : CharacterAbility
         }
 
         RefreshUI();
+        _playerinventory = Character.LocalPlayerInstance.GetComponent<Inventory>();
     }
 
     public void RefreshUI()
@@ -60,8 +55,22 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             return;
         }
-
-        /* 재장전 */ 
+  
+        GunShoot();
+    }
+    private Item GetBulletItem()
+    {
+        foreach (var item in _playerinventory.items.Values)
+        {
+            if (item.itemType == ItemType.Heal && item.itemName == "총알")
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+    void GunShoot() {
+        /* 재장전 */
         // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) // todo.총알이 있을 때만!
         if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount)
         {
@@ -121,6 +130,8 @@ public class CharacterGunFireAbility : CharacterAbility
             }
         }
     }
+
+    
 
     [PunRPC]
     public void PlayShotAnimation(int index)
