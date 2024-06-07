@@ -205,30 +205,8 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (currentEquippedItem != null)
             {
-                if (currentEquippedItem.itemType == ItemType.Food || currentEquippedItem.itemType == ItemType.Heal || currentEquippedItem.itemType == ItemType.Mental)
-                {
-                    ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
-
-                    string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
-                                      ? currentEquippedItem.uniqueId : currentEquippedItem.itemName;
-
-                    if (inventory.itemQuantities.ContainsKey(itemName))
-                    {
-                        inventory.itemQuantities[itemName]--;
-                        if (inventory.itemQuantities[itemName] <= 0)
-                        {
-                            inventory.items.Remove(itemName);
-                            inventory.itemQuantities.Remove(itemName);
-                            RemoveItemFromQuickSlots(currentEquippedItem);
-                            currentEquippedItem = null;
-                        }
-                    }
-                }
-                else if (currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC)
-                {
-                    ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
-                }
-
+ 
+                ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
                 inventoryManager.UpdateAllInventories();
             }
         }

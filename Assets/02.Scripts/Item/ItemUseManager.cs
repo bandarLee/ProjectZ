@@ -6,7 +6,8 @@ public class ItemUseManager : MonoBehaviour
     public static ItemUseManager Instance;
     public UseComputerTrigger computerTrigger;
     public UI_HintLog hintLog;
-
+    public QuickSlotManager quickSlotManager;
+    public InventoryUI inventoryUI;
     private void Awake()
     {
         if (Instance == null)
@@ -30,12 +31,17 @@ public class ItemUseManager : MonoBehaviour
         {
             case ItemType.Food:
                 ApplyFoodEffect(item.itemName);
+                DecreaseItemQuantity(item);
                 break;
             case ItemType.Heal:
                 ApplyHealEffect(item.itemName);
+                DecreaseItemQuantity(item);
+
                 break;
             case ItemType.Mental:
                 ApplyMentalEffect(item.itemName);
+                DecreaseItemQuantity(item);
+
                 break;
             case ItemType.Weapon:
                 ApplyWeaponEffect(item.itemName, item);
@@ -49,6 +55,15 @@ public class ItemUseManager : MonoBehaviour
         }
 
         UpdateUI();
+    }
+    public void UseConsumable(Item item)
+    {
+        if(item.itemType == ItemType.Consumable)
+        {
+            DecreaseItemQuantity(item);
+        }
+        UpdateUI();
+
     }
 
     public void EquipItem(Item item)
@@ -69,6 +84,12 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case ItemType.ETC:
                 EquipEtc(item.itemName);
+                break;
+            case ItemType.Consumable:
+                EquipConsumable(item.itemName);
+                break;
+            case ItemType.Gun:
+                EquipGun(item.itemName);
                 break;
             default:
                 Debug.LogWarning("This item type cannot be equipped.");
@@ -148,19 +169,35 @@ public class ItemUseManager : MonoBehaviour
                     Debug.Log("플레이어가 삽을 들었음");
                     attackAbility.WeaponActive(2);
                     break;
-                case "총_라이플":
-                    Debug.Log("플레이어가 총을 들었음");
-                    gunFireAbility.GunActive(0);
-                    break;
-            case "총알":
-                Debug.Log("플레이어가 총알을 챙겼음");
-                break;
+
+
             default:
                     Debug.LogWarning("Unknown weapon item.");
                     break;
             }
         
            
+    }
+    private void EquipGun(string itemName)
+    {
+        // todo.포톤 내 것일 때만 되게
+        CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
+        CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
+
+        switch (itemName)
+        {
+            case "총_라이플":
+                Debug.Log("플레이어가 총을 들었음");
+                gunFireAbility.GunActive(0);
+                break;
+          
+
+            default:
+                Debug.LogWarning("Unknown Gun item.");
+                break;
+        }
+
+
     }
 
     private void EquipEtc(string itemName)
@@ -180,7 +217,20 @@ public class ItemUseManager : MonoBehaviour
                 break;
         }
     }
+    private void EquipConsumable(string itemName)
+    {
+        switch (itemName)
+        {
+            case "총알":
+                Debug.Log("술을 들었음");
+                break;
+            
 
+            default:
+                Debug.LogWarning("Unknown Consumable item.");
+                break;
+        }
+    }
     private void ApplyFoodEffect(string itemName)
     {
         switch (itemName)
@@ -249,15 +299,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("플레이어가 삽을 사용함");
                 // Player.Instance.UseWeapon(shovel);
                 break;
-            case "총":
-                Debug.Log("Player used gun.");
-                // Player.Instance.UseWeapon(gun);
-                break;
-            case "총알":
-                Debug.Log("플레이어가 총알을 사용함");
-                // Player.Instance.UseWeapon(bullet);
-                DecreaseItemQuantity(item);
-                break;
+
             default:
                 Debug.LogWarning("Unknown weapon item.");
                 break;
@@ -338,11 +380,13 @@ public class ItemUseManager : MonoBehaviour
                 {
                     inventory.items.Remove(itemName);
                     inventory.itemQuantities.Remove(itemName);
-                }
-                RemoveItemFromQuickSlots(item);
-                var inventoryUI = FindObjectOfType<InventoryUI>(true);
+                    quickSlotManager.currentEquippedItem = null;
+                    RemoveItemFromQuickSlots(item);
 
-                inventoryUI.CloseItemInfo();
+                    inventoryUI.CloseItemInfo();
+
+                }
+
 
             }
         }
@@ -350,25 +394,19 @@ public class ItemUseManager : MonoBehaviour
 
     private void RemoveItemFromQuickSlots(Item item)
     {
-        var quickSlotManager = FindObjectOfType<QuickSlotManager>();
-        if (quickSlotManager != null)
-        {
-            quickSlotManager.RemoveItemFromQuickSlots(item);
-        }
+       
+       quickSlotManager.RemoveItemFromQuickSlots(item);
+        
     }
 
     public void UpdateUI()
     {
-        var inventoryUI = FindObjectOfType<InventoryUI>(true);
-        if (inventoryUI != null)
-        {
-            inventoryUI.UpdateInventoryUI();
-        }
 
-        var quickSlotManager = FindObjectOfType<QuickSlotManager>(true);
-        if (quickSlotManager != null)
-        {
-            quickSlotManager.UpdateQuickSlotUI();
-        }
+        inventoryUI.UpdateInventoryUI();
+        
+
+
+        quickSlotManager.UpdateQuickSlotUI();
+        
     }
 }

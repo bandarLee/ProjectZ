@@ -22,7 +22,7 @@ public class Gun : MonoBehaviour
     public float FireCooltime = 0.2f;
 
     // - 총알 개수
-    public int BulletRemainCount;
+    public int BulletRemainCount = 0;
     public int BulletMaxCount = 30;
 
     // - 재장전 시간

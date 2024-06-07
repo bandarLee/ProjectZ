@@ -318,7 +318,7 @@ MonoBehaviour:
   item:
     itemName: "\uCD1D_\uB77C\uC774\uD50C"
     icon: {fileID: 21300000, guid: b86ae960abe6f09458798eaa0069a3f5, type: 3}
-    itemType: 1
+    itemType: 6
     itemEffect: "\uACF5\uACA9\uB825 +40"
     itemDescription: "\uACBD\uCC30\uC774 \uB41C \uB4EF\uD55C \uB290\uB08C\uC774\uB2E4."
     uniqueId: 

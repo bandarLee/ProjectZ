@@ -20,6 +20,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public State State { get; private set; } = State.Live;
     private Animator _animator;
     private InventoryManager _inventoryManager;
+    public QuickSlotManager _quickSlotManager;
     public CharacterAttackAbility _attackability;
     public CharacterGunFireAbility _gunfireAbility;
     private void Awake()
@@ -32,6 +33,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _inventoryManager = FindObjectOfType<InventoryManager>();
         _attackability = GetComponent<CharacterAttackAbility>();
         _gunfireAbility = GetComponent<CharacterGunFireAbility>();
+        _quickSlotManager = FindObjectOfType<QuickSlotManager>();
 
         if (_inventoryManager != null)
         {

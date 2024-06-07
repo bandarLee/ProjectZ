@@ -17,5 +17,7 @@ public enum ItemType
     Weapon,
     Heal,
     Mental,
-    ETC
+    ETC,
+    Consumable,
+    Gun
 }

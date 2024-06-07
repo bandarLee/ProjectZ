@@ -1,6 +1,8 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
@@ -55,14 +57,16 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             return;
         }
-  
-        GunShoot();
+        if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
+        {
+            GunShoot();
+        }
     }
     private Item GetBulletItem()
     {
         foreach (var item in _playerinventory.items.Values)
         {
-            if (item.itemType == ItemType.Heal && item.itemName == "총알")
+            if (item.itemType == ItemType.Consumable && item.itemName == "총알")
             {
                 return item;
             }
@@ -72,7 +76,7 @@ public class CharacterGunFireAbility : CharacterAbility
     void GunShoot() {
         /* 재장전 */
         // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) // todo.총알이 있을 때만!
-        if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount)
+        if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount && GetBulletItem()!= null)
         {
             if (!_isReloading)
             {
@@ -99,6 +103,9 @@ public class CharacterGunFireAbility : CharacterAbility
             //Owner.PhotonView.RPC(nameof(PlayShotAnimation), RpcTarget.All, 1);
 
             CurrentGun.BulletRemainCount--;
+            Item bulletItem = GetBulletItem();
+
+            ItemUseManager.Instance.UseConsumable(bulletItem);
             RefreshUI();
             _shotTimer = 0;
             StartCoroutine(MuzzleEffectOn_Coroutine());
@@ -145,12 +152,36 @@ public class CharacterGunFireAbility : CharacterAbility
         ReloadTextUI.text = $"재장전 중";
         yield return new WaitForSeconds(CurrentGun.ReloadTime);
 
-        CurrentGun.BulletRemainCount = CurrentGun.BulletMaxCount;
+        Item bulletItem = GetBulletItem();
+
+        if (bulletItem != null)
+        {
+            int bulletsToReload = CalculateRemainBullet(bulletItem);
+
+          
+            Mathf.Min(CurrentGun.BulletMaxCount, _playerinventory.itemQuantities[bulletItem.itemName]);
+            
+            
+            CurrentGun.BulletRemainCount = bulletsToReload;
+        }
         RefreshUI();
 
         ReloadTextUI.text = "";
         _isReloading = false;
         yield break;
+    }
+    public int CalculateRemainBullet(Item bullet)
+    {
+        if (CurrentGun.BulletMaxCount < _playerinventory.itemQuantities[bullet.itemName])
+        {
+            return CurrentGun.BulletMaxCount;
+
+        }
+        else
+        {
+            return _playerinventory.itemQuantities[bullet.itemName];
+        }
+
     }
     private IEnumerator MuzzleEffectOn_Coroutine()
     {
@@ -177,9 +208,10 @@ public class CharacterGunFireAbility : CharacterAbility
 
     public void DeactivateAllGuns()
     {
-        foreach (GameObject weapon in GunObject)
+        foreach (GameObject gun in GunObject)
         {
-            weapon.SetActive(false);
+            gun.GetComponent<Gun>().BulletRemainCount = 0;
+            gun.SetActive(false);
         }
     }
 }
