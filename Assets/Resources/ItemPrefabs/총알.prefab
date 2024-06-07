@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemName: "\uCD1D\uC54C"
-    icon: {fileID: 21300000, guid: 39bd035e21e0dc640befdf7889200d85, type: 3}
+    icon: {fileID: 21300000, guid: e6d39c1af4ae54f4a907f01876ca5c3d, type: 3}
     itemType: 1
     itemEffect: "\uCD1D\uC54C"
     itemDescription: "\uB9CE\uC774 \uCC59\uACA8\uB46C\uC57C \uD55C\uB2E4."

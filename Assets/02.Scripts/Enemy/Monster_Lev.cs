@@ -17,7 +17,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     public Animator animator;
     public NavMeshAgent agent;
     public float detectRange = 30f;
-    public float attackRange = 3f;
+    public float attackRange = 2f;
+    public float attackDamageRange = 5f;
     public float patrolRadius = 20f;
     public Stat stat;
 
@@ -136,11 +137,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             return;
         }
 
-        List<Character> targets = FindTargets(attackRange + 0.1f);
+        List<Character> targets = FindTargets(attackDamageRange);
         foreach (Character target in targets)
         {
             Vector3 dir = (target.transform.position - transform.position).normalized;
-            int viewAngle = 160 / 2;
+            int viewAngle = 200 / 2;
             float angle = Vector3.Angle(transform.forward, dir);
             if (angle < viewAngle)
             {
