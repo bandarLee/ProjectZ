@@ -8,6 +8,7 @@ public class ItemUseManager : MonoBehaviour
     public UI_HintLog hintLog;
     public QuickSlotManager quickSlotManager;
     public InventoryUI inventoryUI;
+    public UI_Gunfire uI_Gunfire;
     private void Awake()
     {
         if (Instance == null)
@@ -30,8 +31,7 @@ public class ItemUseManager : MonoBehaviour
         switch (item.itemType)
         {
             case ItemType.Food:
-                ApplyFoodEffect(item.itemName);
-                DecreaseItemQuantity(item);
+                ApplyFoodEffect(item);
                 break;
             case ItemType.Heal:
                 ApplyHealEffect(item.itemName);
@@ -231,14 +231,18 @@ public class ItemUseManager : MonoBehaviour
                 break;
         }
     }
-    private void ApplyFoodEffect(string itemName)
+    private void ApplyFoodEffect(Item item)
     {
-        switch (itemName)
+        switch (item.itemName)
         {
             case "°í±â":
+                DecreaseItemQuantity(item);
+
                 Debug.Log("¹è°íÇÄ È¸º¹ 20");
                 break;
             case "»§":
+                DecreaseItemQuantity(item);
+
                 Debug.Log("Player hunger increased by 30.");
                 break;
             default:
@@ -398,7 +402,10 @@ public class ItemUseManager : MonoBehaviour
        quickSlotManager.RemoveItemFromQuickSlots(item);
         
     }
-
+    public void UseItem(Item item, float duration)
+    {
+        StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
+    }
     public void UpdateUI()
     {
 

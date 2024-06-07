@@ -201,14 +201,23 @@ public class QuickSlotManager : MonoBehaviour
         {
             UseQuickSlotItem(3);
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && currentEquippedItem != null)
         {
-            if (currentEquippedItem != null)
+            switch(currentEquippedItem.itemType)
             {
- 
-                ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
-                inventoryManager.UpdateAllInventories();
+                case ItemType.Food :
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    inventoryManager.UpdateAllInventories();
+
+                    break;
+                default:
+                    ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
+                    inventoryManager.UpdateAllInventories();
+                    break;
             }
+
+
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
