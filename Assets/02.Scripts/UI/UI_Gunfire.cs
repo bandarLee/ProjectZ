@@ -58,7 +58,7 @@ public class UI_Gunfire : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 timeRemaining -= Time.deltaTime;
-                CircleSliderComponent.value = timeRemaining / duration;
+                CircleSliderComponent.value = (duration - timeRemaining) / duration;
                 RemainTime.text = $"{timeRemaining:F1}";
                 yield return null;
             }

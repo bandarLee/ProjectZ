@@ -237,13 +237,11 @@ public class ItemUseManager : MonoBehaviour
         {
             case "°í±â":
                 DecreaseItemQuantity(item);
-
-                Debug.Log("¹è°íÇÄ È¸º¹ 20");
+                Character.LocalPlayerInstance.Stat.Hunger += 30; 
                 break;
             case "»§":
                 DecreaseItemQuantity(item);
-
-                Debug.Log("Player hunger increased by 30.");
+                Character.LocalPlayerInstance.Stat.Hunger += 20;
                 break;
             default:
                 break;
