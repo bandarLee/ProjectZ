@@ -42,8 +42,6 @@ public class CharacterGunFireAbility : CharacterAbility
     {
         yield return new WaitForSeconds(1.0f);
         uI_Gunfire = FindObjectOfType<UI_Gunfire>();
-        uI_Gunfire.RefreshUI();
-
     }
 
 
@@ -55,7 +53,7 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             return;
         }
-        if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
+        if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
             GunShoot();
         }
@@ -71,9 +69,12 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         return null;
     }
-    void GunShoot() {
+    void GunShoot() 
+    {
+        uI_Gunfire.RefreshUI(); // 얘는 총알개수 -> 총을 장착했을 때만 뜨게 하기
+
         /* 재장전 */
-        // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) // todo.총알이 있을 때만!
+        // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) 
         if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount && GetBulletItem()!= null)
         {
             if (!_isReloading)
