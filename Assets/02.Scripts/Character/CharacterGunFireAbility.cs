@@ -55,6 +55,7 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
+            Owner.PhotonView.RPC(nameof(PlayAimingIdleAnimation), RpcTarget.All);
             GunShoot();
         }
     }
@@ -98,7 +99,7 @@ public class CharacterGunFireAbility : CharacterAbility
                 _isReloading = false;
             }
 
-            //Owner.PhotonView.RPC(nameof(PlayShotAnimation), RpcTarget.All, 1);
+            Owner.PhotonView.RPC(nameof(PlayShotAnimation), RpcTarget.All, 1);
 
             CurrentGun.BulletRemainCount--;
             Item bulletItem = GetBulletItem();
@@ -136,7 +137,12 @@ public class CharacterGunFireAbility : CharacterAbility
         }
     }
 
-    
+
+    [PunRPC]
+    public void PlayAimingIdleAnimation()
+    {
+        _animator.SetTrigger($"AimingIdle");
+    }
 
     [PunRPC]
     public void PlayShotAnimation(int index)
@@ -209,5 +215,14 @@ public class CharacterGunFireAbility : CharacterAbility
             gun.SetActive(false);
         }
         //uI_Gunfire.RemoveRefreshUI();
+
+        ResetAllAnimationTriggers();
+        _animator.Play("MoveTree");
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        _animator.ResetTrigger("AimingIdle");
+        _animator.ResetTrigger("Shot");
     }
 }
