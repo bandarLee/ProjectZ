@@ -25,6 +25,7 @@ public class UI_Gunfire : MonoBehaviour
         CircleSlider.SetActive(false);
 
         StartCoroutine(InitiategunFireAbility());
+        HolographicDotSightUI.SetActive(false);
 
     }
     private IEnumerator InitiategunFireAbility()
@@ -33,6 +34,13 @@ public class UI_Gunfire : MonoBehaviour
         gunFireAbility = Character.LocalPlayerInstance.GetComponent<CharacterGunFireAbility>();
 
     }
+
+    public void ToggleSightMode(bool isAiming)
+    {
+        HolographicDotSightUI.SetActive(isAiming);
+        CrosshairUI.SetActive(!isAiming);
+    }
+
     public void RemoveRefreshUI()
     {
         GunTextUI.text = "";

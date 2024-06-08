@@ -74,6 +74,14 @@ public class CharacterGunFireAbility : CharacterAbility
     {
         uI_Gunfire.RefreshUI(); // 얘는 총알개수, -이제부터 총을 장착했을 때만 뜨는 내용들-
 
+        /* 조준경 */
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            bool isAiming = !uI_Gunfire.HolographicDotSightUI.activeSelf; // 현재 조준 상태 반전
+            uI_Gunfire.ToggleSightMode(isAiming);
+            // 카메라 설정 변경 로직 추가하기
+        }
+
         /* 재장전 */
         // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) 
         if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount && GetBulletItem()!= null)
