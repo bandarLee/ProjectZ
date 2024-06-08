@@ -53,12 +53,10 @@ public class UI_Gunfire : MonoBehaviour
         {
             if (isAiming)
             {
-                // 카메라 조준 위치로 이동
                 tpFollow.ShoulderOffset = new Vector3(0f, 1f, 3f);
             }
             else
             {
-                // 카메라 기본 위치로 복귀
                 tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, -1.5f);
             }
         }

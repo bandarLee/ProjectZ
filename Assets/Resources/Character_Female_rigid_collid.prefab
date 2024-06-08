@@ -6881,8 +6881,11 @@ MonoBehaviour:
   GunObject:
   - {fileID: 2943838032877333535}
   uI_Gunfire: {fileID: 0}
-  HitEffect: {fileID: 0}
-  MuzzleEffects: []
+  HitEffect: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+  MuzzleEffects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!95 &2283545895190766293
 Animator:
   serializedVersion: 5
@@ -7469,11 +7472,19 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack2
+  - Type: 9
+    SynchronizeType: 0
+    Name: AimingIdle
+  - Type: 9
+    SynchronizeType: 0
+    Name: Shot1
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
   - SynchronizeType: 1
     LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
 --- !u!114 &4820215599799614896
 MonoBehaviour:
   m_ObjectHideFlags: 0
