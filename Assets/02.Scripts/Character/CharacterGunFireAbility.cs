@@ -79,7 +79,6 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             bool isAiming = !uI_Gunfire.HolographicDotSightUI.activeSelf; // 현재 조준 상태 반전
             uI_Gunfire.ToggleSightMode(isAiming);
-            // 카메라 설정 변경 로직 추가하기
         }
 
         /* 재장전 */

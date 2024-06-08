@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,9 @@ public class UI_Gunfire : MonoBehaviour
     public Slider CircleSliderComponent;
     //먹을때 이 동그라미 슬라이더 쓰는거에용
 
+    public CinemachineVirtualCamera followCamera;
+    private Cinemachine3rdPersonFollow tpFollow;
+
     // UI 위에 text로 표시하기 (ex. 30/30, 재장전 중입니다)
     public TextMeshProUGUI GunTextUI;
     public TextMeshProUGUI ReloadTextUI;
@@ -27,6 +31,11 @@ public class UI_Gunfire : MonoBehaviour
         StartCoroutine(InitiategunFireAbility());
         HolographicDotSightUI.SetActive(false);
 
+        if (followCamera != null)
+        {
+            tpFollow = followCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        }
+
     }
     private IEnumerator InitiategunFireAbility()
     {
@@ -39,6 +48,20 @@ public class UI_Gunfire : MonoBehaviour
     {
         HolographicDotSightUI.SetActive(isAiming);
         CrosshairUI.SetActive(!isAiming);
+
+        if (tpFollow != null)
+        {
+            if (isAiming)
+            {
+                // 카메라 조준 위치로 이동
+                tpFollow.ShoulderOffset = new Vector3(0f, 1f, 3f);
+            }
+            else
+            {
+                // 카메라 기본 위치로 복귀
+                tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, -1.5f);
+            }
+        }
     }
 
     public void RemoveRefreshUI()
