@@ -424,7 +424,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: GunFire Layer
     m_StateMachine: {fileID: 7250788063930219502}
-    m_Mask: {fileID: 31900000, guid: 4e009e9804f053547833288c0fbb2ffc, type: 2}
+    m_Mask: {fileID: 31900000, guid: ffd5bb6cf65eab249b00d8e79c404e61, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -797,7 +797,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400020, guid: ce448a8080b4e934b8473badd27be402, type: 3}
+    m_Motion: {fileID: 7400014, guid: ce448a8080b4e934b8473badd27be402, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
