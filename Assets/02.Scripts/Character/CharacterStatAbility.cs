@@ -22,7 +22,6 @@ public class CharacterStatAbility : CharacterAbility
             StartCoroutine(DecreaseMentalRoutine());
         }
     }
-
     [PunRPC]
     public void Temperature(int temperature)
     {
@@ -39,13 +38,25 @@ public class CharacterStatAbility : CharacterAbility
         {
             yield return new WaitForSeconds(3);
             Stat.Hunger -= 1;
-            if (Stat.Hunger < 0)
-            {
-                Stat.Hunger = 0;
-            }
+            LimitStat();
         }
     }
+    private void LimitStat()
+    {
+        if (Stat.Hunger <= 0)
+        {
+            Stat.Hunger = 0;
+        }
+        if (Stat.Hunger >= Stat.MaxHunger)
+        {
+            Stat.Hunger = Stat.MaxHunger;
+        }
+        if (Stat.Mental >= Stat.MaxMental)
+        {
+            Stat.Mental = Stat.MaxMental;
+        }
 
+    }
     private IEnumerator DecreaseMentalRoutine()
     {
         while (State != State.Death)
@@ -85,10 +96,7 @@ public class CharacterStatAbility : CharacterAbility
         {
             yield return new WaitForSeconds(10);
             Stat.Health -= 10;
-            if (Stat.Health <= 0)
-            {
-                Stat.Health = 0;
-            }
+            LimitStat();
         }
     }
 
@@ -101,9 +109,9 @@ public class CharacterStatAbility : CharacterAbility
 
             // 정신력 증가
             Stat.Mental += 5;
-            if (Stat.Mental > 100)
+            if (Stat.Mental > Stat.MaxMental)
             {
-                Stat.Mental = 100;
+                Stat.Mental = Stat.MaxMental;
             }
 
             if (Owner.PhotonView.IsMine)
@@ -121,10 +129,7 @@ public class CharacterStatAbility : CharacterAbility
         {
             yield return new WaitForSeconds(5);
             Stat.Mental += amount;
-            if (Stat.Mental > 100)
-            {
-                Stat.Mental = 100;
-            }
+            LimitStat();
 
             if (Owner.PhotonView.IsMine)
             {

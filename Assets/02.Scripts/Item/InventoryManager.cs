@@ -45,6 +45,9 @@ public class InventoryManager : MonoBehaviour
         if (playerInventoryUI.inventoryObject.activeSelf)
         {
             playerInventoryUI.CloseInventory();
+            boxInventoryUI.CloseInventory();
+
+
             characterRotateAbility.SetMouseLock(true);
 
         }
@@ -52,7 +55,6 @@ public class InventoryManager : MonoBehaviour
         {
             playerInventoryUI.inventoryObject.SetActive(true);
             characterRotateAbility.SetMouseLock(false);
-
         }
     }
 }
