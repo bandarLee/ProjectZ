@@ -79,7 +79,7 @@ public class UI_Gunfire : MonoBehaviour
     }
     public void MakeReloadUI()
     {
-        ReloadTextUI.text = $"재장전 중";
+        ReloadTextUI.text = $"장전 중";
 
     }
     public IEnumerator UseItemWithTimer(float duration, System.Action onComplete)

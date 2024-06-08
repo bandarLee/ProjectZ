@@ -6883,9 +6883,7 @@ MonoBehaviour:
   uI_Gunfire: {fileID: 0}
   HitEffect: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
   MuzzleEffects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 199458, guid: 487eef9aff9d0f543836d5af5ab26430, type: 3}
 --- !u!95 &2283545895190766293
 Animator:
   serializedVersion: 5
