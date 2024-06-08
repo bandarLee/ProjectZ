@@ -159,16 +159,21 @@ public class ItemUseManager : MonoBehaviour
             {
                 case "도끼":
                     Debug.Log("플레이어가 도끼를 들었음");
+                    gunFireAbility.DeactivateAllGuns(); // 테스트용    
                     attackAbility.WeaponActive(0);
+                    
                     break;
                 case "배트":
                     Debug.Log("플레이어가 야구배트를 들었음");
+                    gunFireAbility.DeactivateAllGuns();
                     attackAbility.WeaponActive(1);
-                    break;
+                break;
                 case "삽":
                     Debug.Log("플레이어가 삽을 들었음");
+                    gunFireAbility.DeactivateAllGuns();
                     attackAbility.WeaponActive(2);
-                    break;
+                    
+                break;
 
 
             default:
@@ -188,6 +193,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "총_라이플":
                 Debug.Log("플레이어가 총을 들었음");
+                attackAbility.DeactivateAllWeapons();// 테스트용
                 gunFireAbility.GunActive(0);
                 break;
           
@@ -222,7 +228,7 @@ public class ItemUseManager : MonoBehaviour
         switch (itemName)
         {
             case "총알":
-                Debug.Log("술을 들었음");
+                Debug.Log("총알을 들었음");
                 break;
             
 
