@@ -33,6 +33,11 @@ public class UI_Gunfire : MonoBehaviour
         gunFireAbility = Character.LocalPlayerInstance.GetComponent<CharacterGunFireAbility>();
 
     }
+    public void RemoveRefreshUI()
+    {
+        GunTextUI.text = "";
+
+    }
     public void RefreshUI()
     {
         GunTextUI.text = $"{gunFireAbility.CurrentGun.BulletRemainCount}/{gunFireAbility.CurrentGun.BulletMaxCount}";

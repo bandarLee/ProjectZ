@@ -208,5 +208,6 @@ public class CharacterGunFireAbility : CharacterAbility
             gun.GetComponent<Gun>().BulletRemainCount = 0;
             gun.SetActive(false);
         }
+        //uI_Gunfire.RemoveRefreshUI();
     }
 }
