@@ -141,7 +141,7 @@ public class CharacterGunFireAbility : CharacterAbility
     [PunRPC]
     public void PlayAimingIdleAnimation()
     {
-        _animator.SetTrigger($"AimingIdle");
+        _animator.SetLayerWeight(2, 1);
     }
 
     [PunRPC]
@@ -216,13 +216,11 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         //uI_Gunfire.RemoveRefreshUI();
 
-        ResetAllAnimationTriggers();
-        _animator.Play("MoveTree");
+        ResetAnimation();
     }
 
-    private void ResetAllAnimationTriggers()
+    private void ResetAnimation()
     {
-        _animator.ResetTrigger("AimingIdle");
-        _animator.ResetTrigger("Shot");
+        _animator.SetLayerWeight(2, 0);
     }
 }
