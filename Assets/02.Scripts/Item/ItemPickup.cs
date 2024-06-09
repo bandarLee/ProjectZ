@@ -4,7 +4,12 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviourPunCallbacks
 {
     public Item item;
+    private PhotonView photonView_ItemPickUp;
 
+    private void Awake()
+    {
+        photonView_ItemPickUp = GetComponent<PhotonView>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Ãæµ¹");
@@ -16,13 +21,15 @@ public class ItemPickup : MonoBehaviourPunCallbacks
             if (inventory != null && inventory.gameObject.GetComponent<Character>().PhotonView.IsMine)
             {
                 inventory.AddItem(item);
+                photonView_ItemPickUp.TransferOwnership(PhotonNetwork.MasterClient);
+
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonNetwork.Destroy(gameObject);
                 }
                 else
                 {
-                    photonView.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView.ViewID);
+                    photonView_ItemPickUp.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView.ViewID);
                 }
             }
         }
