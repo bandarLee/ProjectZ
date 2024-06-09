@@ -18,12 +18,12 @@ public class BoxInventoryUI : MonoBehaviour
     public Image itemIconImage;
     public GameObject inventoryObject;
     public GameObject boxinventoryUIobject;
-    private Inventory playerInventory; // 추가된 변수
+    private Inventory playerInventory; 
 
     private void Start()
     {
         ItemInfo.SetActive(false);
-        playerInventory = FindObjectOfType<Inventory>(); // Inventory 초기화
+        playerInventory = FindObjectOfType<Inventory>();
         if (playerInventory == null)
         {
             Debug.LogError("Player Inventory not found!");
@@ -104,6 +104,7 @@ public class BoxInventoryUI : MonoBehaviour
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
         }
+        Debug.Log(currentSelectedItem);
     }
 
     public void TransferToPlayerInventory()
@@ -137,6 +138,52 @@ public class BoxInventoryUI : MonoBehaviour
         else
         {
             Debug.LogError("Player Inventory not found when trying to transfer item!");
+        }
+    }
+    public void TransferToBoxInventory()
+    {
+        Item selectedItem = playerInventory.inventoryUI.currentSelectedItem;
+
+
+            currentBoxInventory.AddItem(selectedItem);
+
+            if (currentBoxInventory.photonView != null)
+            {
+                currentBoxInventory.photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
+                Debug.Log("RPC 호출: " + selectedItem.itemName);
+            }
+            else
+            {
+                Debug.LogError("Box Inventory PhotonView not found!");
+            }
+        if (playerInventory != null)
+        {
+            string itemName = selectedItem.itemType == ItemType.Weapon || selectedItem.itemType == ItemType.ETC
+                              ? selectedItem.uniqueId : selectedItem.itemName;
+            if (playerInventory.itemQuantities.ContainsKey(itemName))
+            {
+
+                playerInventory.itemQuantities[itemName]--;
+                if (playerInventory.itemQuantities[itemName] <= 0)
+                {
+                    playerInventory.items.Remove(itemName);
+                    playerInventory.itemQuantities.Remove(itemName);
+                    playerInventory.inventoryUI.quickSlotManager.RemoveItemFromQuickSlots(selectedItem);
+
+
+                }
+
+            }
+            playerInventory.inventoryUI.currentSelectedItem = null;
+            playerInventory.inventoryUI.ItemInfo.SetActive(false);
+
+            UpdateInventoryUI();
+            playerInventory.inventoryUI.UpdateInventoryUI();
+            Debug.Log("Item transferred to box inventory.");
+        }
+        else
+        {
+            Debug.LogError("Player Inventory not found when trying to transfer item to box!");
         }
     }
 
