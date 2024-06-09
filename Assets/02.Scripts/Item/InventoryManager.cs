@@ -1,15 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public InventoryUI playerInventoryUI;
     public BoxInventoryUI boxInventoryUI;
-    private CharacterRotateAbility characterRotateAbility;
+    public CharacterRotateAbility characterRotateAbility;
     public void Start()
     {
+        characterRotateAbility = Character.LocalPlayerInstance._characterRotateAbility;
         CloseAllInventories();
-        characterRotateAbility = Character.LocalPlayerInstance.GetComponent<CharacterRotateAbility>();
+       /* StartCoroutine(AssignCharacterRotateAbilityAfterDelay(1.5f));*/
     }
+
+
     public void CloseAllInventories()
     {
         Debug.Log("err");

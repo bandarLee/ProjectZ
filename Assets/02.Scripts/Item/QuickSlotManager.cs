@@ -211,8 +211,7 @@ public class QuickSlotManager : MonoBehaviour
 
                     break;
                 default:
-                    ItemUseManager.Instance.ApplyEffect(currentEquippedItem);
-                    inventoryManager.UpdateAllInventories();
+
                     break;
             }
 
