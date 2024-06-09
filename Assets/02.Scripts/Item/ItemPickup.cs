@@ -16,8 +16,24 @@ public class ItemPickup : MonoBehaviourPunCallbacks
             if (inventory != null && inventory.gameObject.GetComponent<Character>().PhotonView.IsMine)
             {
                 inventory.AddItem(item);
-                PhotonNetwork.Destroy(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.Destroy(gameObject);
+                }
+                else
+                {
+                    photonView.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView.ViewID);
+                }
             }
+        }
+    }
+    [PunRPC]
+    public void RequestMasterDestroy(int viewID)
+    {
+        PhotonView targetView = PhotonView.Find(viewID);
+        if (targetView != null && targetView.IsMine)
+        {
+            PhotonNetwork.Destroy(targetView.gameObject);
         }
     }
 }
