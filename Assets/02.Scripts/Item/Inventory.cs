@@ -31,6 +31,8 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
     {
+        if (!photonView.IsMine) return;
+
         Item newItem = new Item
         {
             itemName = itemName,
@@ -45,6 +47,8 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void AddItem(Item newItem, bool synchronize = true)
     {
+        if (!photonView.IsMine) return;
+
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
         {
             string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
@@ -76,11 +80,15 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoveItemRPC(string itemName)
     {
+        if (!photonView.IsMine) return;
+
         RemoveItem(itemName, false);
     }
 
     public void RemoveItem(string itemName, bool synchronize = true)
     {
+        if (!photonView.IsMine) return;
+
         if (!items.ContainsKey(itemName)) return;
 
         if (itemQuantities.ContainsKey(itemName))

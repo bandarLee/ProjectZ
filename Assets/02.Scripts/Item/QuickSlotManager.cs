@@ -114,20 +114,17 @@ public class QuickSlotManager : MonoBehaviour
             Debug.Log("드랍 아이템: " + currentEquippedItem.itemName);
 
             inventory.itemQuantities[itemName]--;
+            if (characterItemAbility != null && characterItemAbility.PhotonView != null)
+            {
+                characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
+            }
             if (inventory.itemQuantities[itemName] <= 0)
             {
                 inventory.items.Remove(itemName);
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
 
-                if (characterItemAbility != null && characterItemAbility.PhotonView != null)
-                {
-                    characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
-                }
-                else
-                {
-                    Debug.LogError("CharacterItemAbility 또는 PhotonView가 null입니다. RPC를 호출할 수 없습니다.");
-                }
+
                 currentEquippedItem = null;
             }
 

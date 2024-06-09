@@ -8,7 +8,7 @@ public class ItemPickup : MonoBehaviourPunCallbacks
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("충돌");
-        if (other.CompareTag("Player") && photonView.IsMine)
+        if (other.CompareTag("Player") && other.gameObject.GetComponent<Character>().PhotonView.IsMine)
         {
             Debug.Log("충돌2");
 
