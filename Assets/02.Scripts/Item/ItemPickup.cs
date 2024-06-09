@@ -3,28 +3,49 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviourPunCallbacks
 {
-    public Item item;
+    public Item SpawnedItem;
     private PhotonView photonView_ItemPickUp;
-
+    private bool isPickedUp = false;
     private void Awake()
     {
         photonView_ItemPickUp = GetComponent<PhotonView>();
     }
 
+    public void InitializeItem(Item item)
+    {
+        if (item == null || string.IsNullOrEmpty(item.uniqueId))
+        {
+            Debug.LogWarning("InitializeItem: null or invalid item");
+            return;
+        }
+        SpawnedItem = item;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("충돌");
+        if (isPickedUp) return;
         if (other.CompareTag("Player") && other.gameObject.GetComponent<Character>().PhotonView.IsMine)
         {
-            Debug.Log("충돌2");
+            if (SpawnedItem == null || string.IsNullOrEmpty(SpawnedItem.uniqueId))
+            {
+                Debug.LogWarning("OnTriggerEnter: null or invalid SpawnedItem");
+                return;
+            }
+
 
             Inventory inventory = other.GetComponent<Inventory>();
             if (inventory != null && inventory.gameObject.GetComponent<Character>().PhotonView.IsMine)
             {
-                inventory.AddItem(item);
+                Debug.Log(SpawnedItem.uniqueId);
+                isPickedUp = true;
+
+                inventory.AddItem(SpawnedItem);
 
                 photonView_ItemPickUp.RPC(nameof(RequestOwnerDestroy), photonView_ItemPickUp.Owner, photonView_ItemPickUp.ViewID);
+                gameObject.SetActive(false);
+
             }
+
         }
     }
 
@@ -36,6 +57,5 @@ public class ItemPickup : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Destroy(targetView.gameObject);
         }
-
     }
 }

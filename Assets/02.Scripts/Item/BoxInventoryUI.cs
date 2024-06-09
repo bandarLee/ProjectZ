@@ -26,7 +26,6 @@ public class BoxInventoryUI : MonoBehaviour
         playerInventory = FindObjectOfType<Inventory>();
         if (playerInventory == null)
         {
-            Debug.LogError("Player Inventory not found!");
         }
     }
 
@@ -104,7 +103,6 @@ public class BoxInventoryUI : MonoBehaviour
             itemDescriptionText.text = item.itemDescription;
             itemIconImage.sprite = item.icon;
         }
-        Debug.Log(currentSelectedItem);
     }
 
     public void TransferToPlayerInventory()
@@ -137,7 +135,6 @@ public class BoxInventoryUI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Player Inventory not found when trying to transfer item!");
         }
     }
     public void TransferToBoxInventory()
@@ -150,11 +147,9 @@ public class BoxInventoryUI : MonoBehaviour
             if (currentBoxInventory.photonView != null)
             {
                 currentBoxInventory.photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
-                Debug.Log("RPC »£√‚: " + selectedItem.itemName);
             }
             else
             {
-                Debug.LogError("Box Inventory PhotonView not found!");
             }
         if (playerInventory != null)
         {
@@ -179,11 +174,9 @@ public class BoxInventoryUI : MonoBehaviour
 
             UpdateInventoryUI();
             playerInventory.inventoryUI.UpdateInventoryUI();
-            Debug.Log("Item transferred to box inventory.");
         }
         else
         {
-            Debug.LogError("Player Inventory not found when trying to transfer item to box!");
         }
     }
 

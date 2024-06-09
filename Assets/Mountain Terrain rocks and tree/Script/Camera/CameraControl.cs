@@ -38,7 +38,6 @@ public class CameraControl : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Depth textures are not supported on this device!");
         }
     }
 

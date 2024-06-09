@@ -100,12 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uACE0\uAE30"
-    icon: {fileID: 21300000, guid: 14e62563269c11443b9c936be93b95f4, type: 3}
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
     itemType: 0
-    itemEffect: "\uD5C8\uAE30+1"
-    itemDescription: "\uB9DB\uC788\uB294 \uC74C\uC2DD"
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!65 &4162116909795266481
 BoxCollider:

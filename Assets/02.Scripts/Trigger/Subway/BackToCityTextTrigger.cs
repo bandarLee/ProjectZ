@@ -15,7 +15,6 @@ public class BackToCityTextTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어 트리거");
             BackToCityText.gameObject.SetActive(true);
         }
     }
@@ -23,7 +22,6 @@ public class BackToCityTextTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어 트리거 나감");
             BackToCityText.gameObject.SetActive(false);
         }
     }

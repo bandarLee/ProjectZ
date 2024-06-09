@@ -18,14 +18,14 @@ public class CharacterItemAbility : CharacterAbility
         if (itemPrefab != null)
         {
             Vector3 dropPosition = position + forward * 2f + Vector3.up * 1.5f;
-            GameObject droppedItem = PhotonNetwork.Instantiate("ItemPrefabs/" + itemName, dropPosition, Quaternion.identity, 0); 
+            GameObject droppedItem = PhotonNetwork.Instantiate("ItemPrefabs/" + itemName, dropPosition, Quaternion.identity, 0);
             ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
             if (itemPickup != null)
             {
                 ItemPreset preset = FindObjectOfType<ItemPresets>().GetItemPreset(itemName);
                 if (preset != null)
                 {
-                    itemPickup.item = new Item
+                    Item newItem = new Item
                     {
                         itemName = itemName,
                         icon = preset.icon,
@@ -34,10 +34,10 @@ public class CharacterItemAbility : CharacterAbility
                         itemDescription = preset.itemDescription,
                         uniqueId = System.Guid.NewGuid().ToString()
                     };
+                    itemPickup.InitializeItem(newItem); 
                 }
                 else
                 {
-                    Debug.LogWarning("아이템 프리셋을 찾을 수 없습니다: " + itemName);
                 }
             }
         }
@@ -46,5 +46,6 @@ public class CharacterItemAbility : CharacterAbility
             Debug.LogWarning("아이템 프리팹을 찾을 수 없습니다: " + itemName);
         }
     }
+
 
 }

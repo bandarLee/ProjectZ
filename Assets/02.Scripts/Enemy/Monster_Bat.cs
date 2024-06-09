@@ -247,7 +247,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         {
             targetCharacter = nearestCharacter;
             ChangeState(MonsterState.Chase, "IsChasing", true);
-            Debug.Log("Target found: " + targetCharacter.name);
         }
     }
 

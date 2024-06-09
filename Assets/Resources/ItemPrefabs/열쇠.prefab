@@ -123,13 +123,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uC5F4\uC1E0"
-    icon: {fileID: 21300000, guid: e30e7f1121c83ed469e6242c11d18e05, type: 3}
-    itemType: 4
-    itemEffect: "\uC5F4\uC1E0"
-    itemDescription: "\uC7A0\uACA8\uC788\uB294 \uC5B4\uB518\uAC00\uC5D0 \uB4E4\uC5B4\uAC08
-      \uC218 \uC788\uC744 \uAC83 \uAC19\uB2E4."
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!65 &-5731935387039981333
 BoxCollider:

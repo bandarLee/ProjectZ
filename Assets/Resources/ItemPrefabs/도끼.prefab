@@ -122,12 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uB3C4"
-    icon: {fileID: 21300000, guid: 6a08ec4b334ea1c46b8171679417a74f, type: 3}
-    itemType: 1
-    itemEffect: "\uACF5\uACA9\uB825 +35"
-    itemDescription: "\uACFC\uC5F0 \uD718\uB450\uB97C \uC218 \uC788\uC744\uAE4C?"
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!65 &5941061427532128487
 BoxCollider:

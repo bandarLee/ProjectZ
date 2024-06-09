@@ -16,7 +16,6 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseAllInventories()
     {
-        Debug.Log("err");
         playerInventoryUI.CloseInventory();
         boxInventoryUI.CloseInventory();
         CloseItemInfo();

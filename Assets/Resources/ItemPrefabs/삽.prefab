@@ -210,12 +210,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uC0BD"
-    icon: {fileID: 21300000, guid: 279ff480381111b40b99a9cb298a5fd3, type: 3}
-    itemType: 1
-    itemEffect: "\uACF5\uACA9\uB825 +25"
-    itemDescription: "\uBA38\uB9AC \uB9DE\uC544\uB77C"
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!65 &-7410407071247030808
 BoxCollider:

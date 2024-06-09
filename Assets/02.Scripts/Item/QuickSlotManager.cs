@@ -15,7 +15,6 @@ public class QuickSlotManager : MonoBehaviour
 
     private InventoryManager inventoryManager;
     private CharacterItemAbility characterItemAbility;
-
     private void Start()
     {
         quickSlotItems = new Item[quickSlotImages.Length];
@@ -36,7 +35,6 @@ public class QuickSlotManager : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
         if (inventoryManager == null)
         {
-            Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
         }
 
         GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
@@ -45,20 +43,17 @@ public class QuickSlotManager : MonoBehaviour
             inventory = localPlayer.GetComponent<Inventory>();
             if (inventory == null)
             {
-                Debug.LogError("Inventory를 찾을 수 없습니다. Player 객체에 Inventory가 있는지 확인하세요.");
             }
             else
             {
                 characterItemAbility = localPlayer.GetComponent<CharacterItemAbility>();
                 if (characterItemAbility == null)
                 {
-                    Debug.LogError("CharacterItemAbility를 찾을 수 없습니다. Player 객체에 CharacterItemAbility가 있는지 확인하세요.");
                 }
             }
         }
         else
         {
-            Debug.LogError("로컬 플레이어 오브젝트를 찾을 수 없습니다.");
         }
     }
 
@@ -104,7 +99,7 @@ public class QuickSlotManager : MonoBehaviour
 
     public void DropEquippedItem()
     {
-        if (currentEquippedItem == null) return;
+        if (currentEquippedItem == null || currentEquippedItem.itemName == null) return;
 
         string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
                           ? currentEquippedItem.uniqueId : currentEquippedItem.itemName;
@@ -124,15 +119,15 @@ public class QuickSlotManager : MonoBehaviour
                 inventory.itemQuantities.Remove(itemName);
                 RemoveItemFromQuickSlots(currentEquippedItem);
 
-
                 currentEquippedItem = null;
             }
 
             inventoryManager.UpdateAllInventories();
         }
         inventoryManager.CloseItemInfo();
-
     }
+
+
 
     public void RemoveItemFromQuickSlots(Item item)
     {

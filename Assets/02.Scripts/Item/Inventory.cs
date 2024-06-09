@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviourPunCallbacks
         inventoryUI = FindObjectOfType<InventoryUI>();
         if (inventoryUI == null)
         {
-            Debug.LogError("InventoryUI not found in Awake");
         }
     }
 
@@ -25,7 +24,6 @@ public class Inventory : MonoBehaviourPunCallbacks
             inventoryUI = FindObjectOfType<InventoryUI>();
             if (inventoryUI == null)
             {
-                Debug.LogError("InventoryUI not found in Start");
             }
         }
         PhotonNetwork.LocalPlayer.TagObject = this;
@@ -34,7 +32,6 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription, PhotonMessageInfo info)
     {
-        // 중복 추가 방지
         if (processedItems.Contains(uniqueId)) return;
 
         Item newItem = new Item
@@ -47,15 +44,18 @@ public class Inventory : MonoBehaviourPunCallbacks
             itemDescription = itemDescription
         };
 
-        AddItem(newItem, false); // UpdateInventoryUI 호출 방지
+        AddItem(newItem, false); 
         processedItems.Add(uniqueId);
     }
 
     public void AddItem(Item newItem, bool synchronize = true)
     {
-        // 중복 추가 방지
         if (processedItems.Contains(newItem.uniqueId)) return;
-
+        if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
+        {
+            Debug.LogWarning("AddItem: null or invalid item");
+            return;
+        }
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
         {
             string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
@@ -88,7 +88,6 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoveItemRPC(string itemName, PhotonMessageInfo info)
     {
-        // 중복 제거 방지
         if (!photonView.IsMine) return;
 
         RemoveItem(itemName, false);

@@ -11,7 +11,6 @@ public class BoatInteract : MonoBehaviourPunCallbacks
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어보트");
             isPlayerInRange = true;
             player = other.gameObject;
         }
