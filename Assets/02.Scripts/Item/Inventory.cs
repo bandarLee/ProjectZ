@@ -12,9 +12,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     private void Awake()
     {
         inventoryUI = FindObjectOfType<InventoryUI>();
-        if (inventoryUI == null)
-        {
-        }
+
     }
 
     private void Start()
@@ -32,6 +30,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription, PhotonMessageInfo info)
     {
+
         if (processedItems.Contains(uniqueId)) return;
 
         Item newItem = new Item
@@ -50,6 +49,8 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void AddItem(Item newItem, bool synchronize = true)
     {
+        if (!photonView.IsMine) return;
+
         if (processedItems.Contains(newItem.uniqueId)) return;
         if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
         {
