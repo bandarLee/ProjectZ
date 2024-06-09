@@ -13,7 +13,7 @@ public class ItemPickup : MonoBehaviourPunCallbacks
             Debug.Log("Ãæµ¹2");
 
             Inventory inventory = other.GetComponent<Inventory>();
-            if (inventory != null)
+            if (inventory != null && inventory.photonView.IsMine)
             {
                 inventory.AddItem(item);
                 PhotonNetwork.Destroy(gameObject);

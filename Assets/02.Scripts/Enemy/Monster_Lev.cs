@@ -258,7 +258,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster") && other.gameObject != this.gameObject)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+            if (other.CompareTag("Monster") && other.gameObject != this.gameObject)
         {
             Vector3 avoidDirection = transform.position - other.transform.position;
             Vector3 newPos = transform.position + avoidDirection.normalized * 10f;

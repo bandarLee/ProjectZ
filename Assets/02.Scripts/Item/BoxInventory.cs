@@ -51,7 +51,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             itemQuantities[itemName] = 1;
         }
 
-        if (synchronize)
+        if (synchronize && photonView.IsMine)
         {
             photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
         }
