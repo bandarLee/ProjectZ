@@ -35,11 +35,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _gunfireAbility = GetComponent<CharacterGunFireAbility>();
         _quickSlotManager = FindObjectOfType<QuickSlotManager>();
 
-        if (_inventoryManager != null)
-        {
-            _inventoryManager.characterRotateAbility = GetComponent<CharacterRotateAbility>();
-        }
-
         if (PhotonView.IsMine)
         {
             LocalPlayerInstance = this;

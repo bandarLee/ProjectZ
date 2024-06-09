@@ -4,12 +4,11 @@ public class InventoryManager : MonoBehaviour
 {
     public InventoryUI playerInventoryUI;
     public BoxInventoryUI boxInventoryUI;
-    public CharacterRotateAbility characterRotateAbility;
-
+    private CharacterRotateAbility characterRotateAbility;
     public void Start()
     {
         CloseAllInventories();
-
+        characterRotateAbility = Character.LocalPlayerInstance.GetComponent<CharacterRotateAbility>();
     }
     public void CloseAllInventories()
     {
