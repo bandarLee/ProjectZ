@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
     private HashSet<string> processedItems = new HashSet<string>(); // 추가된 아이템의 고유 ID를 저장하는 HashSet
-
+    PhotonView pv;
     private void Awake()
     {
         inventoryUI = FindObjectOfType<InventoryUI>();
@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviourPunCallbacks
             }
         }
         PhotonNetwork.LocalPlayer.TagObject = this;
+        pv = GetComponent<PhotonView>();
     }
 
     [PunRPC]
@@ -49,7 +50,7 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void AddItem(Item newItem, bool synchronize = true)
     {
-        if (!photonView.IsMine) return;
+        if (!pv.IsMine) return;
 
         if (processedItems.Contains(newItem.uniqueId)) return;
         if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
@@ -80,7 +81,7 @@ public class Inventory : MonoBehaviourPunCallbacks
 
         if (synchronize)
         {
-            photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
+            pv.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
         }
 
         inventoryUI.UpdateInventoryUI();
@@ -89,14 +90,14 @@ public class Inventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoveItemRPC(string itemName, PhotonMessageInfo info)
     {
-        if (!photonView.IsMine) return;
+        if (!pv.IsMine) return;
 
         RemoveItem(itemName, false);
     }
 
     public void RemoveItem(string itemName, bool synchronize = true)
     {
-        if (!photonView.IsMine) return;
+        if (!pv.IsMine) return;
 
         if (!items.ContainsKey(itemName)) return;
 
@@ -116,7 +117,7 @@ public class Inventory : MonoBehaviourPunCallbacks
 
         if (synchronize)
         {
-            photonView.RPC("RemoveItemRPC", RpcTarget.OthersBuffered, itemName);
+            pv.RPC("RemoveItemRPC", RpcTarget.OthersBuffered, itemName);
         }
 
         inventoryUI.UpdateInventoryUI();
