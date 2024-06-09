@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviourPunCallbacks
@@ -10,6 +11,7 @@ public class ItemPickup : MonoBehaviourPunCallbacks
     {
         photonView_ItemPickUp = GetComponent<PhotonView>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("충돌");
@@ -21,24 +23,35 @@ public class ItemPickup : MonoBehaviourPunCallbacks
             if (inventory != null && inventory.gameObject.GetComponent<Character>().PhotonView.IsMine)
             {
                 inventory.AddItem(item);
+
+                // 소유권을 마스터 클라이언트로 전송
                 photonView_ItemPickUp.TransferOwnership(PhotonNetwork.MasterClient);
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.Destroy(gameObject);
-                }
-                else
-                {
-                    photonView_ItemPickUp.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView.ViewID);
-                }
+                // 약간의 지연 후 제거
+                StartCoroutine(DestroyAfterOwnershipTransfer());
             }
         }
     }
+
+    private IEnumerator DestroyAfterOwnershipTransfer()
+    {
+        yield return new WaitForSeconds(0.1f); // 0.1초 지연
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+        else
+        {
+            photonView_ItemPickUp.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView_ItemPickUp.ViewID);
+        }
+    }
+
     [PunRPC]
     public void RequestMasterDestroy(int viewID)
     {
         PhotonView targetView = PhotonView.Find(viewID);
-        if (targetView != null && targetView.IsMine)
+        if (targetView != null)
         {
             PhotonNetwork.Destroy(targetView.gameObject);
         }
