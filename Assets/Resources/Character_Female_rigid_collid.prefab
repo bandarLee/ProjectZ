@@ -7514,6 +7514,7 @@ MonoBehaviour:
   _quickSlotManager: {fileID: 0}
   _attackability: {fileID: 0}
   _gunfireAbility: {fileID: 0}
+  _characterRotateAbility: {fileID: 0}
 --- !u!114 &4577571689269186767
 MonoBehaviour:
   m_ObjectHideFlags: 0
