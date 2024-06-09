@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviourPunCallbacks
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
+    private HashSet<string> processedItems = new HashSet<string>(); // 추가된 아이템의 고유 ID를 저장하는 HashSet
+
     private void Awake()
     {
         inventoryUI = FindObjectOfType<InventoryUI>();
@@ -15,6 +17,7 @@ public class Inventory : MonoBehaviourPunCallbacks
             Debug.LogError("InventoryUI not found in Awake");
         }
     }
+
     private void Start()
     {
         if (inventoryUI == null)
@@ -29,9 +32,10 @@ public class Inventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
+    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription, PhotonMessageInfo info)
     {
-        if (!photonView.IsMine) return;
+        // 중복 추가 방지
+        if (processedItems.Contains(uniqueId)) return;
 
         Item newItem = new Item
         {
@@ -42,12 +46,15 @@ public class Inventory : MonoBehaviourPunCallbacks
             itemEffect = itemEffect,
             itemDescription = itemDescription
         };
+
         AddItem(newItem, false); // UpdateInventoryUI 호출 방지
+        processedItems.Add(uniqueId);
     }
 
     public void AddItem(Item newItem, bool synchronize = true)
     {
-        if (!photonView.IsMine) return;
+        // 중복 추가 방지
+        if (processedItems.Contains(newItem.uniqueId)) return;
 
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
         {
@@ -68,18 +75,20 @@ public class Inventory : MonoBehaviourPunCallbacks
                 itemQuantities[newItem.itemName] = 1;
             }
         }
+        processedItems.Add(newItem.uniqueId);
 
         if (synchronize)
         {
             photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
         }
 
-        inventoryUI.UpdateInventoryUI();                                                             
+        inventoryUI.UpdateInventoryUI();
     }
 
     [PunRPC]
-    public void RemoveItemRPC(string itemName)
+    public void RemoveItemRPC(string itemName, PhotonMessageInfo info)
     {
+        // 중복 제거 방지
         if (!photonView.IsMine) return;
 
         RemoveItem(itemName, false);
@@ -113,5 +122,4 @@ public class Inventory : MonoBehaviourPunCallbacks
         inventoryUI.UpdateInventoryUI();
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
     }
-
 }

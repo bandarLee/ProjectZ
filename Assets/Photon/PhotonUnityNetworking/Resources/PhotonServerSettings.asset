@@ -72,6 +72,8 @@ MonoBehaviour:
   - PlayShotIdleAnimation
   - PlayAimingIdleAnimation
   - RequestMasterDestroy
+  - Delete
+  - RequestOwnerDestroy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

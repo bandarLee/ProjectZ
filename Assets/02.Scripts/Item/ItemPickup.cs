@@ -1,5 +1,4 @@
 using Photon.Pun;
-using System.Collections;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviourPunCallbacks
@@ -24,36 +23,19 @@ public class ItemPickup : MonoBehaviourPunCallbacks
             {
                 inventory.AddItem(item);
 
-                // 소유권을 마스터 클라이언트로 전송
-                photonView_ItemPickUp.TransferOwnership(PhotonNetwork.MasterClient);
-
-                // 약간의 지연 후 제거
-                StartCoroutine(DestroyAfterOwnershipTransfer());
+                photonView_ItemPickUp.RPC(nameof(RequestOwnerDestroy), photonView_ItemPickUp.Owner, photonView_ItemPickUp.ViewID);
             }
         }
     }
 
-    private IEnumerator DestroyAfterOwnershipTransfer()
-    {
-        yield return new WaitForSeconds(0.1f); // 0.1초 지연
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
-        else
-        {
-            photonView_ItemPickUp.RPC("RequestMasterDestroy", RpcTarget.MasterClient, photonView_ItemPickUp.ViewID);
-        }
-    }
-
     [PunRPC]
-    public void RequestMasterDestroy(int viewID)
+    private void RequestOwnerDestroy(int viewID)
     {
         PhotonView targetView = PhotonView.Find(viewID);
-        if (targetView != null)
+        if (targetView != null && targetView.IsMine)
         {
             PhotonNetwork.Destroy(targetView.gameObject);
         }
+
     }
 }
