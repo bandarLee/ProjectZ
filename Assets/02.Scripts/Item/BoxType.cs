@@ -6,7 +6,10 @@ public enum BoxType
     PostOfficeLarge,
     PostOfficeSmall,
     WarehouseLarge,
-    WarehouseSmall
+    WarehouseSmall,
+    Subway,
+    Test
+
 }
 
 [System.Serializable]

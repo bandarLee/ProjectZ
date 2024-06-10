@@ -17,7 +17,6 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        allBoxInventories = FindObjectsOfType<BoxInventory>().ToList();
         if (PhotonNetwork.IsMasterClient)
         {
             foreach (var box in allBoxInventories)
