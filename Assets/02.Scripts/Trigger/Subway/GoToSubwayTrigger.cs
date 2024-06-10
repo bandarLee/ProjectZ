@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GoToSubwayTrigger : MonoBehaviour
 {
-    GameTime gameTime;
+    public GameTime gameTime;
     public GameObject SubwayEntrance;
     private Vector3 originalPosition;
     private Vector3 targetPosition;
@@ -14,7 +14,6 @@ public class GoToSubwayTrigger : MonoBehaviour
 
     void Start()
     {
-        gameTime = FindObjectOfType<GameTime>();
         originalPosition = SubwayEntrance.transform.position; // 원래 위치 저장
         targetPosition = originalPosition + new Vector3(10, 0, 0); // 목표 위치 설정
 

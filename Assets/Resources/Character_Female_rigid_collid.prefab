@@ -7688,6 +7688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraRoot: {fileID: 5796785261949354064}
+  CharacterRotateLocked: 0
 --- !u!114 &4445782170285678535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7797,6 +7798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inventoryManager: {fileID: 0}
   _quickSlotManager: {fileID: 0}
   _attackability: {fileID: 0}
   _gunfireAbility: {fileID: 0}
