@@ -203,27 +203,43 @@ public class CharacterGunFireAbility : CharacterAbility
     }
 
 
-    public void GunActive(int GunNumber)
+ [PunRPC]
+    public void GunActiveRPC(int GunNumber)
     {
         foreach (GameObject weapon in GunObject)
         {
             weapon.SetActive(false);
-
         }
         GunObject[GunNumber].SetActive(true);
     }
 
+    public void GunActive(int GunNumber)
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(GunActiveRPC), RpcTarget.All, GunNumber);
+        }
+        GunActiveRPC(GunNumber); // 로컬에서도 실행
+    }
 
-    public void DeactivateAllGuns()
+    [PunRPC]
+    public void DeactivateAllGunsRPC()
     {
         foreach (GameObject gun in GunObject)
         {
             gun.GetComponent<Gun>().BulletRemainCount = 0;
             gun.SetActive(false);
         }
-        //uI_Gunfire.RemoveRefreshUI();
-
         ResetAnimation();
+    }
+
+    public void DeactivateAllGuns()
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(DeactivateAllGunsRPC), RpcTarget.All);
+        }
+        DeactivateAllGunsRPC(); // 로컬에서도 실행
     }
 
     private void ResetAnimation()

@@ -51,19 +51,23 @@ public class CharacterAttackAbility : CharacterAbility
     }
 
     [PunRPC]
-    public void WeaponActive(int WeaponNumber)
+    public void WeaponActiveRPC(int WeaponNumber)
     {
-        if (!Owner.PhotonView.IsMine)
-        {
-            return;
-        }
         foreach (GameObject weapon in WeaponObject)
         {
             weapon.SetActive(false);
-
         }
         WeaponObject[WeaponNumber].SetActive(true);
         _activeWeaponIndex = WeaponNumber;
+    }
+
+    public void WeaponActive(int WeaponNumber)
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(WeaponActiveRPC), RpcTarget.All, WeaponNumber);
+        }
+        WeaponActiveRPC(WeaponNumber);
     }
 
 
