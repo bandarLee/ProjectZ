@@ -36,7 +36,7 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
             Item randomItem = GetRandomItem(config);
             if (randomItem != null)
             {
-                box.AddItem(randomItem);
+                box.BoxAddItem(randomItem);
             }
             else
             {

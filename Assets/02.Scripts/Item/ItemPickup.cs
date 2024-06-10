@@ -26,11 +26,6 @@ public class ItemPickup : MonoBehaviourPunCallbacks
         if (isPickedUp) return;
         if (other.CompareTag("Player") && other.gameObject.GetComponent<Character>().PhotonView.IsMine)
         {
-            if (SpawnedItem == null || string.IsNullOrEmpty(SpawnedItem.uniqueId))
-            {
-                Debug.LogWarning("OnTriggerEnter: null or invalid SpawnedItem");
-                return;
-            }
 
 
             Inventory inventory = other.GetComponent<Inventory>();

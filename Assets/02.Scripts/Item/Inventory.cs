@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
     private HashSet<string> processedItems = new HashSet<string>(); // 추가된 아이템의 고유 ID를 저장하는 HashSet
-    PhotonView pv;
+    public PhotonView pv;
     private void Awake()
     {
         inventoryUI = FindObjectOfType<InventoryUI>();
@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription, PhotonMessageInfo info)
+    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
     {
 
         if (processedItems.Contains(uniqueId)) return;

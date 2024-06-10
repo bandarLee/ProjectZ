@@ -149,6 +149,10 @@ public class InventoryUI : MonoBehaviour
                 return "정신력";
             case ItemType.ETC:
                 return "기타";
+            case ItemType.Consumable:
+                return "소모품";
+            case ItemType.Gun:
+                return "총";
             default:
                 return "알 수 없음";
         }

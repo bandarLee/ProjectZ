@@ -377,19 +377,20 @@ public class ItemUseManager : MonoBehaviour
     private void DecreaseItemQuantity(Item item)
     {
         var inventory = FindObjectOfType<Inventory>();
-        if (inventory != null)
+        if (inventory != null && inventory.pv.IsMine)
         {
             string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC ? item.uniqueId : item.itemName;
 
             if (inventory.itemQuantities.ContainsKey(itemName))
             {
                 inventory.itemQuantities[itemName]--;
+                Debug.LogError("아이템 갯수감소");
                 if (inventory.itemQuantities[itemName] <= 0)
                 {
                     inventory.items.Remove(itemName);
                     inventory.itemQuantities.Remove(itemName);
                     quickSlotManager.currentEquippedItem = null;
-                    RemoveItemFromQuickSlots(item);
+                    quickSlotManager.RemoveItemFromQuickSlots(item);
 
                     inventoryUI.CloseItemInfo();
 
@@ -400,12 +401,7 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void RemoveItemFromQuickSlots(Item item)
-    {
-       
-       quickSlotManager.RemoveItemFromQuickSlots(item);
-        
-    }
+
     public void UseItem(Item item, float duration)
     {
         StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));

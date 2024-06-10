@@ -24,9 +24,7 @@ public class BoxInventoryUI : MonoBehaviour
     {
         ItemInfo.SetActive(false);
         playerInventory = FindObjectOfType<Inventory>();
-        if (playerInventory == null)
-        {
-        }
+
     }
 
     public void SetBoxInventory(BoxInventory boxInventory)
@@ -110,7 +108,7 @@ public class BoxInventoryUI : MonoBehaviour
         if (currentSelectedItem == null) return;
 
         string itemName = currentSelectedItem.uniqueId;
-        currentBoxInventory.RemoveItem(itemName);
+        currentBoxInventory.BoxRemoveItem(itemName);
 
         if (playerInventory == null)
         {
@@ -121,10 +119,9 @@ public class BoxInventoryUI : MonoBehaviour
         {
             playerInventory.AddItem(currentSelectedItem);
 
-            // BoxInventory의 PhotonView를 통해 RPC 호출
             if (currentBoxInventory.photonView != null)
             {
-                currentBoxInventory.photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.icon.name, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
+                currentBoxInventory.photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
             }
 
             currentSelectedItem = null;
@@ -142,11 +139,11 @@ public class BoxInventoryUI : MonoBehaviour
         Item selectedItem = playerInventory.inventoryUI.currentSelectedItem;
 
 
-            currentBoxInventory.AddItem(selectedItem);
+            currentBoxInventory.BoxAddItem(selectedItem);
 
             if (currentBoxInventory.photonView != null)
             {
-                currentBoxInventory.photonView.RPC("AddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
+                currentBoxInventory.photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
             }
             else
             {
@@ -196,6 +193,8 @@ public class BoxInventoryUI : MonoBehaviour
                 return "기타";
             case ItemType.Consumable:
                 return "소모품";
+            case ItemType.Gun:
+                return "총";
             default:
                 return "알 수 없음";
         }
