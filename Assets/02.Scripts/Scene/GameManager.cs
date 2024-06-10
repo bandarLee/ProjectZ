@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public Vector3 GetRandomSpawnPoint()
     {
-        Randomzone = 0;
+        Randomzone = Random.Range(0,6);
         lastZone = (CityZoneType)Randomzone; // 마지막 섹터를 업데이트
         return SpawnPoints[Randomzone].transform.position;
     }
