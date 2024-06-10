@@ -7,7 +7,7 @@ public class CharacterRotateAbility : CharacterAbility
 
     private float _mx;
     private float _my;
-    private bool CharacterRotateLocked = false;
+    public bool CharacterRotateLocked = false;
 
     private float lastRotationY;
     private float lastCameraRotationX;

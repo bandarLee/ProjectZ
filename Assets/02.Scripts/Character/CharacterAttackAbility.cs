@@ -37,7 +37,7 @@ public class CharacterAttackAbility : CharacterAbility
 
         _attackTimer += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1)
+        if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1 && !Owner._characterRotateAbility.CharacterRotateLocked)
         {
             _attackTimer = 0f;
             Owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, 1);
@@ -98,33 +98,72 @@ public class CharacterAttackAbility : CharacterAbility
         }
     }
 
-    public void ActiveCollider(int index)
+    [PunRPC]
+    public void ActiveColliderRPC(int index)
     {
         WeaponCollider[index].enabled = true;
-
     }
-    public void InActiveCollider(int index)
+
+    public void ActiveCollider(int index)
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(ActiveColliderRPC), RpcTarget.All, index);
+        }
+        ActiveColliderRPC(index); // 로컬에서도 실행
+    }
+
+    [PunRPC]
+    public void InActiveColliderRPC(int index)
     {
         WeaponCollider[index].enabled = false;
         _damagedList.Clear();
     }
 
-    // 모든 콜라이더를 비활성화
-    public void DeactivateAllColliders()
+    public void InActiveCollider(int index)
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(InActiveColliderRPC), RpcTarget.All, index);
+        }
+        InActiveColliderRPC(index); // 로컬에서도 실행
+    }
+
+    [PunRPC]
+    public void DeactivateAllCollidersRPC()
     {
         foreach (Collider collider in WeaponCollider)
         {
             collider.enabled = false;
         }
-        _damagedList.Clear(); // 비활성화하면서 때린 목록도 초기화
+        _damagedList.Clear();
     }
 
-    public void DeactivateAllWeapons()
+    public void DeactivateAllColliders()
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(DeactivateAllCollidersRPC), RpcTarget.All);
+        }
+        DeactivateAllCollidersRPC(); // 로컬에서도 실행
+    }
+
+    [PunRPC]
+    public void DeactivateAllWeaponsRPC()
     {
         foreach (GameObject weapon in WeaponObject)
         {
             weapon.SetActive(false);
         }
         _activeWeaponIndex = -1;
+    }
+
+    public void DeactivateAllWeapons()
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(DeactivateAllWeaponsRPC), RpcTarget.All);
+        }
+        DeactivateAllWeaponsRPC(); // 로컬에서도 실행
     }
 }
