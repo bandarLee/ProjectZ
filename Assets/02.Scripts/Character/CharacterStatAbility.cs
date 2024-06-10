@@ -56,6 +56,16 @@ public class CharacterStatAbility : CharacterAbility
             Stat.Mental = Stat.MaxMental;
         }
 
+        
+        if (Stat.Health <= 0)
+        {
+            if (Owner.PhotonView.IsMine)
+            {
+                Owner.Death();
+
+            }
+        }
+
     }
     private IEnumerator DecreaseMentalRoutine()
     {
@@ -142,4 +152,6 @@ public class CharacterStatAbility : CharacterAbility
     {
         StartCoroutine(IncreaseMentalRoutine(amount));
     }
+
+
 }
