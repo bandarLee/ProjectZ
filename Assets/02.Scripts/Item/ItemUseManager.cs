@@ -9,6 +9,8 @@ public class ItemUseManager : MonoBehaviour
     public QuickSlotManager quickSlotManager;
     public InventoryUI inventoryUI;
     public UI_Gunfire uI_Gunfire;
+    public CharacterAttackAbility attackAbility;
+    public CharacterGunFireAbility gunFireAbility;
     private void Awake()
     {
         if (Instance == null)
@@ -24,6 +26,8 @@ public class ItemUseManager : MonoBehaviour
     private void Start()
     {
         computerTrigger = FindObjectOfType<UseComputerTrigger>();
+        attackAbility = Character.LocalPlayerInstance._attackability; 
+        gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
     }
 
     public void ApplyEffect(Item item)
@@ -68,6 +72,9 @@ public class ItemUseManager : MonoBehaviour
 
     public void EquipItem(Item item)
     {
+        attackAbility.DeactivateAllWeapons();
+        gunFireAbility.DeactivateAllGuns();
+
         switch (item.itemType)
         {
             case ItemType.Food:
@@ -151,25 +158,21 @@ public class ItemUseManager : MonoBehaviour
 
     private void EquipWeapon(string itemName)
     {
-        CharacterAttackAbility attackAbility = Character.LocalPlayerInstance._attackability;
-        CharacterGunFireAbility gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
+
 
         switch (itemName)
             {
                 case "도끼":
                     Debug.Log("플레이어가 도끼를 들었음");
-                    gunFireAbility.DeactivateAllGuns(); // 테스트용    
                     attackAbility.WeaponActive(0);
                     
                     break;
                 case "배트":
                     Debug.Log("플레이어가 야구배트를 들었음");
-                    gunFireAbility.DeactivateAllGuns();
                     attackAbility.WeaponActive(1);
                 break;
                 case "삽":
                     Debug.Log("플레이어가 삽을 들었음");
-                    gunFireAbility.DeactivateAllGuns();
                     attackAbility.WeaponActive(2);
                     
                 break;
@@ -184,15 +187,12 @@ public class ItemUseManager : MonoBehaviour
     }
     private void EquipGun(string itemName)
     {
-        // todo.포톤 내 것일 때만 되게
-        CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
-        CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
+
 
         switch (itemName)
         {
             case "총_라이플":
                 Debug.Log("플레이어가 총을 들었음");
-                attackAbility.DeactivateAllWeapons();// 테스트용
                 gunFireAbility.GunActive(0);
                 break;
           
@@ -375,7 +375,7 @@ public class ItemUseManager : MonoBehaviour
 
     private void DecreaseItemQuantity(Item item)
     {
-        var inventory = FindObjectOfType<Inventory>();
+        Inventory inventory = Character.LocalPlayerInstance.gameObject.GetComponent<Inventory>();
         if (inventory != null && inventory.pv.IsMine)
         {
             string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC ? item.uniqueId : item.itemName;

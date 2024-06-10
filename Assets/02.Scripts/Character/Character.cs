@@ -19,7 +19,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public Stat Stat { get; private set; }
     public State State { get; private set; } = State.Live;
     private Animator _animator;
-    private InventoryManager _inventoryManager;
+    public InventoryManager _inventoryManager;
     public QuickSlotManager _quickSlotManager;
     public CharacterAttackAbility _attackability;
     public CharacterGunFireAbility _gunfireAbility;
