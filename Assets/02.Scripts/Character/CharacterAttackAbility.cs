@@ -53,6 +53,10 @@ public class CharacterAttackAbility : CharacterAbility
     [PunRPC]
     public void WeaponActive(int WeaponNumber)
     {
+        if (!Owner.PhotonView.IsMine)
+        {
+            return;
+        }
         foreach (GameObject weapon in WeaponObject)
         {
             weapon.SetActive(false);
