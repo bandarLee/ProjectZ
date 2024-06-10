@@ -160,12 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uCD1D_\uB77C\uC774\uD50C"
-    icon: {fileID: 21300000, guid: b86ae960abe6f09458798eaa0069a3f5, type: 3}
-    itemType: 6
-    itemEffect: "\uACF5\uACA9\uB825 +40"
-    itemDescription: "\uACBD\uCC30\uC774 \uB41C \uB4EF\uD55C \uB290\uB08C\uC774\uB2E4."
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!114 &-1490592263844495275
 MonoBehaviour:
