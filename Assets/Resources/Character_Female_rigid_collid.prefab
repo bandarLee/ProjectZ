@@ -1972,13 +1972,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2943838032877333535}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.027, y: -0.002, z: -0.004}
-  m_LocalScale: {x: 0.99988246, y: 0.999345, z: 0.9998905}
+  m_LocalRotation: {x: -0.019582927, y: -0.8518347, z: -0.008145753, w: 0.52338123}
+  m_LocalPosition: {x: -0.0539, y: -0.0058, z: 0.0286}
+  m_LocalScale: {x: 1.6, y: 0.999345, z: 0.9998905}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7407426530229411049}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.97, y: -116.89, z: 1.424}
 --- !u!33 &2943838032874404507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7538,8 +7538,8 @@ MonoBehaviour:
     Temperature: 20
     StandardTemperature: 20
     Damage: 20
-    MoveSpeed: 4
-    RunSpeed: 7
+    MoveSpeed: 3
+    RunSpeed: 6
     RotationSpeed: 200
     AttackCoolTime: 0.5
     JumpPower: 4
