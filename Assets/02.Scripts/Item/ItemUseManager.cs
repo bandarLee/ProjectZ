@@ -151,11 +151,10 @@ public class ItemUseManager : MonoBehaviour
 
     private void EquipWeapon(string itemName)
     {
-        // todo.포톤 내 것일 때만 되게
-        CharacterAttackAbility attackAbility = FindObjectOfType<CharacterAttackAbility>();
-        CharacterGunFireAbility gunFireAbility = FindObjectOfType<CharacterGunFireAbility>();
+        CharacterAttackAbility attackAbility = Character.LocalPlayerInstance._attackability;
+        CharacterGunFireAbility gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
 
-            switch (itemName)
+        switch (itemName)
             {
                 case "도끼":
                     Debug.Log("플레이어가 도끼를 들었음");
