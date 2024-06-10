@@ -1192,7 +1192,6 @@ namespace DigitalRuby.WeatherMaker
                     {
                         if (Application.isPlaying)
                         {
-                            Debug.LogErrorFormat("Object of type {0} is required, please ensure it is active in the WeatherMakerPrefab", typeof(T));
                         }
                     }
                     else
