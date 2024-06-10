@@ -20,13 +20,5 @@ public class GameTime : MonoBehaviour
         CurrentTimeType = TimeType.Day;
     }
 
-    // TimeType을 변경할 수 있는 메서드 추가
-    public void ChangeTimeType(TimeType newTimeType)
-    {
-        if (CurrentTimeType != newTimeType)
-        {
-            CurrentTimeType = newTimeType;
-            OnTimeTypeChanged?.Invoke(newTimeType);
-        }
-    }
+   
 }

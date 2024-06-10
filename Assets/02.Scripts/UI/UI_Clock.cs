@@ -12,14 +12,18 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     public Image Sun;
     public Image Moon;
     public Image Mystery;
+    public GoToSubwayTrigger gotoSubwayTrigger;
 
     private WeatherMakerDayNightCycleManagerScript dayNightCycleManager;
     private GameTime gameTimeScript;
+    private GameTime.TimeType previousTimeType;
+
 
     private void Start()
     {
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;
         gameTimeScript = FindObjectOfType<GameTime>();
+        previousTimeType = gameTimeScript.CurrentTimeType;
 
         // 슬라이더 최대값 설정
         ClockSlider.maxValue = 86400f;
@@ -66,6 +70,12 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         else
         {
             gameTimeScript.CurrentTimeType = GameTime.TimeType.Night;
+        }
+
+        if (gameTimeScript.CurrentTimeType != previousTimeType)
+        {
+            previousTimeType = gameTimeScript.CurrentTimeType;
+            gotoSubwayTrigger.ManageSubwayEntrance(gameTimeScript.CurrentTimeType);
         }
 
         // CurrentTimeType에 따라 UI 업데이트
