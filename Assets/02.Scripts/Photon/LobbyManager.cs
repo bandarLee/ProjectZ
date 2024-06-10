@@ -41,6 +41,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.PhotonServerSettings.DevRegion = "kr";
+
         if (PhotonNetwork.IsConnected)
         {
             int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
