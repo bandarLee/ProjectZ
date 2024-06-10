@@ -47,7 +47,7 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
 
     private Item GetRandomItem(BoxTypeConfig config)
     {
-        float totalProbability = config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.etcProbability;
+        float totalProbability = config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.etcProbability + config.gunProbability + config.consumeProbability;
         float randomValue = Random.Range(0, totalProbability);
 
         ItemType selectedType;
@@ -66,6 +66,14 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability)
         {
             selectedType = ItemType.Mental;
+        }
+        else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.gunProbability)
+        {
+            selectedType = ItemType.Gun;
+        }
+        else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.gunProbability + config.consumeProbability)
+        {
+            selectedType = ItemType.Consumable;
         }
         else
         {
