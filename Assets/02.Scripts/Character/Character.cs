@@ -104,9 +104,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             if (PhotonView.IsMine)
             {
-                OnDeath();
+                Death();
+
             }
-            PhotonView.RPC(nameof(Death), RpcTarget.All);
+
         }
         else
         {
@@ -117,14 +118,22 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
     }
 
-    private void OnDeath()
+    public void Death()
+    {
+        OnDeath();
+
+        PhotonView.RPC(nameof(DeathRPC), RpcTarget.All);
+
+    }
+
+    public void OnDeath()
     {
         string logMessage = $"\n{PhotonView.Owner.NickName}이 운명을 다했습니다.";
         PhotonView.RPC(nameof(AddLog), RpcTarget.All, logMessage);
     }
 
     [PunRPC]
-    private void Death()
+    private void DeathRPC()
     {
         if (State == State.Death)
         {
