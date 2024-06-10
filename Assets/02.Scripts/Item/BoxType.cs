@@ -18,5 +18,7 @@ public struct BoxTypeConfig
     public float weaponProbability;
     public float healProbability;
     public float mentalProbability;
+    public float gunProbability;
+    public float consumeProbability;
     public float etcProbability;
 }
