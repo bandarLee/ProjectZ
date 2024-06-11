@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/City_1.unity
     guid: 6b5942cfec8b016439c4b7a32746c62b
-  - enabled: 1
+  - enabled: 0
     path: Assets/01.Scenes/City_2.unity
     guid: 62a74ad2e58f6924899ef7504411396f
   - enabled: 1
