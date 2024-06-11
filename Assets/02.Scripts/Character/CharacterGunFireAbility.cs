@@ -121,30 +121,22 @@ public class CharacterGunFireAbility : CharacterAbility
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); // 레이 생성- 위치와 방향을 설정
             RaycastHit other; // 레이 부딪힌 대상의 정보 받아옴
             bool isHit = Physics.Raycast(ray, out other);
-            Debug.Log("Raycast hit: " + isHit);  // 레이캐스트 충돌 감지 여부 로그
             if (isHit)
             {
-                Debug.Log("Hit position: " + other.point); // 부딪힌 위치 로그
-                Debug.Log("Hit normal: " + other.normal); // 부딪힌 위치의 법선 벡터 로그
                 IDamaged damagedAbleObject = other.collider.GetComponent<IDamaged>();
                 if (damagedAbleObject != null)
                 {
-                    Debug.Log("Damaged object found");
                     PhotonView photonView = other.collider.GetComponent<PhotonView>();
                     if (photonView != null)
                     {
-                        Debug.Log("PhotonView found");
                         Vector3 hitPosition = other.point;
                         Quaternion hitRotation = Quaternion.LookRotation(other.normal);
-                        ParticleSystem hitEffectInstance = Instantiate(HitEffect, hitPosition, hitRotation);
-                        hitEffectInstance.Play();
+                        PhotonNetwork.Instantiate(HitEffect.name, hitPosition, hitRotation);
+                        
 
                         photonView.RPC("Damaged", RpcTarget.All, CurrentGun.Damage, Owner.PhotonView.OwnerActorNr);
                     }
-                    
                 }
-                
-
             }
         }
     }
