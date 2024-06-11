@@ -144,6 +144,12 @@ public class PoliceTrigger : MonoBehaviour
 
     private void MoveDoor()
     {
+        // DoorPrefab이 null인 경우 DoTween 호출을 방지하는 코드
+        if (DoorPrefab == null)
+        {
+            Debug.LogError("DoorPrefab is null. Cannot move the door.");
+            return;
+        }
         isDoorMoving = true;
         Vector3 endPos = DoorPrefab.transform.position + Vector3.forward * moveDistance;
         DoorPrefab.transform.DOMove(endPos, moveDuration).OnComplete(() => isDoorMoving = false);
