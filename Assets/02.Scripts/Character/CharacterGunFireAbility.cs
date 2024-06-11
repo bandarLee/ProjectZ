@@ -96,7 +96,7 @@ public class CharacterGunFireAbility : CharacterAbility
         /* 총알발사 */
         _shotTimer += Time.deltaTime; // Fire 쿨타임땜에
 
-        if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0)
+        if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0 && !Owner._quickSlotManager.ItemUseLock)
         {
             // 재장전 취소
             if (_isReloading)

@@ -15,6 +15,8 @@ public class QuickSlotManager : MonoBehaviour
 
     private InventoryManager inventoryManager;
     private CharacterItemAbility characterItemAbility;
+
+    public bool ItemUseLock = false;
     private void Start()
     {
         quickSlotItems = new Item[quickSlotImages.Length];
@@ -193,7 +195,7 @@ public class QuickSlotManager : MonoBehaviour
         {
             UseQuickSlotItem(3);
         }
-        if (Input.GetMouseButtonDown(0) && currentEquippedItem != null)
+        if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
             switch(currentEquippedItem.itemType)
             {
