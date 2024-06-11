@@ -4,15 +4,27 @@ using Photon.Pun;
 
 public class Inventory : MonoBehaviourPunCallbacks
 {
+    public static Inventory Instance { get; private set; }
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
-    private HashSet<string> processedItems = new HashSet<string>(); // 추가된 아이템의 고유 ID를 저장하는 HashSet
+    private HashSet<string> processedItems = new HashSet<string>(); 
     public PhotonView pv;
+
     private void Awake()
     {
-        inventoryUI = FindObjectOfType<InventoryUI>();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        inventoryUI = FindObjectOfType<InventoryUI>();
     }
 
     private void Start()
@@ -20,32 +32,10 @@ public class Inventory : MonoBehaviourPunCallbacks
         if (inventoryUI == null)
         {
             inventoryUI = FindObjectOfType<InventoryUI>();
-            if (inventoryUI == null)
-            {
-            }
+
         }
         PhotonNetwork.LocalPlayer.TagObject = this;
-        pv = GetComponent<PhotonView>();
-    }
-
-    [PunRPC]
-    public void AddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
-    {
-
-        if (processedItems.Contains(uniqueId)) return;
-
-        Item newItem = new Item
-        {
-            itemName = itemName,
-            itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType),
-            uniqueId = uniqueId,
-            icon = FindObjectOfType<ItemPresets>().GetIconByName(itemName), // 아이콘 가져오기
-            itemEffect = itemEffect,
-            itemDescription = itemDescription
-        };
-
-        AddItem(newItem, false); 
-        processedItems.Add(uniqueId);
+        pv = Character.LocalPlayerInstance.GetComponent<PhotonView>();
     }
 
     public void AddItem(Item newItem, bool synchronize = true)
@@ -79,21 +69,10 @@ public class Inventory : MonoBehaviourPunCallbacks
         }
         processedItems.Add(newItem.uniqueId);
 
-        if (synchronize)
-        {
-            pv.RPC("AddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
-        }
-
         inventoryUI.UpdateInventoryUI();
     }
 
-    [PunRPC]
-    public void RemoveItemRPC(string itemName, PhotonMessageInfo info)
-    {
-        if (!pv.IsMine) return;
 
-        RemoveItem(itemName, false);
-    }
 
     public void RemoveItem(string itemName, bool synchronize = true)
     {
@@ -115,10 +94,6 @@ public class Inventory : MonoBehaviourPunCallbacks
             items.Remove(itemName);
         }
 
-        if (synchronize)
-        {
-            pv.RPC("RemoveItemRPC", RpcTarget.OthersBuffered, itemName);
-        }
 
         inventoryUI.UpdateInventoryUI();
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();

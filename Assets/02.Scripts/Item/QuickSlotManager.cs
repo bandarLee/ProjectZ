@@ -42,7 +42,7 @@ public class QuickSlotManager : MonoBehaviour
         GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
         if (localPlayer != null)
         {
-            inventory = localPlayer.GetComponent<Inventory>();
+            inventory = Inventory.Instance;
             if (inventory == null)
             {
             }

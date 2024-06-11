@@ -28,13 +28,12 @@ public class ItemPickup : MonoBehaviourPunCallbacks
         {
 
 
-            Inventory inventory = other.GetComponent<Inventory>();
-            if (inventory != null && inventory.gameObject.GetComponent<Character>().PhotonView.IsMine)
+            if (Inventory.Instance.pv.IsMine)
             {
                 Debug.Log(SpawnedItem.uniqueId);
                 isPickedUp = true;
 
-                inventory.AddItem(SpawnedItem);
+                Inventory.Instance.AddItem(SpawnedItem);
 
                 photonView_ItemPickUp.RPC(nameof(RequestOwnerDestroy), photonView_ItemPickUp.Owner, photonView_ItemPickUp.ViewID);
                 gameObject.SetActive(false);

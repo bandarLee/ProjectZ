@@ -29,7 +29,7 @@ public class PoliceTrigger : MonoBehaviour
         OpenText.gameObject.SetActive(false);
         NoKeyText.gameObject.SetActive(false);
 
-        playerInventory = FindObjectOfType<Inventory>();
+        playerInventory = Inventory.Instance;
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
         inventoryUI = FindObjectOfType<InventoryUI>();
         inventoryManager = FindObjectOfType<InventoryManager>();

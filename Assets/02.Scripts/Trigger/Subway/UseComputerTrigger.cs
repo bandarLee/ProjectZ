@@ -22,7 +22,7 @@ public class UseComputerTrigger : MonoBehaviour
         UseComputerText.gameObject.SetActive(false);
         NoDiskText.gameObject.SetActive(false);
 
-        playerInventory = FindObjectOfType<Inventory>();
+        playerInventory = Inventory.Instance;
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
         inventoryUI = FindObjectOfType<InventoryUI>();
         inventoryManager = FindObjectOfType<InventoryManager>();

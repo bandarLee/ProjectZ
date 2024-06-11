@@ -23,7 +23,7 @@ public class BoxInventoryUI : MonoBehaviour
     private void Start()
     {
         ItemInfo.SetActive(false);
-        playerInventory = FindObjectOfType<Inventory>();
+        playerInventory = Inventory.Instance;
 
     }
 
@@ -112,7 +112,7 @@ public class BoxInventoryUI : MonoBehaviour
 
         if (playerInventory == null)
         {
-            playerInventory = FindObjectOfType<Inventory>();
+            playerInventory = Inventory.Instance;
         }
 
         if (playerInventory != null)

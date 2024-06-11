@@ -7030,7 +7030,6 @@ GameObject:
   - component: {fileID: 2276321437071597166}
   - component: {fileID: 4577571689269186767}
   - component: {fileID: 8035682637341063288}
-  - component: {fileID: 3394129554567082972}
   - component: {fileID: 1818963430674056701}
   - component: {fileID: 2725166659701261590}
   - component: {fileID: 1937366128822270390}
@@ -7167,7 +7166,6 @@ MonoBehaviour:
   GunObject:
   - {fileID: 2943838032877333535}
   uI_Gunfire: {fileID: 0}
-  HitEffect: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
   MuzzleEffects:
   - {fileID: 1249088848546852466}
 --- !u!95 &2283545895190766293
@@ -7853,20 +7851,6 @@ MonoBehaviour:
   - {fileID: 4938404733691438473}
   - {fileID: 6736230897707058646}
   WeaponDamage: 230000001e00000019000000
---- !u!114 &3394129554567082972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7424561231724397829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 108e1f6b3d4838d40a762d27e9a4a42f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
-  pv: {fileID: 0}
 --- !u!114 &1818963430674056701
 MonoBehaviour:
   m_ObjectHideFlags: 0

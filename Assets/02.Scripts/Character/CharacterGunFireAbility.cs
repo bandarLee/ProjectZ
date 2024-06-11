@@ -34,8 +34,7 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             muzzleEffect.SetActive(false);
         }
-
-        _playerinventory = Character.LocalPlayerInstance.GetComponent<Inventory>();
+        _playerinventory = Inventory.Instance;
     }
     private IEnumerator InitializeCrossHair()
     {
