@@ -100,12 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uCC45"
-    icon: {fileID: 21300000, guid: 6b22156af64babe4f9bff6441c5b942f, type: 3}
-    itemType: 4
-    itemEffect: "\uCC45"
-    itemDescription: "\uCC45\uC5D0 \uC0AC\uC774\uC5D0 \uBB34\uC5B8\uAC00 \uC801\uD600\uC838\uC788\uB2E4"
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!114 &-2031550448111213371
 MonoBehaviour:
