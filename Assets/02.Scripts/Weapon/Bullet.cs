@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * Force);
-       // Destroy(gameObject, 10f);
+       Destroy(gameObject, 5f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +28,5 @@ public class Bullet : MonoBehaviour
                 photonView.RPC("Damaged", RpcTarget.All, Damage, PhotonNetwork.LocalPlayer.ActorNumber);
             } 
         }
-       // Destroy(gameObject);
     }
 }
