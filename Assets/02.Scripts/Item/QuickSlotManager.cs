@@ -113,7 +113,7 @@ public class QuickSlotManager : MonoBehaviour
             inventory.itemQuantities[itemName]--;
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
             {
-                characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, inventory.transform.position, inventory.transform.forward);
+                characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, Character.LocalPlayerInstance.gameObject.transform.position, Character.LocalPlayerInstance.gameObject.transform.forward);
             }
             if (inventory.itemQuantities[itemName] <= 0)
             {

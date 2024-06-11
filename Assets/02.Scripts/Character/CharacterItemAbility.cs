@@ -19,6 +19,8 @@ public class CharacterItemAbility : CharacterAbility
         {
             Vector3 dropPosition = position + forward * 2f + Vector3.up * 1.5f;
             GameObject droppedItem = PhotonNetwork.Instantiate("ItemPrefabs/" + itemName, dropPosition, Quaternion.identity, 0);
+            Debug.Log("Item Prefab Instantiated: " + itemName);
+
             ItemPickup itemPickup = droppedItem.GetComponent<ItemPickup>();
             if (itemPickup != null)
             {

@@ -121,7 +121,7 @@ public class BoxInventoryUI : MonoBehaviour
 
             if (currentBoxInventory.photonView != null)
             {
-                currentBoxInventory.photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
+                currentBoxInventory.photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
             }
 
             currentSelectedItem = null;
