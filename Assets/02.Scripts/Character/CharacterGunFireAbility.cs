@@ -17,7 +17,6 @@ public class CharacterGunFireAbility : CharacterAbility
 
 
     public UI_Gunfire uI_Gunfire;
-    public ParticleSystem HitEffect; // ÀÌÆåÆ® ÆÄÆí 
     public List<GameObject> MuzzleEffects; // ÀÌÆåÆ® ¹ÝÂ¦ 
 
     private bool _isReloading = false;
@@ -131,7 +130,7 @@ public class CharacterGunFireAbility : CharacterAbility
                     {
                         Vector3 hitPosition = other.point;
                         Quaternion hitRotation = Quaternion.LookRotation(other.normal);
-                        PhotonNetwork.Instantiate(HitEffect.name, hitPosition, hitRotation);
+                        //PhotonNetwork.Instantiate(HitEffect.name, hitPosition, hitRotation);
                         
 
                         photonView.RPC("Damaged", RpcTarget.All, CurrentGun.Damage, Owner.PhotonView.OwnerActorNr);
