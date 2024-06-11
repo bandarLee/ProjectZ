@@ -2,13 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
+using DG.Tweening;
 
 public class PoliceTrigger : MonoBehaviour
 {
     public TextMeshProUGUI OpenText;
     public TextMeshProUGUI NoKeyText;
-    //public TextMeshProUGUI BackToCityText;
 
     public GameObject DoorPrefab;
     public float moveDistance = 5f; // 이동 거리
@@ -29,7 +28,6 @@ public class PoliceTrigger : MonoBehaviour
     {
         OpenText.gameObject.SetActive(false);
         NoKeyText.gameObject.SetActive(false);
-        //BackToCityText.gameObject.SetActive(false);
 
         playerInventory = FindObjectOfType<Inventory>();
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
@@ -59,6 +57,7 @@ public class PoliceTrigger : MonoBehaviour
             Debug.LogError("ItemUseManager not found");
         }
     }
+
     private IEnumerator InitializingInventory()
     {
         yield return new WaitForSeconds(1.0f);
@@ -93,11 +92,16 @@ public class PoliceTrigger : MonoBehaviour
     {
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E))
         {
-            // 아이템 사용 매니저를 통해 키 아이템을 사용
+            if (hasDoorOpened)
+            {
+                return;
+            }
+
             Item keyItem = GetKeyItem();
             if (keyItem != null)
             {
                 itemUseManager.ApplyEffect(keyItem);
+                UseKeyToOpenDoor();
             }
             else
             {
@@ -127,7 +131,8 @@ public class PoliceTrigger : MonoBehaviour
     {
         if (isPlayerInTrigger && !isDoorMoving && !hasDoorOpened)
         {
-            StartCoroutine(MoveDoor());
+            MoveDoor();
+            hasDoorOpened = true; 
         }
     }
 
@@ -137,23 +142,16 @@ public class PoliceTrigger : MonoBehaviour
         NoKeyText.gameObject.SetActive(false);
     }
 
-    private IEnumerator MoveDoor()
+    private void MoveDoor()
     {
-        isDoorMoving = true;
-        hasDoorOpened = true;
-
-        Vector3 startPos = DoorPrefab.transform.position;
-        Vector3 endPos = startPos + Vector3.forward * moveDistance;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < moveDuration)
+        // DoorPrefab이 null인 경우 DoTween 호출을 방지하는 코드
+        if (DoorPrefab == null)
         {
-            DoorPrefab.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            Debug.LogError("DoorPrefab is null. Cannot move the door.");
+            return;
         }
-
-        DoorPrefab.transform.position = endPos;
-        isDoorMoving = false;
+        isDoorMoving = true;
+        Vector3 endPos = DoorPrefab.transform.position + Vector3.forward * moveDistance;
+        DoorPrefab.transform.DOMove(endPos, moveDuration).OnComplete(() => isDoorMoving = false);
     }
 }

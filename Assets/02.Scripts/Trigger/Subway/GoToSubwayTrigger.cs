@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class GoToSubwayTrigger : MonoBehaviour
@@ -15,8 +14,9 @@ public class GoToSubwayTrigger : MonoBehaviour
     {
         originalPosition = SubwayEntrance.transform.position; // 원래 위치 저장
         targetPosition = originalPosition + new Vector3(0, 0, 5); // 목표 위치 설정
-    }
+        ManageSubwayEntrance(GameTime.TimeType.Mystery);
 
+    }
 
 
     public void ManageSubwayEntrance(GameTime.TimeType newTimeType)
