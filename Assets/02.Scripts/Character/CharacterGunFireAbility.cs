@@ -12,6 +12,8 @@ public class CharacterGunFireAbility : CharacterAbility
 
     public Gun CurrentGun; // 현재 들고있는 총
     public GameObject[] GunObject;
+    public GameObject bulletPrefab;
+    public Transform FirePos;
 
     private float _shotTimer;
 
@@ -114,28 +116,13 @@ public class CharacterGunFireAbility : CharacterAbility
             _shotTimer = 0;
             StartCoroutine(MuzzleEffectOn_Coroutine());
 
-
+            
             /* 체력 닳는 기능 */
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); // 레이 생성- 위치와 방향을 설정
-            RaycastHit other; // 레이 부딪힌 대상의 정보 받아옴
-            bool isHit = Physics.Raycast(ray, out other);
-            if (isHit)
+            if (bulletItem != null)
             {
-                IDamaged damagedAbleObject = other.collider.GetComponent<IDamaged>();
-                if (damagedAbleObject != null)
-                {
-                    PhotonView photonView = other.collider.GetComponent<PhotonView>();
-                    if (photonView != null)
-                    {
-                        Vector3 hitPosition = other.point;
-                        Quaternion hitRotation = Quaternion.LookRotation(other.normal);
-                        //PhotonNetwork.Instantiate(HitEffect.name, hitPosition, hitRotation);
-                        
-
-                        photonView.RPC("Damaged", RpcTarget.All, CurrentGun.Damage, Owner.PhotonView.OwnerActorNr);
-                    }
-                }
+                Instantiate(bulletPrefab, FirePos.position, FirePos.rotation);
             }
+
         }
     }
 
