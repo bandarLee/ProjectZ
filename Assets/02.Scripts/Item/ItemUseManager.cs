@@ -43,8 +43,7 @@ public class ItemUseManager : MonoBehaviour
 
                 break;
             case ItemType.Mental:
-                ApplyMentalEffect(item.itemName);
-                DecreaseItemQuantity(item);
+                ApplyMentalEffect(item);
 
                 break;
             case ItemType.Weapon:
@@ -242,7 +241,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "고기":
                 DecreaseItemQuantity(item);
-                Character.LocalPlayerInstance.Stat.Hunger += 30; 
+                Character.LocalPlayerInstance.Stat.Hunger += 20; 
                 break;
             case "빵":
                 DecreaseItemQuantity(item);
@@ -272,13 +271,13 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void ApplyMentalEffect(string itemName)
+    private void ApplyMentalEffect(Item item)
     {
-        switch (itemName)
+        switch (item.itemName)
         {
             case "술":
-                Debug.Log("플레이어의 정신력이 올라갔다");
-                // PlayerStatus.Instance.IncreaseMentalState(20);
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 20;
                 break;
             case "책":
                 Debug.Log("Player happiness increased.");
