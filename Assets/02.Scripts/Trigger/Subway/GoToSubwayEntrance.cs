@@ -14,13 +14,11 @@ public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null && photonView.IsMine)
             {
-                // 자신만 씬을 로드하도록 RPC 호출
-                photonView.RPC("LoadSubwayScene", RpcTarget.AllBuffered);
+                LoadSubwayScene();
             }
         }
     }
 
-    [PunRPC]
     private void LoadSubwayScene()
     {
             PhotonNetwork.LoadLevel("SubwayScene");
