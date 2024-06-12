@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class Inventory : MonoBehaviourPunCallbacks
 {
@@ -24,20 +25,31 @@ public class Inventory : MonoBehaviourPunCallbacks
             return;
         }
 
-        inventoryUI = FindObjectOfType<InventoryUI>();
     }
 
     private void Start()
     {
-        if (inventoryUI == null)
-        {
-            inventoryUI = FindObjectOfType<InventoryUI>();
 
-        }
         PhotonNetwork.LocalPlayer.TagObject = this;
-        pv = Character.LocalPlayerInstance.GetComponent<PhotonView>();
-    }
+        StartCoroutine(FindPhotonViewAfterDelay(1.0f));
 
+    }
+    private IEnumerator FindPhotonViewAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (Character.LocalPlayerInstance == null)
+        {
+            Debug.LogError("LocalPlayerInstance is not set.");
+            yield break;
+        }
+
+        pv = Character.LocalPlayerInstance.GetComponent<PhotonView>();
+        if (pv == null)
+        {
+            Debug.LogError("PhotonView not found on LocalPlayerInstance.");
+        }
+    }
     public void AddItem(Item newItem, bool synchronize = true)
     {
         if (!pv.IsMine) return;
