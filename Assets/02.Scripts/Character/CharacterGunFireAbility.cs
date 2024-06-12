@@ -55,7 +55,7 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
-            Owner.PhotonView.RPC(nameof(PlayAimingIdleAnimation), RpcTarget.All);
+            Owner.PhotonView.RPC(nameof(PlayRifleIdleAnimation), RpcTarget.All);
             GunShoot();
         }
     }
@@ -128,9 +128,11 @@ public class CharacterGunFireAbility : CharacterAbility
 
 
     [PunRPC]
-    public void PlayAimingIdleAnimation()
+    public void PlayRifleIdleAnimation()
     {
         _animator.SetLayerWeight(2, 1);
+        //_animator.SetTrigger("PullOut");
+
     }
 
     [PunRPC]

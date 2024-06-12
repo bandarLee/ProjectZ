@@ -11,6 +11,7 @@ public class ItemUseManager : MonoBehaviour
     public UI_Gunfire uI_Gunfire;
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
+    private CharacterItemAbility characterItemAbility;
     private void Awake()
     {
         if (Instance == null)
@@ -32,7 +33,10 @@ public class ItemUseManager : MonoBehaviour
         {
             quickSlotManager = FindObjectOfType<QuickSlotManager>();
         }
+        characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
     }
+
+   
 
     public void ApplyEffect(Item item)
     {
@@ -72,11 +76,30 @@ public class ItemUseManager : MonoBehaviour
         UpdateUI();
 
     }
+    private void HandCount(Item item)
+    {
+        characterItemAbility.UnUsingHandAnimation();
+        if (item.itemType ==  ItemType.ETC || item.itemType == ItemType.Gun)
+        {
+            characterItemAbility.TwoHandAnimation();
+        }
+        else if(item.itemType == ItemType.Weapon)
+        {
+            return;
+        }
+        else
+        {
+            characterItemAbility.OneHandAnimation();
+        }
+            
+        
+    }
 
     public void EquipItem(Item item)
     {
         attackAbility.DeactivateAllWeapons();
         gunFireAbility.DeactivateAllGuns();
+        HandCount(item);
 
         switch (item.itemType)
         {
@@ -87,12 +110,10 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case ItemType.Heal:
                 //왼손이나 나머지부분들은 다 Run하는거처럼
-
                 EquipHeal(item.itemName);
                 break;
             case ItemType.Mental:
                 //왼손이나 나머지부분들은 다 Run하는거처럼
-
                 EquipMental(item.itemName);
                 break;
             case ItemType.Weapon:
@@ -105,12 +126,10 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case ItemType.Consumable:
                 //왼손이나 나머지부분들은 다 Run하는거처럼
-
                 EquipConsumable(item.itemName);
                 break;
             case ItemType.Gun:
                 //양손(상체)
-
                 EquipGun(item.itemName);
                 break;
             default:
@@ -430,4 +449,5 @@ public class ItemUseManager : MonoBehaviour
         quickSlotManager.UpdateQuickSlotUI();
         
     }
+
 }

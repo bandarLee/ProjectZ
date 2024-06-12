@@ -7803,6 +7803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a91fe0426de37468d1d64b522a91c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
   _inventoryManager: {fileID: 0}
   _quickSlotManager: {fileID: 0}
   _attackability: {fileID: 0}

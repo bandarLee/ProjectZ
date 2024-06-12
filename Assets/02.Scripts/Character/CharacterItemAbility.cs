@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class CharacterItemAbility : CharacterAbility
 {
@@ -47,6 +48,74 @@ public class CharacterItemAbility : CharacterAbility
         {
             Debug.LogWarning("아이템 프리팹을 찾을 수 없습니다: " + itemName);
         }
+    }
+    //
+
+   
+    public void UnUsingHandAnimation()
+    {
+        Owner.PhotonView.RPC(nameof(UnUsingHandAnimationRPC), RpcTarget.All);
+
+    }
+
+
+    [PunRPC]
+    public void UnUsingHandAnimationRPC()
+    {
+        Owner._animator.SetBool("isPullOut", false);
+
+        Owner._animator.SetBool("RePullOut", true);
+        Owner._animator.SetInteger("UsingHand", 0);
+
+
+    }
+
+
+
+    public void OneHandAnimation()
+    {
+
+        StartCoroutine(OneHandAnimationAfterSeconds());
+    }
+    private IEnumerator OneHandAnimationAfterSeconds()
+    {
+
+        yield return new WaitForSeconds(0.5f);
+        Owner.PhotonView.RPC(nameof(OneHandAnimationRPC), RpcTarget.All);
+
+    }
+    public void TwoHandAnimation()
+    {
+        StartCoroutine(TwoHandAnimationAfterSeconds());
+
+    }
+    private IEnumerator TwoHandAnimationAfterSeconds()
+    {
+
+        yield return new WaitForSeconds(1f);
+        Owner.PhotonView.RPC(nameof(TwoHandAnimationRPC), RpcTarget.All);
+
+    }
+    [PunRPC]
+    public void OneHandAnimationRPC()
+    {
+        Owner._animator.SetBool("isPullOut", true);
+        Owner._animator.SetBool("RePullOut", false);
+
+        Owner._animator.SetInteger("UsingHand", 1);
+    }
+
+
+
+    [PunRPC]
+    public void TwoHandAnimationRPC()
+    {
+
+        Owner._animator.SetBool("isPullOut", true);
+        Owner._animator.SetBool("RePullOut", false);
+
+        Owner._animator.SetInteger("UsingHand", 2);
+
     }
 
 

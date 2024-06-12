@@ -85,6 +85,17 @@ MonoBehaviour:
   - GunActiveRPC
   - DeathRPC
   - LoadSubwayScene
+  - PlayRifleIdleAnimation
+  - RifflePullOutAnimation
+  - UsingHandAnimation
+  - UnUsingHandAnimation
+  - OneHandAnimation
+  - TwoHandAnimation
+  - RifflePullOutAnimationRPC
+  - UnUsingHandAnimationRPC
+  - OneHandAnimationRPC
+  - TwoHandAnimationRPC
+  - RePullOutAnimationRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

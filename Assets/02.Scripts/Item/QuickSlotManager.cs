@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using System.Collections;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -17,8 +18,13 @@ public class QuickSlotManager : MonoBehaviour
     private CharacterItemAbility characterItemAbility;
 
     public bool ItemUseLock = false;
+
+    private Animator _animator;
+
     private void Start()
     {
+        _animator = GetComponent<Animator>();
+
         quickSlotItems = new Item[quickSlotImages.Length];
         foreach (Image image in quickSlotImages)
         {
@@ -111,6 +117,9 @@ public class QuickSlotManager : MonoBehaviour
             Debug.Log("드랍 아이템: " + currentEquippedItem.itemName);
 
             inventory.itemQuantities[itemName]--;
+            // usinghand = 0;
+            characterItemAbility.UnUsingHandAnimation();
+
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
             {
                 characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, Character.LocalPlayerInstance.gameObject.transform.position, Character.LocalPlayerInstance.gameObject.transform.forward);
@@ -182,11 +191,14 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
-                //RifflePullOut
-                UseQuickSlotItem(i);
+/*                characterItemAbility.RifflePullOutAnimation();
+*/                UseQuickSlotItem(i);
             }
         }
     }
+
+
+
     private void Update()
     {
         CheckQuickSlotInput();
