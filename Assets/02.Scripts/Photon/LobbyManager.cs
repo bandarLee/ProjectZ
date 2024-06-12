@@ -54,7 +54,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
             PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
-
         }
         else
         {
@@ -62,9 +61,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // 플레이어마다 랜덤으로 씬 선택
     public override void OnJoinedRoom()
     {
         connectionInfoText.text = "파티에 참가합니다.";
-        PhotonNetwork.LoadLevel("City_1");
+
+        string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
+
+        int randomIndex = Random.Range(0, scenes.Length);
+        string randomScene = scenes[randomIndex];
+
+        PhotonNetwork.LoadLevel(randomScene);
     }
 }

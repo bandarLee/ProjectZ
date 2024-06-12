@@ -9,14 +9,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public CityZoneType lastZone;
     public int Randomzone;
-    private Vector3 spawnPosition;
+    public Transform spawnPosition;
+
+
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 GameManager를 파괴하지 않음
         }
         else
         {
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (!_init)
             {
                 Init();
-                LoadRandomCity();
             }
         }
     }
@@ -41,36 +41,39 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!_init)
         {
             Init();
-            LoadRandomCity();
         }
     }
 
     public void Init()
     {
         _init = true;
+        SpawnPlayer();
     }
 
-    private void LoadRandomCity()
+    // 캐릭터 리스폰 코드
+ /*   private void LoadRandomCity()
     {
         Randomzone = 0;
         lastZone = (CityZoneType)Randomzone;
         string sceneName = "City_" + (Randomzone + 1).ToString();
         PhotonNetwork.LoadLevel(sceneName);
-    }
+    }*/
 
-    public void SetSpawnPoint(Vector3 position)
-    {
-        spawnPosition = position;
-        SpawnPlayer();
-    }
+
     public Vector3 GetSpawnPoint()
     {
-        return spawnPosition;
+        return spawnPosition.position;
     }
+
     private void SpawnPlayer()
     {
-        GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
+
+        GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
     }
+
+
+
+
 
     public void LoadCity(CityZoneType cityZoneType)
     {
