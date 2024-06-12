@@ -176,25 +176,21 @@ public class QuickSlotManager : MonoBehaviour
             }
         }
     }
-
+    private void CheckQuickSlotInput()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                //RifflePullOut
+                UseQuickSlotItem(i);
+            }
+        }
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            UseQuickSlotItem(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UseQuickSlotItem(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            UseQuickSlotItem(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            UseQuickSlotItem(3);
-        }
+        CheckQuickSlotInput();
+       
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
             switch(currentEquippedItem.itemType)

@@ -175,7 +175,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     // 로비 씬에서 플레이어를 랜덤한 섹터의 RespawnPoint에 스폰
     private void SetSpawnPoint()
     {
-        Vector3 spawnPoint = GameManager.Instance.GetRandomSpawnPoint();
+        Vector3 spawnPoint = GameManager.Instance.GetSpawnPoint();
         GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
         GetComponent<CharacterRotateAbility>().SetRandomRotation();
     }
@@ -183,7 +183,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     // 플레이어가 죽었을 때 마지막으로 있던 섹터의 RespawnPoint에 리스폰
     private void SetRespawnPoint()
     {
-        Vector3 spawnPoint = GameManager.Instance.GetRandomSpawnPoint();
+        Vector3 spawnPoint = GameManager.Instance.GetSpawnPoint();
         GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPoint);
         GetComponent<CharacterRotateAbility>().SetRandomRotation();
     }

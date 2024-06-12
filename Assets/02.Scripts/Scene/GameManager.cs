@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void LoadRandomCity()
     {
-        Randomzone = Random.Range(0, 6);
+        Randomzone = 0;
         lastZone = (CityZoneType)Randomzone;
         string sceneName = "City_" + (Randomzone + 1).ToString();
         PhotonNetwork.LoadLevel(sceneName);
@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         spawnPosition = position;
         SpawnPlayer();
     }
-
+    public Vector3 GetSpawnPoint()
+    {
+        return spawnPosition;
+    }
     private void SpawnPlayer()
     {
         GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);

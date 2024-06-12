@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -25,6 +26,18 @@ public class InventoryUI : MonoBehaviour
         inventory = Inventory.Instance;
         UpdateInventoryUI();
         ItemInfo.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if(Inventory.Instance.inventoryUI == null)
+        {
+            Inventory.Instance.inventoryUI = GetComponent<InventoryUI>();
+        }
+        if(ItemUseManager.Instance.inventoryUI == null)
+        {
+            ItemUseManager.Instance.inventoryUI = GetComponent<InventoryUI>();
+        }
     }
 
     public void UpdateInventoryUI()
