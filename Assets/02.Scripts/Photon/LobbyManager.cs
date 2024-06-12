@@ -69,6 +69,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
 
         int randomIndex = Random.Range(0, scenes.Length);
+
+        // ÇöÀç ¾ÀÀ» Æ÷Åæ¿¡ ¾÷·Îµå
+        Hashtable SceneProperties = new Hashtable();
+        SceneProperties.Add("CurrentScene", randomIndex);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
+
+
         string randomScene = scenes[randomIndex];
 
         PhotonNetwork.LoadLevel(randomScene);

@@ -21,10 +21,14 @@ public enum SectorTriggerType
     Trigger4,
 }
 
+
+
 public class CitySceneMove : MonoBehaviour
 {
     public CityZoneType ThisTriggerCity;
     public SectorTriggerType ThisTriggerType;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,6 +40,8 @@ public class CitySceneMove : MonoBehaviour
 
     private void HandleTriggerEnter(GameObject player)
     {
+
+        CharacterInfo.Instance.SpawnDir = ((int)ThisTriggerType + 2) % 4;
         switch (ThisTriggerCity)
         {
             case CityZoneType.City_1:

@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -7,10 +8,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager Instance { get; private set; }
     public bool _init = false;
 
-    public CityZoneType lastZone;
     public int Randomzone;
     public Transform spawnPosition;
-
+    public Transform [] SceneMovePosition;
 
 
     private void Awake()
@@ -50,15 +50,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         SpawnPlayer();
     }
 
-    // 캐릭터 리스폰 코드
- /*   private void LoadRandomCity()
-    {
-        Randomzone = 0;
-        lastZone = (CityZoneType)Randomzone;
-        string sceneName = "City_" + (Randomzone + 1).ToString();
-        PhotonNetwork.LoadLevel(sceneName);
-    }*/
-
 
     public Vector3 GetSpawnPoint()
     {
@@ -67,17 +58,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
+        if (!CharacterInfo.Instance._isGameStart)
+        {
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
+            CharacterInfo.Instance._isGameStart = true;
 
-        GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
+        }
+        else
+        {
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", SceneMovePosition[CharacterInfo.Instance.SpawnDir].position, Quaternion.identity);
+
+        }
     }
-
-
-
 
 
     public void LoadCity(CityZoneType cityZoneType)
     {
-        lastZone = cityZoneType;
         string sceneName = "City_" + ((int)cityZoneType + 1).ToString();
         PhotonNetwork.LoadLevel(sceneName);
     }
