@@ -77,24 +77,36 @@ public class ItemUseManager : MonoBehaviour
         switch (item.itemType)
         {
             case ItemType.Food:
+                //왼손이나 나머지부분들은 다 Run하는거처럼
+
                 EquipFood(item.itemName);
                 break;
             case ItemType.Heal:
+                //왼손이나 나머지부분들은 다 Run하는거처럼
+
                 EquipHeal(item.itemName);
                 break;
             case ItemType.Mental:
+                //왼손이나 나머지부분들은 다 Run하는거처럼
+
                 EquipMental(item.itemName);
                 break;
             case ItemType.Weapon:
+                //지금상태유지
                 EquipWeapon(item.itemName);
                 break;
             case ItemType.ETC:
+                //양손(상체)
                 EquipEtc(item.itemName);
                 break;
             case ItemType.Consumable:
+                //왼손이나 나머지부분들은 다 Run하는거처럼
+
                 EquipConsumable(item.itemName);
                 break;
             case ItemType.Gun:
+                //양손(상체)
+
                 EquipGun(item.itemName);
                 break;
             default:
