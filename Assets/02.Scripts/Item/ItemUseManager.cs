@@ -410,7 +410,7 @@ public class ItemUseManager : MonoBehaviour
     private void DecreaseItemQuantity(Item item)
     {
         Inventory inventory = Inventory.Instance;
-        if (inventory != null && inventory.pv.IsMine)
+        if (inventory != null && Character.LocalPlayerInstance.PhotonView.IsMine)
         {
             string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC ? item.uniqueId : item.itemName;
 

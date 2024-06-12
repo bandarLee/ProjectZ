@@ -23,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/City_2.unity
     guid: 980cdbbfcd8e6c44aa901c0812768042
-  - enabled: 1
-    path: Assets/01.Scenes/SubwayScene.unity
-    guid: f1cbadb937bdd5a43a7eaba3137cdb8b
   - enabled: 0
     path: Assets/01.Scenes/City_Temp.unity
     guid: 3e6b830be13805248990f985aca4b3ef
@@ -44,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/City_6.unity
     guid: d8fdb022fc0ed224386f96f5be644adf
+  - enabled: 1
+    path: Assets/01.Scenes/SubwayScene.unity
+    guid: f1cbadb937bdd5a43a7eaba3137cdb8b
   m_configObjects: {}

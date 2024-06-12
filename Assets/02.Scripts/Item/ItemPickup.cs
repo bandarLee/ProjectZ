@@ -28,8 +28,7 @@ public class ItemPickup : MonoBehaviourPunCallbacks
         {
 
 
-            if (Inventory.Instance.pv.IsMine)
-            {
+   
                 Debug.Log(SpawnedItem.uniqueId);
                 isPickedUp = true;
 
@@ -38,7 +37,6 @@ public class ItemPickup : MonoBehaviourPunCallbacks
                 photonView_ItemPickUp.RPC(nameof(RequestOwnerDestroy), photonView_ItemPickUp.Owner, photonView_ItemPickUp.ViewID);
                 gameObject.SetActive(false);
 
-            }
 
         }
     }

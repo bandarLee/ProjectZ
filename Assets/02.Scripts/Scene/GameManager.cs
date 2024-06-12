@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -7,16 +8,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager Instance { get; private set; }
     public bool _init = false;
 
-    public CityZoneType lastZone;
     public int Randomzone;
-    private Vector3 spawnPosition;
+    public Transform spawnPosition;
+    public Transform [] SceneMovePosition;
+
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 GameManager를 파괴하지 않음
         }
         else
         {
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (!_init)
             {
                 Init();
-                LoadRandomCity();
             }
         }
     }
@@ -41,40 +41,39 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!_init)
         {
             Init();
-            LoadRandomCity();
         }
     }
 
     public void Init()
     {
         _init = true;
-    }
-
-    private void LoadRandomCity()
-    {
-        Randomzone = 0;
-        lastZone = (CityZoneType)Randomzone;
-        string sceneName = "City_" + (Randomzone + 1).ToString();
-        PhotonNetwork.LoadLevel(sceneName);
-    }
-
-    public void SetSpawnPoint(Vector3 position)
-    {
-        spawnPosition = position;
         SpawnPlayer();
     }
+
+
     public Vector3 GetSpawnPoint()
     {
-        return spawnPosition;
+        return spawnPosition.position;
     }
+
     private void SpawnPlayer()
     {
-        GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition, Quaternion.identity);
+        if (!CharacterInfo.Instance._isGameStart)
+        {
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
+            CharacterInfo.Instance._isGameStart = true;
+
+        }
+        else
+        {
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", SceneMovePosition[CharacterInfo.Instance.SpawnDir].position, Quaternion.identity);
+
+        }
     }
+
 
     public void LoadCity(CityZoneType cityZoneType)
     {
-        lastZone = cityZoneType;
         string sceneName = "City_" + ((int)cityZoneType + 1).ToString();
         PhotonNetwork.LoadLevel(sceneName);
     }

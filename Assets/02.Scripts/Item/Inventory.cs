@@ -9,8 +9,9 @@ public class Inventory : MonoBehaviourPunCallbacks
     public Dictionary<string, Item> items = new Dictionary<string, Item>();
     public Dictionary<string, int> itemQuantities = new Dictionary<string, int>();
     public InventoryUI inventoryUI;
-    private HashSet<string> processedItems = new HashSet<string>(); 
-    public PhotonView pv;
+    private HashSet<string> processedItems = new HashSet<string>();
+
+
 
     private void Awake()
     {
@@ -29,31 +30,11 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
         PhotonNetwork.LocalPlayer.TagObject = this;
-        StartCoroutine(FindPhotonViewAfterDelay(1.0f));
-
     }
-    private IEnumerator FindPhotonViewAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
 
-        if (Character.LocalPlayerInstance == null)
-        {
-            Debug.LogError("LocalPlayerInstance is not set.");
-            yield break;
-        }
-
-        pv = Character.LocalPlayerInstance.GetComponent<PhotonView>();
-        if (pv == null)
-        {
-            Debug.LogError("PhotonView not found on LocalPlayerInstance.");
-        }
-    }
     public void AddItem(Item newItem, bool synchronize = true)
-    {
-        if (!pv.IsMine) return;
-
+    { 
         if (processedItems.Contains(newItem.uniqueId)) return;
         if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
         {
@@ -88,7 +69,7 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void RemoveItem(string itemName, bool synchronize = true)
     {
-        if (!pv.IsMine) return;
+      
 
         if (!items.ContainsKey(itemName)) return;
 
