@@ -28,6 +28,10 @@ public class ItemUseManager : MonoBehaviour
         computerTrigger = FindObjectOfType<UseComputerTrigger>();
         attackAbility = Character.LocalPlayerInstance._attackability; 
         gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
+        if(quickSlotManager == null)
+        {
+            quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        }
     }
 
     public void ApplyEffect(Item item)
@@ -394,7 +398,7 @@ public class ItemUseManager : MonoBehaviour
             if (inventory.itemQuantities.ContainsKey(itemName))
             {
                 inventory.itemQuantities[itemName]--;
-                Debug.LogError("아이템 갯수감소");
+
                 if (inventory.itemQuantities[itemName] <= 0)
                 {
                     inventory.items.Remove(itemName);
