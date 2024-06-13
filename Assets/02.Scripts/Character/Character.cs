@@ -205,16 +205,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             GetComponent<Animator>().SetTrigger("Live");
         }
     }
-    public void DeactiveOtherCharacterOrder()
-    {
-        PhotonView.RPC("DeactiveOtherCharacterRPC", RpcTarget.AllBuffered);
 
-    }
-    [PunRPC]
-    public void DeactiveOtherCharacterRPC()
-    {
-        DeactiveOtherCharacter();
-    }
     public void DeactiveOtherCharacter()
     {
         int myCurrentScene = (int)PhotonNetwork.LocalPlayer.CustomProperties["CurrentScene"];
