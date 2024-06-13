@@ -35,14 +35,14 @@ namespace DigitalRuby.WeatherMaker
         [Tooltip("Snow script")]
         public WeatherMakerFallingParticleScript SnowScript;
 
-        [Tooltip("Hail script")]
+       /* [Tooltip("Hail script")]
         public WeatherMakerFallingParticleScript HailScript;
 
         [Tooltip("Sleet script")]
         public WeatherMakerFallingParticleScript SleetScript;
 
         [Tooltip("Set a custom precipitation script for use with Precipitation = WeatherMakerPrecipitationType.Custom ")]
-        public WeatherMakerFallingParticleScript CustomPrecipitationScript;
+        public WeatherMakerFallingParticleScript CustomPrecipitationScript;*/
 
         [Tooltip("Whether to allow precipitation to follow other cameras, such as reflection cameras")]
         public bool FollowNonNormalCameras;
@@ -81,24 +81,24 @@ namespace DigitalRuby.WeatherMaker
             set { if (SnowScript != null) SnowScript.Intensity = value; }
         }
 
-        public float HailIntensity
+     /*   public float HailIntensity
         {
             get { return HailScript != null ? HailScript.Intensity : 0.0f; }
             set { if (HailScript != null) HailScript.Intensity = value; }
-        }
+        }*/
 
-        public float SleetIntensity
+/*        public float SleetIntensity
         {
             get { return SleetScript != null ? SleetScript.Intensity : 0.0f; }
             set { if (SleetScript != null) SleetScript.Intensity = value; }
         }
-
-        public float CustomIntensity
+*/
+/*        public float CustomIntensity
         {
             get { return CustomPrecipitationScript != null ? CustomPrecipitationScript.Intensity : 0.0f; }
             set { if (CustomPrecipitationScript != null) CustomPrecipitationScript.Intensity = value; }
         }
-
+*/
         private void OnEnable()
         {
             WeatherMakerScript.EnsureInstance(this, ref instance);
@@ -165,7 +165,7 @@ namespace DigitalRuby.WeatherMaker
                         ChangePrecipitation(SnowScript);
                         break;
 
-                    case WeatherMakerPrecipitationType.Hail:
+                  /*  case WeatherMakerPrecipitationType.Hail:
                         ChangePrecipitation(HailScript);
                         break;
 
@@ -175,7 +175,7 @@ namespace DigitalRuby.WeatherMaker
 
                     case WeatherMakerPrecipitationType.Custom:
                         ChangePrecipitation(CustomPrecipitationScript);
-                        break;
+                        break;*/
                 }
             }
 

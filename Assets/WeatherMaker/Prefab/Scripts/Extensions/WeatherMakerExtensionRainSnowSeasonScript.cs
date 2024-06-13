@@ -95,8 +95,8 @@ namespace DigitalRuby.WeatherMaker
             if (rain != lastRain)
             {
                 lastRain = rain;
-                rain += (WeatherMakerScript.Instance.PrecipitationManager.SleetIntensity * 0.5f);
-                rain += (WeatherMakerScript.Instance.PrecipitationManager.HailIntensity * 0.25f);
+               /* rain += (WeatherMakerScript.Instance.PrecipitationManager.SleetIntensity * 0.5f);
+                rain += (WeatherMakerScript.Instance.PrecipitationManager.HailIntensity * 0.25f);*/
                 OnUpdateRain(rain); // 비 업데이트 함수 호출
             }
         }
@@ -115,8 +115,8 @@ namespace DigitalRuby.WeatherMaker
             if (snow != lastSnow)
             {
                 lastSnow = snow;
-                snow += (WeatherMakerScript.Instance.PrecipitationManager.SleetIntensity * 0.5f);
-                snow += (WeatherMakerScript.Instance.PrecipitationManager.HailIntensity * 0.5f);
+               /* snow += (WeatherMakerScript.Instance.PrecipitationManager.SleetIntensity * 0.5f);
+                snow += (WeatherMakerScript.Instance.PrecipitationManager.HailIntensity * 0.5f);*/
                 OnUpdateSnow(snow); // 눈 업데이트 함수 호출
             }
         }

@@ -5,8 +5,8 @@ namespace DigitalRuby.WeatherMaker
     {
         float RainIntensity { get; }
         float SnowIntensity { get; }
-        float HailIntensity { get; }
+       /* float HailIntensity { get; }
         float SleetIntensity { get; }
-        float CustomIntensity { get; }
+        float CustomIntensity { get; }*/
     }
 }
