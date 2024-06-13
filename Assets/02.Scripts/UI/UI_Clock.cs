@@ -20,6 +20,17 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     private GameTime gameTimeScript;
     private GameTime.TimeType previousTimeType;
 
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true; // 씬 자동 동기화 설정
+    }
+
+    private void OnEnable()
+    {
+        // 씬 전환 후 시간을 로드합니다.
+        LoadTime();
+    }
+
     private void Start()
     {
         dayNightCycleManager = WeatherMakerDayNightCycleManagerScript.Instance;

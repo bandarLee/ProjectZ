@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+
     public void Init()
     {
         _init = true;
