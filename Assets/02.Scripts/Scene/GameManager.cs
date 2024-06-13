@@ -60,13 +60,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (!CharacterInfo.Instance._isGameStart)
         {
-            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
+/*            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
+*/
+            Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(spawnPosition.position);
             CharacterInfo.Instance._isGameStart = true;
 
         }
         else
         {
-            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", SceneMovePosition[CharacterInfo.Instance.SpawnDir].position, Quaternion.identity);
+/*            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", SceneMovePosition[CharacterInfo.Instance.SpawnDir].position, Quaternion.identity);
+*/            Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
 
         }
     }
