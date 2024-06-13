@@ -206,7 +206,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
     }
 
-    public void DeactiveOtherCharacter()
+/*    public void DeactiveOtherCharacter()
     {
         int myCurrentScene = (int)PhotonNetwork.LocalPlayer.CustomProperties["CurrentScene"];
 
@@ -225,5 +225,5 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
                 }
             }
         };
-    }
+    }*/
 }
