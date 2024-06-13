@@ -97,10 +97,7 @@ MonoBehaviour:
   - TwoHandAnimationRPC
   - RePullOutAnimationRPC
   - ResetShootAnimationRPC
-<<<<<<< HEAD
-=======
   - DeactiveOtherCharacter
->>>>>>> 84bec0d1d06ddce35f569b28a3fc63920300d3bc
   - DeactiveOtherCharacterRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
