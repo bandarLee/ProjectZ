@@ -207,7 +207,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     }
     public void DeactiveOtherCharacterOrder()
     {
-        PhotonView.RPC("DeactiveOtherCharacter", RpcTarget.AllBuffered);
+        PhotonView.RPC("DeactiveOtherCharacterRPC", RpcTarget.AllBuffered);
 
     }
     [PunRPC]
