@@ -1,11 +1,9 @@
 using DigitalRuby.WeatherMaker;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using ExitGames.Client.Photon; // ExitGames.Client.Photon.Hashtable을 사용하기 위해 추가
 
 public class UI_Clock : MonoBehaviourPun, IPunObservable
 {
@@ -20,16 +18,6 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     private GameTime gameTimeScript;
     private GameTime.TimeType previousTimeType;
 
-    private void Awake()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true; // 씬 자동 동기화 설정
-    }
-
-    private void OnEnable()
-    {
-        // 씬 전환 후 시간을 로드합니다.
-        LoadTime();
-    }
 
     private void Start()
     {
@@ -47,19 +35,12 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
         }
-        else
-        {
-            // 마스터 클라이언트가 아닌 경우 시작할 때 시간을 복원합니다.
-            LoadTime();
-        }
     }
 
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            // 마스터 클라이언트에서 시간을 업데이트
-            dayNightCycleManager.TimeOfDay += Time.deltaTime;
             UpdateSunAndMoonVisibility();
         }
     }
@@ -153,37 +134,6 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
             dayNightCycleManager.TimeOfDay = (float)stream.ReceiveNext();
             gameTimeScript.CurrentTimeType = (GameTime.TimeType)stream.ReceiveNext();
             UpdateSunAndMoonVisibility(); // 받은 시간으로 UI 업데이트
-        }
-    }
-
-    // 시간 정보를 저장하는 메서드
-    private void SaveTime()
-    {
-        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
-        {
-            { "TimeOfDay", dayNightCycleManager.TimeOfDay },
-            { "TimeType", (int)gameTimeScript.CurrentTimeType }
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-    }
-
-    // 시간 정보를 로드하는 메서드
-    private void LoadTime()
-    {
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("TimeOfDay", out object timeOfDay) &&
-            PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("TimeType", out object timeType))
-        {
-            dayNightCycleManager.TimeOfDay = (float)timeOfDay;
-            gameTimeScript.CurrentTimeType = (GameTime.TimeType)(int)timeType;
-            UpdateSunAndMoonVisibility();
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            SaveTime();
         }
     }
 }
