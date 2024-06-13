@@ -97,6 +97,7 @@ MonoBehaviour:
   - TwoHandAnimationRPC
   - RePullOutAnimationRPC
   - ResetShootAnimationRPC
+  - DeactiveOtherCharacterRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
