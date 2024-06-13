@@ -178,8 +178,18 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             weapon.SetActive(false);
         }
+        StartCoroutine(ActivateGunAfterDelay(GunNumber, 0.1f));
         // 0.1ÃÊ ÈÄ..
-        GunObject[GunNumber].SetActive(true);
+        //GunObject[GunNumber].SetActive(true);
+    }
+
+    private IEnumerator ActivateGunAfterDelay(int gunNumber, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (gunNumber >= 0 && gunNumber < GunObject.Length)
+        {
+            GunObject[gunNumber].SetActive(true);
+        }
     }
 
     public void GunActive(int GunNumber)
