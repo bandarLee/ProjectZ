@@ -52,6 +52,14 @@ public class CharacterItemAbility : CharacterAbility
 
     public void UnUsingHandAnimation()
     {
+        StartCoroutine(UnUsingHandAnimationAfterSeconds());
+        
+
+    }
+    private IEnumerator UnUsingHandAnimationAfterSeconds()
+    {
+
+        yield return new WaitForSeconds(0.1f);
         Owner.PhotonView.RPC(nameof(UnUsingHandAnimationRPC), RpcTarget.All);
 
     }
@@ -76,7 +84,7 @@ public class CharacterItemAbility : CharacterAbility
     private IEnumerator OneHandAnimationAfterSeconds()
     {
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         Owner.PhotonView.RPC(nameof(OneHandAnimationRPC), RpcTarget.All);
 
     }
