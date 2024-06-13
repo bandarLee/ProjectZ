@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -203,5 +204,35 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             GetComponent<Animator>().SetTrigger("Live");
         }
+    }
+    public void DeactiveOtherCharacterOrder()
+    {
+        PhotonView.RPC("DeactiveOtherCharacter", RpcTarget.AllBuffered);
+
+    }
+    [PunRPC]
+    public void DeactiveOtherCharacterRPC()
+    {
+        DeactiveOtherCharacter();
+    }
+    public void DeactiveOtherCharacter()
+    {
+        int myCurrentScene = (int)PhotonNetwork.LocalPlayer.CustomProperties["CurrentScene"];
+
+        foreach (Character character in FindObjectsOfType<Character>())
+        {
+            if (character.PhotonView.IsMine)
+            {
+                continue;
+            }
+
+            if (character.PhotonView.Owner.CustomProperties.TryGetValue("CurrentScene", out object otherScene))
+            {
+                if ((int)otherScene != myCurrentScene)
+                {
+                    character.gameObject.SetActive(false);
+                }
+            }
+        };
     }
 }

@@ -16,12 +16,15 @@ public class CharacterRotateAbility : CharacterAbility
     {
         SetMouseLock(true);
 
+        InitializeCamera();
+    }
+    public void InitializeCamera()
+    {
         if (Owner.PhotonView.IsMine)
         {
             GameObject.FindWithTag("FollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = CameraRoot;
         }
     }
-
     private void Update()
     {
         if (Owner.State == State.Death || !Owner.PhotonView.IsMine)
