@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Init();
         }
-        Character.LocalPlayerInstance.DeactiveOtherCharacterOrder();
 
     }
 
@@ -66,7 +65,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
 
             CharacterInfo.Instance._isGameStart = true;
-            Character.LocalPlayerInstance.DeactiveOtherCharacterOrder();
 
         }
         else
@@ -75,7 +73,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             */
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
             Character.LocalPlayerInstance._characterRotateAbility.InitializeCamera();
-            Character.LocalPlayerInstance.DeactiveOtherCharacterOrder();
 
         }
     }
@@ -89,6 +86,20 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
         PhotonNetwork.LoadLevel(sceneName);
     }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("CurrentScene"))
+        {
+            int newScene = (int)changedProps["CurrentScene"];
+            OnSceneChanged(targetPlayer, newScene);
+        }
+    }
 
+    private void OnSceneChanged(Player player, int newScene)
+    {
+        Debug.LogError($"Player {player.NickName} changed scene to {newScene}");
+        Character.LocalPlayerInstance.DeactiveOtherCharacter();
+
+    }
 
 }

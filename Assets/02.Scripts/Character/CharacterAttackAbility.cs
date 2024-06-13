@@ -40,15 +40,18 @@ public class CharacterAttackAbility : CharacterAbility
         if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1 && !Owner._characterRotateAbility.CharacterRotateLocked)
         {
             _attackTimer = 0f;
-            Owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, 1);
+            StartCoroutine(PerformAttack());
+
         }
     }
 
-    [PunRPC] 
-    public void PlayAttackAnimation(int index)
+    private IEnumerator PerformAttack()
     {
-        _animator.SetTrigger($"Attack{index}");
+        Owner._animator.SetBool("DoAttack", true);
+        yield return new WaitForSeconds(0.08f); 
+        Owner._animator.SetBool("DoAttack", false);
     }
+
 
     [PunRPC]
     public void WeaponActiveRPC(int WeaponNumber)
@@ -57,8 +60,21 @@ public class CharacterAttackAbility : CharacterAbility
         {
             weapon.SetActive(false);
         }
-        WeaponObject[WeaponNumber].SetActive(true);
+        StartCoroutine(WeaponActiveAfterDelay(WeaponNumber, 0.1f));
+        //WeaponObject[WeaponNumber].SetActive(true);
         _activeWeaponIndex = WeaponNumber;
+
+        Owner._animator.SetBool("WeaponPullOut", true);
+        Owner._animator.SetBool("ReWeaponPullOut", false);
+    }
+
+    private IEnumerator WeaponActiveAfterDelay(int WeaponNumber, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (WeaponNumber >= 0 && WeaponNumber < WeaponObject.Length)
+        {
+            WeaponObject[WeaponNumber].SetActive(true);
+        }
     }
 
     public void WeaponActive(int WeaponNumber)
@@ -160,6 +176,9 @@ public class CharacterAttackAbility : CharacterAbility
             weapon.SetActive(false);
         }
         _activeWeaponIndex = -1;
+
+        Owner._animator.SetBool("WeaponPullOut", false);
+        Owner._animator.SetBool("ReWeaponPullOut", true);
     }
 
     public void DeactivateAllWeapons()
