@@ -11,7 +11,8 @@ public class ItemUseManager : MonoBehaviour
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
     private CharacterItemAbility characterItemAbility;
-    public UI_BookText ui_BookText; // BookText를 public으로 수정
+    public UI_BookText uI_BookText; 
+    public UI_DiskText uI_DiskText;
 
     private void Awake()
     {
@@ -222,7 +223,7 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("Player used a Book.");
-                ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
@@ -334,31 +335,27 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("Player used a Book");
-                ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
-                //DecreaseItemQuantity(item);
+                uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 break;
             case "디스크1":
                 if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk1");
-                    //hintLog.UpdateHintText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
-                    DecreaseItemQuantity(item);
+                    uI_DiskText.DisplayText_1("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
                 }
                 break;
             case "디스크2":
                 if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk2");
-                    //hintLog.UpdateHintText("마지막 생명과 함께 최후의 섬으로 가라.");
-                    DecreaseItemQuantity(item);
+                    uI_DiskText.DisplayText_2("마지막 생명과 함께 최후의 섬으로 가라.");
                 }
                 break;
             case "디스크3":
                 if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk3");
-                    //hintLog.UpdateHintText("<The Last Yggdrasil>");
-                    DecreaseItemQuantity(item);
+                    uI_DiskText.DisplayText_3("<The Last Yggdrasil>.");
                 }
                 break;
             default:
