@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_InputField NicknameInput;
     public TextMeshProUGUI connectionInfoText;
     public Button joinButton;
-
+    public string randomScene;
     private void Start()
     {
         PhotonNetwork.GameVersion = gameVersion;
@@ -54,7 +54,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
-            PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
+            string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
+            //string sceneToLoad = "City_1";
+
+            int randomIndex = Random.Range(0, scenes.Length);
+            Hashtable SceneProperties = new Hashtable();
+            SceneProperties.Add("CurrentScene", randomIndex);
+            //SceneProperties.Add("CurrentScene", 0);
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
+
+
+            randomScene = scenes[randomIndex];
+            PhotonNetwork.JoinOrCreateRoom(randomScene, roomOptions, TypedLobby.Default);
         }
         else
         {
@@ -68,42 +80,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectionInfoText.text = "파티에 참가합니다.";
 
 
-        string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
-        //string sceneToLoad = "City_1";
 
-        int randomIndex = Random.Range(0, scenes.Length);
 
         // 현재 씬을 포톤에 업로드
-        Hashtable SceneProperties = new Hashtable();
-        SceneProperties.Add("CurrentScene", randomIndex);
-        string randomScene = scenes[randomIndex];
-
-        CreateRoomForScene(randomScene);
-
-        //SceneProperties.Add("CurrentScene", 0);
-
-        PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
-
-
+       
 
         PhotonNetwork.LoadLevel(randomScene);
         //PhotonNetwork.LoadLevel(sceneToLoad);
     }
-    private void CreateRoomForScene(string sceneName)
-    {
-        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
-        roomOptions.CustomRoomProperties = new Hashtable { { "SceneName", sceneName } };
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "SceneName" };
-
-        PhotonNetwork.JoinOrCreateRoom(sceneName, roomOptions, TypedLobby.Default);
-    }
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    {
-        if (propertiesThatChanged.ContainsKey("SceneName"))
-        {
-            string sceneName = (string)propertiesThatChanged["SceneName"];
-            PhotonNetwork.LoadLevel(sceneName);
-        }
-    }
 }
-
