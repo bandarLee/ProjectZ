@@ -1,4 +1,5 @@
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class ItemUseManager : MonoBehaviour
@@ -12,33 +13,31 @@ public class ItemUseManager : MonoBehaviour
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
     private CharacterItemAbility characterItemAbility;
+    private UI_BookText BookText;
 
-    public UI_BookText ui_BookText;
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         computerTrigger = FindObjectOfType<UseComputerTrigger>();
-        attackAbility = Character.LocalPlayerInstance._attackability; 
+        attackAbility = Character.LocalPlayerInstance._attackability;
         gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
-        if(quickSlotManager == null)
+        if (quickSlotManager == null)
         {
             quickSlotManager = FindObjectOfType<QuickSlotManager>();
         }
         characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
     }
-
-   
 
     public void ApplyEffect(Item item)
     {
@@ -50,11 +49,9 @@ public class ItemUseManager : MonoBehaviour
             case ItemType.Heal:
                 ApplyHealEffect(item.itemName);
                 DecreaseItemQuantity(item);
-
                 break;
             case ItemType.Mental:
                 ApplyMentalEffect(item);
-
                 break;
             case ItemType.Weapon:
                 ApplyWeaponEffect(item.itemName, item);
@@ -69,23 +66,24 @@ public class ItemUseManager : MonoBehaviour
 
         UpdateUI();
     }
+
     public void UseConsumable(Item item)
     {
-        if(item.itemType == ItemType.Consumable)
+        if (item.itemType == ItemType.Consumable)
         {
             DecreaseItemQuantity(item);
         }
         UpdateUI();
-
     }
+
     private void HandCount(Item item)
     {
         characterItemAbility.UnUsingHandAnimation();
-        if (item.itemType ==  ItemType.ETC || item.itemType == ItemType.Gun)
+        if (item.itemType == ItemType.ETC || item.itemType == ItemType.Gun)
         {
             characterItemAbility.TwoHandAnimation();
         }
-        else if(item.itemType == ItemType.Weapon)
+        else if (item.itemType == ItemType.Weapon)
         {
             return;
         }
@@ -104,32 +102,24 @@ public class ItemUseManager : MonoBehaviour
         switch (item.itemType)
         {
             case ItemType.Food:
-                //왼손이나 나머지부분들은 다 Run하는거처럼
-
                 EquipFood(item.itemName);
                 break;
             case ItemType.Heal:
-                //왼손이나 나머지부분들은 다 Run하는거처럼
                 EquipHeal(item.itemName);
                 break;
             case ItemType.Mental:
-                //왼손이나 나머지부분들은 다 Run하는거처럼
                 EquipMental(item.itemName);
                 break;
             case ItemType.Weapon:
-                //지금상태유지
                 EquipWeapon(item.itemName);
                 break;
             case ItemType.ETC:
-                //양손(상체)
                 EquipEtc(item.itemName);
                 break;
             case ItemType.Consumable:
-                //왼손이나 나머지부분들은 다 Run하는거처럼
                 EquipConsumable(item.itemName);
                 break;
             case ItemType.Gun:
-                //양손(상체)
                 EquipGun(item.itemName);
                 break;
             default:
@@ -182,8 +172,8 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("책을 들었음");
+                //ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 break;
-
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -192,51 +182,38 @@ public class ItemUseManager : MonoBehaviour
 
     private void EquipWeapon(string itemName)
     {
-
-
         switch (itemName)
-            {
-                case "도끼":
-                    Debug.Log("플레이어가 도끼를 들었음");
-                    attackAbility.WeaponActive(0);
-                    
-                    break;
-                case "배트":
-                    Debug.Log("플레이어가 야구배트를 들었음");
-                    attackAbility.WeaponActive(1);
+        {
+            case "도끼":
+                Debug.Log("플레이어가 도끼를 들었음");
+                attackAbility.WeaponActive(0);
                 break;
-                case "삽":
-                    Debug.Log("플레이어가 삽을 들었음");
-                    attackAbility.WeaponActive(2);
-                    
+            case "배트":
+                Debug.Log("플레이어가 야구배트를 들었음");
+                attackAbility.WeaponActive(1);
                 break;
-
-
+            case "삽":
+                Debug.Log("플레이어가 삽을 들었음");
+                attackAbility.WeaponActive(2);
+                break;
             default:
-                    Debug.LogWarning("Unknown weapon item.");
-                    break;
-            }
-        
-           
+                Debug.LogWarning("Unknown weapon item.");
+                break;
+        }
     }
+
     private void EquipGun(string itemName)
     {
-
-
         switch (itemName)
         {
             case "총_라이플":
                 Debug.Log("플레이어가 총을 들었음");
                 gunFireAbility.GunActive(0);
                 break;
-          
-
             default:
                 Debug.LogWarning("Unknown Gun item.");
                 break;
         }
-
-
     }
 
     private void EquipEtc(string itemName)
@@ -245,17 +222,19 @@ public class ItemUseManager : MonoBehaviour
         {
             case "지도":
                 Debug.Log("Player found a map.");
-
                 break;
             case "열쇠":
                 Debug.Log("Player found a key.");
-
+                break;
+            case "책":
+                Debug.Log("Player found a Book.");
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
         }
     }
+
     private void EquipConsumable(string itemName)
     {
         switch (itemName)
@@ -263,20 +242,19 @@ public class ItemUseManager : MonoBehaviour
             case "총알":
                 Debug.Log("총알을 들었음");
                 break;
-            
-
             default:
                 Debug.LogWarning("Unknown Consumable item.");
                 break;
         }
     }
+
     private void ApplyFoodEffect(Item item)
     {
         switch (item.itemName)
         {
             case "고기":
                 DecreaseItemQuantity(item);
-                Character.LocalPlayerInstance.Stat.Hunger += 20; 
+                Character.LocalPlayerInstance.Stat.Hunger += 20;
                 break;
             case "빵":
                 DecreaseItemQuantity(item);
@@ -318,6 +296,10 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player happiness increased.");
                 // PlayerStatus.Instance.IncreaseHappiness(15);
                 break;
+          /*  case "책":
+                DecreaseItemQuantity(item);
+               // ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                break;*/
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -340,7 +322,6 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("플레이어가 삽을 사용함");
                 // Player.Instance.UseWeapon(shovel);
                 break;
-
             default:
                 Debug.LogWarning("Unknown weapon item.");
                 break;
@@ -355,7 +336,6 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a map.");
                 // Player.Instance.UseMap();
                 break;
-
             case "열쇠":
                 Debug.Log("Player used a key.");
                 var policeTrigger = FindObjectOfType<PoliceTrigger>();
@@ -365,15 +345,11 @@ public class ItemUseManager : MonoBehaviour
                 }
                 DecreaseItemQuantity(item);
                 break;
-
             case "책":
                 Debug.Log("Player used a Book");
-                if (hintLog != null)
-                {
-                   
-                }
+                BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                //DecreaseItemQuantity(item);
                 break;
-
             case "디스크1":
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
@@ -382,7 +358,6 @@ public class ItemUseManager : MonoBehaviour
                     DecreaseItemQuantity(item);
                 }
                 break;
-
             case "디스크2":
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
@@ -391,7 +366,6 @@ public class ItemUseManager : MonoBehaviour
                     DecreaseItemQuantity(item);
                 }
                 break;
-
             case "디스크3":
                 if (hintLog != null && computerTrigger.isPlayerInTrigger)
                 {
@@ -400,7 +374,6 @@ public class ItemUseManager : MonoBehaviour
                     DecreaseItemQuantity(item);
                 }
                 break;
-
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
@@ -426,28 +399,19 @@ public class ItemUseManager : MonoBehaviour
                     quickSlotManager.RemoveItemFromQuickSlots(item);
 
                     inventoryUI.CloseItemInfo();
-
                 }
-
-
             }
         }
     }
-
 
     public void UseItem(Item item, float duration)
     {
         StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
     }
+
     public void UpdateUI()
     {
-
         inventoryUI.UpdateInventoryUI();
-        
-
-
         quickSlotManager.UpdateQuickSlotUI();
-        
     }
-
 }
