@@ -13,9 +13,9 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
     {
         if (itemPresetsContainer == null)
         {
-            Debug.LogError("ItemPresetsContainer is not set.");
-            return;
+            itemPresetsContainer = FindObjectOfType<ItemPresets>();
         }
+
 
         if (PhotonNetwork.IsMasterClient)
         {

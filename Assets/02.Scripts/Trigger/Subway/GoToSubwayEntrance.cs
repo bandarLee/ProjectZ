@@ -6,6 +6,7 @@ using Photon.Pun; // 포톤 네임스페이스 추가
 
 public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
 {
+    public GameObject UILoading;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -14,6 +15,7 @@ public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null && photonView.IsMine)
             {
+                UILoading.SetActive(true);
                 LoadSubwayScene();
             }
         }
