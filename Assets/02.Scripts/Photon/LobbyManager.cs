@@ -68,22 +68,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectionInfoText.text = "파티에 참가합니다.";
 
 
-        //string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
-        string sceneToLoad = "City_1";
+        string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
+        //string sceneToLoad = "City_1";
 
-        //int randomIndex = Random.Range(0, scenes.Length);
+        int randomIndex = Random.Range(0, scenes.Length);
 
         // 현재 씬을 포톤에 업로드
         Hashtable SceneProperties = new Hashtable();
-        //SceneProperties.Add("CurrentScene", randomIndex);
-        SceneProperties.Add("CurrentScene", 0);
+        SceneProperties.Add("CurrentScene", randomIndex);
+        //SceneProperties.Add("CurrentScene", 0);
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
 
 
-        //string randomScene = scenes[randomIndex];
+        string randomScene = scenes[randomIndex];
 
-        //PhotonNetwork.LoadLevel(randomScene);
-        PhotonNetwork.LoadLevel(sceneToLoad);
+        PhotonNetwork.LoadLevel(randomScene);
+        //PhotonNetwork.LoadLevel(sceneToLoad);
     }
 }
