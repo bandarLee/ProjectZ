@@ -47,16 +47,24 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     {
         string itemName = newItem.uniqueId;
         items[itemName] = newItem;
-
-        if (itemQuantities.ContainsKey(itemName))
+        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
         {
-            itemQuantities[itemName]++;
+            string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
+            newItem.uniqueId = uniqueItemName;
+            items[uniqueItemName] = newItem;
+            itemQuantities[uniqueItemName] = 1;
         }
         else
         {
-            itemQuantities[itemName] = 1;
+            if (itemQuantities.ContainsKey(itemName))
+            {
+                itemQuantities[itemName]++;
+            }
+            else
+            {
+                itemQuantities[itemName] = 1;
+            }
         }
-
         if (synchronize && photonView.IsMine)
         {
             photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
@@ -75,11 +83,8 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     {
         if (items.ContainsKey(itemName))
         {
-            if (itemQuantities[itemName] > 1)
-            {
-                itemQuantities[itemName]--;
-            }
-            else
+            itemQuantities[itemName]--;
+            if (itemQuantities[itemName] <= 0)
             {
                 items.Remove(itemName);
                 itemQuantities.Remove(itemName);

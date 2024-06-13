@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Photon.Pun; // 포톤 네임스페이스 추가
+using Photon.Pun; 
 
 public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
 {
