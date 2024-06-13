@@ -8,7 +8,7 @@ public class UI_HintLog : MonoBehaviourPunCallbacks
 {
     public static UI_HintLog Instance { get; private set; }
 
-    public TextMeshProUGUI HintText;
+    //public TextMeshProUGUI HintText;
     public TextMeshProUGUI LogText;
 
     private string _logText = string.Empty;
@@ -18,13 +18,13 @@ public class UI_HintLog : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    public void UpdateHintText(string newText)
+   /* public void UpdateHintText(string newText)
     {
         if (HintText != null)
         {
             HintText.text = newText;
         }
-    }
+    }*/
 
     public void AddLog(string logMessage)
     {
