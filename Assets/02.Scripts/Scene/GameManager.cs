@@ -80,10 +80,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void LoadCity(CityZoneType cityZoneType)
     {
         string sceneName = "City_" + ((int)cityZoneType + 1).ToString();
-        Hashtable SceneProperties = new Hashtable();
-        SceneProperties.Add("CurrentScene", (int)cityZoneType);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
-        PhotonNetwork.LoadLevel(sceneName);
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+        roomOptions.CustomRoomProperties = new Hashtable { { "SceneName", sceneName } };
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "SceneName" };
+
+        PhotonNetwork.JoinOrCreateRoom(sceneName, roomOptions, TypedLobby.Default);
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {

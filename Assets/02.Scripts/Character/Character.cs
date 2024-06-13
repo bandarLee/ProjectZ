@@ -40,7 +40,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         if (PhotonView.IsMine)
         {
             LocalPlayerInstance = this;
-            DontDestroyOnLoad(gameObject);
 
         }
     }

@@ -76,14 +76,34 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // ÇöÀç ¾ÀÀ» Æ÷Åæ¿¡ ¾÷·Îµå
         Hashtable SceneProperties = new Hashtable();
         SceneProperties.Add("CurrentScene", randomIndex);
+        string randomScene = scenes[randomIndex];
+
+        CreateRoomForScene(randomScene);
+
         //SceneProperties.Add("CurrentScene", 0);
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
 
 
-        string randomScene = scenes[randomIndex];
 
         PhotonNetwork.LoadLevel(randomScene);
         //PhotonNetwork.LoadLevel(sceneToLoad);
     }
+    private void CreateRoomForScene(string sceneName)
+    {
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+        roomOptions.CustomRoomProperties = new Hashtable { { "SceneName", sceneName } };
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "SceneName" };
+
+        PhotonNetwork.JoinOrCreateRoom(sceneName, roomOptions, TypedLobby.Default);
+    }
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("SceneName"))
+        {
+            string sceneName = (string)propertiesThatChanged["SceneName"];
+            PhotonNetwork.LoadLevel(sceneName);
+        }
+    }
 }
+
