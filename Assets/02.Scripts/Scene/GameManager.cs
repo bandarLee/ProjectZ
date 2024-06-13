@@ -1,7 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -76,6 +75,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void LoadCity(CityZoneType cityZoneType)
     {
         string sceneName = "City_" + ((int)cityZoneType + 1).ToString();
-        SceneManager.LoadScene(sceneName);
+        PhotonNetwork.LoadLevel(sceneName);
     }
 }

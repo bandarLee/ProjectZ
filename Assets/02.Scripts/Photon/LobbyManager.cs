@@ -78,6 +78,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         string randomScene = scenes[randomIndex];
 
-        SceneManager.LoadScene(randomScene);
+        PhotonNetwork.LoadLevel(randomScene);
     }
 }
