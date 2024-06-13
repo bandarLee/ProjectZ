@@ -1,19 +1,17 @@
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 
 public class ItemUseManager : MonoBehaviour
 {
     public static ItemUseManager Instance;
     public UseComputerTrigger computerTrigger;
-    public UI_HintLog hintLog;
     public QuickSlotManager quickSlotManager;
     public InventoryUI inventoryUI;
     public UI_Gunfire uI_Gunfire;
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
     private CharacterItemAbility characterItemAbility;
-    private UI_BookText BookText;
+    public UI_BookText ui_BookText; // BookText를 public으로 수정
 
     private void Awake()
     {
@@ -79,7 +77,7 @@ public class ItemUseManager : MonoBehaviour
     private void HandCount(Item item)
     {
         characterItemAbility.UnUsingHandAnimation();
-        if (item.itemType == ItemType.ETC || item.itemType == ItemType.Gun)
+        if (item.itemType == ItemType.Gun)
         {
             characterItemAbility.TwoHandAnimation();
         }
@@ -170,10 +168,6 @@ public class ItemUseManager : MonoBehaviour
             case "술":
                 Debug.Log("술을 들었음");
                 break;
-            case "책":
-                Debug.Log("책을 들었음");
-                //ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
-                break;
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -227,7 +221,8 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player found a key.");
                 break;
             case "책":
-                Debug.Log("Player found a Book.");
+                Debug.Log("Player used a Book.");
+                ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
@@ -292,14 +287,6 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 20;
                 break;
-            case "담배":
-                Debug.Log("Player happiness increased.");
-                // PlayerStatus.Instance.IncreaseHappiness(15);
-                break;
-          /*  case "책":
-                DecreaseItemQuantity(item);
-               // ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
-                break;*/
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -347,11 +334,11 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("Player used a Book");
-                BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                ui_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 //DecreaseItemQuantity(item);
                 break;
             case "디스크1":
-                if (hintLog != null && computerTrigger.isPlayerInTrigger)
+                if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk1");
                     //hintLog.UpdateHintText("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
@@ -359,7 +346,7 @@ public class ItemUseManager : MonoBehaviour
                 }
                 break;
             case "디스크2":
-                if (hintLog != null && computerTrigger.isPlayerInTrigger)
+                if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk2");
                     //hintLog.UpdateHintText("마지막 생명과 함께 최후의 섬으로 가라.");
@@ -367,7 +354,7 @@ public class ItemUseManager : MonoBehaviour
                 }
                 break;
             case "디스크3":
-                if (hintLog != null && computerTrigger.isPlayerInTrigger)
+                if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a Disk3");
                     //hintLog.UpdateHintText("<The Last Yggdrasil>");

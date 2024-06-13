@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 
 public class UI_BookText : MonoBehaviour
 {
@@ -10,15 +9,11 @@ public class UI_BookText : MonoBehaviour
 
     private string fullText;
 
-    private void Start()
-    {
-        BookText.text = "";
-    }
-
     public void DisplayText(string text)
     {
         fullText = text;
-        BookText.text = "";
+        BookText.text = text;
+        BookText.gameObject.SetActive(true); 
         StartCoroutine(TypeText());
     }
 
@@ -30,5 +25,8 @@ public class UI_BookText : MonoBehaviour
             BookText.maxVisibleCharacters = i;
             yield return new WaitForSeconds(typingSpeed);
         }
+        yield return new WaitForSeconds(1.5f);
+        BookText.text = "";
+        BookText.gameObject.SetActive(false); // 텍스트를 다시 숨기기
     }
 }
