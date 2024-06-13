@@ -115,7 +115,7 @@ public class CharacterGunFireAbility : CharacterAbility
             _shotTimer = 0;
             StartCoroutine(MuzzleEffectOn_Coroutine());
 
-            
+
             /* 체력 닳는 기능 */
             if (bulletItem != null)
             {
@@ -178,6 +178,7 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             weapon.SetActive(false);
         }
+        // 0.1초 후..
         GunObject[GunNumber].SetActive(true);
     }
 
