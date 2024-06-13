@@ -91,8 +91,6 @@ public class ItemUseManager : MonoBehaviour
         {
             characterItemAbility.OneHandAnimation();
         }
-            
-        
     }
 
     public void EquipItem(Item item)

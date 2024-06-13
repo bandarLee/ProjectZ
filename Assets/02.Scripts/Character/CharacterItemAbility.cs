@@ -49,9 +49,7 @@ public class CharacterItemAbility : CharacterAbility
             Debug.LogWarning("아이템 프리팹을 찾을 수 없습니다: " + itemName);
         }
     }
-    //
 
-   
     public void UnUsingHandAnimation()
     {
         Owner.PhotonView.RPC(nameof(UnUsingHandAnimationRPC), RpcTarget.All);
@@ -69,8 +67,6 @@ public class CharacterItemAbility : CharacterAbility
 
 
     }
-
-
 
     public void OneHandAnimation()
     {
@@ -96,6 +92,7 @@ public class CharacterItemAbility : CharacterAbility
         Owner.PhotonView.RPC(nameof(TwoHandAnimationRPC), RpcTarget.All);
 
     }
+
     [PunRPC]
     public void OneHandAnimationRPC()
     {
@@ -104,8 +101,6 @@ public class CharacterItemAbility : CharacterAbility
 
         Owner._animator.SetInteger("UsingHand", 1);
     }
-
-
 
     [PunRPC]
     public void TwoHandAnimationRPC()
@@ -117,6 +112,4 @@ public class CharacterItemAbility : CharacterAbility
         Owner._animator.SetInteger("UsingHand", 2);
 
     }
-
-
 }

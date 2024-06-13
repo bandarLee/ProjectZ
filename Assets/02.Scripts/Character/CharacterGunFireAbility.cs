@@ -25,6 +25,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private Inventory _playerinventory;
 
+
     private void Start()
     {
         StartCoroutine(InitializeCrossHair());
@@ -37,6 +38,7 @@ public class CharacterGunFireAbility : CharacterAbility
             muzzleEffect.SetActive(false);
         }
         _playerinventory = Inventory.Instance;
+
     }
     private IEnumerator InitializeCrossHair()
     {
@@ -55,7 +57,6 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         if (Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
-            Owner.PhotonView.RPC(nameof(PlayRifleIdleAnimation), RpcTarget.All);
             GunShoot();
         }
     }
@@ -106,8 +107,6 @@ public class CharacterGunFireAbility : CharacterAbility
                 _isReloading = false;
             }
 
-            Owner.PhotonView.RPC(nameof(PlayShotAnimation), RpcTarget.All, 1);
-
             CurrentGun.BulletRemainCount--;
             Item bulletItem = GetBulletItem();
 
@@ -124,21 +123,6 @@ public class CharacterGunFireAbility : CharacterAbility
             }
 
         }
-    }
-
-
-    [PunRPC]
-    public void PlayRifleIdleAnimation()
-    {
-        _animator.SetLayerWeight(2, 1);
-        //_animator.SetTrigger("PullOut");
-
-    }
-
-    [PunRPC]
-    public void PlayShotAnimation(int index)
-    {
-        _animator.SetTrigger($"Shot{index}");
     }
 
 
@@ -214,7 +198,11 @@ public class CharacterGunFireAbility : CharacterAbility
             gun.GetComponent<Gun>().BulletRemainCount = 0;
             gun.SetActive(false);
         }
-        ResetAnimation();
+        //ResetAnimation();
+        //characterItemAbility.UnUsingHandAnimation();
+        Owner._animator.SetBool("RePullOut", true);
+        Owner._animator.SetBool("isPullOut", false);
+        Owner._animator.SetInteger("UsingHand", 0);
     }
 
     public void DeactivateAllGuns()
@@ -224,10 +212,5 @@ public class CharacterGunFireAbility : CharacterAbility
             Owner.PhotonView.RPC(nameof(DeactivateAllGunsRPC), RpcTarget.All);
         }
         DeactivateAllGunsRPC(); // 로컬에서도 실행
-    }
-
-    private void ResetAnimation()
-    {
-        _animator.SetLayerWeight(2, 0);
     }
 }

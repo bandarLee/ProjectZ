@@ -191,8 +191,7 @@ public class QuickSlotManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
-/*                characterItemAbility.RifflePullOutAnimation();
-*/                UseQuickSlotItem(i);
+                UseQuickSlotItem(i);
             }
         }
     }
