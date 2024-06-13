@@ -12,6 +12,8 @@ public class ItemUseManager : MonoBehaviour
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
     private CharacterItemAbility characterItemAbility;
+
+    public UI_BookText ui_BookText;
     private void Awake()
     {
         if (Instance == null)
@@ -312,7 +314,7 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 20;
                 break;
-            case "책":
+            case "담배":
                 Debug.Log("Player happiness increased.");
                 // PlayerStatus.Instance.IncreaseHappiness(15);
                 break;
@@ -368,7 +370,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a Book");
                 if (hintLog != null)
                 {
-                    //hintLog.UpdateHintText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                   
                 }
                 break;
 
