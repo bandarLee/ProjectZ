@@ -42,6 +42,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 30;
         PhotonNetwork.PhotonServerSettings.DevRegion = "kr";
+        PhotonNetwork.AutomaticallySyncScene = false;
 
         if (PhotonNetwork.IsConnected)
         {
