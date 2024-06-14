@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1343564546116276924}
   - component: {fileID: 8983521300193964434}
   m_Layer: 7
-  m_Name: Police_Cabinet2
+  m_Name: Police_Cabinet_Farm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

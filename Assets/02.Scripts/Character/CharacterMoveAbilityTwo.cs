@@ -85,15 +85,13 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public void Teleport(Vector3 newPosition)
     {
-        Vector3 originalVelocity = _rigidbody.velocity; // 현재 리지드바디의 속도와 각속도를 저장
-        Vector3 originalAngularVelocity = _rigidbody.angularVelocity;
+
 
         _rigidbody.velocity = Vector3.zero; // 리지드바디의 속도와 각속도를 일시적으로 0으로 설정
         _rigidbody.angularVelocity = Vector3.zero;
 
         transform.position = newPosition; // 캐릭터의 위치를 새로운 위치로 갱신
 
-        _rigidbody.velocity = originalVelocity; // 리지드바디의 속도와 각속도를 원래대로 복구
-        _rigidbody.angularVelocity = originalAngularVelocity;
+
     }
 }
