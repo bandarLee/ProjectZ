@@ -635,13 +635,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a3347fd1409824ab1610a1dda895f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemName: "\uB514\uC2A4\uD06C1"
-    icon: {fileID: 21300000, guid: 82a706c5d3e6ed84a8a03c09433d42e9, type: 3}
-    itemType: 4
-    itemEffect: "\uB514\uC2A4\uD06C1"
-    itemDescription: "\uC5B4\uB518\uAC00\uC5D0 \uC5F0\uACB0\uD574 \uB0B4\uC6A9\uC744
-      \uD655\uC778\uD574 \uBD10\uC57C \uD560 \uAC83 \uAC19\uB2E4  "
+  SpawnedItem:
+    itemName: 
+    icon: {fileID: 0}
+    itemType: 0
+    itemEffect: 
+    itemDescription: 
     uniqueId: 
 --- !u!114 &3765468250381281326
 MonoBehaviour:

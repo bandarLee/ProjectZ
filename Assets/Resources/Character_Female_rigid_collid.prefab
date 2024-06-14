@@ -7733,9 +7733,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Jump
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack1
   - Type: 1
     SynchronizeType: 2
     Name: Speed
@@ -7756,16 +7753,10 @@ MonoBehaviour:
     Name: Damage
   - Type: 9
     SynchronizeType: 0
-    Name: Attack2
-  - Type: 9
-    SynchronizeType: 0
     Name: AimingIdle
   - Type: 9
     SynchronizeType: 0
     Name: Shot1
-  - Type: 9
-    SynchronizeType: 0
-    Name: PullOut
   - Type: 3
     SynchronizeType: 0
     Name: UsingHand

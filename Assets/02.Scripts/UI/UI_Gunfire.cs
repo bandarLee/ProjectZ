@@ -35,13 +35,12 @@ public class UI_Gunfire : MonoBehaviour
         {
             tpFollow = followCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         }
-
     }
     private IEnumerator InitiategunFireAbility()
     {
         yield return new WaitForSeconds(1.0f);
         gunFireAbility = Character.LocalPlayerInstance.GetComponent<CharacterGunFireAbility>();
-
+        gunFireAbility.uI_Gunfire = FindObjectOfType<UI_Gunfire>();
     }
 
     public void ToggleSightMode(bool isAiming)

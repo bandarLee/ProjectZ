@@ -16,6 +16,8 @@ public class UseComputerTrigger : MonoBehaviour
     private Coroutine noDiskTextCoroutine;
 
     public bool isPlayerInTrigger = false;
+    public Item DiskItem;
+
 
     private void Start()
     {
@@ -41,14 +43,42 @@ public class UseComputerTrigger : MonoBehaviour
             Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
         }
     }
+    void Update()
+    {
+        if ((isPlayerInTrigger)&& Input.GetMouseButtonDown(0))
+        {
+            DiskItem = null;
 
+            foreach (Item item in playerInventory.items.Values)
+                {
+                    if (item.itemType == ItemType.ETC && (item.itemName == "디스크1" || item.itemName == "디스크2" || item.itemName == "디스크3"))
+                    {
+                        DiskItem = item;
+                    break;
+
+                }
+                if (DiskItem == null)
+                    {
+                        if (noDiskTextCoroutine != null)
+                        {
+                            StopCoroutine(noDiskTextCoroutine);
+                        }
+                        NoDiskText.gameObject.SetActive(true);
+                        noDiskTextCoroutine = StartCoroutine(HideNoDiskTextAfterDelay(1.5f));
+                    }
+                }
+            
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetMouseButtonDown(0))
+        if (other.CompareTag("Player") && Character.LocalPlayerInstance.PhotonView.IsMine)
         {
             UseComputerText.gameObject.SetActive(true);
             isPlayerInTrigger = true;
         }
+        
     }
 
     private void OnTriggerExit(Collider other)
@@ -59,39 +89,9 @@ public class UseComputerTrigger : MonoBehaviour
             isPlayerInTrigger= false;
         }
     }
-    private void Update()
-    {
-        if (isPlayerInTrigger)
-        {
-            // 아이템 사용 매니저를 통해 디스크 아이템을 사용
-            Item DiskItem = GetDiskItem();
-            if (DiskItem != null)
-            {
-                itemUseManager.ApplyEffect(DiskItem);
-            }
-            else
-            {
-                if (noDiskTextCoroutine != null)
-                {
-                    StopCoroutine(noDiskTextCoroutine);
-                }
-                NoDiskText.gameObject.SetActive(true);
-                noDiskTextCoroutine = StartCoroutine(HideNoDiskTextAfterDelay(3f));
-            }
-        }
-    }
 
-    private Item GetDiskItem()
-    {
-        foreach (var item in playerInventory.items.Values)
-        {
-            if (item.itemType == ItemType.ETC && item.itemName == "디스크1"|| item.itemName == "디스크2"||item.itemName == "디스크3")
-            {
-                return item;
-            }
-        }
-        return null;
-    }
+
+    
 
     private IEnumerator HideNoDiskTextAfterDelay(float delay)
     {

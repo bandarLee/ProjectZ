@@ -225,6 +225,12 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a Book.");
                 uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 break;
+            case "디스크1":
+                break;
+            case "디스크2":
+                break;
+            case "디스크3":
+                break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
