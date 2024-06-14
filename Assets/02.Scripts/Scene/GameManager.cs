@@ -69,23 +69,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         return spawnPosition[(int)lastZone].position;
     }
-    private IEnumerator ActivateCitySectorsAndSpawnPlayer(int spawnSector)
+    private  void ActivateCitySectorsAndSpawnPlayer(int spawnSector)
     {
-        yield return StartCoroutine(ActivateCitySectors((int)lastZone));
+        ActivateCitySectors((int)lastZone);
         SpawnPlayer(spawnSector);
     }
-    private IEnumerator ActivateCitySectors(int activeIndex)
+    private void ActivateCitySectors(int activeIndex)
     {
         foreach (GameObject citysector in CitySectors)
         {
-            citysector.SetActive(false);
+            citysector.SetActive(false);  
         }
 
-        yield return null; 
 
         CitySectors[activeIndex].SetActive(true);
 
-        yield return null; 
     }
     private void SpawnPlayer(int spawnSector)
     {
@@ -108,7 +106,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         SceneProperties.Add("CurrentScene", (int)lastZone);
         PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
 
-        StartCoroutine(ActivateCitySectorsAndSpawnPlayer((int)lastZone));
+        ActivateCitySectorsAndSpawnPlayer((int)lastZone);
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
