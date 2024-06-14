@@ -209,10 +209,12 @@ public class QuickSlotManager : MonoBehaviour
                 case ItemType.Food :
                     ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
                     inventoryManager.UpdateAllInventories();
-
                     break;
                 default:
-
+                case ItemType.ETC:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
                     break;
             }
 

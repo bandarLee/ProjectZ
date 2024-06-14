@@ -44,7 +44,7 @@ public class UseComputerTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Input.GetMouseButtonDown(0))
         {
             UseComputerText.gameObject.SetActive(true);
             isPlayerInTrigger = true;
@@ -61,7 +61,7 @@ public class UseComputerTrigger : MonoBehaviour
     }
     private void Update()
     {
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInTrigger)
         {
             // 아이템 사용 매니저를 통해 디스크 아이템을 사용
             Item DiskItem = GetDiskItem();
@@ -95,7 +95,7 @@ public class UseComputerTrigger : MonoBehaviour
 
     private IEnumerator HideNoDiskTextAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(1.5f);
         NoDiskText.gameObject.SetActive(false);
     }
 }

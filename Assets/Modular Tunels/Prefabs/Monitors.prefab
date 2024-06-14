@@ -536,12 +536,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9026716300770077183}
   - {fileID: 4744772293104392}
   - {fileID: 4240516233511132}
   - {fileID: 4743908250278408}
   - {fileID: 4461724305502904}
   - {fileID: 4888932806345186}
-  - {fileID: 9026716300770077183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &33533213920952910
@@ -712,7 +712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1f27b123ca0b143a9f1f9a6919c5dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MissionText: {fileID: 0}
   UseComputerText: {fileID: 0}
   NoDiskText: {fileID: 0}
   isPlayerInTrigger: 0
