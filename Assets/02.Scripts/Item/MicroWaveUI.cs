@@ -8,7 +8,7 @@ public class MicroWaveUI : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FillSliderOverTime(5f)); 
+/*        StartCoroutine(FillSliderOverTime(5f)); */
     }
 
     private IEnumerator FillSliderOverTime(float duration)
