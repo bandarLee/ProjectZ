@@ -40,8 +40,18 @@ public class CitySceneMove : MonoBehaviour
 
     private void HandleTriggerEnter(GameObject player)
     {
+        int Direction = ((int)ThisTriggerType + 2) % 4;
+        int DestinateScene; 
+        if ((int)ThisTriggerType/2 == 0) 
+        {
+            DestinateScene = ((int)ThisTriggerCity + 1) % 6;
+        }
+        else
+        {
+            DestinateScene = ((int)ThisTriggerCity + 3) % 6;
+        }
 
-        CharacterInfo.Instance.SpawnDir = ((int)ThisTriggerType + 2);
+        CharacterInfo.Instance.SpawnDir = Direction + DestinateScene * 4;
         switch (ThisTriggerCity)
         {
             case CityZoneType.City_1:
