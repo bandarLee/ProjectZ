@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         _init = true;
         lastZone = cityZoneTypes[randomIndex];
-        SpawnPlayer(randomIndex);
+        ActivateCitySectorsAndSpawnPlayer((int)lastZone);
     }
 
 
