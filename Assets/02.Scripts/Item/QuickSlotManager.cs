@@ -106,10 +106,13 @@ public class QuickSlotManager : MonoBehaviour
         {
             selectColor.color = Color.white;
         }
-        SelectColors[slotIndex].color = Color.red;
+
+        Color customOrangeColor = new Color(255f / 255f, 120f / 255f, 0f / 255f);
+        SelectColors[slotIndex].color = customOrangeColor;
 
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
     }
+
 
     public void DropEquippedItem()
     {
