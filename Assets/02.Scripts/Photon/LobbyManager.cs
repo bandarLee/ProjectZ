@@ -65,6 +65,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         connectionInfoText.text = "파티에 참가합니다.";
 
-        PhotonNetwork.LoadLevel("City_1");
+        PhotonNetwork.LoadLevel("CityScene");
     }
 }
