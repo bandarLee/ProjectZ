@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using System.Collections;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class QuickSlotManager : MonoBehaviour
     public bool ItemUseLock = false;
 
     private Animator _animator;
-
+    public Image[] SelectColors; 
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -102,6 +101,13 @@ public class QuickSlotManager : MonoBehaviour
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
 
         currentEquippedItem = quickSlotItems[slotIndex];
+
+        foreach (Image selectColor in SelectColors)
+        {
+            selectColor.color = Color.white;
+        }
+        SelectColors[slotIndex].color = Color.red;
+
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
     }
 
@@ -211,10 +217,7 @@ public class QuickSlotManager : MonoBehaviour
                     inventoryManager.UpdateAllInventories();
                     break;
                 default:
-                case ItemType.ETC:
-                    ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
-                    inventoryManager.UpdateAllInventories();
-                    break;
+
                     break;
             }
 
