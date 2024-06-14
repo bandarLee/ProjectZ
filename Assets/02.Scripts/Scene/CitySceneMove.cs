@@ -42,9 +42,16 @@ public class CitySceneMove : MonoBehaviour
     {
         int Direction = ((int)ThisTriggerType + 2) % 4;
         int DestinateScene; 
-        if ((int)ThisTriggerType/2 == 0) 
+        if ((int)ThisTriggerType % 2 == 0) 
         {
-            DestinateScene = ((int)ThisTriggerCity + 1) % 6;
+            if ((int)ThisTriggerType / 2 == 0)
+            {
+                DestinateScene = ((int)ThisTriggerCity - 1) % 6;
+            }
+            else
+            {
+                DestinateScene = ((int)ThisTriggerCity + 1) % 6;
+            }
         }
         else
         {
