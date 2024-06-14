@@ -13,7 +13,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TMP_InputField NicknameInput;
     public TextMeshProUGUI connectionInfoText;
     public Button joinButton;
-    public string randomScene;
     private void Start()
     {
         PhotonNetwork.GameVersion = gameVersion;
@@ -43,7 +42,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 30;
         PhotonNetwork.PhotonServerSettings.DevRegion = "kr";
         PhotonNetwork.AutomaticallySyncScene = false;
-
         if (PhotonNetwork.IsConnected)
         {
             int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
@@ -52,21 +50,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 { "CharacterType", characterType }
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
-            string[] scenes = { "City_1", "City_2", "City_3", "City_4", "City_5", "City_6" };
-            //string sceneToLoad = "City_1";
-
-            int randomIndex = Random.Range(0, scenes.Length);
-            Hashtable SceneProperties = new Hashtable();
-            SceneProperties.Add("CurrentScene", randomIndex);
-            //SceneProperties.Add("CurrentScene", 0);
-
-            PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
-
-
-            randomScene = scenes[randomIndex];
-            PhotonNetwork.JoinOrCreateRoom(randomScene, roomOptions, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
         }
         else
         {
@@ -74,18 +59,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+
     // 플레이어마다 랜덤으로 씬 선택
     public override void OnJoinedRoom()
     {
         connectionInfoText.text = "파티에 참가합니다.";
 
-
-
-
-        // 현재 씬을 포톤에 업로드
-       
-
-        PhotonNetwork.LoadLevel(randomScene);
-        //PhotonNetwork.LoadLevel(sceneToLoad);
+        PhotonNetwork.LoadLevel("City_1");
     }
 }

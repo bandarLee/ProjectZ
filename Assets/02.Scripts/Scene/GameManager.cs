@@ -1,17 +1,20 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance { get; private set; }
     public bool _init = false;
 
+    public CityZoneType lastZone;
     public int Randomzone;
-    public Transform spawnPosition;
+    public Transform[] spawnPosition;
     public Transform[] SceneMovePosition;
-
+    public GameObject[] CitySectors;
 
     private void Awake()
     {
@@ -48,43 +51,64 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Init()
     {
+        int randomIndex = Random.Range(0, 6);
+        CityZoneType[] cityZoneTypes = (CityZoneType[])System.Enum.GetValues(typeof(CityZoneType));
+
+        Hashtable SceneProperties = new Hashtable();
+        SceneProperties.Add("CurrentScene", randomIndex);
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
+
         _init = true;
-        SpawnPlayer();
+        lastZone = cityZoneTypes[randomIndex];
+        SpawnPlayer(randomIndex);
     }
 
 
     public Vector3 GetSpawnPoint()
     {
-        return spawnPosition.position;
+        return spawnPosition[(int)lastZone].position;
     }
+    private IEnumerator ActivateCitySectorsAndSpawnPlayer(int spawnSector)
+    {
+        yield return StartCoroutine(ActivateCitySectors((int)lastZone));
+        SpawnPlayer(spawnSector);
+    }
+    private IEnumerator ActivateCitySectors(int activeIndex)
+    {
+        foreach (GameObject citysector in CitySectors)
+        {
+            citysector.SetActive(false);
+        }
 
-    private void SpawnPlayer()
+        yield return null; 
+
+        CitySectors[activeIndex].SetActive(true);
+
+        yield return null; 
+    }
+    private void SpawnPlayer(int spawnSector)
     {
         if (!CharacterInfo.Instance._isGameStart)
         {
-            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition.position, Quaternion.identity);
-
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
             CharacterInfo.Instance._isGameStart = true;
-
         }
         else
         {
-            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", SceneMovePosition[CharacterInfo.Instance.SpawnDir].position, Quaternion.identity);
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
-            Character.LocalPlayerInstance._characterRotateAbility.InitializeCamera();
-
         }
     }
 
 
     public void LoadCity(CityZoneType cityZoneType)
     {
-        string sceneName = "City_" + ((int)cityZoneType + 1).ToString();
-        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
-        roomOptions.CustomRoomProperties = new Hashtable { { "SceneName", sceneName } };
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "SceneName" };
+        lastZone = cityZoneType;
+        Hashtable SceneProperties = new Hashtable();
+        SceneProperties.Add("CurrentScene", (int)lastZone);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(SceneProperties);
 
-        PhotonNetwork.JoinOrCreateRoom(sceneName, roomOptions, TypedLobby.Default);
+        StartCoroutine(ActivateCitySectorsAndSpawnPlayer((int)lastZone));
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
