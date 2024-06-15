@@ -388,7 +388,10 @@ public class ItemUseManager : MonoBehaviour
                 {
                     inventory.items.Remove(itemName);
                     inventory.itemQuantities.Remove(itemName);
-                    quickSlotManager.currentEquippedItem = null;
+                    if(quickSlotManager.currentEquippedItem.itemType != ItemType.Gun)
+                    {
+                        quickSlotManager.currentEquippedItem = null;
+                    }
                     quickSlotManager.RemoveItemFromQuickSlots(item);
 
                     inventoryUI.CloseItemInfo();

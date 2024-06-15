@@ -23,7 +23,6 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private bool _isReloading = false;
 
-    private Inventory _playerinventory;
     private Camera mainCamera;
 
     private void Start()
@@ -38,7 +37,7 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             muzzleEffect.SetActive(false);
         }
-        _playerinventory = Inventory.Instance;
+        
 
     }
     private IEnumerator InitializeCrossHair()
@@ -63,7 +62,7 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     private Item GetBulletItem()
     {
-        foreach (var item in _playerinventory.items.Values)
+        foreach (var item in Inventory.Instance.items.Values)
         {
             if (item.itemType == ItemType.Consumable && item.itemName == "총알")
             {
@@ -85,7 +84,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
         /* 재장전 */
         // R키 누르면 1.5초 후 재장전(중간에 총 쏘는 행위를 하면 재장전 취소) 
-        if (Input.GetKeyDown(KeyCode.R) && CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount && GetBulletItem()!= null)
+        if (Input.GetKeyDown(KeyCode.R) && (CurrentGun.BulletRemainCount < CurrentGun.BulletMaxCount) && GetBulletItem()!= null)
         {
             if (!_isReloading)
             {
@@ -176,14 +175,14 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     public int CalculateRemainBullet(Item bullet)
     {
-        if (CurrentGun.BulletMaxCount < _playerinventory.itemQuantities[bullet.itemName])
+        if (CurrentGun.BulletMaxCount < Inventory.Instance.itemQuantities[bullet.itemName])
         {
             return CurrentGun.BulletMaxCount;
 
         }
         else
         {
-            return _playerinventory.itemQuantities[bullet.itemName];
+            return Inventory.Instance.itemQuantities[bullet.itemName];
         }
 
     }
@@ -251,6 +250,10 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             Owner.PhotonView.RPC(nameof(DeactivateAllGunsRPC), RpcTarget.All);
         }
+        uI_Gunfire.tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, -1.5f);
+
+        uI_Gunfire.HolographicDotSightUI.SetActive(false);
+        uI_Gunfire.CrosshairUI.SetActive(true);
         DeactivateAllGunsRPC(); // 로컬에서도 실행
     }
 }

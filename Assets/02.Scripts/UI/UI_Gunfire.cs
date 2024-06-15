@@ -15,7 +15,7 @@ public class UI_Gunfire : MonoBehaviour
     //먹을때 이 동그라미 슬라이더 쓰는거에용
 
     public CinemachineVirtualCamera followCamera;
-    private Cinemachine3rdPersonFollow tpFollow;
+    public Cinemachine3rdPersonFollow tpFollow;
 
     // UI 위에 text로 표시하기 (ex. 30/30, 재장전 중입니다)
     public TextMeshProUGUI GunTextUI;

@@ -13,6 +13,7 @@ public class Item
 
 public enum ItemType
 {
+    Default,
     Food,
     Weapon,
     Heal,
