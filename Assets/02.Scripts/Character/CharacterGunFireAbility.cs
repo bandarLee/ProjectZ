@@ -19,7 +19,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private float _shotTimer;
 
     public UI_Gunfire uI_Gunfire;
-    public List<GameObject> MuzzleEffects; // ÀÌÆåÆ® ¹ÝÂ¦ 
+    public List<GameObject> MuzzleEffects; 
 
     private bool _isReloading = false;
 
@@ -36,7 +36,10 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             muzzleEffect.SetActive(false);
         }
-        
+        if (bulletPrefab != null)
+        {
+            Bullet = bulletPrefab.GetComponent<Bullet>();
+        }
 
     }
     private IEnumerator InitializeCrossHair()
@@ -72,7 +75,7 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     void GunShoot() 
     {
-        uI_Gunfire.RefreshUI(); // ¾ê´Â ÃÑ¾Ë°³¼ö, -ÀÌÁ¦ºÎÅÍ ÃÑÀ» ÀåÂøÇßÀ» ¶§¸¸ ¶ß´Â ³»¿ëµé-
+        uI_Gunfire.RefreshUI(); 
 
         /* Á¶ÁØ°æ */
         if (Input.GetMouseButtonDown(1)) 
@@ -88,13 +91,13 @@ public class CharacterGunFireAbility : CharacterAbility
             if (!_isReloading)
             {
 
-                StartCoroutine(Reload_Coroutine()); // ÀçÀåÀü Áß
+                StartCoroutine(Reload_Coroutine()); 
             }
 
         }
 
         /* ÃÑ¾Ë¹ß»ç */
-        _shotTimer += Time.deltaTime; // Fire ÄðÅ¸ÀÓ¶«¿¡
+        _shotTimer += Time.deltaTime; 
 
         if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0 && !Owner._quickSlotManager.ItemUseLock)
         {
@@ -119,7 +122,6 @@ public class CharacterGunFireAbility : CharacterAbility
             if (bulletItem != null)
             {
                 FireBullet();
-                //Instantiate(bulletPrefab, FirePos.position, FirePos.rotation);
             }
 
         }
@@ -206,8 +208,6 @@ public class CharacterGunFireAbility : CharacterAbility
             weapon.SetActive(false);
         }
         StartCoroutine(ActivateGunAfterDelay(GunNumber, 0.1f));
-        // 0.1ÃÊ ÈÄ..
-        //GunObject[GunNumber].SetActive(true);
     }
 
     private IEnumerator ActivateGunAfterDelay(int gunNumber, float delay)
@@ -236,8 +236,6 @@ public class CharacterGunFireAbility : CharacterAbility
             gun.GetComponent<Gun>().BulletRemainCount = 0;
             gun.SetActive(false);
         }
-        //ResetAnimation();
-        //characterItemAbility.UnUsingHandAnimation();
         Owner._animator.SetBool("RePullOut", true);
         Owner._animator.SetBool("isPullOut", false);
         Owner._animator.SetInteger("UsingHand", 0);
