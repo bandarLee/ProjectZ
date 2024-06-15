@@ -253,6 +253,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
         uI_Gunfire.HolographicDotSightUI.SetActive(false);
         uI_Gunfire.CrosshairUI.SetActive(true);
+        uI_Gunfire.RemoveRefreshUI();
         DeactivateAllGunsRPC(); // 로컬에서도 실행
     }
 }
