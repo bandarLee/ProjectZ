@@ -63,29 +63,8 @@ namespace Michsky.UI.Shift
                 foreach (Transform child in indicatorParent)
                     Destroy(child.gameObject);
 
-                for (int i = 0; i < itemList.Count; ++i)
-                {
-                    GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                    go.transform.SetParent(indicatorParent, false);
-                    go.name = itemList[i].itemTitle;
-
-                    Transform onObj;
-                    onObj = go.transform.Find("On");
-                    Transform offObj;
-                    offObj = go.transform.Find("Off");
-
-                    if (i == index)
-                    {
-                        onObj.gameObject.SetActive(true);
-                        offObj.gameObject.SetActive(false);
-                    }
-
-                    else
-                    {
-                        onObj.gameObject.SetActive(false);
-                        offObj.gameObject.SetActive(true);
-                    }
-                }
+      
+              
             }
 
             else

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 224516569428276450}
   - component: {fileID: 222873838789058854}
   - component: {fileID: 114115301442003544}
-  - component: {fileID: 114814208735122188}
   m_Layer: 5
   m_Name: 1
   m_TagString: Untagged
@@ -77,23 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114814208735122188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006609310621334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114115301442003544}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1013060782474736
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +87,6 @@ GameObject:
   - component: {fileID: 224234351050860718}
   - component: {fileID: 222202392371916130}
   - component: {fileID: 114520586149949398}
-  - component: {fileID: 114960624610575856}
   m_Layer: 5
   m_Name: 4
   m_TagString: Untagged
@@ -171,23 +152,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114960624610575856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013060782474736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114520586149949398}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1037343371816530
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +222,6 @@ GameObject:
   - component: {fileID: 224494989394491428}
   - component: {fileID: 222358950359286766}
   - component: {fileID: 114659361006895506}
-  - component: {fileID: 114112620519619080}
   - component: {fileID: 114505835257392050}
   m_Layer: 5
   m_Name: Glow
@@ -324,23 +287,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114112620519619080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070371162449942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114659361006895506}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!114 &114505835257392050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +428,6 @@ GameObject:
   - component: {fileID: 224420945437571460}
   - component: {fileID: 222492151147892512}
   - component: {fileID: 114995046450483620}
-  - component: {fileID: 114920832777834540}
   m_Layer: 5
   m_Name: Frame Glow
   m_TagString: Untagged
@@ -547,23 +492,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114920832777834540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156895266738728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114995046450483620}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1174941180692622
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +503,6 @@ GameObject:
   - component: {fileID: 224873284569885448}
   - component: {fileID: 222737420846149228}
   - component: {fileID: 114652389893420734}
-  - component: {fileID: 114526514379233876}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -699,24 +626,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114526514379233876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174941180692622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e53da8c190fcc64693a9a03b09347e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  textObject: {fileID: 114652389893420734}
-  keepAlphaValue: 0
-  useCustomColor: 0
-  colorType: 1
-  fontType: 3
 --- !u!1 &1217996367185350
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +637,6 @@ GameObject:
   - component: {fileID: 224201022109196140}
   - component: {fileID: 222986479741521052}
   - component: {fileID: 114539013791593058}
-  - component: {fileID: 114215516563384764}
   m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
@@ -793,23 +701,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114215516563384764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1217996367185350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114539013791593058}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1266578185413864
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,7 +712,6 @@ GameObject:
   - component: {fileID: 224296762931644672}
   - component: {fileID: 222508011209741858}
   - component: {fileID: 114141138340917684}
-  - component: {fileID: 114592557098766426}
   m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
@@ -886,23 +776,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114592557098766426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266578185413864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114141138340917684}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1273332126664158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,7 +1025,6 @@ GameObject:
   - component: {fileID: 224030706260910782}
   - component: {fileID: 222693644959767594}
   - component: {fileID: 114848728166117858}
-  - component: {fileID: 114821607145754940}
   - component: {fileID: 114994633826351902}
   m_Layer: 5
   m_Name: Shadow
@@ -1218,23 +1090,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114821607145754940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381012299697088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114848728166117858}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 4
 --- !u!114 &114994633826351902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,7 +1121,6 @@ GameObject:
   - component: {fileID: 224913208182349726}
   - component: {fileID: 222975526762054398}
   - component: {fileID: 114897379355009802}
-  - component: {fileID: 114476580117743534}
   m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
@@ -1331,23 +1185,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114476580117743534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1410065526966744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114897379355009802}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1582274780109496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1359,7 +1196,6 @@ GameObject:
   - component: {fileID: 224624842703806940}
   - component: {fileID: 222555392358168024}
   - component: {fileID: 114800710048542624}
-  - component: {fileID: 114091110689537600}
   - component: {fileID: 114188977143951082}
   m_Layer: 5
   m_Name: BG Glow
@@ -1425,23 +1261,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114091110689537600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582274780109496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114800710048542624}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!114 &114188977143951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1473,7 +1292,6 @@ GameObject:
   - component: {fileID: 224645902038703366}
   - component: {fileID: 222091464772337620}
   - component: {fileID: 114376079774957542}
-  - component: {fileID: 114414721023675978}
   m_Layer: 5
   m_Name: 3
   m_TagString: Untagged
@@ -1539,23 +1357,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114414721023675978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668110057563632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114376079774957542}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1790320227756924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1368,6 @@ GameObject:
   - component: {fileID: 224068884584126106}
   - component: {fileID: 222116724932474000}
   - component: {fileID: 114269196019601962}
-  - component: {fileID: 114303526303074232}
   m_Layer: 5
   m_Name: 2
   m_TagString: Untagged
@@ -1633,23 +1433,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114303526303074232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790320227756924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114269196019601962}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1959421167423528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1444,6 @@ GameObject:
   - component: {fileID: 224535523150645416}
   - component: {fileID: 222528795267847762}
   - component: {fileID: 114086099828821560}
-  - component: {fileID: 114516003908733666}
   m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
@@ -1726,23 +1508,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114516003908733666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959421167423528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114086099828821560}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 0
 --- !u!1 &1968659154575998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,7 +1609,6 @@ GameObject:
   - component: {fileID: 224598080136877896}
   - component: {fileID: 222970879540678514}
   - component: {fileID: 114277784963400750}
-  - component: {fileID: 114964578370838360}
   - component: {fileID: 114931299861605454}
   m_Layer: 5
   m_Name: Shadow
@@ -1910,23 +1674,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114964578370838360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1976456468858804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12069492762c9048b6c2edda60be228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: ed935159a86a1be4cbc1c44848b24daf, type: 2}
-  imageObject: {fileID: 114277784963400750}
-  keepAlphaValue: 1
-  useCustomColor: 0
-  colorType: 4
 --- !u!114 &114931299861605454
 MonoBehaviour:
   m_ObjectHideFlags: 0
