@@ -11,12 +11,12 @@ public class CharacterGunFireAbility : CharacterAbility
     private Animator _animator;
 
     public Gun CurrentGun; // 현재 들고있는 총
+    public Bullet Bullet;
     public GameObject[] GunObject;
     public GameObject bulletPrefab;
     public Transform FirePos;
 
     private float _shotTimer;
-
 
     public UI_Gunfire uI_Gunfire;
     public List<GameObject> MuzzleEffects; // 이펙트 반짝 
@@ -24,10 +24,11 @@ public class CharacterGunFireAbility : CharacterAbility
     private bool _isReloading = false;
 
     private Inventory _playerinventory;
-
+    private Camera mainCamera;
 
     private void Start()
     {
+        mainCamera = Camera.main;
         StartCoroutine(InitializeCrossHair());
 
         _animator = GetComponent<Animator>();
@@ -119,12 +120,40 @@ public class CharacterGunFireAbility : CharacterAbility
             /* 체력 닳는 기능 */
             if (bulletItem != null)
             {
-                Instantiate(bulletPrefab, FirePos.position, FirePos.rotation);
+                FireBullet();
+                //Instantiate(bulletPrefab, FirePos.position, FirePos.rotation);
             }
 
         }
     }
 
+    private void FireBullet()
+    {
+        Vector3 fireDirection = GetFireDirection();
+        GameObject bullet = Instantiate(bulletPrefab, FirePos.position, Quaternion.LookRotation(fireDirection));
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = fireDirection * Bullet.Force;
+        }
+    }
+
+    private Vector3 GetFireDirection()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(100); // 적당한 거리 포인트 설정
+        }
+        Vector3 fireDirection = (targetPoint - FirePos.position).normalized;
+        return fireDirection;
+    }
 
     private IEnumerator Reload_Coroutine()
     {
