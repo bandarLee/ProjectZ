@@ -51,11 +51,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             return;
         }
 
-        // 로비 씬에서 생성될 때 스폰 포인트 설정
-        if (SceneManager.GetActiveScene().name != "Lobby")
-        {
-            SetSpawnPoint();
-        }
     }
 
     private void OnDestroy()
