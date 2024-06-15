@@ -31,7 +31,6 @@ public class CharacterGunFireAbility : CharacterAbility
         StartCoroutine(InitializeCrossHair());
 
         _animator = GetComponent<Animator>();
-        DeactivateAllGuns();
 
         foreach (GameObject muzzleEffect in MuzzleEffects)
         {
