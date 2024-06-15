@@ -17,6 +17,7 @@ public struct BoxTypeConfig
 {
     public BoxType boxType;
     public int itemCount;
+    public float defaultProbability;
     public float foodProbability;
     public float weaponProbability;
     public float healProbability;

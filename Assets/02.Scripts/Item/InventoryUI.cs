@@ -30,14 +30,11 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if(Inventory.Instance.inventoryUI == null)
+        if (Inventory.Instance != null && Inventory.Instance.inventoryUI == null)
         {
-            Inventory.Instance.inventoryUI = GetComponent<InventoryUI>();
+            Inventory.Instance.inventoryUI = this;
         }
-        if(ItemUseManager.Instance.inventoryUI == null)
-        {
-            ItemUseManager.Instance.inventoryUI = GetComponent<InventoryUI>();
-        }
+
     }
 
     public void UpdateInventoryUI()

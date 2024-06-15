@@ -62,7 +62,6 @@ namespace DigitalRuby.WeatherMaker
                 SetTemperatureSafely(15); // º¸Åë
                 weatherType = 0;
             }
-            Debug.Log($"³¯¾¾ ·£´ý :{weatherType}");
             photonView.RPC("SyncWeather", RpcTarget.Others, weatherType);
         }
 

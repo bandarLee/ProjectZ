@@ -46,10 +46,14 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
 
     private Item GetRandomItem(BoxTypeConfig config)
     {
-        float totalProbability = config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.etcProbability + config.gunProbability + config.consumeProbability;
+        float totalProbability = config.defaultProbability + config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.etcProbability + config.gunProbability + config.consumeProbability;
         float randomValue = Random.Range(0, totalProbability);
 
         ItemType selectedType;
+        if(randomValue < config.defaultProbability)
+        {
+            Debug.LogError("아이템 생성 이상함");
+        }
         if (randomValue < config.foodProbability)
         {
             selectedType = ItemType.Food;
