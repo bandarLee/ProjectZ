@@ -128,6 +128,7 @@ public class QuickSlotManager : MonoBehaviour
             inventory.itemQuantities[itemName]--;
             // usinghand = 0;
             characterItemAbility.UnUsingHandAnimation();
+            characterItemAbility.DeactivateAllItems();
 
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
             {

@@ -94,6 +94,7 @@ public class ItemUseManager : MonoBehaviour
 
     public void EquipItem(Item item)
     {
+        characterItemAbility.DeactivateAllItems();
         attackAbility.DeactivateAllWeapons();
         gunFireAbility.DeactivateAllGuns();
         HandCount(item);
@@ -133,6 +134,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "고기":
                 Debug.Log("고기를 들었음");
+                characterItemAbility.ItemActive("고기");
                 break;
             case "빵":
                 Debug.Log("빵을들었음");
@@ -168,6 +170,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "술":
                 Debug.Log("술을 들었음");
+                characterItemAbility.ItemActive("술");
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");

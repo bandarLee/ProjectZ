@@ -99,6 +99,8 @@ MonoBehaviour:
   - ResetShootAnimationRPC
   - DeactiveOtherCharacter
   - DeactiveOtherCharacterRPC
+  - ItemActiveRPC
+  - DeactivateAllItemsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
