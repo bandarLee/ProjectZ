@@ -7197,6 +7197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentGun: {fileID: 7732741988673916883}
+  Bullet: {fileID: 0}
   GunObject:
   - {fileID: 2943838032877333535}
   bulletPrefab: {fileID: 4619007093716553816, guid: 5c2efe5eb8535434ba2cb14c6325d7bd, type: 3}
@@ -7722,6 +7723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraRoot: {fileID: 5796785261949354064}
+  GunTransform: {fileID: 2943838032877783049}
+  UpperBodyTransform: {fileID: 1994725550685611755}
   CharacterRotateLocked: 0
 --- !u!114 &4445782170285678535
 MonoBehaviour:
