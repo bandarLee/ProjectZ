@@ -7723,6 +7723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraRoot: {fileID: 5796785261949354064}
+  GunTransform: {fileID: 2943838032877783049}
+  UpperBodyTransform: {fileID: 1994725550685611755}
   CharacterRotateLocked: 0
 --- !u!114 &4445782170285678535
 MonoBehaviour:

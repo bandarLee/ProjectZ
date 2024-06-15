@@ -149,7 +149,7 @@ public class CharacterGunFireAbility : CharacterAbility
         }
         else
         {
-            targetPoint = ray.GetPoint(100); // 적당한 거리 포인트 설정
+            targetPoint = ray.GetPoint(30); // 적당한 거리 포인트 설정
         }
         Vector3 fireDirection = (targetPoint - FirePos.position).normalized;
         return fireDirection;

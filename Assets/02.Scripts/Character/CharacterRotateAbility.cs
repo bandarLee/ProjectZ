@@ -4,6 +4,8 @@ using UnityEngine;
 public class CharacterRotateAbility : CharacterAbility
 {
     public Transform CameraRoot;
+    public Transform GunTransform;
+    public Transform UpperBodyTransform;
 
     private float _mx;
     private float _my;
@@ -12,11 +14,14 @@ public class CharacterRotateAbility : CharacterAbility
     private float lastRotationY;
     private float lastCameraRotationX;
 
+    private CharacterGunFireAbility _gunFireAbility;
+
     private void Start()
     {
         SetMouseLock(true);
 
         InitializeCamera();
+        _gunFireAbility = GetComponent<CharacterGunFireAbility>();
     }
     public void InitializeCamera()
     {
@@ -32,6 +37,7 @@ public class CharacterRotateAbility : CharacterAbility
             return;
         }
 
+
         if (!CharacterRotateLocked)
         {
             CharacterRotate();
@@ -41,6 +47,7 @@ public class CharacterRotateAbility : CharacterAbility
             transform.eulerAngles = new Vector3(0, lastRotationY, 0f);
             CameraRoot.localEulerAngles = new Vector3(-lastCameraRotationX, 0, 0f);
         }
+
     }
 
     public void SetMouseLock(bool isLocked)
@@ -89,6 +96,13 @@ public class CharacterRotateAbility : CharacterAbility
 
         transform.eulerAngles = new Vector3(0, _mx, 0f);
         CameraRoot.localEulerAngles = new Vector3(-_my, 0, 0f);
+
+        if (_gunFireAbility != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null &&
+           Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
+        {
+            GunTransform.localEulerAngles = new Vector3(-_my, -116.89f, 1.424f);
+            UpperBodyTransform.localEulerAngles = new Vector3(-_my, UpperBodyTransform.localEulerAngles.y, UpperBodyTransform.localEulerAngles.z);
+        }
 
         lastRotationY = _mx;
         lastCameraRotationX = _my;
