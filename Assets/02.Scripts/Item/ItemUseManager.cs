@@ -40,6 +40,9 @@ public class ItemUseManager : MonoBehaviour
 
     public void ApplyEffect(Item item)
     {
+        characterItemAbility.DeactivateAllItems();
+        characterItemAbility.UnUsingHandAnimation();
+
         switch (item.itemType)
         {
             case ItemType.Food:
