@@ -229,7 +229,8 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책":
                 Debug.Log("Player used a Book.");
-                uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                //uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                characterItemAbility.ItemActive("책");
                 break;
             case "디스크1":
                 break;
