@@ -1,4 +1,3 @@
-
 using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,9 +10,14 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "1";
-    public TMP_InputField NicknameInput;
+    public TextMeshProUGUI NicknameInput;
     public TextMeshProUGUI connectionInfoText;
+    public TextMeshProUGUI NicknameInfo;
     public Button joinButton;
+    public GameObject loadingScreen;
+    public Image loadingFillImage;
+    public TextMeshProUGUI loadingText;
+    private bool isLoading = false;
     private void Start()
     {
         PhotonNetwork.GameVersion = gameVersion;
@@ -35,7 +39,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
         PhotonNetwork.ConnectUsingSettings();
     }
-
+    public void NicknameEnter()
+    {
+        NicknameInfo.text = NicknameInput.text;
+    }
     public void Connect1()
     {
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
@@ -106,11 +113,30 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
-    // 플레이어마다 랜덤으로 씬 선택
     public override void OnJoinedRoom()
     {
         connectionInfoText.text = "파티에 참가합니다.";
+        StartLoading("CityScene");
 
-        PhotonNetwork.LoadLevel("CityScene");
+    }
+    public void StartLoading(string sceneName)
+    {
+        loadingScreen.SetActive(true);
+        isLoading = true;
+        AsyncOperation operation = PhotonNetwork.LoadLevel(sceneName);
+        StartCoroutine(UpdateLoadingProgress(operation));
+    }
+
+    IEnumerator UpdateLoadingProgress(AsyncOperation operation)
+    {
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingFillImage.fillAmount = progress;
+            loadingText.text = (progress * 100f).ToString("F2") + "%";
+            yield return null;
+        }
+        loadingScreen.SetActive(false); // 로딩이 완료되면 로딩 화면 비활성화
+        isLoading = false;
     }
 }
