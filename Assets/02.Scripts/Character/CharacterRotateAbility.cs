@@ -9,6 +9,7 @@ public class CharacterRotateAbility : CharacterAbility
 
     private float _mx;
     private float _my;
+    private float _myGun;
     public bool CharacterRotateLocked = false;
 
     private float lastRotationY;
@@ -91,8 +92,10 @@ public class CharacterRotateAbility : CharacterAbility
 
         _mx += mouseX * Owner.Stat.RotationSpeed * Time.deltaTime;
         _my += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
+        _myGun += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
 
         _my = Mathf.Clamp(_my, -50f, 25f);
+        _myGun = Mathf.Clamp(_my, -10f, 15f);
 
         transform.eulerAngles = new Vector3(0, _mx, 0f);
         CameraRoot.localEulerAngles = new Vector3(-_my, 0, 0f);
@@ -100,7 +103,7 @@ public class CharacterRotateAbility : CharacterAbility
         if (_gunFireAbility != null && Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem != null &&
            Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
-            GunTransform.localEulerAngles = new Vector3(-_my, -116.89f, 1.424f);
+            GunTransform.localEulerAngles = new Vector3(-_myGun, -116.89f, 1.424f);
             UpperBodyTransform.localEulerAngles = new Vector3(-_my, UpperBodyTransform.localEulerAngles.y, UpperBodyTransform.localEulerAngles.z);
         }
 
