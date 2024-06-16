@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -147,8 +148,50 @@ public class QuickSlotManager : MonoBehaviour
         }
         inventoryManager.CloseItemInfo();
     }
+    public void DropAllItem()
+    {
+        List<Item> itemsToDrop = new List<Item>(inventory.items.Values);
+
+        foreach (Item item in itemsToDrop)
+        {
+            DropItem(item);
+        }
+       
+    }
+    private void DropItem(Item item)
+    {
+        if (item == null || item.itemName == null) return;
 
 
+        string itemName = item.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
+                          ? item.uniqueId : currentEquippedItem.itemName;
+
+        if (inventory.itemQuantities.ContainsKey(itemName))
+        {
+            Debug.Log("드랍 아이템: " + item.itemName);
+
+            inventory.itemQuantities[itemName]--;
+            // usinghand = 0;
+            characterItemAbility.UnUsingHandAnimation();
+            characterItemAbility.DeactivateAllItems();
+
+            if (characterItemAbility != null && characterItemAbility.PhotonView != null)
+            {
+                characterItemAbility.PhotonView.RPC("DropItemPrefab", RpcTarget.AllBuffered, currentEquippedItem.itemName, Character.LocalPlayerInstance.gameObject.transform.position, Character.LocalPlayerInstance.gameObject.transform.forward);
+            }
+            if (inventory.itemQuantities[itemName] <= 0)
+            {
+                inventory.items.Remove(itemName);
+                inventory.itemQuantities.Remove(itemName);
+                RemoveItemFromQuickSlots(item);
+
+                currentEquippedItem = null;
+            }
+
+            inventoryManager.UpdateAllInventories();
+        }
+        inventoryManager.CloseItemInfo();
+    }
 
     public void RemoveItemFromQuickSlots(Item item)
     {
