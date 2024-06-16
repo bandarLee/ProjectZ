@@ -36,7 +36,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public void Connect()
+    public void Connect1()
     {
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
         PhotonNetwork.SendRate = 30;
@@ -59,8 +59,53 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
+    public void Connect2()
+    {
+        PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.PhotonServerSettings.DevRegion = "kr";
+        PhotonNetwork.AutomaticallySyncScene = false;
+        if (PhotonNetwork.IsConnected)
+        {
+            int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
+            Hashtable props = new Hashtable
+            {
+                { "CharacterType", characterType }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+            PhotonNetwork.JoinOrCreateRoom("Server2", roomOptions, TypedLobby.Default);
+        }
+        else
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
 
-
+    public void Connect3()
+    {
+        PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.PhotonServerSettings.DevRegion = "kr";
+        PhotonNetwork.AutomaticallySyncScene = false;
+        if (PhotonNetwork.IsConnected)
+        {
+            int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
+            Hashtable props = new Hashtable
+            {
+                { "CharacterType", characterType }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+            PhotonNetwork.JoinOrCreateRoom("Server3", roomOptions, TypedLobby.Default);
+        }
+        else
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
     // 플레이어마다 랜덤으로 씬 선택
     public override void OnJoinedRoom()
     {
