@@ -11,8 +11,9 @@ public class ItemUseManager : MonoBehaviour
     public CharacterAttackAbility attackAbility;
     public CharacterGunFireAbility gunFireAbility;
     private CharacterItemAbility characterItemAbility;
-    public UI_BookText uI_BookText; 
+    public UI_BookText uI_BookText;
     public UI_DiskText uI_DiskText;
+    public Light FlashLight;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class ItemUseManager : MonoBehaviour
             quickSlotManager = FindObjectOfType<QuickSlotManager>();
         }
         characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
+
+        FlashLight.enabled = false;
     }
 
     public void ApplyEffect(Item item)
@@ -129,6 +132,16 @@ public class ItemUseManager : MonoBehaviour
                 Debug.LogWarning("This item type cannot be equipped.");
                 break;
         }
+
+        // 손전등 아이템 선택 시 불빛 켜기/끄기 로직 추가
+        if (item.itemName == "손전등")
+        {
+            FlashLight.enabled = true;
+        }
+        else
+        {
+            FlashLight.enabled = false;
+        }
     }
 
     private void EquipFood(string itemName)
@@ -150,7 +163,7 @@ public class ItemUseManager : MonoBehaviour
             case "물":
                 Debug.Log("물을 들었음");
                 //characterItemAbility.ItemActive("물");
-                break;                
+                break;
             case "수박":
                 Debug.Log("수박을 들었음");
                 //characterItemAbility.ItemActive("수박");
@@ -237,6 +250,10 @@ public class ItemUseManager : MonoBehaviour
     {
         switch (itemName)
         {
+            case "손전등":
+                Debug.Log("Player found a flashlight.");
+                FlashLight.enabled = true;
+                break;
             case "지도":
                 Debug.Log("Player found a map.");
                 //characterItemAbility.ItemActive("지도");
@@ -319,7 +336,7 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("플레이어 체력 +10.");
                 Character.LocalPlayerInstance.Stat.Health += 10;
                 break;
-      
+
             default:
                 Debug.LogWarning("Unknown heal item.");
                 break;
@@ -425,7 +442,7 @@ public class ItemUseManager : MonoBehaviour
                 {
                     inventory.items.Remove(itemName);
                     inventory.itemQuantities.Remove(itemName);
-                    if(quickSlotManager.currentEquippedItem.itemType != ItemType.Gun)
+                    if (quickSlotManager.currentEquippedItem.itemType != ItemType.Gun)
                     {
                         quickSlotManager.currentEquippedItem = null;
                     }

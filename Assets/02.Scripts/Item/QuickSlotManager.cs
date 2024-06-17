@@ -1,7 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,7 +20,8 @@ public class QuickSlotManager : MonoBehaviour
     public bool ItemUseLock = false;
 
     private Animator _animator;
-    public Image[] SelectColors; 
+    public Image[] SelectColors;
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -31,9 +32,6 @@ public class QuickSlotManager : MonoBehaviour
             image.gameObject.SetActive(false);
         }
         StartCoroutine(InitializeInventory());
-
-       
-
     }
 
     private IEnumerator InitializeInventory()
@@ -114,7 +112,6 @@ public class QuickSlotManager : MonoBehaviour
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
     }
 
-
     public void DropEquippedItem()
     {
         if (currentEquippedItem == null || currentEquippedItem.itemName == null) return;
@@ -150,6 +147,7 @@ public class QuickSlotManager : MonoBehaviour
         }
         inventoryManager.CloseItemInfo();
     }
+
     public void DropAllItem()
     {
         List<Item> itemsToDrop = new List<Item>(inventory.items.Values);
@@ -158,12 +156,11 @@ public class QuickSlotManager : MonoBehaviour
         {
             DropItem(item);
         }
-       
     }
+
     private void DropItem(Item item)
     {
         if (item == null || item.itemName == null) return;
-
 
         string itemName = item.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
                           ? item.uniqueId : currentEquippedItem.itemName;
@@ -240,6 +237,7 @@ public class QuickSlotManager : MonoBehaviour
             }
         }
     }
+
     private void CheckQuickSlotInput()
     {
         for (int i = 0; i < 4; i++)
@@ -251,39 +249,19 @@ public class QuickSlotManager : MonoBehaviour
         }
     }
 
-
-
     private void Update()
     {
         CheckQuickSlotInput();
-       
+
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
-            switch(currentEquippedItem.itemType)
-            {
-                case ItemType.Food :
-                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
-                    inventoryManager.UpdateAllInventories();
-                    break;
-                    case ItemType.ETC :
-                        ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
-                    inventoryManager.UpdateAllInventories();
-                    break;
-
-
-                default:
-
-                    break;
-            }
-
-
-            
+            ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
+            inventoryManager.UpdateAllInventories();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             DropEquippedItem();
-
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
