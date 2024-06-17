@@ -42,7 +42,7 @@ namespace Michsky.UI.Shift
 
                 resolutionSelector.itemList.RemoveRange(0, resolutionSelector.itemList.Count);
 
-                int currentResolutionIndex = 2;
+                int currentResolutionIndex = 20;
                 for (int i = 0; i < resolutions.Length; i++)
                 {
 #if UNITY_2022_2_OR_NEWER
@@ -84,7 +84,7 @@ namespace Michsky.UI.Shift
 
                 List<string> options = new List<string>();
 
-                int currentResolutionIndex = 0;
+                int currentResolutionIndex = 20;
                 for (int i = 0; i < resolutions.Length; i++)
                 {
 #if UNITY_2022_2_OR_NEWER
