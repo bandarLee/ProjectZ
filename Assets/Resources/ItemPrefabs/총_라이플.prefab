@@ -181,7 +181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GType: 0
   ProfileImage: {fileID: 21300000, guid: b86ae960abe6f09458798eaa0069a3f5, type: 3}
-  Damage: 40
   FireCooltime: 0.2
   BulletRemainCount: 0
   BulletMaxCount: 30
