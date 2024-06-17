@@ -1,10 +1,13 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bed : MonoBehaviour
 {
     public TextMeshProUGUI UseBedText;
+    public Slider UsingTimeSlider;
+
     private CharacterStatAbility playerStatAbility;
     private bool isPlayerInRange = false;
     private bool isUsingBed = false;
