@@ -27,6 +27,6 @@ public class UI_BookText : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
         BookText.text = "";
-        BookText.gameObject.SetActive(false); // 텍스트를 다시 숨기기
+        BookText.gameObject.SetActive(false); 
     }
 }
