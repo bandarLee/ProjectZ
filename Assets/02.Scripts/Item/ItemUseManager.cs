@@ -139,8 +139,25 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("고기를 들었음");
                 characterItemAbility.ItemActive("고기");
                 break;
-            case "빵":
-                Debug.Log("빵을들었음");
+            case "사과":
+                Debug.Log("사과를 들었음");
+                //characterItemAbility.ItemActive("사과");
+                break;
+            case "통조림":
+                Debug.Log("통조림을 들었음");
+                //characterItemAbility.ItemActive("통조림");
+                break;
+            case "물":
+                Debug.Log("물을 들었음");
+                //characterItemAbility.ItemActive("물");
+                break;                
+            case "수박":
+                Debug.Log("수박을 들었음");
+                //characterItemAbility.ItemActive("수박");
+                break;
+            case "토마토":
+                Debug.Log("토마토를 들었음");
+                //characterItemAbility.ItemActive("토마토");
                 break;
             default:
                 Debug.LogWarning("Unknown food item.");
@@ -154,12 +171,11 @@ public class ItemUseManager : MonoBehaviour
         {
             case "구급상자":
                 Debug.Log("구상을 들었음");
+                //characterItemAbility.ItemActive("구급상자");
                 break;
             case "진통제":
                 Debug.Log("진통제를 들었음");
-                break;
-            case "붕대":
-                Debug.Log("붕대를 들었음");
+                //characterItemAbility.ItemActive("진통제");
                 break;
             default:
                 Debug.LogWarning("Unknown heal item.");
@@ -223,13 +239,14 @@ public class ItemUseManager : MonoBehaviour
         {
             case "지도":
                 Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도");
                 break;
             case "열쇠":
                 Debug.Log("Player found a key.");
+                //characterItemAbility.ItemActive("열쇠");
                 break;
             case "책":
                 Debug.Log("Player used a Book.");
-                //uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
                 characterItemAbility.ItemActive("책");
                 break;
             case "디스크1":
@@ -263,11 +280,27 @@ public class ItemUseManager : MonoBehaviour
         {
             case "고기":
                 DecreaseItemQuantity(item);
-                Character.LocalPlayerInstance.Stat.Hunger += 20;
+                Character.LocalPlayerInstance.Stat.Hunger += 30;
                 break;
-            case "빵":
+            case "사과":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
+            case "통조림":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 20;
+                break;
+            case "물":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 5;
+                break;
+            case "수박":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
+            case "토마토":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
                 break;
             default:
                 break;
@@ -279,14 +312,14 @@ public class ItemUseManager : MonoBehaviour
         switch (itemName)
         {
             case "구급상자":
-                Debug.Log("Player health increased by 50.");
+                Debug.Log("플레이어 체력 +20.");
+                Character.LocalPlayerInstance.Stat.Health += 20;
                 break;
             case "진통제":
-                Debug.Log("Player health increased by 20.");
+                Debug.Log("플레이어 체력 +10.");
+                Character.LocalPlayerInstance.Stat.Health += 10;
                 break;
-            case "붕대":
-                Debug.Log("플레이어 체력 회복 10");
-                break;
+      
             default:
                 Debug.LogWarning("Unknown heal item.");
                 break;
@@ -299,7 +332,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "술":
                 DecreaseItemQuantity(item);
-                Character.LocalPlayerInstance.Stat.Mental += 20;
+                Character.LocalPlayerInstance.Stat.Mental += 15;
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
