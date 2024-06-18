@@ -70,7 +70,6 @@ public class Inventory : MonoBehaviourPunCallbacks
     {
       
 
-        if (!items.ContainsKey(itemName)) return;
 
         if (itemQuantities.ContainsKey(itemName))
         {
@@ -80,10 +79,16 @@ public class Inventory : MonoBehaviourPunCallbacks
                 items.Remove(itemName);
                 itemQuantities.Remove(itemName);
             }
+            Debug.Log(itemName);
         }
         else
         {
+            Debug.Log(itemName);
+            Debug.Log("¼º°ø");
+
             items.Remove(itemName);
+            itemQuantities.Remove(itemName);
+
         }
 
 

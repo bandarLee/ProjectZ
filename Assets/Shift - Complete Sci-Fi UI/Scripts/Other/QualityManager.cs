@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using TMPro;
@@ -26,6 +28,8 @@ namespace Michsky.UI.Shift
         Resolution[] resolutions;
         List<string> options = new List<string>();
 
+
+
         void Start()
         {
             mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat(masterSlider.sliderTag + "SliderValue")) * 20);
@@ -42,7 +46,7 @@ namespace Michsky.UI.Shift
 
                 resolutionSelector.itemList.RemoveRange(0, resolutionSelector.itemList.Count);
 
-                int currentResolutionIndex = 20;
+                int currentResolutionIndex = -1;
                 for (int i = 0; i < resolutions.Length; i++)
                 {
 #if UNITY_2022_2_OR_NEWER
@@ -84,7 +88,7 @@ namespace Michsky.UI.Shift
 
                 List<string> options = new List<string>();
 
-                int currentResolutionIndex = 20;
+                int currentResolutionIndex = 0;
                 for (int i = 0; i < resolutions.Length; i++)
                 {
 #if UNITY_2022_2_OR_NEWER
@@ -123,6 +127,8 @@ namespace Michsky.UI.Shift
 
         public void SetResolution(int resolutionIndex)
         {
+
+
             Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
         }
 
@@ -218,23 +224,29 @@ namespace Michsky.UI.Shift
         public void SetOverallQuality(int qualityIndex)
         {
             QualitySettings.SetQualityLevel(qualityIndex);
+            //  WindowFullscreen
         }
 
         public void WindowFullscreen()
         {
-            Screen.fullScreen = true;
-            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+
+
+            Screen.fullScreen = false;
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+
         }
 
         public void WindowBorderless()
         {
+
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
         }
 
         public void WindowWindowed()
         {
-            Screen.fullScreen = false;
-            Screen.fullScreenMode = FullScreenMode.Windowed;
+
+            Screen.fullScreen = true;
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
         }
     }
 }
