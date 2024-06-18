@@ -94,8 +94,8 @@ public class CharacterRotateAbility : CharacterAbility
         _my += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
         _myGun += mouseY * Owner.Stat.RotationSpeed * Time.deltaTime;
 
-        _my = Mathf.Clamp(_my, -50f, 25f);
-        _myGun = Mathf.Clamp(_my, -10f, 15f);
+        _my = Mathf.Clamp(_my, -20f, 25f);
+        _myGun = Mathf.Clamp(_my, -5f, 15f);
 
         transform.eulerAngles = new Vector3(0, _mx, 0f);
         CameraRoot.localEulerAngles = new Vector3(-_my, 0, 0f);

@@ -127,8 +127,6 @@ public class QuickSlotManager : MonoBehaviour
             // usinghand = 0;
             characterItemAbility.UnUsingHandAnimation();
             characterItemAbility.DeactivateAllItems();
-            Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
-            Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
 
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
             {
@@ -262,6 +260,8 @@ public class QuickSlotManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             DropEquippedItem();
+            Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
+            Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
