@@ -220,7 +220,7 @@ public class QuickSlotManager : MonoBehaviour
                 string itemName = quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC
                                   ? quickSlotItems[i].uniqueId : quickSlotItems[i].itemName;
 
-                if (quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC)
+                if (quickSlotItems[i].itemType == ItemType.Weapon || quickSlotItems[i].itemType == ItemType.ETC || quickSlotItems[i].itemType == ItemType.Gun)
                 {
                     quickSlotQuantities[i].text = "";
                 }

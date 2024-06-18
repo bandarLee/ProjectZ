@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviourPunCallbacks
             Debug.LogWarning("AddItem: null or invalid item");
             return;
         }
-        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
+        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
             string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
             newItem.uniqueId = uniqueItemName;
