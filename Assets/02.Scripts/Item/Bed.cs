@@ -1,30 +1,54 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Bed : MonoBehaviour
 {
     public TextMeshProUGUI UseBedText;
+    public TextMeshProUGUI StopUsingBedText;
+    public TextMeshProUGUI CantUseBedText;
+    public TextMeshProUGUI AllRecoveriesText;
+
     public Slider UsingTimeSlider;
 
-    private CharacterStatAbility playerStatAbility;
     private bool isPlayerInRange = false;
     private bool isUsingBed = false;
+    private float useTime = 20f;
+    private Coroutine useBedCoroutine;
 
     private void Start()
     {
+        UsingTimeSlider.gameObject.SetActive(false);
         UseBedText.gameObject.SetActive(false);
+        StopUsingBedText.gameObject.SetActive(false);
+        CantUseBedText.gameObject.SetActive(false);
+        AllRecoveriesText.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<Character>().PhotonView.IsMine)
         {
-            UseBedText.gameObject.SetActive(true);
-            playerStatAbility = other.GetComponent<CharacterStatAbility>();
-            isPlayerInRange = true;
+            Character character = other.GetComponent<Character>();
+            if (character.Stat.Health >= character.Stat.MaxHealth && character.Stat.Mental >= character.Stat.MaxMental)
+            {
+                StartCoroutine(ShowCantUseBedText());
+            }
+            else
+            {
+                UseBedText.gameObject.SetActive(true);
+                isPlayerInRange = true;
+            }
         }
+    }
+
+    private IEnumerator ShowCantUseBedText()
+    {
+        CantUseBedText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        CantUseBedText.gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,7 +57,6 @@ public class Bed : MonoBehaviour
         {
             UseBedText.gameObject.SetActive(false);
             isPlayerInRange = false;
-            playerStatAbility = null;
         }
     }
 
@@ -41,31 +64,66 @@ public class Bed : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && !isUsingBed)
         {
-            StartCoroutine(UseBedRoutine());
+            useBedCoroutine = StartCoroutine(UseBed());
+        }
+        else if (isUsingBed && Input.GetKeyDown(KeyCode.E))
+        {
+            StopUsingBed();
         }
     }
-
-    private IEnumerator UseBedRoutine()
+    private void StopUsingBed()
     {
-        isUsingBed = true;
-        float useTime = 20f; // 최대 사용 시간
-
-        while (useTime > 0)
+        if (useBedCoroutine != null)
         {
-            if (playerStatAbility == null || playerStatAbility.State == State.Death)
-            {
-                break;
-            }
-
-            playerStatAbility.Stat.Health += 5;
-            playerStatAbility.Stat.Mental += 3;
-            playerStatAbility.LimitStat();
-
-            useTime -= 1f;
-            yield return new WaitForSeconds(1f);
+            StopCoroutine(useBedCoroutine);
+            useBedCoroutine = null;
         }
 
         isUsingBed = false;
-        UseBedText.gameObject.SetActive(false); // 침대 사용 종료 후 텍스트 숨기기
+        StopUsingBedText.gameObject.SetActive(false);
+        UsingTimeSlider.gameObject.SetActive(false);
+    }
+
+    private IEnumerator UseBed()
+    {
+        isUsingBed = true;
+        UseBedText.gameObject.SetActive(false);
+        StopUsingBedText.gameObject.SetActive(true);
+        UsingTimeSlider.gameObject.SetActive(true);
+        UsingTimeSlider.maxValue = useTime;
+        UsingTimeSlider.value = 0;
+
+        float elapsedTime = 0;
+        Character character = Character.LocalPlayerInstance;
+
+        while (elapsedTime < useTime)
+        {
+            elapsedTime += Time.deltaTime;
+            UsingTimeSlider.value = elapsedTime;
+
+            if (elapsedTime % 1f < Time.deltaTime)
+            {
+                character.Stat.Health = Mathf.Min(character.Stat.Health + 5, character.Stat.MaxHealth);
+                character.Stat.Mental = Mathf.Min(character.Stat.Mental + 3, character.Stat.MaxMental);
+            }
+            if (character.Stat.Health >= character.Stat.MaxHealth && character.Stat.Mental >= character.Stat.MaxMental)
+            {
+                StartCoroutine(ShowAllRecoveriesText());
+                StopUsingBed();
+                yield break;
+            }
+            yield return null;
+        }
+
+        StopUsingBedText.gameObject.SetActive(false);
+        UsingTimeSlider.gameObject.SetActive(false);
+        isUsingBed = false;
+    }
+
+    private IEnumerator ShowAllRecoveriesText()
+    {
+        AllRecoveriesText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        AllRecoveriesText.gameObject.SetActive(false);
     }
 }

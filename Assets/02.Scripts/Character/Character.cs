@@ -25,10 +25,12 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterAttackAbility _attackability;
     public CharacterGunFireAbility _gunfireAbility;
     public CharacterRotateAbility _characterRotateAbility;
+    public CharacterStatAbility _statability;
+
     private void Awake()
     {
-        CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
-        Stat = ability.Stat;
+        _statability = GetComponent<CharacterStatAbility>();
+        Stat = _statability.Stat;
         Stat.Init();
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
@@ -194,8 +196,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     {
         State = State.Live;
 
-        CharacterStatAbility ability = GetComponent<CharacterStatAbility>();
-        Stat = ability.Stat;
+        Stat = _statability.Stat;
         Stat.Init();
 
         if (this != null) // 오브젝트가 파괴되었는지 확인
