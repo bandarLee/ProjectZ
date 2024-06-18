@@ -107,8 +107,7 @@ public class BoxInventoryUI : MonoBehaviour
     {
         if (currentSelectedItem == null) return;
 
-        string itemName = currentSelectedItem.uniqueId;
-        currentBoxInventory.BoxRemoveItem(itemName);
+        currentBoxInventory.BoxRemoveItem(currentSelectedItem);
 
         if (playerInventory == null)
         {
@@ -130,9 +129,7 @@ public class BoxInventoryUI : MonoBehaviour
             UpdateInventoryUI();
             playerInventory.inventoryUI.UpdateInventoryUI();
         }
-        else
-        {
-        }
+ 
     }
     public void TransferToBoxInventory()
     {
@@ -150,7 +147,7 @@ public class BoxInventoryUI : MonoBehaviour
             }
         if (playerInventory != null)
         {
-            string itemName = selectedItem.itemType == ItemType.Weapon || selectedItem.itemType == ItemType.ETC
+            string itemName = (selectedItem.itemType == ItemType.Weapon || selectedItem.itemType == ItemType.ETC || selectedItem.itemType == ItemType.Gun)
                               ? selectedItem.uniqueId : selectedItem.itemName;
             if (playerInventory.itemQuantities.ContainsKey(itemName))
             {

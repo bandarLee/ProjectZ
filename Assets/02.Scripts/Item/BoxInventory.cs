@@ -45,9 +45,8 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     public void BoxAddItem(Item newItem, bool synchronize = true)
     {
-        string itemName = newItem.uniqueId;
-        items[itemName] = newItem;
-        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC)
+
+        if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
             string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
             newItem.uniqueId = uniqueItemName;
@@ -56,13 +55,14 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (itemQuantities.ContainsKey(itemName))
+            if (itemQuantities.ContainsKey(newItem.itemName))
             {
-                itemQuantities[itemName]++;
+                itemQuantities[newItem.itemName]++;
             }
             else
             {
-                itemQuantities[itemName] = 1;
+                items[newItem.itemName] = newItem;
+                itemQuantities[newItem.itemName] = 1;
             }
         }
         if (synchronize && photonView.IsMine)
@@ -74,14 +74,16 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void BoxRemoveItemRPC(string itemName)
+    public void BoxRemoveItemRPC(Item boxitem)
     {
-        BoxRemoveItem(itemName, false);
+        BoxRemoveItem(boxitem, false);
     }
 
-    public void BoxRemoveItem(string itemName, bool synchronize = true)
+    public void BoxRemoveItem(Item boxitem, bool synchronize = true)
     {
-        if (items.ContainsKey(itemName))
+        string itemName = boxitem.itemType == ItemType.Weapon || boxitem.itemType == ItemType.ETC || boxitem.itemType == ItemType.Gun ? boxitem.uniqueId : boxitem.itemName;
+
+        if (itemQuantities.ContainsKey(itemName))
         {
             itemQuantities[itemName]--;
             if (itemQuantities[itemName] <= 0)
@@ -89,14 +91,19 @@ public class BoxInventory : MonoBehaviourPunCallbacks
                 items.Remove(itemName);
                 itemQuantities.Remove(itemName);
             }
-
+        }
+        else
+        {
+            items.Remove(itemName);
+        }
+        
             if (synchronize)
             {
                 photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, itemName);
             }
 
             UpdateInventoryUI();
-        }
+        
     }
 
     public void UpdateInventoryUI()
