@@ -43,6 +43,11 @@ public class ItemUseManager : MonoBehaviour
 
     public void ApplyEffect(Item item)
     {
+
+        if (item.itemType == ItemType.Gun)
+        {
+            return;
+        }
         characterItemAbility.DeactivateAllItems();
         characterItemAbility.UnUsingHandAnimation();
 
