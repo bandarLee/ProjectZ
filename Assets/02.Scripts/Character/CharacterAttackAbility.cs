@@ -8,7 +8,7 @@ public class CharacterAttackAbility : CharacterAbility
 {
     private Animator _animator;
     private float _attackTimer = 0;
-    public Collider[] WeaponCollider;
+    public Collider WeaponCollider;
     public GameObject[] WeaponObject;
     public int ShovelDamage = 25;
     public int BatDamage = 30;
@@ -62,6 +62,7 @@ public class CharacterAttackAbility : CharacterAbility
         {
             weapon.SetActive(false);
         }
+
         StartCoroutine(WeaponActiveAfterDelay(WeaponNumber, 0.1f));
         _activeWeaponIndex = WeaponNumber;
 
@@ -75,6 +76,8 @@ public class CharacterAttackAbility : CharacterAbility
         if (WeaponNumber >= 0 && WeaponNumber < WeaponObject.Length)
         {
             WeaponObject[WeaponNumber].SetActive(true);
+            WeaponCollider = WeaponObject[WeaponNumber].GetComponent<Collider>();
+
         }
     }
 
@@ -133,7 +136,7 @@ public class CharacterAttackAbility : CharacterAbility
     [PunRPC]
     public void ActiveColliderRPC(int index)
     {
-        WeaponCollider[index].enabled = true;
+        WeaponCollider.enabled = true;
     }
 
     public void ActiveCollider(int index)
@@ -145,29 +148,13 @@ public class CharacterAttackAbility : CharacterAbility
         ActiveColliderRPC(index); // 로컬에서도 실행
     }
 
-    [PunRPC]
-    public void InActiveColliderRPC(int index)
-    {
-        WeaponCollider[index].enabled = false;
-        _damagedList.Clear();
-    }
-
-    public void InActiveCollider(int index)
-    {
-        if (Owner.PhotonView.IsMine)
-        {
-            Owner.PhotonView.RPC(nameof(InActiveColliderRPC), RpcTarget.All, index);
-        }
-        InActiveColliderRPC(index); // 로컬에서도 실행
-    }
 
     [PunRPC]
     public void DeactivateAllCollidersRPC()
     {
-        foreach (Collider collider in WeaponCollider)
-        {
-            collider.enabled = false;
-        }
+
+         WeaponCollider.enabled = false;
+
         _damagedList.Clear();
     }
 
