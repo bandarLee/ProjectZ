@@ -122,10 +122,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         OnDeath();
 
         PhotonView.RPC(nameof(DeathRPC), RpcTarget.All);
-
-        _quickSlotManager.DropAllItem();
         Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
         Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
+        _quickSlotManager.DropAllItem();
+
 
     }
 

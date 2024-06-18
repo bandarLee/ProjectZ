@@ -102,6 +102,7 @@ public class UI_Gunfire : MonoBehaviour
         }
 
         CircleSlider.SetActive(false);
+        
         CrosshairUI.SetActive(true);
 
         RemainTime.text = "";

@@ -254,11 +254,16 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             Owner.PhotonView.RPC(nameof(DeactivateAllGunsRPC), RpcTarget.All);
         }
-        uI_Gunfire.tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, -1.5f);
+        if(uI_Gunfire != null)
+        {
+            uI_Gunfire.tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, -1.5f);
 
-        uI_Gunfire.HolographicDotSightUI.SetActive(false);
-        uI_Gunfire.CrosshairUI.SetActive(true);
-        uI_Gunfire.RemoveRefreshUI();
+            uI_Gunfire.HolographicDotSightUI.SetActive(false);
+            uI_Gunfire.CrosshairUI.SetActive(true);
+            uI_Gunfire.RemoveRefreshUI();
+
+        }
+       
         DeactivateAllGunsRPC(); // 로컬에서도 실행
     }
 }

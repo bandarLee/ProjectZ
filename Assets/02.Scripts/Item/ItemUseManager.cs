@@ -461,7 +461,11 @@ public class ItemUseManager : MonoBehaviour
 
     public void UseItem(Item item, float duration)
     {
-        StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
+        if(item.itemType != ItemType.Gun)
+        {
+            StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
+
+        }
     }
 
     public void UpdateUI()
