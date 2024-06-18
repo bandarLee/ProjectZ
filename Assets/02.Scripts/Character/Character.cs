@@ -149,6 +149,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         {
             GetComponent<Animator>().SetTrigger("Die");
             GetComponent<CharacterAttackAbility>().DeactivateAllColliders();
+
         }
 
         if (PhotonView.IsMine)
