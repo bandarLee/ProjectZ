@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public int Damage = 20;
     public float Force = 30f;
     private Rigidbody rb;
-    private bool hasDealtDamage = false;
+    private bool hasDamaged = false;
 
     private void Start()
     {
@@ -19,10 +19,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasDealtDamage)
-        {
-            return;
-        }
+        if (hasDamaged) return;
 
         var damageable = other.GetComponent<IDamaged>();
         if (damageable != null)
@@ -30,8 +27,8 @@ public class Bullet : MonoBehaviour
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null)
             {
-                hasDealtDamage = true;
                 photonView.RPC("Damaged", RpcTarget.All, Damage, PhotonNetwork.LocalPlayer.ActorNumber);
+                hasDamaged = true;
             } 
         }
     }
