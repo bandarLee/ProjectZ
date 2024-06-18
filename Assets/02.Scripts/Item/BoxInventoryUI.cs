@@ -142,9 +142,7 @@ public class BoxInventoryUI : MonoBehaviour
             {
                 currentBoxInventory.photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
             }
-            else
-            {
-            }
+
         if (playerInventory != null)
         {
             string itemName = (selectedItem.itemType == ItemType.Weapon || selectedItem.itemType == ItemType.ETC || selectedItem.itemType == ItemType.Gun)
@@ -163,15 +161,19 @@ public class BoxInventoryUI : MonoBehaviour
                 }
 
             }
+            else
+            {
+                Debug.Log("아이템 보관 실행1");
+
+                playerInventory.RemoveItem(itemName);
+            }
             playerInventory.inventoryUI.currentSelectedItem = null;
             playerInventory.inventoryUI.ItemInfo.SetActive(false);
 
             UpdateInventoryUI();
             playerInventory.inventoryUI.UpdateInventoryUI();
         }
-        else
-        {
-        }
+   
     }
 
     public string GetItemType(ItemType itemType)
