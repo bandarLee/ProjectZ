@@ -155,7 +155,8 @@ public class CharacterGunFireAbility : CharacterAbility
 
         if (Vector3.Dot(fireDirection, FirePos.forward) < 0)
         {
-            fireDirection = FirePos.forward;
+            Vector3 screenCenterDirection = (ray.origin + ray.direction * 30f) - FirePos.position;
+            fireDirection = screenCenterDirection.normalized;
         }
 
         return fireDirection;
