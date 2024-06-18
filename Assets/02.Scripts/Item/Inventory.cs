@@ -35,7 +35,6 @@ public class Inventory : MonoBehaviourPunCallbacks
 
     public void AddItem(Item newItem, bool synchronize = true)
     { 
-        if (processedItems.Contains(newItem.uniqueId)) return;
         if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
         {
             Debug.LogWarning("AddItem: null or invalid item");
