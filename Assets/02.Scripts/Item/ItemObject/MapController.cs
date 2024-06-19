@@ -7,31 +7,30 @@ public class MapController : MonoBehaviour
     public RectTransform PlayerIcon;  // ÇÃ·¹ÀÌ¾î ¾ÆÀÌÄÜ RectTransform
     public Transform PlayerTransform; // ÇÃ·¹ÀÌ¾î Transform
 
-   /* public float mapWidth;  // ¹Ì´Ï¸ÊÀÇ ½ÇÁ¦ Æø
-    public float mapHeight; // ¹Ì´Ï¸ÊÀÇ ½ÇÁ¦ ³ôÀÌ*/
+    /* public float mapWidth;  // ¹Ì´Ï¸ÊÀÇ ½ÇÁ¦ Æø
+     public float mapHeight; // ¹Ì´Ï¸ÊÀÇ ½ÇÁ¦ ³ôÀÌ*/
 
-    private Vector2 MapOrigin; // ¹Ì´Ï¸ÊÀÇ ¿øÁ¡ ÁÂÇ¥
 
     void Start()
     {
-        // ¹Ì´Ï¸ÊÀÇ ¿øÁ¡ ÁÂÇ¥ ¼³Á¤
-        MapOrigin = new Vector2(MapRect.rect.width / 2, MapRect.rect.height / 2);
         PlayerTransform = Character.LocalPlayerInstance.transform;
     }
 
     void Update()
     {
         if (PlayerTransform == null)
-        { 
+        {
             Debug.LogWarning("PlayerTransform is not set.");
-            return; 
+            return;
         }
 
         Vector3 playerWorldPos = PlayerTransform.localPosition;
         Vector3 PositionMargin = new Vector3(1155, 0, 1075);
-        PlayerIcon.anchoredPosition = new Vector2((playerWorldPos.x - PositionMargin.x), (playerWorldPos.z - PositionMargin.z));
+        PlayerIcon.anchoredPosition = new Vector2((playerWorldPos.x - PositionMargin.x)*4f, (playerWorldPos.z - PositionMargin.z)*6f);
 
-        Debug.Log("playerWorldPos: " + playerWorldPos);
+        Debug.Log("ÇÃ·¹ÀÌ¾î ¸¶Áø °ª" + PlayerTransform.localPosition);
+
+
 
     }
 
