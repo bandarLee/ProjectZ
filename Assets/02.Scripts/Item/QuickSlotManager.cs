@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using static UnityEditorInternal.ReorderableList;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -251,11 +253,40 @@ public class QuickSlotManager : MonoBehaviour
     {
         CheckQuickSlotInput();
 
+        CheckQuickSlotInput();
+
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
-            ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
-            inventoryManager.UpdateAllInventories();
+            switch (currentEquippedItem.itemType)
+            {
+                case ItemType.Food:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
+                case ItemType.ETC:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 0f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
+                case ItemType.Heal:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
+                case ItemType.Mental:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
+                case ItemType.Default:
+
+                    break;
+                default:
+
+                    break;
+            }
+
+
+
         }
+
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
