@@ -132,7 +132,13 @@ public class PoliceTrigger : MonoBehaviour
         if (isPlayerInTrigger && !isDoorMoving && !hasDoorOpened)
         {
             MoveDoor();
-            hasDoorOpened = true; 
+            hasDoorOpened = true;
+
+            Item keyItem = GetKeyItem();
+            if (keyItem != null)
+            {
+                itemUseManager.DecreaseItemQuantity(keyItem);
+            }
         }
     }
 
