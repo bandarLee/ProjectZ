@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using Photon.Pun;
 using UnityEngine;
 
@@ -14,6 +15,10 @@ public class ItemUseManager : MonoBehaviour
     public UI_BookText uI_BookText;
     public UI_DiskText uI_DiskText;
     public Light FlashLight;
+    public GameObject MapImage;
+
+    private bool isMapActive = false;
+    private bool isFlashLightActive = false;
 
     private void Awake()
     {
@@ -39,6 +44,7 @@ public class ItemUseManager : MonoBehaviour
         characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
 
         FlashLight.enabled = false;
+        MapImage.SetActive(false); 
     }
 
     public void ApplyEffect(Item item)
@@ -136,16 +142,6 @@ public class ItemUseManager : MonoBehaviour
             default:
                 Debug.LogWarning("This item type cannot be equipped.");
                 break;
-        }
-
-        // 손전등 아이템 선택 시 불빛 켜기/끄기 로직 추가
-        if (item.itemName == "손전등")
-        {
-            FlashLight.enabled = true;
-        }
-        else
-        {
-            FlashLight.enabled = false;
         }
     }
 
@@ -257,7 +253,6 @@ public class ItemUseManager : MonoBehaviour
         {
             case "손전등":
                 Debug.Log("Player found a flashlight.");
-                FlashLight.enabled = true;
                 break;
             case "지도":
                 Debug.Log("Player found a map.");
@@ -388,9 +383,13 @@ public class ItemUseManager : MonoBehaviour
     {
         switch (itemName)
         {
+            case "손전등":
+                Debug.Log("Player used a flashlight.");
+                ToggleFlashLight();
+                break;
             case "지도":
                 Debug.Log("Player used a map.");
-                // Player.Instance.UseMap();
+                ToggleMap();
                 break;
             case "열쇠":
                 Debug.Log("Player used a key.");
@@ -466,6 +465,18 @@ public class ItemUseManager : MonoBehaviour
             StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
 
         }
+    }
+
+    private void ToggleMap()
+    {
+        isMapActive = !isMapActive;
+        MapImage.SetActive(isMapActive);
+    }
+
+    private void ToggleFlashLight()
+    {
+        isFlashLightActive = !isFlashLightActive;
+        FlashLight.enabled = isFlashLightActive;
     }
 
     public void UpdateUI()
