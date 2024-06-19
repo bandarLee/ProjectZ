@@ -355,6 +355,10 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 15;
                 break;
+            case "¡÷ªÁ±‚":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental = Character.LocalPlayerInstance.Stat.MaxMental;
+                break;
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
