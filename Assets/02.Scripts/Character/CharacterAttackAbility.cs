@@ -152,10 +152,14 @@ public class CharacterAttackAbility : CharacterAbility
     [PunRPC]
     public void DeactivateAllCollidersRPC()
     {
+        if(WeaponCollider != null)
+        {
+            WeaponCollider.enabled = false;
 
-         WeaponCollider.enabled = false;
+            _damagedList.Clear();
 
-        _damagedList.Clear();
+        }
+
     }
 
     public void DeactivateAllColliders()
