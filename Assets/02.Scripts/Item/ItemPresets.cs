@@ -29,7 +29,9 @@ public class ItemPresets : MonoBehaviour
             itemEffect = preset.itemEffect,
             itemDescription = preset.itemDescription,
             uniqueId = System.Guid.NewGuid().ToString()
+
         };
+
     }
 
     public Sprite GetIconByName(string itemName)

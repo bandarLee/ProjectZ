@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Xml;
 
 
 
@@ -48,7 +49,8 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
-            string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
+            string uniqueItemName = newItem.uniqueId;
+            Debug.Log(uniqueItemName);
             newItem.uniqueId = uniqueItemName;
             items[uniqueItemName] = newItem;
             itemQuantities[uniqueItemName] = 1;
@@ -72,13 +74,22 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
         UpdateInventoryUI();
     }
-
     [PunRPC]
-    public void BoxRemoveItemRPC(Item boxitem)
+    public void BoxRemoveItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
     {
+        var icon = FindObjectOfType<ItemPresets>().GetIconByName(itemName);
+
+        Item boxitem = new Item
+        {
+            itemName = itemName,
+            itemType = (ItemType)System.Enum.Parse(typeof(ItemType), itemType),
+            uniqueId = uniqueId,
+            icon = icon,
+            itemEffect = itemEffect,
+            itemDescription = itemDescription
+        };
         BoxRemoveItem(boxitem, false);
     }
-
     public void BoxRemoveItem(Item boxitem, bool synchronize = true)
     {
         string itemName = boxitem.itemType == ItemType.Weapon || boxitem.itemType == ItemType.ETC || boxitem.itemType == ItemType.Gun ? boxitem.uniqueId : boxitem.itemName;
@@ -99,7 +110,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         
             if (synchronize)
             {
-                photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, itemName);
+                photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, boxitem.itemName, boxitem.itemType.ToString(), boxitem.uniqueId, boxitem.itemEffect, boxitem.itemDescription);
             }
 
             UpdateInventoryUI();

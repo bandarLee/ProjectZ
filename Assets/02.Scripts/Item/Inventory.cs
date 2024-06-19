@@ -42,7 +42,8 @@ public class Inventory : MonoBehaviourPunCallbacks
         }
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
-            string uniqueItemName = newItem.itemName + "_" + System.Guid.NewGuid().ToString();
+            string uniqueItemName = newItem.uniqueId;
+
             newItem.uniqueId = uniqueItemName;
             items[uniqueItemName] = newItem;
             itemQuantities[uniqueItemName] = 1;
