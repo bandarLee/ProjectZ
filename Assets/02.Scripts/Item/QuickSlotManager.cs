@@ -272,7 +272,14 @@ public class QuickSlotManager : MonoBehaviour
                     inventoryManager.UpdateAllInventories();
                     break;
                 case ItemType.Mental:
-                    ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    if(currentEquippedItem.itemName == "¡÷ªÁ±‚")
+                    {
+                        ItemUseManager.Instance.UseItem(currentEquippedItem, 5f);
+                    }
+                    else
+                    {
+                        ItemUseManager.Instance.UseItem(currentEquippedItem, 2f);
+                    }
                     inventoryManager.UpdateAllInventories();
                     break;
                 case ItemType.Default:
