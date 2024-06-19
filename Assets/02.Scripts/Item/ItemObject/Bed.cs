@@ -40,6 +40,8 @@ public class Bed : MonoBehaviour
             {
                 UseBedText.gameObject.SetActive(true);
                 isPlayerInRange = true;
+                
+                Character.LocalPlayerInstance._animator.SetBool("DoSleep", true);
             }
         }
     }
@@ -57,6 +59,8 @@ public class Bed : MonoBehaviour
         {
             UseBedText.gameObject.SetActive(false);
             isPlayerInRange = false;
+            
+            Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
         }
     }
 
