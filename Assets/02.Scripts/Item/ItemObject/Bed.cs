@@ -40,8 +40,6 @@ public class Bed : MonoBehaviour
             {
                 UseBedText.gameObject.SetActive(true);
                 isPlayerInRange = true;
-                
-                Character.LocalPlayerInstance._animator.SetBool("DoSleep", true);
             }
         }
     }
@@ -59,8 +57,6 @@ public class Bed : MonoBehaviour
         {
             UseBedText.gameObject.SetActive(false);
             isPlayerInRange = false;
-            
-            Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
         }
     }
 
@@ -86,6 +82,7 @@ public class Bed : MonoBehaviour
         isUsingBed = false;
         StopUsingBedText.gameObject.SetActive(false);
         UsingTimeSlider.gameObject.SetActive(false);
+        Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
     }
 
     private IEnumerator UseBed()
@@ -96,6 +93,8 @@ public class Bed : MonoBehaviour
         UsingTimeSlider.gameObject.SetActive(true);
         UsingTimeSlider.maxValue = useTime;
         UsingTimeSlider.value = 0;
+
+        Character.LocalPlayerInstance._animator.SetBool("DoSleep", true);
 
         float elapsedTime = 0;
         Character character = Character.LocalPlayerInstance;
@@ -122,6 +121,7 @@ public class Bed : MonoBehaviour
         StopUsingBedText.gameObject.SetActive(false);
         UsingTimeSlider.gameObject.SetActive(false);
         isUsingBed = false;
+        Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
     }
 
     private IEnumerator ShowAllRecoveriesText()
