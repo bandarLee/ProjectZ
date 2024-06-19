@@ -18,6 +18,7 @@ public class ItemUseManager : MonoBehaviour
 
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
+    private bool isDisplayingText = false;
 
     private void Awake()
     {
@@ -400,8 +401,14 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 break;
             case "책":
-                Debug.Log("Player used a Book");
-                uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                if (!isDisplayingText)
+                {
+                    Debug.Log("Player used a Book.");
+                    isDisplayingText = true;
+                    uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.", () => {
+                        isDisplayingText = false;
+                    });
+                }
                 break;
             case "디스크1":
                 if (computerTrigger.isPlayerInTrigger)
