@@ -18,6 +18,7 @@ public class ItemUseManager : MonoBehaviour
 
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
+    private bool isDisplayingText = false;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class ItemUseManager : MonoBehaviour
     public void ApplyEffect(Item item)
     {
 
-        if (item.itemType == ItemType.Gun)
+        if ((item.itemType == ItemType.Gun) || (item.itemType == ItemType.ETC && item.itemName == "열쇠"))
         {
             return;
         }
@@ -265,6 +266,10 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a Book.");
                 characterItemAbility.ItemActive("책");
                 break;
+            case "책2":
+                Debug.Log("Player used a Book.");
+                characterItemAbility.ItemActive("책2");
+                break;
             case "디스크1":
                 break;
             case "디스크2":
@@ -400,8 +405,24 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 break;
             case "책":
-                Debug.Log("Player used a Book");
-                uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 20초간 모습을 드러낸다.");
+                if (!isDisplayingText)
+                {
+                    Debug.Log("Player used a Book.");
+                    isDisplayingText = true;
+                    uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 모습을 드러낸다.", () => {
+                        isDisplayingText = false;
+                    });
+                }
+                break;
+            case "책2":
+                if (!isDisplayingText)
+                {
+                    Debug.Log("Player used a Book.");
+                    isDisplayingText = true;
+                    uI_BookText.DisplayText("죽음의 도시에서만 존재한다.", () => {
+                        isDisplayingText = false;
+                    });
+                }
                 break;
             case "디스크1":
                 if (computerTrigger.isPlayerInTrigger)
@@ -430,7 +451,7 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
-    private void DecreaseItemQuantity(Item item)
+    public void DecreaseItemQuantity(Item item)
     {
         Inventory inventory = Inventory.Instance;
         if (inventory != null && Character.LocalPlayerInstance.PhotonView.IsMine)
@@ -462,7 +483,11 @@ public class ItemUseManager : MonoBehaviour
         if(item.itemType != ItemType.Gun)
         {
             StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
-
+        }
+        if (item.itemType == ItemType.ETC && item.itemName == "열쇠")
+        {
+            Debug.Log("열쇠는 UseItem 메서드에서 사용되지 않습니다.");
+            return;
         }
     }
 
