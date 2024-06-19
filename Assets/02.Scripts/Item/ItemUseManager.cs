@@ -266,6 +266,10 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player used a Book.");
                 characterItemAbility.ItemActive("책");
                 break;
+            case "책2":
+                Debug.Log("Player used a Book.");
+                characterItemAbility.ItemActive("책2");
+                break;
             case "디스크1":
                 break;
             case "디스크2":
@@ -406,6 +410,16 @@ public class ItemUseManager : MonoBehaviour
                     Debug.Log("Player used a Book.");
                     isDisplayingText = true;
                     uI_BookText.DisplayText("소의 뿔이 사라지는 시간에 중앙에서 모습을 드러낸다.", () => {
+                        isDisplayingText = false;
+                    });
+                }
+                break;
+            case "책2":
+                if (!isDisplayingText)
+                {
+                    Debug.Log("Player used a Book.");
+                    isDisplayingText = true;
+                    uI_BookText.DisplayText("죽음의 도시에서만 존재한다.", () => {
                         isDisplayingText = false;
                     });
                 }
