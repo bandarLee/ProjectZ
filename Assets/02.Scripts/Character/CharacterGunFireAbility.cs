@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using System.Collections;
@@ -24,6 +25,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private bool _isReloading = false;
 
     private Camera mainCamera;
+    private CinemachineImpulseSource cameraShakeImpulse;
 
     private void Start()
     {
@@ -40,7 +42,11 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             Bullet = bulletPrefab.GetComponent<Bullet>();
         }
-
+        GameObject followCamera = GameObject.FindWithTag("FollowCamera");
+        //if (followCamera != null)
+        {
+            cameraShakeImpulse = followCamera.GetComponent<CinemachineImpulseSource>();
+        }
     }
     private IEnumerator InitializeCrossHair()
     {
@@ -109,6 +115,11 @@ public class CharacterGunFireAbility : CharacterAbility
                 _isReloading = false;
             }
 
+            //if (cameraShakeImpulse != null)
+            {
+                cameraShakeImpulse.GenerateImpulse();
+            }
+
             CurrentGun.BulletRemainCount--;
             Item bulletItem = GetBulletItem();
 
@@ -123,7 +134,6 @@ public class CharacterGunFireAbility : CharacterAbility
             {
                 FireBullet();
             }
-
         }
     }
 
