@@ -164,8 +164,12 @@ public class BoxInventoryUI : MonoBehaviour
             else
             {
                 Debug.Log("아이템 보관 실행1");
+                playerInventory.RemoveItem(selectedItem.uniqueId);
 
-                playerInventory.RemoveItem(itemName);
+                playerInventory.items.Remove(selectedItem.uniqueId);
+                playerInventory.itemQuantities.Remove(selectedItem.uniqueId);
+                playerInventory.inventoryUI.quickSlotManager.RemoveItemFromQuickSlots(selectedItem);
+
             }
             playerInventory.inventoryUI.currentSelectedItem = null;
             playerInventory.inventoryUI.ItemInfo.SetActive(false);
