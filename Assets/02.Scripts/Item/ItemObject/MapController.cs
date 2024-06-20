@@ -76,13 +76,13 @@ public class MapController : MonoBehaviour
         // 미니맵 좌표를 설정합니다.
         playerIcon.anchoredPosition = new Vector2(x, y);
 
-        Debug.Log($"Player World Pos: {playerWorldPos} -> MiniMap Pos: ({x}, {y})");
+        //Debug.Log($"Player World Pos: {playerWorldPos} -> MiniMap Pos: ({x}, {y})");
     }
 
     // 플레이어 Transform을 설정하는 메서드 추가
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
-        Debug.Log("현재 플레이어 위치: " + playerTransform.position);
+        //Debug.Log("현재 플레이어 위치: " + playerTransform.position);
     }
 }

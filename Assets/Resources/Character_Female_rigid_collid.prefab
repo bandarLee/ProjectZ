@@ -7868,6 +7868,7 @@ MonoBehaviour:
   _gunfireAbility: {fileID: 0}
   _characterRotateAbility: {fileID: 0}
   _statability: {fileID: 0}
+  _moveAbilityTwo: {fileID: 0}
 --- !u!114 &4577571689269186767
 MonoBehaviour:
   m_ObjectHideFlags: 0

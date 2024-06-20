@@ -11,7 +11,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public float JumpPower = 6f;
     private bool _canJump = true;
-
+    private bool _canMove = true;
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -21,7 +21,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     private void Update()
     {
-        if (Owner.State == State.Death || !Owner.PhotonView.IsMine)
+        if (Owner.State == State.Death || !Owner.PhotonView.IsMine || !_canMove)
         {
             return;
         }
@@ -93,5 +93,13 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         transform.position = newPosition; // 캐릭터의 위치를 새로운 위치로 갱신
 
 
+    }
+    public void PlayerMoveLock()
+    {
+        _canMove = false;
+    }
+    public void PlayerMoveFree()
+    {
+        _canMove = true;
     }
 }
