@@ -5,7 +5,6 @@ public class CharacterRotateAbility : CharacterAbility
 {
     public Transform CameraRoot;
     public Transform GunTransform;
-    public Transform UpperBodyTransform;
 
     private float _mx;
     private float _my;
@@ -104,7 +103,7 @@ public class CharacterRotateAbility : CharacterAbility
            Character.LocalPlayerInstance._quickSlotManager.currentEquippedItem.itemType == ItemType.Gun)
         {
             GunTransform.localEulerAngles = new Vector3(-_myGun, -116.89f, 1.424f);
-            UpperBodyTransform.localEulerAngles = new Vector3(-_my, UpperBodyTransform.localEulerAngles.y, UpperBodyTransform.localEulerAngles.z);
+            
         }
 
         lastRotationY = _mx;

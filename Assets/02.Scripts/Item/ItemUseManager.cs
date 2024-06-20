@@ -161,23 +161,23 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "사과":
                 Debug.Log("사과를 들었음");
-                //characterItemAbility.ItemActive("사과");
+                characterItemAbility.ItemActive("사과");
                 break;
             case "통조림":
                 Debug.Log("통조림을 들었음");
-                //characterItemAbility.ItemActive("통조림");
+                characterItemAbility.ItemActive("통조림");
                 break;
             case "물":
                 Debug.Log("물을 들었음");
-                //characterItemAbility.ItemActive("물");
+                characterItemAbility.ItemActive("물");
                 break;
             case "수박":
                 Debug.Log("수박을 들었음");
-                //characterItemAbility.ItemActive("수박");
+                characterItemAbility.ItemActive("수박");
                 break;
             case "토마토":
                 Debug.Log("토마토를 들었음");
-                //characterItemAbility.ItemActive("토마토");
+                characterItemAbility.ItemActive("토마토");
                 break;
             default:
                 Debug.LogWarning("Unknown food item.");
@@ -191,11 +191,11 @@ public class ItemUseManager : MonoBehaviour
         {
             case "구급상자":
                 Debug.Log("구상을 들었음");
-                //characterItemAbility.ItemActive("구급상자");
+                characterItemAbility.ItemActive("구급상자");
                 break;
             case "진통제":
                 Debug.Log("진통제를 들었음");
-                //characterItemAbility.ItemActive("진통제");
+                characterItemAbility.ItemActive("진통제");
                 break;
             default:
                 Debug.LogWarning("Unknown heal item.");
@@ -210,6 +210,10 @@ public class ItemUseManager : MonoBehaviour
             case "술":
                 Debug.Log("술을 들었음");
                 characterItemAbility.ItemActive("술");
+                break;
+            case "주사기":
+                Debug.Log("주사기를 들었음");
+                characterItemAbility.ItemActive("주사기");
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
@@ -266,7 +270,7 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "열쇠":
                 Debug.Log("Player found a key.");
-                //characterItemAbility.ItemActive("열쇠");
+                characterItemAbility.ItemActive("열쇠");
                 break;
             case "책":
                 Debug.Log("Player used a Book.");
@@ -274,13 +278,16 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "책2":
                 Debug.Log("Player used a Book.");
-                characterItemAbility.ItemActive("책2");
+                characterItemAbility.ItemActive("책");
                 break;
             case "디스크1":
+                characterItemAbility.ItemActive("디스크1");
                 break;
             case "디스크2":
+                characterItemAbility.ItemActive("디스크1");
                 break;
             case "디스크3":
+                characterItemAbility.ItemActive("디스크1");
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
@@ -294,6 +301,7 @@ public class ItemUseManager : MonoBehaviour
         {
             case "총알":
                 Debug.Log("총알을 들었음");
+                characterItemAbility.ItemActive("총알");
                 break;
             default:
                 Debug.LogWarning("Unknown Consumable item.");
@@ -302,6 +310,7 @@ public class ItemUseManager : MonoBehaviour
     }
     private void EquipStatBook(string itemName)
     {
+        characterItemAbility.ItemActive("책");
         switch (itemName)
         {
             case "스탯북_이동속도":
