@@ -163,6 +163,8 @@ public class InventoryUI : MonoBehaviour
                 return "소모품";
             case ItemType.Gun:
                 return "총";
+            case ItemType.StatBook:
+                return "스탯";
             default:
                 return "알 수 없음";
         }
