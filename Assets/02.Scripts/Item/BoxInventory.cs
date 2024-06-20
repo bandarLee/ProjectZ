@@ -50,7 +50,6 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
             string uniqueItemName = newItem.uniqueId;
-            Debug.Log(uniqueItemName);
             newItem.uniqueId = uniqueItemName;
             items[uniqueItemName] = newItem;
             itemQuantities[uniqueItemName] = 1;
