@@ -4,12 +4,13 @@ using UnityEngine.UI;
 using System.Linq;
 using Photon.Pun;
 using System;
+using System.Collections;
 
 public class BoxInventoryUI : MonoBehaviour
 {
     public Item currentSelectedItem;
     public GameObject[] inventorySlots;
-    private BoxInventory currentBoxInventory;
+    public BoxInventory currentBoxInventory;
 
     public GameObject ItemInfo;
     public TMP_Text itemNameText;
@@ -19,7 +20,9 @@ public class BoxInventoryUI : MonoBehaviour
     public Image itemIconImage;
     public GameObject inventoryObject;
     public GameObject boxinventoryUIobject;
-    private Inventory playerInventory; 
+    private Inventory playerInventory;
+
+    public TMP_Text SystemText;
 
     private void Start()
     {
@@ -84,6 +87,7 @@ public class BoxInventoryUI : MonoBehaviour
                     slot.pressedIcon.transform.localScale = new Vector3(0, 0, 0);
 
                     slot.quantityText.text = "";
+                    slot.slotitem = null;
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -122,6 +126,11 @@ public class BoxInventoryUI : MonoBehaviour
 
         if (playerInventory != null)
         {
+            if (playerInventory.items.Count >= 8)
+            {
+                UpdateSystemMessageInventory();
+                return;
+            }
             playerInventory.AddItem(currentSelectedItem);
 
             if (currentBoxInventory.photonView != null)
@@ -141,7 +150,6 @@ public class BoxInventoryUI : MonoBehaviour
     {
         if (slotitem == null) { return; }
 
-        currentBoxInventory.BoxRemoveItem(slotitem);
 
         if (playerInventory == null)
         {
@@ -150,14 +158,21 @@ public class BoxInventoryUI : MonoBehaviour
 
         if (playerInventory != null)
         {
+            if(playerInventory.items.Count >= 8)
+            {
+                UpdateSystemMessageInventory();
+
+                return;
+            }
+            currentBoxInventory.BoxRemoveItem(slotitem);
+
             playerInventory.AddItem(slotitem);
 
             if (currentBoxInventory.photonView != null)
             {
-                currentBoxInventory.photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
+                currentBoxInventory.photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, slotitem.itemName, slotitem.itemType.ToString(), slotitem.uniqueId, slotitem.itemEffect, slotitem.itemDescription);
             }
 
-            slotitem = null;
             ItemInfo.SetActive(false);
 
             UpdateInventoryUI();
@@ -165,8 +180,72 @@ public class BoxInventoryUI : MonoBehaviour
         }
 
     }
+    public void TransferToBoxInventorySlot(Item slotitem)
+    {
+        if (currentBoxInventory.items.Count >= 12)
+        {
+            UpdateSystemMessageBoxInventory();
+
+            return;
+        }
+        if(currentBoxInventory == null)
+        {
+            return;
+        }
+        Item selectedItem = slotitem;
+
+
+        currentBoxInventory.BoxAddItem(selectedItem);
+
+        if (currentBoxInventory.photonView != null)
+        {
+            currentBoxInventory.photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, selectedItem.itemName, selectedItem.itemType.ToString(), selectedItem.uniqueId, selectedItem.itemEffect, selectedItem.itemDescription);
+        }
+
+        if (playerInventory != null)
+        {
+            string itemName = (selectedItem.itemType == ItemType.Weapon || selectedItem.itemType == ItemType.ETC || selectedItem.itemType == ItemType.Gun)
+                              ? selectedItem.uniqueId : selectedItem.itemName;
+            if (playerInventory.itemQuantities.ContainsKey(itemName))
+            {
+
+                playerInventory.itemQuantities[itemName]--;
+                if (playerInventory.itemQuantities[itemName] <= 0)
+                {
+                    playerInventory.items.Remove(itemName);
+                    playerInventory.itemQuantities.Remove(itemName);
+                    playerInventory.inventoryUI.quickSlotManager.RemoveItemFromQuickSlots(selectedItem);
+
+
+                }
+
+            }
+            else
+            {
+                Debug.Log("아이템 보관 실행1");
+                playerInventory.RemoveItem(selectedItem.uniqueId);
+
+                playerInventory.items.Remove(selectedItem.uniqueId);
+                playerInventory.itemQuantities.Remove(selectedItem.uniqueId);
+                playerInventory.inventoryUI.quickSlotManager.RemoveItemFromQuickSlots(selectedItem);
+
+            }
+            playerInventory.inventoryUI.currentSelectedItem = null;
+
+            playerInventory.inventoryUI.ItemInfo.SetActive(false);
+
+            UpdateInventoryUI();
+            playerInventory.inventoryUI.UpdateInventoryUI();
+        }
+    }
     public void TransferToBoxInventory()
     {
+        if (currentBoxInventory.items.Count >= 12)
+        {
+            UpdateSystemMessageBoxInventory();
+
+            return;
+        }
         Item selectedItem = playerInventory.inventoryUI.currentSelectedItem;
 
 
@@ -248,5 +327,25 @@ public class BoxInventoryUI : MonoBehaviour
     {
         inventoryObject.SetActive(false);
         boxinventoryUIobject.SetActive(false);
+        currentBoxInventory = null;
+    }
+    public void UpdateSystemMessageInventory()
+    {
+        SystemText.gameObject.SetActive(true);
+        SystemText.text = "인벤토리에 남은 공간이 없습니다.";
+        StartCoroutine(HideNoSpaceTextAfterDelay(2f));
+
+    }
+    public void UpdateSystemMessageBoxInventory()
+    {
+        SystemText.gameObject.SetActive(true);
+        SystemText.text = "박스에 남는 공간이 없습니다.";
+        StartCoroutine(HideNoSpaceTextAfterDelay(2f));
+
+    }
+    private IEnumerator HideNoSpaceTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SystemText.gameObject.SetActive(false);
     }
 }

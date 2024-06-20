@@ -40,7 +40,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 if (boxInventoryUI != null)
                 {
 
-                    boxInventoryUI.TransferToBoxInventory();
+                    boxInventoryUI.TransferToBoxInventorySlot(slotitem);
                 }
                 break;
             case SlotType.BoxInventorySlot:

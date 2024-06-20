@@ -40,6 +40,11 @@ public class Inventory : MonoBehaviourPunCallbacks
             Debug.LogWarning("AddItem: null or invalid item");
             return;
         }
+        if (items.Count >= 8)
+        {
+            Debug.LogWarning("AddItem: Inventory is full (maximum 8 unique items)");
+            return;
+        }
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
             string uniqueItemName = newItem.uniqueId;
@@ -95,5 +100,25 @@ public class Inventory : MonoBehaviourPunCallbacks
 
         inventoryUI.UpdateInventoryUI();
         FindObjectOfType<QuickSlotManager>().UpdateQuickSlotUI();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            Debug.Log("Items:");
+            foreach (var item in items)
+            {
+                Debug.Log($"Item Name: {item.Key}, Item Details: {item.Value}");
+            }
+
+            // itemQuantities의 내용을 출력
+            Debug.Log("Item Quantities:");
+            foreach (var quantity in itemQuantities)
+            {
+                Debug.Log($"Item Name: {quantity.Key}, Quantity: {quantity.Value}");
+            }
+        }
+        
+
     }
 }

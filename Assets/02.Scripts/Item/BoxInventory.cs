@@ -46,7 +46,11 @@ public class BoxInventory : MonoBehaviourPunCallbacks
 
     public void BoxAddItem(Item newItem, bool synchronize = true)
     {
-
+        if (items.Count >= 12)
+        {
+            Debug.LogWarning("BoxAddItem: Box Inventory is full (maximum 8 unique items)");
+            return;
+        }
         if (newItem.itemType == ItemType.Weapon || newItem.itemType == ItemType.ETC || newItem.itemType == ItemType.Gun)
         {
             string uniqueItemName = newItem.uniqueId;

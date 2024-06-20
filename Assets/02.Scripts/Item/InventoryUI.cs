@@ -74,6 +74,8 @@ public class InventoryUI : MonoBehaviour
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int capturedIndex = i;
                 inventorySlots[i].GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(capturedIndex));
+                var slotsitemList = inventory.items.Values.ToList();
+                slot.slotitem = slotsitemList[capturedIndex];
             }
             else
             {
@@ -88,6 +90,8 @@ public class InventoryUI : MonoBehaviour
                     slot.pressedIcon.transform.localScale = new Vector3(0, 0, 0);
 
                     slot.quantityText.text = "";
+                    slot.slotitem = null;
+
                 }
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();

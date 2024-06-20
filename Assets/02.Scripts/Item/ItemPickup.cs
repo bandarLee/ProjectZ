@@ -24,12 +24,17 @@ public class ItemPickup : MonoBehaviourPunCallbacks
     private void OnTriggerEnter(Collider other)
     {
         if (isPickedUp) return;
+
         if (other.CompareTag("Player") && other.gameObject.GetComponent<Character>().PhotonView.IsMine)
         {
+            if (Inventory.Instance.items.Count >= 8)
+            {
+                FindObjectOfType<BoxInventoryUI>().UpdateSystemMessageInventory();
+                return;
+            }
 
 
-   
-                Debug.Log(SpawnedItem.uniqueId);
+            Debug.Log(SpawnedItem.uniqueId);
                 isPickedUp = true;
 
                 Inventory.Instance.AddItem(SpawnedItem);
