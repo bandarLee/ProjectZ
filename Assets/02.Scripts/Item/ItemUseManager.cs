@@ -17,7 +17,6 @@ public class ItemUseManager : MonoBehaviour
     public Light FlashLight;
     public GameObject MapImage;
 
-
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
     private bool isDisplayingText = false;
@@ -47,6 +46,20 @@ public class ItemUseManager : MonoBehaviour
 
         FlashLight.enabled = false;
         MapImage.SetActive(false); 
+
+        // Áöµµ
+        if (map == null)
+        {
+            map = FindObjectOfType<Map>();
+            if(map == null)
+            {
+                Debug.LogError("Map component not found!!!!!!!!!!");
+            }
+        }
+        if (MapImage == null)
+        {
+            Debug.LogError("MapImage GameObject is not assigned!");
+        }
     }
 
     public void ApplyEffect(Item item)
@@ -625,15 +638,22 @@ public class ItemUseManager : MonoBehaviour
         }
     }
 
+    public void MapExit()
+    {
+        MapImage.SetActive(false);
+        Character.LocalPlayerInstance._characterRotateAbility.SetMouseLock(true);
+
+    }
+
+
     private void ToggleMap()
     {
-        isMapActive = !isMapActive;
-        MapImage.SetActive(isMapActive);
+        MapImage.SetActive(true);
 
-        if (isMapActive)
-        {
+
             map.OpenMap();
-        }
+            Character.LocalPlayerInstance._characterRotateAbility.SetMouseLock(false);
+
     }
 
     private void ToggleFlashLight()
