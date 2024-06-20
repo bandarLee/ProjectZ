@@ -13,6 +13,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public InventoryUI inventoryUI;
     public BoxInventoryUI boxInventoryUI;
 
+    public Item slotitem;
+
     public enum SlotType
     {
         PlayerInventorySlot,
@@ -44,7 +46,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             case SlotType.BoxInventorySlot:
                 if (boxInventoryUI != null)
                 {
-                    boxInventoryUI.TransferToPlayerInventory();
+                    boxInventoryUI.TransferToPlayerInventorySlot(slotitem);
                 }
                 break;
         }

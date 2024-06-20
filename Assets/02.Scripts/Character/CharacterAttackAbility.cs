@@ -18,11 +18,6 @@ public class CharacterAttackAbility : CharacterAbility
     private List<IDamaged> _damagedList = new List<IDamaged>();
     private int _activeWeaponIndex = -1;
 
-    protected override void Awake() // 이는 가상 메소드 또는 추상 메소드인 경우에만 사용할 수 있습니다.
-    {
-        base.Awake(); // 부모 클래스의 Awake 메소드 호출
-        DeactivateAllWeapons(); // 추가적인 자식 클래스 로직
-    }
 
     private void Start()
     {
@@ -179,9 +174,9 @@ public class CharacterAttackAbility : CharacterAbility
             weapon.SetActive(false);
         }
         _activeWeaponIndex = -1;
-
-        Owner._animator.SetBool("WeaponPullOut", false);
+       
         Owner._animator.SetBool("ReWeaponPullOut", true);
+        Owner._animator.SetBool("WeaponPullOut", false);
     }
 
     public void DeactivateAllWeapons()

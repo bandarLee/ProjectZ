@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using Photon.Pun;
+using System;
 
 public class BoxInventoryUI : MonoBehaviour
 {
@@ -64,7 +65,11 @@ public class BoxInventoryUI : MonoBehaviour
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int capturedIndex = i;
+
                 inventorySlots[i].GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(capturedIndex));
+                var slotsitemList = currentBoxInventory.items.Values.ToList();
+                slot.slotitem = slotsitemList[capturedIndex];
+
             }
             else
             {
@@ -83,6 +88,7 @@ public class BoxInventoryUI : MonoBehaviour
 
                 inventorySlots[i].GetComponent<Button>().onClick.RemoveAllListeners();
             }
+
         }
     }
 
@@ -105,7 +111,7 @@ public class BoxInventoryUI : MonoBehaviour
 
     public void TransferToPlayerInventory()
     {
-        if (currentSelectedItem == null) return;
+        if (currentSelectedItem == null) {return;}
 
         currentBoxInventory.BoxRemoveItem(currentSelectedItem);
 
@@ -130,6 +136,34 @@ public class BoxInventoryUI : MonoBehaviour
             playerInventory.inventoryUI.UpdateInventoryUI();
         }
  
+    }
+    public void TransferToPlayerInventorySlot(Item slotitem)
+    {
+        if (slotitem == null) { return; }
+
+        currentBoxInventory.BoxRemoveItem(slotitem);
+
+        if (playerInventory == null)
+        {
+            playerInventory = Inventory.Instance;
+        }
+
+        if (playerInventory != null)
+        {
+            playerInventory.AddItem(slotitem);
+
+            if (currentBoxInventory.photonView != null)
+            {
+                currentBoxInventory.photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, currentSelectedItem.itemName, currentSelectedItem.itemType.ToString(), currentSelectedItem.uniqueId, currentSelectedItem.itemEffect, currentSelectedItem.itemDescription);
+            }
+
+            slotitem = null;
+            ItemInfo.SetActive(false);
+
+            UpdateInventoryUI();
+            playerInventory.inventoryUI.UpdateInventoryUI();
+        }
+
     }
     public void TransferToBoxInventory()
     {
