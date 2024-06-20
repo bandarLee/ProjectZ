@@ -10,9 +10,9 @@ public class CharacterAttackAbility : CharacterAbility
     private float _attackTimer = 0;
     public Collider WeaponCollider;
     public GameObject[] WeaponObject;
-    public int ShovelDamage = 25;
-    public int BatDamage = 30;
-    public int AxeDamage = 35;
+    public float ShovelDamage = 25;
+    public float BatDamage = 30;
+    public float AxeDamage = 35;
 
     // 때린 애들을 기억해 놓는 리스트
     private List<IDamaged> _damagedList = new List<IDamaged>();
@@ -116,19 +116,19 @@ public class CharacterAttackAbility : CharacterAbility
                 // 피격 이펙트 생성
                 Vector3 hitPosition = (transform.position + other.transform.position) / 2f + new Vector3(0f, 1f, 0f);
                 //PhotonNetwork.Instantiate("HitEffect", hitPosition, Quaternion.identity);
-                int damage = GetWeaponDamage(_activeWeaponIndex);
+                float damage = GetWeaponDamage(_activeWeaponIndex);
                 photonView.RPC("Damaged", RpcTarget.All, damage, Owner.PhotonView.OwnerActorNr);
             }
         }
     }
 
-    private int GetWeaponDamage(int weaponIndex)
+    private float GetWeaponDamage(int weaponIndex)
     {
         switch (weaponIndex)
         {
-            case 0: return AxeDamage;
-            case 1: return BatDamage;
-            case 2: return ShovelDamage;
+            case 0: return AxeDamage * (Owner.Stat.Damage);
+            case 1: return BatDamage * (Owner.Stat.Damage);
+            case 2: return ShovelDamage * (Owner.Stat.Damage);
             default: return 0;
         }
     }

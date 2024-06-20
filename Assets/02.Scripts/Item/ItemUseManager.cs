@@ -75,6 +75,9 @@ public class ItemUseManager : MonoBehaviour
             case ItemType.ETC:
                 ApplyEtcEffect(item.itemName, item);
                 break;
+            case ItemType.StatBook:
+                ApplyStatBookEffect(item);
+                break;
             default:
                 Debug.LogWarning("Unknown item type.");
                 break;
@@ -138,6 +141,9 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case ItemType.Gun:
                 EquipGun(item.itemName);
+                break;
+            case ItemType.StatBook:
+                EquipStatBook(item.itemName);
                 break;
             default:
                 Debug.LogWarning("This item type cannot be equipped.");
@@ -288,6 +294,27 @@ public class ItemUseManager : MonoBehaviour
         {
             case "ÃÑ¾Ë":
                 Debug.Log("ÃÑ¾ËÀ» µé¾úÀ½");
+                break;
+            default:
+                Debug.LogWarning("Unknown Consumable item.");
+                break;
+        }
+    }
+    private void EquipStatBook(string itemName)
+    {
+        switch (itemName)
+        {
+            case "½ºÅÈºÏ_ÀÌµ¿¼Óµµ":
+                Debug.Log("ÀÌ¼ÓºÏ µé¾úÀ½");
+                break;
+            case "½ºÅÈºÏ_°ø°Ý·Â":
+                Debug.Log("°ø°ÝºÏ µé¾úÀ½");
+                break;
+            case "½ºÅÈºÏ_Á¡ÇÁ·Â":
+                Debug.Log("Á¡ÇÁºÏ µé¾úÀ½");
+                break;
+            case "½ºÅÈºÏ_Ã¼·Â":
+                Debug.Log("Ã¼·ÂºÏ µé¾úÀ½");
                 break;
             default:
                 Debug.LogWarning("Unknown Consumable item.");
@@ -454,7 +481,44 @@ public class ItemUseManager : MonoBehaviour
                 break;
         }
     }
-
+    private void ApplyStatBookEffect(Item item)
+    {
+        switch (item.itemName)
+        {
+            case "½ºÅÈºÏ_ÀÌµ¿¼Óµµ":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.MoveSpeed += 0.1f;
+                isDisplayingText = true;
+                uI_BookText.DisplayText("»¡¸® ¶Ù´Â ¹ý ... ´Ù¸®¸¦ ºü¸£°Ô ¿òÁ÷ÀÎ´Ù ", () => {
+                    isDisplayingText = false;
+                });
+                break;
+            case "½ºÅÈºÏ_°ø°Ý·Â":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Damage += 0.1f;
+                isDisplayingText = true;
+                uI_BookText.DisplayText("¼¼°Ô ¶§¸®´Â ¹ý ... ¼¼°Ô ÆÈÀ» ÈÖµÎ¸¥´Ù.", () => {
+                    isDisplayingText = false;
+                });
+                break;
+            case "½ºÅÈºÏ_Á¡ÇÁ·Â":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.JumpPower += 0.1f;
+                isDisplayingText = true;
+                uI_BookText.DisplayText("³ôÀÌ ¶Ù´Â ¹ý ... ½Å¹ßÀ» ÁÁÀº°É ½Å´Â´Ù.", () => {
+                    isDisplayingText = false;
+                });
+                break;
+            case "½ºÅÈºÏ_Ã¼·Â":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.MaxHealth += 10;
+                isDisplayingText = true;
+                uI_BookText.DisplayText("Ã¼·ÂÀÌ ÁÁ¾ÆÁö´Â ¹ý ... ¿îµ¿À» ÇÑ´Ù.", () => {
+                    isDisplayingText = false;
+                });
+                break;
+        }
+    }
     public void DecreaseItemQuantity(Item item)
     {
         Inventory inventory = Inventory.Instance;

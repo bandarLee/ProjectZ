@@ -33,6 +33,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _statability = GetComponent<CharacterStatAbility>();
         Stat = _statability.Stat;
         Stat.Init();
+        Stat.InitializeStat();
         PhotonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
         _inventoryManager = FindObjectOfType<InventoryManager>();

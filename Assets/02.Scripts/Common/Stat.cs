@@ -15,7 +15,7 @@ public class Stat
     public int Temperature;
     public int StandardTemperature;
 
-    public int Damage;
+    public float Damage;
 
     public float MoveSpeed;
     public float RunSpeed;
@@ -31,5 +31,22 @@ public class Stat
         Mental = MaxMental;
         Hunger = MaxHunger;
         Temperature = StandardTemperature;
+    }
+    public void InitializeStat()
+    {
+        Health = 100;
+        MaxHealth = 100;
+        Mental = 100;
+        MaxMental = 100;
+        Hunger = 100;
+        MaxHunger = 100;
+        Temperature = 20;
+        StandardTemperature = 20;
+        Damage = 1;
+        MoveSpeed = 3;
+        RunSpeed = 1.5f * MoveSpeed;
+        RotationSpeed = 200;
+        AttackCoolTime = 5;
+        JumpPower = 6;
     }
 }

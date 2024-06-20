@@ -9,7 +9,6 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     Animator _animator;
     Rigidbody _rigidbody;
 
-    public float JumpPower = 6f;
     private bool _canJump = true;
     private bool _canMove = true;
     private void Start()
@@ -70,7 +69,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
     {
         RequestPlayAnimation("Jump");
 
-        _rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.up * (Owner.Stat.JumpPower), ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.25f);
         _canJump = true;

@@ -285,6 +285,10 @@ public class QuickSlotManager : MonoBehaviour
                 case ItemType.Default:
 
                     break;
+                case ItemType.StatBook:
+                    ItemUseManager.Instance.UseItem(currentEquippedItem, 3f);
+                    inventoryManager.UpdateAllInventories();
+                    break;
                 default:
 
                     break;

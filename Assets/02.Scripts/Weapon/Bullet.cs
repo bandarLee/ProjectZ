@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int Damage = 20;
+    public float Damage = 20;
     public float Force = 30f;
     private Rigidbody rb;
     private bool hasDamaged = false;
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null)
             {
-                photonView.RPC("Damaged", RpcTarget.All, Damage, PhotonNetwork.LocalPlayer.ActorNumber);
+                photonView.RPC("Damaged", RpcTarget.All, Damage * (Character.LocalPlayerInstance._statability.Stat.Damage), PhotonNetwork.LocalPlayer.ActorNumber);
                 hasDamaged = true;
             } 
         }
