@@ -58,13 +58,18 @@ public class CharacterAttackAbility : CharacterAbility
             weapon.SetActive(false);
         }
 
-        StartCoroutine(WeaponActiveAfterDelay(WeaponNumber, 0.1f));
+        StartCoroutine(WeaponActiveAfterDelay(WeaponNumber, 0.6f));
         _activeWeaponIndex = WeaponNumber;
 
         Owner._animator.SetBool("WeaponPullOut", true);
-        Owner._animator.SetBool("ReWeaponPullOut", false);
+        StartCoroutine(TimeDelayWeapon());
     }
+        IEnumerator TimeDelayWeapon()
+    {
+        yield return new WaitForSeconds(1f);
+        Owner._animator.SetBool("WeaponPullOut", false);
 
+    }
     private IEnumerator WeaponActiveAfterDelay(int WeaponNumber, float delay)
     {
         yield return new WaitForSeconds(delay);

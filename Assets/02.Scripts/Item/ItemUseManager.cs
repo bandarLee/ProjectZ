@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class ItemUseManager : MonoBehaviour
@@ -70,7 +71,7 @@ public class ItemUseManager : MonoBehaviour
             return;
         }
         Character.LocalPlayerInstance._animator.SetBool("isPullOut", false);
-        HandCount(item);
+        
 
 
         switch (item.itemType)
@@ -125,9 +126,15 @@ public class ItemUseManager : MonoBehaviour
         else
         {
             Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 1);
+            StartCoroutine(TimeDelayHand());
+
         }
     }
-
+    IEnumerator TimeDelayHand()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 0);
+    }
     public void EquipItem(Item item)
     {
         characterItemAbility.DeactivateAllItems();
@@ -631,7 +638,7 @@ public class ItemUseManager : MonoBehaviour
     {
         if(item.itemType != ItemType.Gun)
         {
-
+            HandCount(item);
             StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
         }
         if (item.itemType == ItemType.ETC && item.itemName == "¿­¼è")

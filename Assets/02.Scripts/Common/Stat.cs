@@ -46,7 +46,7 @@ public class Stat
         MoveSpeed = 10;
         RunSpeed = 1.5f * MoveSpeed;
         RotationSpeed = 200;
-        AttackCoolTime = 5;
+        AttackCoolTime = 0.8f;
         JumpPower = 6;
     }
 }
