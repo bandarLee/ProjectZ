@@ -17,6 +17,7 @@ public class ItemUseManager : MonoBehaviour
     public Light FlashLight;
     public GameObject MapImage;
 
+
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
     private bool isDisplayingText = false;
@@ -478,17 +479,17 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "지도조각 4":
                 Debug.Log("Player registers the map4.");
-
+                map.RegisterMapPiece(3);
                 DecreaseItemQuantity(item);
                 break;
             case "지도조각 5":
                 Debug.Log("Player registers the map5.");
-
+                map.RegisterMapPiece(4);
                 DecreaseItemQuantity(item);
                 break;
             case "지도조각 6":
                 Debug.Log("Player registers the map6.");
-
+                map.RegisterMapPiece(5);
                 DecreaseItemQuantity(item);
                 break;
             case "열쇠":
@@ -628,6 +629,11 @@ public class ItemUseManager : MonoBehaviour
     {
         isMapActive = !isMapActive;
         MapImage.SetActive(isMapActive);
+
+        if (isMapActive)
+        {
+            map.OpenMap();
+        }
     }
 
     private void ToggleFlashLight()
