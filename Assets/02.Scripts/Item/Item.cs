@@ -20,5 +20,6 @@ public enum ItemType
     Mental,
     ETC,
     Consumable,
-    Gun
+    Gun,
+    StatBook
 }

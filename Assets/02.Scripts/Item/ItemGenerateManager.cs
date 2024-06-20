@@ -78,6 +78,11 @@ public class ItemGenerateManager : MonoBehaviourPunCallbacks
         {
             selectedType = ItemType.Consumable;
         }
+        else if (randomValue < config.foodProbability + config.weaponProbability + config.healProbability + config.mentalProbability + config.gunProbability + config.consumeProbability + config.statBookProbability)
+        {
+            selectedType = ItemType.StatBook;
+
+        }
         else
         {
             selectedType = ItemType.ETC;

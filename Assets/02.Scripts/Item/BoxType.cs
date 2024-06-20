@@ -24,5 +24,6 @@ public struct BoxTypeConfig
     public float mentalProbability;
     public float gunProbability;
     public float consumeProbability;
+    public float statBookProbability;
     public float etcProbability;
 }
