@@ -4,8 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEditorInternal.ReorderableList;
+
 
 public class QuickSlotManager : MonoBehaviour
 {

@@ -13,6 +13,7 @@ public class ItemUseManager : MonoBehaviour
     private CharacterItemAbility characterItemAbility;
     public UI_BookText uI_BookText;
     public UI_DiskText uI_DiskText;
+    public Map map;
     public Light FlashLight;
     public GameObject MapImage;
 
@@ -268,6 +269,30 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("Player found a map.");
                 //characterItemAbility.ItemActive("지도");
                 break;
+            case "지도조각 1":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 1");
+                break;
+            case "지도조각 2":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 2");
+                break;
+            case "지도조각 3":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 3");
+                break;
+            case "지도조각 4":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 4");
+                break;
+            case "지도조각 5":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 5");
+                break;
+            case "지도조각 6":
+                Debug.Log("Player found a map.");
+                //characterItemAbility.ItemActive("지도조각 6");
+                break;
             case "열쇠":
                 Debug.Log("Player found a key.");
                 characterItemAbility.ItemActive("열쇠");
@@ -425,6 +450,7 @@ public class ItemUseManager : MonoBehaviour
 
     private void ApplyEtcEffect(string itemName, Item item)
     {
+        
         switch (itemName)
         {
             case "손전등":
@@ -434,6 +460,36 @@ public class ItemUseManager : MonoBehaviour
             case "지도":
                 Debug.Log("Player used a map.");
                 ToggleMap();
+                break;
+            case "지도조각 1":
+                Debug.Log("Player registers the map1.");
+                map.RegisterMapPiece(0);
+                DecreaseItemQuantity(item);
+                break;
+            case "지도조각 2":
+                Debug.Log("Player registers the map2.");
+                map.RegisterMapPiece(1);
+                DecreaseItemQuantity(item);
+                break;
+            case "지도조각 3":
+                Debug.Log("Player registers the map3.");
+                map.RegisterMapPiece(2);
+                DecreaseItemQuantity(item);
+                break;
+            case "지도조각 4":
+                Debug.Log("Player registers the map4.");
+
+                DecreaseItemQuantity(item);
+                break;
+            case "지도조각 5":
+                Debug.Log("Player registers the map5.");
+
+                DecreaseItemQuantity(item);
+                break;
+            case "지도조각 6":
+                Debug.Log("Player registers the map6.");
+
+                DecreaseItemQuantity(item);
                 break;
             case "열쇠":
                 Debug.Log("Player used a key.");
