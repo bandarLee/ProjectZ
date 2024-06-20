@@ -253,8 +253,7 @@ public class CharacterGunFireAbility : CharacterAbility
             gun.GetComponent<Gun>().BulletRemainCount = 0;
             gun.SetActive(false);
         }
-        Owner._animator.SetBool("RePullOut", true);
-        Owner._animator.SetBool("isPullOut", false);
+
         Owner._animator.SetInteger("UsingHand", 0);
     }
 

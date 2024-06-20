@@ -69,8 +69,9 @@ public class ItemUseManager : MonoBehaviour
         {
             return;
         }
-        characterItemAbility.DeactivateAllItems();
-        characterItemAbility.UnUsingHandAnimation();
+        Character.LocalPlayerInstance._animator.SetBool("isPullOut", false);
+        HandCount(item);
+
 
         switch (item.itemType)
         {
@@ -80,6 +81,7 @@ public class ItemUseManager : MonoBehaviour
             case ItemType.Heal:
                 ApplyHealEffect(item.itemName);
                 DecreaseItemQuantity(item);
+
                 break;
             case ItemType.Mental:
                 ApplyMentalEffect(item);
@@ -112,10 +114,9 @@ public class ItemUseManager : MonoBehaviour
 
     private void HandCount(Item item)
     {
-        characterItemAbility.UnUsingHandAnimation();
         if (item.itemType == ItemType.Gun)
         {
-            characterItemAbility.TwoHandAnimation();
+            Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 2);
         }
         else if (item.itemType == ItemType.Weapon)
         {
@@ -123,7 +124,7 @@ public class ItemUseManager : MonoBehaviour
         }
         else
         {
-            characterItemAbility.OneHandAnimation();
+            Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 1);
         }
     }
 
@@ -132,7 +133,6 @@ public class ItemUseManager : MonoBehaviour
         characterItemAbility.DeactivateAllItems();
         attackAbility.DeactivateAllWeapons();
         gunFireAbility.DeactivateAllGuns();
-        HandCount(item);
 
         switch (item.itemType)
         {
@@ -611,6 +611,8 @@ public class ItemUseManager : MonoBehaviour
 
                 if (inventory.itemQuantities[itemName] <= 0)
                 {
+                    characterItemAbility.DeactivateAllItems();
+
                     inventory.items.Remove(itemName);
                     inventory.itemQuantities.Remove(itemName);
                     if (quickSlotManager.currentEquippedItem.itemType != ItemType.Gun)
@@ -629,6 +631,7 @@ public class ItemUseManager : MonoBehaviour
     {
         if(item.itemType != ItemType.Gun)
         {
+
             StartCoroutine(uI_Gunfire.UseItemWithTimer(duration, () => ApplyEffect(item)));
         }
         if (item.itemType == ItemType.ETC && item.itemName == "¿­¼è")

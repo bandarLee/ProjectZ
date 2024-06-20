@@ -20,12 +20,10 @@ public class QuickSlotManager : MonoBehaviour
 
     public bool ItemUseLock = false;
 
-    private Animator _animator;
     public Image[] SelectColors;
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
 
         quickSlotItems = new Item[quickSlotImages.Length];
         foreach (Image image in quickSlotImages)
@@ -99,6 +97,9 @@ public class QuickSlotManager : MonoBehaviour
     public void UseQuickSlotItem(int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
+        Character.LocalPlayerInstance._animator.SetBool("isPullOut", true);
+        StartCoroutine(TimeDelay());
+        Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 0);
 
         currentEquippedItem = quickSlotItems[slotIndex];
 
@@ -112,7 +113,11 @@ public class QuickSlotManager : MonoBehaviour
 
         ItemUseManager.Instance.EquipItem(currentEquippedItem);
     }
-
+    IEnumerator TimeDelay()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Character.LocalPlayerInstance._animator.SetBool("isPullOut", false);
+    }
     public void DropEquippedItem()
     {
         if (currentEquippedItem == null || currentEquippedItem.itemName == null) return;
@@ -126,7 +131,6 @@ public class QuickSlotManager : MonoBehaviour
 
             inventory.itemQuantities[itemName]--;
             // usinghand = 0;
-            characterItemAbility.UnUsingHandAnimation();
             characterItemAbility.DeactivateAllItems();
 
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
@@ -170,7 +174,6 @@ public class QuickSlotManager : MonoBehaviour
 
             inventory.itemQuantities[itemName]--;
             // usinghand = 0;
-            characterItemAbility.UnUsingHandAnimation();
             characterItemAbility.DeactivateAllItems();
 
             if (characterItemAbility != null && characterItemAbility.PhotonView != null)
@@ -252,7 +255,6 @@ public class QuickSlotManager : MonoBehaviour
     {
         CheckQuickSlotInput();
 
-        CheckQuickSlotInput();
 
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {

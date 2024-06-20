@@ -91,6 +91,12 @@ public class CharacterItemAbility : CharacterAbility
     }
     public void ItemActive(string itemName)
     {
+        StartCoroutine(ItemActiveDelay(itemName));
+    }
+    private IEnumerator ItemActiveDelay(string itemName)
+    {
+
+        yield return new WaitForSeconds(0.8f);
         if (itemIndexMap.ContainsKey(itemName))
         {
             int itemIndex = itemIndexMap[itemName];
@@ -104,8 +110,8 @@ public class CharacterItemAbility : CharacterAbility
         {
             Debug.LogWarning("Item not found: " + itemName);
         }
-    }
 
+    }
     [PunRPC]
     public void DeactivateAllItemsRPC()
     {
@@ -128,74 +134,9 @@ public class CharacterItemAbility : CharacterAbility
 
     /***/
 
-    public void UnUsingHandAnimation()
-    {
-        StartCoroutine(UnUsingHandAnimationAfterSeconds());
-        
-
-    }
-    private IEnumerator UnUsingHandAnimationAfterSeconds()
-    {
-
-        yield return new WaitForSeconds(0.1f);
-        Owner.PhotonView.RPC(nameof(UnUsingHandAnimationRPC), RpcTarget.All);
-
-    }
 
 
-    [PunRPC]
-    public void UnUsingHandAnimationRPC()
-    {
-        Owner._animator.SetBool("isPullOut", false);
-
-        Owner._animator.SetBool("RePullOut", true);
-        Owner._animator.SetInteger("UsingHand", 0);
 
 
-    }
 
-    public void OneHandAnimation()
-    {
-
-        StartCoroutine(OneHandAnimationAfterSeconds());
-    }
-    private IEnumerator OneHandAnimationAfterSeconds()
-    {
-
-        yield return new WaitForSeconds(0.6f);
-        Owner.PhotonView.RPC(nameof(OneHandAnimationRPC), RpcTarget.All);
-
-    }
-    public void TwoHandAnimation()
-    {
-        StartCoroutine(TwoHandAnimationAfterSeconds());
-
-    }
-    private IEnumerator TwoHandAnimationAfterSeconds()
-    {
-
-        yield return new WaitForSeconds(1f);
-        Owner.PhotonView.RPC(nameof(TwoHandAnimationRPC), RpcTarget.All);
-
-    }
-
-    [PunRPC]
-    public void OneHandAnimationRPC()
-    {
-        Owner._animator.SetBool("isPullOut", true);
-        Owner._animator.SetBool("RePullOut", false);
-
-        Owner._animator.SetInteger("UsingHand", 1);
-    }
-
-    [PunRPC]
-    public void TwoHandAnimationRPC()
-    {
-
-        Owner._animator.SetBool("isPullOut", true);
-        Owner._animator.SetBool("RePullOut", false);
-
-        Owner._animator.SetInteger("UsingHand", 2);
-
-    }
 }

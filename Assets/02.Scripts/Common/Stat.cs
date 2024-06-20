@@ -43,7 +43,7 @@ public class Stat
         Temperature = 20;
         StandardTemperature = 20;
         Damage = 1;
-        MoveSpeed = 20;
+        MoveSpeed = 10;
         RunSpeed = 1.5f * MoveSpeed;
         RotationSpeed = 200;
         AttackCoolTime = 5;
