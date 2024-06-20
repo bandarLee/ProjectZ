@@ -52,7 +52,7 @@ public class UI_Gunfire : MonoBehaviour
         {
             if (isAiming)
             {
-                tpFollow.ShoulderOffset = new Vector3(0f, 1f, 3f);
+                tpFollow.ShoulderOffset = new Vector3(0.5f, 1f, 3f);
             }
             else
             {
