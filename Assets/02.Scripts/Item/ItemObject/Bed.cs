@@ -83,6 +83,8 @@ public class Bed : MonoBehaviour
         StopUsingBedText.gameObject.SetActive(false);
         UsingTimeSlider.gameObject.SetActive(false);
         Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
+        Character.LocalPlayerInstance._moveAbilityTwo.PlayerMoveFree();
+
     }
 
     private IEnumerator UseBed()
@@ -93,7 +95,7 @@ public class Bed : MonoBehaviour
         UsingTimeSlider.gameObject.SetActive(true);
         UsingTimeSlider.maxValue = useTime;
         UsingTimeSlider.value = 0;
-
+        Character.LocalPlayerInstance._moveAbilityTwo.PlayerMoveLock();
         Character.LocalPlayerInstance._animator.SetBool("DoSleep", true);
 
         float elapsedTime = 0;
@@ -122,6 +124,8 @@ public class Bed : MonoBehaviour
         UsingTimeSlider.gameObject.SetActive(false);
         isUsingBed = false;
         Character.LocalPlayerInstance._animator.SetBool("DoSleep", false);
+        Character.LocalPlayerInstance._moveAbilityTwo.PlayerMoveFree();
+
     }
 
     private IEnumerator ShowAllRecoveriesText()
