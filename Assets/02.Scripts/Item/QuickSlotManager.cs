@@ -98,6 +98,13 @@ public class QuickSlotManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
         Character.LocalPlayerInstance._animator.SetBool("isPullOut", true);
+        if(quickSlotItems[slotIndex].itemType == ItemType.Gun)
+        {
+            Character.LocalPlayerInstance._animator.SetBool("IsGun", true);
+            StartCoroutine(TimeDelayGun());
+        }
+        Character.LocalPlayerInstance._animator.SetBool("isPullOut", true);
+
         StartCoroutine(TimeDelay());
         Character.LocalPlayerInstance._animator.SetInteger("UsingHand", 0);
 
@@ -118,11 +125,16 @@ public class QuickSlotManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Character.LocalPlayerInstance._animator.SetBool("isPullOut", false);
     }
+    IEnumerator TimeDelayGun()
+    {
+        yield return new WaitForSeconds(2.5f);
+        Character.LocalPlayerInstance._animator.SetBool("IsGun", false);
+    }
     public void DropEquippedItem()
     {
         if (currentEquippedItem == null || currentEquippedItem.itemName == null) return;
 
-        string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC
+        string itemName = currentEquippedItem.itemType == ItemType.Weapon || currentEquippedItem.itemType == ItemType.ETC || currentEquippedItem.itemType == ItemType.Gun
                           ? currentEquippedItem.uniqueId : currentEquippedItem.itemName;
 
         if (inventory.itemQuantities.ContainsKey(itemName))
