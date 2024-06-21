@@ -8,7 +8,7 @@ public class MapController : MonoBehaviour
     public RectTransform playerIcon;  // 플레이어 아이콘 RectTransform
     public Transform playerTransform; // 플레이어 Transform
 
-    public RectTransform otherPlayerIconPrefab;
+    public List<RectTransform> otherPlayerIconImages; // 미리 설정된 다른 플레이어 아이콘 리스트
     private List<RectTransform> otherPlayerIcons = new List<RectTransform>();
 
     private Vector3 positionMargin = new Vector3(1155, 0, 1075); // 기준점, 이 값을 조정하여 기준점을 설정
@@ -82,13 +82,13 @@ public class MapController : MonoBehaviour
 
         // 미니맵 좌표를 설정합니다.
         playerIcon.anchoredPosition = new Vector2(x, y);
-
     }
+
     private void CreateOtherPlayerIcons()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < otherPlayerIconImages.Count; i++)
         {
-            RectTransform otherPlayerIcon = Instantiate(otherPlayerIconPrefab, mapRect);
+            RectTransform otherPlayerIcon = Instantiate(otherPlayerIconImages[i], mapRect);
             otherPlayerIcons.Add(otherPlayerIcon);
         }
     }
@@ -121,6 +121,5 @@ public class MapController : MonoBehaviour
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
-
     }
 }

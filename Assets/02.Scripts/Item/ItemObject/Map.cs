@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Map : MonoBehaviour
+public class Map : MonoBehaviourPunCallbacks
 {
     public GameObject[] CityButtons;
     public GameObject[] LockImages;
@@ -17,6 +20,7 @@ public class Map : MonoBehaviour
     {
         InitializeMap();
         AssignButtonEvents();
+        SyncMapPieces();
     }
 
     // 초기 상태 설정 메서드
@@ -32,6 +36,7 @@ public class Map : MonoBehaviour
     }
 
     // 지도 조각 등록 메서드
+    [PunRPC]
     public void RegisterMapPiece(int pieceIndex)
     {
         if (pieceIndex < 0 || pieceIndex >= CityPiecesFound.Length)
@@ -42,6 +47,16 @@ public class Map : MonoBehaviour
         CityPiecesFound[pieceIndex] = true;
         LockImages[pieceIndex].SetActive(false);
         CityTexts[pieceIndex].gameObject.SetActive(true);
+        ShowMapPiece(pieceIndex);
+
+        // 현재 플레이어의 커스텀 속성 업데이트
+        UpdatePlayerMapProperties();
+    }
+
+    // RPC 호출 메서드 추가
+    public void RegisterMapPieceRPC(int pieceIndex)
+    {
+        photonView.RPC("RegisterMapPiece", RpcTarget.All, pieceIndex);
     }
 
     // 지도 조각 클릭 처리 메서드
@@ -79,7 +94,7 @@ public class Map : MonoBehaviour
     private IEnumerator ShowFindMapText()
     {
         FindMapText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f); // 2초 동안 텍스트 표시
+        yield return new WaitForSeconds(3f); // 3초 동안 텍스트 표시
         FindMapText.gameObject.SetActive(false);
     }
 
@@ -105,5 +120,53 @@ public class Map : MonoBehaviour
             mapPiece.SetActive(false); // 모든 지도 조각을 비활성화
         }
         FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
+    }
+
+    // 현재 지도 정보를 모든 플레이어와 동기화
+    private void SyncMapPieces()
+    {
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("MapPieces"))
+        {
+            bool[] syncedPieces = (bool[])PhotonNetwork.LocalPlayer.CustomProperties["MapPieces"];
+            for (int i = 0; i < syncedPieces.Length; i++)
+            {
+                if (syncedPieces[i])
+                {
+                    RegisterMapPiece(i);
+                }
+            }
+        }
+    }
+
+    // 현재 플레이어의 커스텀 속성 업데이트
+    private void UpdatePlayerMapProperties()
+    {
+        Hashtable props = new Hashtable
+        {
+            { "MapPieces", CityPiecesFound }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    // 새로운 플레이어가 들어올 때 현재 지도 정보를 동기화
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        SyncMapPieces();
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("MapPieces"))
+        {
+            bool[] updatedPieces = (bool[])changedProps["MapPieces"];
+            for (int i = 0; i < updatedPieces.Length; i++)
+            {
+                if (updatedPieces[i] && !CityPiecesFound[i])
+                {
+                    RegisterMapPiece(i);
+                }
+            }
+        }
     }
 }
