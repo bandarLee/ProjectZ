@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (!CharacterInfo.Instance._isGameStart)
         {
-            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
+            GameObject newPlayer = PhotonNetwork.Instantiate("Character_Male_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
             CharacterInfo.Instance._isGameStart = true;
         }
         else
