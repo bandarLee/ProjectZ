@@ -230,7 +230,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     }
 
     [PunRPC]
-    public void Damaged(int damage, int actorNumber)
+    public void Damaged(float damage, int actorNumber)
     {
         if (state == MonsterState.Death || !PhotonNetwork.IsMasterClient)
         {
