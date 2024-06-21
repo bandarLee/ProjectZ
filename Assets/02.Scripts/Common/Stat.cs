@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable] // 데이터 직렬화
 public class Stat 
 {
-    public int Health;
-    public int MaxHealth;
+    public float Health;
+    public float MaxHealth;
     public int Mental;
     public int MaxMental;
     public int Hunger;
@@ -46,7 +46,7 @@ public class Stat
         MoveSpeed = 10;
         RunSpeed = 1.5f * MoveSpeed;
         RotationSpeed = 200;
-        AttackCoolTime = 0.8f;
+        AttackCoolTime = 0.5f;
         JumpPower = 6;
     }
 }
