@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,9 @@ public class MapController : MonoBehaviour
     public RectTransform mapRect; // 미니맵 UI 이미지 RectTransform
     public RectTransform playerIcon;  // 플레이어 아이콘 RectTransform
     public Transform playerTransform; // 플레이어 Transform
+
+    public RectTransform otherPlayerIconPrefab;
+    private List<RectTransform> otherPlayerIcons = new List<RectTransform>();
 
     private Vector3 positionMargin = new Vector3(1155, 0, 1075); // 기준점, 이 값을 조정하여 기준점을 설정
     private float scaleX;
@@ -19,8 +23,10 @@ public class MapController : MonoBehaviour
         {
             playerTransform = Character.LocalPlayerInstance.transform;
         }
+        // 다른 플레이어 아이콘 생성
+        CreateOtherPlayerIcons();
 
-        // 변환 비율과 오프셋을 계산합니다.
+        // 변환 비율과 오프셋 계산
         CalculateTransformParameters();
     }
 
@@ -33,6 +39,7 @@ public class MapController : MonoBehaviour
         }
 
         UpdatePlayerIconPosition();
+        UpdateOtherPlayerIconsPosition();
     }
 
     private void CalculateTransformParameters()
@@ -76,13 +83,44 @@ public class MapController : MonoBehaviour
         // 미니맵 좌표를 설정합니다.
         playerIcon.anchoredPosition = new Vector2(x, y);
 
-        //Debug.Log($"Player World Pos: {playerWorldPos} -> MiniMap Pos: ({x}, {y})");
+    }
+    private void CreateOtherPlayerIcons()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            RectTransform otherPlayerIcon = Instantiate(otherPlayerIconPrefab, mapRect);
+            otherPlayerIcons.Add(otherPlayerIcon);
+        }
+    }
+
+    private void UpdateOtherPlayerIconsPosition()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        int index = 0;
+        foreach (GameObject player in players)
+        {
+            if (player.transform != playerTransform && index < otherPlayerIcons.Count)
+            {
+                // 플레이어의 월드 좌표를 가져옵니다.
+                Vector3 playerWorldPos = player.transform.localPosition;
+
+                // 월드 좌표를 미니맵 좌표로 변환합니다.
+                float x = playerWorldPos.x * scaleX + offsetX;
+                float y = playerWorldPos.z * scaleY + offsetY;
+
+                // 미니맵 좌표를 설정합니다.
+                otherPlayerIcons[index].anchoredPosition = new Vector2(x, y);
+
+                index++;
+            }
+        }
     }
 
     // 플레이어 Transform을 설정하는 메서드 추가
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
-        //Debug.Log("현재 플레이어 위치: " + playerTransform.position);
+
     }
 }
