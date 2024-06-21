@@ -779,6 +779,100 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6432574590577608280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &715613375638609404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7661858329058151111}
+  - component: {fileID: 3242825136854378214}
+  m_Layer: 6
+  m_Name: Spot Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7661858329058151111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715613375638609404}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02519697, y: -0, z: -0, w: 0.9996825}
+  m_LocalPosition: {x: -0, y: 1.352, z: 0.149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6793797777160203443}
+  m_LocalEulerAnglesHint: {x: -2.888, y: 0, z: 0}
+--- !u!108 &3242825136854378214
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715613375638609404}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 0
+  m_Shape: 0
+  m_Color: {r: 1, g: 0.9461318, b: 0.73018867, a: 1}
+  m_Intensity: 2
+  m_Range: 45
+  m_SpotAngle: 50
+  m_InnerSpotAngle: 4
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &717121269717196155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5568,6 +5662,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6841372169529571524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4802953117924189934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8048825319119146940}
+  m_Layer: 0
+  m_Name: CharacterFlashlightTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8048825319119146940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802953117924189934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.03544716, y: 0.011940477, z: 0.0011248429, w: -0.99929965}
+  m_LocalPosition: {x: 0.011, y: 1.265, z: 0.101}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6793797777160203443}
+  m_LocalEulerAnglesHint: {x: -4.064, y: -361.366, z: -0.081}
 --- !u!1 &4836616724669577247
 GameObject:
   m_ObjectHideFlags: 0
@@ -9682,6 +9807,8 @@ Transform:
   - {fileID: 454136205275368738}
   - {fileID: 6469974250790756584}
   - {fileID: 5796785261949354064}
+  - {fileID: 8048825319119146940}
+  - {fileID: 7661858329058151111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &7126053338474154869
@@ -10403,6 +10530,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: DoSleep
+  - Type: 9
+    SynchronizeType: 0
+    Name: ResetTrigger
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -10448,6 +10578,7 @@ MonoBehaviour:
   _characterRotateAbility: {fileID: 0}
   _statability: {fileID: 0}
   _moveAbilityTwo: {fileID: 0}
+  _characterItemAbility: {fileID: 0}
 --- !u!114 &4577571689269186767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10525,6 +10656,8 @@ MonoBehaviour:
   - {fileID: 902058175579579467}
   - {fileID: 1958536021051259439}
   - {fileID: 5861929709503187832}
+  Flashlight: {fileID: 3242825136854378214}
+  ChracterFlashlightTransform: {fileID: 8048825319119146940}
 --- !u!54 &2725166659701261590
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterRotateAbility _characterRotateAbility;
     public CharacterStatAbility _statability;
     public CharacterMoveAbilityTwo _moveAbilityTwo;
-
+    public CharacterItemAbility _characterItemAbility;
     private void Awake()
     {
         _statability = GetComponent<CharacterStatAbility>();
@@ -42,6 +42,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _quickSlotManager = FindObjectOfType<QuickSlotManager>();
         _characterRotateAbility = GetComponent<CharacterRotateAbility>();
         _moveAbilityTwo = GetComponent<CharacterMoveAbilityTwo>();
+        _characterItemAbility = GetComponent <CharacterItemAbility>();
+
         if (PhotonView.IsMine)
         {
             LocalPlayerInstance = this;

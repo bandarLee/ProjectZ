@@ -216,5 +216,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2121e07ebc90de940bbc32d7c091fae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterFlashlightTransform: {fileID: 0}
-  flashlight: {fileID: 0}

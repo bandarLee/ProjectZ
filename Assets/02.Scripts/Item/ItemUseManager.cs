@@ -668,8 +668,7 @@ public class ItemUseManager : MonoBehaviour
 
     private void ToggleFlashLight()
     {
-        isFlashLightActive = !isFlashLightActive;
-        FlashLight.enabled = isFlashLightActive;
+        characterItemAbility.ToggleFlashlight();
     }
 
     public void UpdateUI()

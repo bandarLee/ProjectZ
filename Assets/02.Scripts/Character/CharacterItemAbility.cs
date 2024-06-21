@@ -10,6 +10,10 @@ public class CharacterItemAbility : CharacterAbility
     public GameObject[] ItemObject;
     private Dictionary<string, int> itemIndexMap;
     private int _activeItemIndex = -1;
+    public Light Flashlight;
+    public Transform ChracterFlashlightTransform;
+
+    private bool isFlashlightOn = false;
 
     protected override void Awake()
     {
@@ -21,6 +25,10 @@ public class CharacterItemAbility : CharacterAbility
     {
         InitializeItemIndexMap();
         DeactivateAllItems();
+        if (Flashlight != null)
+        {
+            Flashlight.enabled = false;
+        }
     }
 
     private void InitializeItemIndexMap()
@@ -131,12 +139,29 @@ public class CharacterItemAbility : CharacterAbility
         }
         DeactivateAllItemsRPC();
     }
+    public void ToggleFlashlight()
+    {
+        if (PhotonView.IsMine)
+        {
+            isFlashlightOn = !isFlashlightOn;
+            Flashlight.enabled = isFlashlightOn;
+            PhotonView.RPC("UpdateFlashlightState", RpcTarget.Others, isFlashlightOn);
+        }
+    }
 
-    /***/
+    [PunRPC]
+    void UpdateFlashlightState(bool state)
+    {
+        isFlashlightOn = state;
+        Flashlight.enabled = isFlashlightOn;
+    }
 
-
-
-
-
-
+    private void Update()
+    {
+        if (PhotonView.IsMine && Flashlight != null && ChracterFlashlightTransform != null)
+        {
+            Flashlight.transform.position = ChracterFlashlightTransform.position;
+            Flashlight.transform.rotation = ChracterFlashlightTransform.rotation;
+        }
+    }
 }

@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class HandFlashlightController : MonoBehaviourPunCallbacks
 {
-    public Transform CharacterFlashlightTransform; // 캐릭터 손 위치
-    public Light flashlight; // 손전등 라이트
 
     private void Update()
     {
         if (photonView.IsMine)
         {
-            flashlight.transform.position = CharacterFlashlightTransform.position;
-            flashlight.transform.rotation = CharacterFlashlightTransform.rotation;
+            Character.LocalPlayerInstance._characterItemAbility.Flashlight.transform.position = Character.LocalPlayerInstance._characterItemAbility.ChracterFlashlightTransform.position;
+            Character.LocalPlayerInstance._characterItemAbility.Flashlight.transform.rotation = Character.LocalPlayerInstance._characterItemAbility.ChracterFlashlightTransform.rotation;
 
-            Vector3 flashlightDirection = CharacterFlashlightTransform.forward;
+
+            Vector3 flashlightDirection = Character.LocalPlayerInstance._characterItemAbility.ChracterFlashlightTransform.forward;
             photonView.RPC("UpdateFlashlightDirection", RpcTarget.Others, flashlightDirection);
         }
     }
@@ -21,6 +20,6 @@ public class HandFlashlightController : MonoBehaviourPunCallbacks
     [PunRPC]
     void UpdateFlashlightDirection(Vector3 direction)
     {
-        flashlight.transform.forward = direction;
+       Character.LocalPlayerInstance._characterItemAbility.Flashlight.transform.forward = direction;
     }
 }
