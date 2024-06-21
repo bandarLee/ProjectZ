@@ -189,10 +189,6 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("통조림을 들었음");
                 characterItemAbility.ItemActive("통조림");
                 break;
-            case "물":
-                Debug.Log("물을 들었음");
-                characterItemAbility.ItemActive("물");
-                break;
             case "수박":
                 Debug.Log("수박을 들었음");
                 characterItemAbility.ItemActive("수박");
@@ -204,6 +200,14 @@ public class ItemUseManager : MonoBehaviour
             case "빵":
                 Debug.Log("빵을 들었음");
                 characterItemAbility.ItemActive("빵");
+                break;
+            case "김밥":
+                Debug.Log("김밥을 들었음");
+                characterItemAbility.ItemActive("김밥");
+                break;
+            case "초밥":
+                Debug.Log("초밥을 들었음");
+                characterItemAbility.ItemActive("초밥");
                 break;
             default:
                 Debug.LogWarning("Unknown food item.");
@@ -240,6 +244,10 @@ public class ItemUseManager : MonoBehaviour
             case "주사기":
                 Debug.Log("주사기를 들었음");
                 characterItemAbility.ItemActive("주사기");
+                break;
+            case "물":
+                Debug.Log("물을 들었음");
+                characterItemAbility.ItemActive("물");
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
@@ -397,10 +405,6 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 20;
                 break;
-            case "물":
-                DecreaseItemQuantity(item);
-                Character.LocalPlayerInstance.Stat.Hunger += 5;
-                break;
             case "수박":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 10;
@@ -410,6 +414,14 @@ public class ItemUseManager : MonoBehaviour
                 Character.LocalPlayerInstance.Stat.Hunger += 10;
                 break;
             case "빵":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
+            case "김밥":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
+            case "초밥":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 10;
                 break;
@@ -448,6 +460,10 @@ public class ItemUseManager : MonoBehaviour
             case "주사기":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental = Character.LocalPlayerInstance.Stat.MaxMental;
+                break;
+            case "물":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 5;
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
