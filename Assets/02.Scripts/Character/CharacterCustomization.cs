@@ -53,10 +53,18 @@ public class CharacterCustomization : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
+            ChangeSlot("Hair", "ShavedHead");
             myRecipe = avatar.GetCurrentRecipe();
             Debug.Log(myRecipe);
             avatar.ClearSlots();
             avatar.LoadFromRecipeString(myRecipe);
         }
+    }
+    public void ChangeSlot(string slotName, string assetName)
+    {
+        avatar.SetSlot(slotName, assetName);
+        avatar.BuildCharacter();
+        myRecipe = avatar.GetCurrentRecipe();
+        Debug.Log("Updated Recipe: " + myRecipe);
     }
 }
