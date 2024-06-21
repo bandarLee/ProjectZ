@@ -84,7 +84,7 @@ public class CharacterGunFireAbility : CharacterAbility
         uI_Gunfire.RefreshUI(); 
 
         /* 조준경 */
-        if (Input.GetMouseButtonDown(1)) 
+        if (Input.GetMouseButtonDown(1) && !Owner._characterRotateAbility.CharacterRotateLocked) 
         {
             bool isAiming = !uI_Gunfire.HolographicDotSightUI.activeSelf; // 현재 조준 상태 반전
             uI_Gunfire.ToggleSightMode(isAiming);
@@ -107,6 +107,8 @@ public class CharacterGunFireAbility : CharacterAbility
 
         if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0 && !Owner._quickSlotManager.ItemUseLock)
         {
+            Owner._animator.SetInteger("UsingHand", 2);
+            StartCoroutine(TimeDelayGunShoot());
             // 재장전 취소
             if (_isReloading)
             {
@@ -129,14 +131,18 @@ public class CharacterGunFireAbility : CharacterAbility
             StartCoroutine(MuzzleEffectOn_Coroutine());
 
 
-            /* 체력 닳는 기능 */
             if (bulletItem != null)
             {
                 FireBullet();
             }
         }
     }
+    IEnumerator TimeDelayGunShoot()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Owner._animator.SetInteger("UsingHand", 0);
 
+    }
     private void FireBullet()
     {
         Vector3 fireDirection = GetFireDirection();
@@ -270,9 +276,17 @@ public class CharacterGunFireAbility : CharacterAbility
             uI_Gunfire.HolographicDotSightUI.SetActive(false);
             uI_Gunfire.CrosshairUI.SetActive(true);
             uI_Gunfire.RemoveRefreshUI();
-
+            StartCoroutine(TimedelayDropItem());
         }
        
         DeactivateAllGunsRPC(); // 로컬에서도 실행
+    }
+    IEnumerator TimedelayDropItem()
+    {
+        Owner._animator.SetBool("IsDrop", true);
+
+        yield return new WaitForSeconds(0.5f);
+        Owner._animator.SetBool("IsDrop", false);
+
     }
 }
