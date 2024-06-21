@@ -201,6 +201,10 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("토마토를 들었음");
                 characterItemAbility.ItemActive("토마토");
                 break;
+            case "빵":
+                Debug.Log("빵을 들었음");
+                characterItemAbility.ItemActive("빵");
+                break;
             default:
                 Debug.LogWarning("Unknown food item.");
                 break;
