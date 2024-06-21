@@ -409,6 +409,10 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 10;
                 break;
+            case "»§":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
             default:
                 break;
         }
