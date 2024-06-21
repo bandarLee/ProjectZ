@@ -101,6 +101,8 @@ MonoBehaviour:
   - DeactiveOtherCharacterRPC
   - ItemActiveRPC
   - DeactivateAllItemsRPC
+  - UpdateFlashlightState
+  - UpdateFlashlightDirection
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
