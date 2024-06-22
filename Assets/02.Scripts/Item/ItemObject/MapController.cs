@@ -28,6 +28,9 @@ public class MapController : MonoBehaviour
 
         // 변환 비율과 오프셋 계산
         CalculateTransformParameters();
+
+        // 초기에는 아이콘들을 비활성화
+        SetIconsActive(false);
     }
 
     void Update()
@@ -132,6 +135,7 @@ public class MapController : MonoBehaviour
     // 다른 플레이어 아이콘의 활성화 상태를 설정하는 메서드 추가
     public void SetOtherPlayerIconsActive(bool isActive)
     {
+        Debug.Log("플레이어활성화 비활성화");
         foreach (var icon in otherPlayerIcons)
         {
             icon.gameObject.SetActive(isActive);
@@ -141,18 +145,24 @@ public class MapController : MonoBehaviour
     // mapRect 활성화 상태를 감지하고 아이콘들을 업데이트하는 메서드 추가
     private void OnEnable()
     {
-        UpdateIconVisibility();
+        mapRect.gameObject.SetActive(true); // mapRect가 활성화될 때 아이콘들도 활성화
+        SetIconsActive(true);
+        Debug.Log("활성화");
+
     }
 
     private void OnDisable()
     {
-        UpdateIconVisibility();
+        mapRect.gameObject.SetActive(false); // mapRect가 비활성화될 때 아이콘들도 비활성화
+        SetIconsActive(false);
+        Debug.Log("비활성화");
+
     }
 
-    private void UpdateIconVisibility()
+    private void SetIconsActive(bool isActive)
     {
-        bool isActive = mapRect.gameObject.activeSelf;
         SetPlayerIconActive(isActive);
         SetOtherPlayerIconsActive(isActive);
+
     }
 }

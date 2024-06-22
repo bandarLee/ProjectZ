@@ -33,6 +33,7 @@ public class Map : MonoBehaviourPunCallbacks
         {
             mapController.SetPlayerIconActive(false);
             mapController.SetOtherPlayerIconsActive(false);
+            Debug.Log("비활성화");
         }
     }
 
@@ -149,13 +150,6 @@ public class Map : MonoBehaviourPunCallbacks
             mapPiece.SetActive(false); // 모든 지도 조각을 비활성화
         }
         FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
-
-        // 플레이어 아이콘과 다른 플레이어 아이콘을 활성화합니다.
-        if (mapController != null)
-        {
-            mapController.SetPlayerIconActive(true);
-            mapController.SetOtherPlayerIconsActive(true);
-        }
     }
 
     // 지도를 닫을 때 호출되는 메서드 추가
@@ -178,6 +172,8 @@ public class Map : MonoBehaviourPunCallbacks
         {
             mapController.SetPlayerIconActive(false);
             mapController.SetOtherPlayerIconsActive(false);
+            Debug.Log("비활성화");
+
         }
     }
 
