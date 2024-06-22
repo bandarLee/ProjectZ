@@ -738,6 +738,8 @@ public class ItemUseManager : MonoBehaviour
 
     public void MapExit()
     {
+        map.mapController.IsMapActive = false;
+
         MapImage.SetActive(false);
         Character.LocalPlayerInstance._characterRotateAbility.SetMouseLock(true);
 
@@ -747,7 +749,8 @@ public class ItemUseManager : MonoBehaviour
     private void ToggleMap()
     {
         MapImage.SetActive(true);
-
+        map.mapController.IsMapActive = true;
+        map.mapController.IconInactive(false);
 
             map.OpenMap();
             Character.LocalPlayerInstance._characterRotateAbility.SetMouseLock(false);

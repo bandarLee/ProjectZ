@@ -17,24 +17,13 @@ public class Map : MonoBehaviourPunCallbacks
     private bool[] CityPiecesFound = new bool[6];
     private bool mapOpen = false; // 지도가 열려 있는지 상태를 추적
 
-    private MapController mapController; // MapController를 참조하기 위한 변수
+    public MapController mapController; // MapController를 참조하기 위한 변수
 
     private void Start()
     {
         InitializeMap();
         AssignButtonEvents();
         SyncMapPieces();
-
-        // MapController를 찾습니다.
-        mapController = FindObjectOfType<MapController>();
-
-        // 초기에는 모든 아이콘을 비활성화합니다.
-        if (mapController != null)
-        {
-            mapController.SetPlayerIconActive(false);
-            mapController.SetOtherPlayerIconsActive(false);
-            Debug.Log("비활성화");
-        }
     }
 
     // 초기 상태 설정 메서드
@@ -106,6 +95,7 @@ public class Map : MonoBehaviourPunCallbacks
             Debug.Log("City " + (pieceIndex + 1) + " 버튼 클릭됨");
             FindMapText.gameObject.SetActive(false);
             ShowMapPiece(pieceIndex);
+            mapController.IconInactive(true);
         }
     }
 
@@ -167,14 +157,7 @@ public class Map : MonoBehaviourPunCallbacks
         }
         FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
 
-        // 플레이어 아이콘과 다른 플레이어 아이콘을 비활성화합니다.
-        if (mapController != null)
-        {
-            mapController.SetPlayerIconActive(false);
-            mapController.SetOtherPlayerIconsActive(false);
-            Debug.Log("비활성화");
 
-        }
     }
 
     // 지도가 열려있는지 확인하는 메서드 추가

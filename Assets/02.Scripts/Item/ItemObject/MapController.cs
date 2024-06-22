@@ -4,12 +4,10 @@ using UnityEngine.UI;
 
 public class MapController : MonoBehaviour
 {
-    public RectTransform mapRect; // 미니맵 UI 이미지 RectTransform
     public RectTransform playerIcon;  // 플레이어 아이콘 RectTransform
     public Transform playerTransform; // 플레이어 Transform
 
-    public List<RectTransform> otherPlayerIconImages; // 미리 설정된 다른 플레이어 아이콘 리스트
-    private List<RectTransform> otherPlayerIcons = new List<RectTransform>();
+    public RectTransform[] otherPlayerIcons;
 
     private Vector3 positionMargin = new Vector3(1155, 0, 1075); // 기준점, 이 값을 조정하여 기준점을 설정
     private float scaleX;
@@ -17,34 +15,38 @@ public class MapController : MonoBehaviour
     private float offsetX;
     private float offsetY;
 
-    void Start()
+    public bool IsMapActive = false;
+    private void OnEnable()
     {
-        if (Character.LocalPlayerInstance != null)
+        if (Character.LocalPlayerInstance != null && playerTransform == null)
         {
-            playerTransform = Character.LocalPlayerInstance.transform;
+            playerTransform = Character.LocalPlayerInstance.gameObject.transform;
+            CalculateTransformParameters();
+
         }
-        // 다른 플레이어 아이콘 생성
-        CreateOtherPlayerIcons();
-
-        // 변환 비율과 오프셋 계산
-        CalculateTransformParameters();
-
-        // 초기에는 아이콘들을 비활성화
-        SetIconsActive(false);
     }
-
     void Update()
     {
         if (playerTransform == null)
         {
-            Debug.LogWarning("PlayerTransform is not set.");
-            return;
+            playerTransform = Character.LocalPlayerInstance.gameObject.transform;
+            CalculateTransformParameters();
+        }
+        if (IsMapActive)
+        {
+            UpdatePlayerIconPosition();
+            UpdateOtherPlayerIconsPosition();
         }
 
-        UpdatePlayerIconPosition();
-        UpdateOtherPlayerIconsPosition();
     }
-
+    public void IconInactive(bool isactive)
+    {
+        playerIcon.gameObject.SetActive(isactive);
+        foreach (RectTransform otherplayerIcon in otherPlayerIcons)
+        {
+            otherplayerIcon.gameObject.SetActive(isactive);
+        }
+    }
     private void CalculateTransformParameters()
     {
         // 각 대응되는 점들을 사용하여 비율을 계산합니다.
@@ -87,14 +89,8 @@ public class MapController : MonoBehaviour
         playerIcon.anchoredPosition = new Vector2(x, y);
     }
 
-    private void CreateOtherPlayerIcons()
-    {
-        for (int i = 0; i < otherPlayerIconImages.Count; i++)
-        {
-            RectTransform otherPlayerIcon = Instantiate(otherPlayerIconImages[i], mapRect);
-            otherPlayerIcons.Add(otherPlayerIcon);
-        }
-    }
+
+
 
     private void UpdateOtherPlayerIconsPosition()
     {
@@ -103,7 +99,7 @@ public class MapController : MonoBehaviour
         int index = 0;
         foreach (GameObject player in players)
         {
-            if (player.transform != playerTransform && index < otherPlayerIcons.Count)
+            if (player.transform != playerTransform && index < otherPlayerIcons.Length)
             {
                 // 플레이어의 월드 좌표를 가져옵니다.
                 Vector3 playerWorldPos = player.transform.localPosition;
@@ -120,49 +116,8 @@ public class MapController : MonoBehaviour
         }
     }
 
-    // 플레이어 Transform을 설정하는 메서드 추가
-    public void SetPlayerTransform(Transform playerTransform)
-    {
-        this.playerTransform = playerTransform;
-    }
 
-    // 플레이어 아이콘의 활성화 상태를 설정하는 메서드 추가
-    public void SetPlayerIconActive(bool isActive)
-    {
-        playerIcon.gameObject.SetActive(isActive);
-    }
 
-    // 다른 플레이어 아이콘의 활성화 상태를 설정하는 메서드 추가
-    public void SetOtherPlayerIconsActive(bool isActive)
-    {
-        Debug.Log("플레이어활성화 비활성화");
-        foreach (var icon in otherPlayerIcons)
-        {
-            icon.gameObject.SetActive(isActive);
-        }
-    }
 
-    // mapRect 활성화 상태를 감지하고 아이콘들을 업데이트하는 메서드 추가
-    private void OnEnable()
-    {
-        mapRect.gameObject.SetActive(true); // mapRect가 활성화될 때 아이콘들도 활성화
-        SetIconsActive(true);
-        Debug.Log("활성화");
 
-    }
-
-    private void OnDisable()
-    {
-        mapRect.gameObject.SetActive(false); // mapRect가 비활성화될 때 아이콘들도 비활성화
-        SetIconsActive(false);
-        Debug.Log("비활성화");
-
-    }
-
-    private void SetIconsActive(bool isActive)
-    {
-        SetPlayerIconActive(isActive);
-        SetOtherPlayerIconsActive(isActive);
-
-    }
 }
