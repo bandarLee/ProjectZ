@@ -209,6 +209,22 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("초밥을 들었음");
                 characterItemAbility.ItemActive("초밥");
                 break;
+            case "바나나":
+                Debug.Log("바나나를 들었음");
+                characterItemAbility.ItemActive("바나나");
+                break;
+            case "아몬드":
+                Debug.Log("아몬드를 들었음");
+                characterItemAbility.ItemActive("아몬드");
+                break;
+            case "블루베리":
+                Debug.Log("블루베리를 들었음");
+                characterItemAbility.ItemActive("블루베리");
+                break;
+            case "감자칩":
+                Debug.Log("감자칩을 들었음");
+                characterItemAbility.ItemActive("감자칩");
+                break;
             default:
                 Debug.LogWarning("Unknown food item.");
                 break;
@@ -257,9 +273,13 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("위스키를 들었음");
                 characterItemAbility.ItemActive("위스키");
                 break;
-            case "에너지드링크":
-                Debug.Log("에너지드링크를 들었음");
-                characterItemAbility.ItemActive("에너지드링크");
+            case "에너지드링크_포도맛":
+                Debug.Log("에너지드링크_포도맛을 들었음");
+                characterItemAbility.ItemActive("에너지드링크_포도맛");
+                break;
+            case "에너지드링크_레몬맛":
+                Debug.Log("에너지드링크_레몬맛을 들었음");
+                characterItemAbility.ItemActive("에너지드링크_레몬맛");
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
@@ -437,6 +457,22 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Hunger += 10;
                 break;
+            case "바나나":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
+            case "아몬드":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 5;
+                break;
+            case "블루베리":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 5;
+                break;
+            case "감자칩":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Hunger += 10;
+                break;
             default:
                 break;
         }
@@ -485,7 +521,11 @@ public class ItemUseManager : MonoBehaviour
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 15;
                 break;
-            case "에너지드링크":
+            case "에너지드링크_포도맛":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 10;
+                break;
+            case "에너지드링크_레몬맛":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 10;
                 break;
