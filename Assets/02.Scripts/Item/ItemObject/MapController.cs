@@ -73,14 +73,14 @@ public class MapController : MonoBehaviour
 
     private void UpdatePlayerIconPosition()
     {
-        // 플레이어의 월드 좌표를 가져옵니다.
+        // 플레이어의 월드 좌표
         Vector3 playerWorldPos = playerTransform.localPosition;
 
-        // 월드 좌표를 미니맵 좌표로 변환합니다.
+        // 월드 좌표를 미니맵 좌표로 변환
         float x = playerWorldPos.x * scaleX + offsetX;
         float y = playerWorldPos.z * scaleY + offsetY;
 
-        // 미니맵 좌표를 설정합니다.
+        // 미니맵 좌표를 설정
         playerIcon.anchoredPosition = new Vector2(x, y);
     }
 
@@ -121,5 +121,20 @@ public class MapController : MonoBehaviour
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
+    }
+
+    // 플레이어 아이콘의 활성화 상태를 설정하는 메서드 추가
+    public void SetPlayerIconActive(bool isActive)
+    {
+        playerIcon.gameObject.SetActive(isActive);
+    }
+
+    // 다른 플레이어 아이콘의 활성화 상태를 설정하는 메서드 추가
+    public void SetOtherPlayerIconsActive(bool isActive)
+    {
+        foreach (var icon in otherPlayerIcons)
+        {
+            icon.gameObject.SetActive(isActive);
+        }
     }
 }

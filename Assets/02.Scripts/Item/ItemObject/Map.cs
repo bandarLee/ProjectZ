@@ -15,12 +15,25 @@ public class Map : MonoBehaviourPunCallbacks
     public TextMeshProUGUI FindMapText;
     public GameObject[] MapPieceImages;
     private bool[] CityPiecesFound = new bool[6];
+    private bool mapOpen = false; // 지도가 열려 있는지 상태를 추적
+
+    private MapController mapController; // MapController를 참조하기 위한 변수
 
     private void Start()
     {
         InitializeMap();
         AssignButtonEvents();
         SyncMapPieces();
+
+        // MapController를 찾습니다.
+        mapController = FindObjectOfType<MapController>();
+
+        // 초기에는 모든 아이콘을 비활성화합니다.
+        if (mapController != null)
+        {
+            mapController.SetPlayerIconActive(false);
+            mapController.SetOtherPlayerIconsActive(false);
+        }
     }
 
     // 초기 상태 설정 메서드
@@ -51,12 +64,26 @@ public class Map : MonoBehaviourPunCallbacks
 
         // 현재 플레이어의 커스텀 속성 업데이트
         UpdatePlayerMapProperties();
+        // 마스터 클라이언트인 경우 방의 커스텀 속성 업데이트 = 미리 등록한 지도 조각을 공유하기 위함
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UpdateRoomMapProperties();
+        }
+
+    }
+    private void UpdateRoomMapProperties()
+    {
+        Hashtable roomProps = new Hashtable
+    {
+        { "MapPieces", CityPiecesFound }
+    };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
     }
 
     // RPC 호출 메서드 추가
     public void RegisterMapPieceRPC(int pieceIndex)
     {
-        photonView.RPC("RegisterMapPiece", RpcTarget.All, pieceIndex);
+        photonView.RPC("RegisterMapPiece", RpcTarget.OthersBuffered, pieceIndex);
     }
 
     // 지도 조각 클릭 처리 메서드
@@ -111,6 +138,8 @@ public class Map : MonoBehaviourPunCallbacks
     // 지도를 열 때 호출되는 메서드
     public void OpenMap()
     {
+        mapOpen = true; // 지도가 열려있는 상태로 설정
+
         foreach (var button in CityButtons)
         {
             button.SetActive(true); // 모든 버튼을 활성화
@@ -120,19 +149,67 @@ public class Map : MonoBehaviourPunCallbacks
             mapPiece.SetActive(false); // 모든 지도 조각을 비활성화
         }
         FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
+
+        // 플레이어 아이콘과 다른 플레이어 아이콘을 활성화합니다.
+        if (mapController != null)
+        {
+            mapController.SetPlayerIconActive(true);
+            mapController.SetOtherPlayerIconsActive(true);
+        }
+    }
+
+    // 지도를 닫을 때 호출되는 메서드 추가
+    public void CloseMap()
+    {
+        mapOpen = false; // 지도가 닫혀있는 상태로 설정
+
+        foreach (var button in CityButtons)
+        {
+            button.SetActive(false); // 모든 버튼을 비활성화
+        }
+        foreach (var mapPiece in MapPieceImages)
+        {
+            mapPiece.SetActive(false); // 모든 지도 조각을 비활성화
+        }
+        FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
+
+        // 플레이어 아이콘과 다른 플레이어 아이콘을 비활성화합니다.
+        if (mapController != null)
+        {
+            mapController.SetPlayerIconActive(false);
+            mapController.SetOtherPlayerIconsActive(false);
+        }
+    }
+
+    // 지도가 열려있는지 확인하는 메서드 추가
+    public bool IsMapOpen()
+    {
+        return mapOpen;
+    }
+
+    // 지도가 열린 상태를 유지하는 메서드 추가
+    public void KeepMapOpen()
+    {
+        mapOpen = true;
     }
 
     // 현재 지도 정보를 모든 플레이어와 동기화
     private void SyncMapPieces()
     {
-        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("MapPieces"))
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MapPieces"))
         {
-            bool[] syncedPieces = (bool[])PhotonNetwork.LocalPlayer.CustomProperties["MapPieces"];
+            bool[] syncedPieces = (bool[])PhotonNetwork.CurrentRoom.CustomProperties["MapPieces"];
             for (int i = 0; i < syncedPieces.Length; i++)
             {
-                if (syncedPieces[i])
+                if (syncedPieces[i] && !CityPiecesFound[i])
                 {
-                    RegisterMapPiece(i);
+                    CityPiecesFound[i] = true;
+                    LockImages[i].SetActive(false);
+                    CityTexts[i].gameObject.SetActive(true);
+                    if (mapOpen)
+                    {
+                        ShowMapPiece(i);
+                    }
                 }
             }
         }
@@ -164,7 +241,13 @@ public class Map : MonoBehaviourPunCallbacks
             {
                 if (updatedPieces[i] && !CityPiecesFound[i])
                 {
-                    RegisterMapPiece(i);
+                    CityPiecesFound[i] = true;
+                    LockImages[i].SetActive(false);
+                    CityTexts[i].gameObject.SetActive(true);
+                    if (mapOpen)
+                    {
+                        ShowMapPiece(i);
+                    }
                 }
             }
         }
