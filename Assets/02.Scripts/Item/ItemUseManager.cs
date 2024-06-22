@@ -249,6 +249,18 @@ public class ItemUseManager : MonoBehaviour
                 Debug.Log("물을 들었음");
                 characterItemAbility.ItemActive("물");
                 break;
+            case "맥주":
+                Debug.Log("맥주를 들었음");
+                characterItemAbility.ItemActive("맥주");
+                break;
+            case "위스키":
+                Debug.Log("위스키를 들었음");
+                characterItemAbility.ItemActive("위스키");
+                break;
+            case "에너지드링크":
+                Debug.Log("에너지드링크를 들었음");
+                characterItemAbility.ItemActive("에너지드링크");
+                break;
             default:
                 Debug.LogWarning("Unknown mental item.");
                 break;
@@ -464,6 +476,18 @@ public class ItemUseManager : MonoBehaviour
             case "물":
                 DecreaseItemQuantity(item);
                 Character.LocalPlayerInstance.Stat.Mental += 5;
+                break;
+            case "맥주":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 10;
+                break;
+            case "위스키":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 15;
+                break;
+            case "에너지드링크":
+                DecreaseItemQuantity(item);
+                Character.LocalPlayerInstance.Stat.Mental += 10;
                 break;
             default:
                 Debug.LogWarning("Unknown mental item.");
