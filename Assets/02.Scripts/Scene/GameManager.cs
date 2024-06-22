@@ -2,6 +2,8 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using UMA;
+using UMA.CharacterSystem;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -90,11 +92,33 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!CharacterInfo.Instance._isGameStart)
         {
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
+
+            // Recipe 정보 로드
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
+            {
+                Debug.Log("Character Recipe in SpawnPlayer: " + characterRecipe);
+
+                var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
+                ApplyRecipeString(avatar, characterRecipe.ToString());
+            }
+            else
+            {
+                Debug.LogError("CharacterRecipe not found in CustomProperties");
+            }
+
             CharacterInfo.Instance._isGameStart = true;
         }
         else
         {
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
+        }
+    }
+
+    public static void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
+    {
+        if (avatar != null && !string.IsNullOrEmpty(recipeString))
+        {
+            avatar.LoadFromRecipeString(recipeString);
         }
     }
 

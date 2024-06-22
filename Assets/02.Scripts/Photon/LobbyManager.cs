@@ -2,6 +2,8 @@ using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UMA;
+using UMA.CharacterSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -115,7 +117,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        connectionInfoText.text = "파티에 참가합니다.";
+        base.OnJoinedRoom();
+        Debug.Log("Joined Room");
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
+        {
+            Debug.Log("Character Recipe in OnJoinedRoom: " + characterRecipe);
+        }
         StartLoading("CityScene");
 
     }
@@ -123,8 +131,41 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         loadingScreen.SetActive(true);
         isLoading = true;
+        DynamicCharacterAvatar avatar = FindObjectOfType<DynamicCharacterAvatar>(); // DynamicCharacterAvatar 객체 가져오기
+        if (avatar == null)
+        {
+            Debug.LogError("DynamicCharacterAvatar object not found!");
+            return;
+        }
+
+        string characterRecipe = GetRecipeString(avatar);
+        Debug.Log("Character Recipe: " + characterRecipe);
+        Hashtable props = new Hashtable
+    {
+        { "CharacterRecipe", characterRecipe }
+    };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+
+        StartCoroutine(LoadSceneAfterPropertiesSet(sceneName));
+
+    }
+    private IEnumerator LoadSceneAfterPropertiesSet(string sceneName)
+    {
+        // 커스텀 프로퍼티가 설정될 때까지 대기
+        yield return new WaitForSeconds(1);
+
         AsyncOperation operation = PhotonNetwork.LoadLevel(sceneName);
         StartCoroutine(UpdateLoadingProgress(operation));
+    }
+    public static string GetRecipeString(DynamicCharacterAvatar avatar)
+    {
+        if (avatar != null)
+        {
+            string recipe = avatar.GetCurrentRecipe();
+            return recipe;
+        }
+        return null;
     }
 
     IEnumerator UpdateLoadingProgress(AsyncOperation operation)
