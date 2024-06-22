@@ -137,4 +137,22 @@ public class MapController : MonoBehaviour
             icon.gameObject.SetActive(isActive);
         }
     }
+
+    // mapRect 활성화 상태를 감지하고 아이콘들을 업데이트하는 메서드 추가
+    private void OnEnable()
+    {
+        UpdateIconVisibility();
+    }
+
+    private void OnDisable()
+    {
+        UpdateIconVisibility();
+    }
+
+    private void UpdateIconVisibility()
+    {
+        bool isActive = mapRect.gameObject.activeSelf;
+        SetPlayerIconActive(isActive);
+        SetOtherPlayerIconsActive(isActive);
+    }
 }

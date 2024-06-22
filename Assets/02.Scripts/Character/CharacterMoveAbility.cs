@@ -70,10 +70,6 @@ public class CharacterMoveAbility : CharacterAbility
         // 5. 점프 적용
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
-            if (map != null && map.IsMapOpen()) // map.IsMapOpen()은 지도가 열려있는지 확인하는 메서드
-            {
-                map.KeepMapOpen();
-            }
             _yVelocity = Owner.Stat.JumpPower;
             _animator.SetTrigger("Jump");
         }
