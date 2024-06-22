@@ -104,6 +104,8 @@ MonoBehaviour:
   - UpdateFlashlightState
   - UpdateFlashlightDirection
   - RegisterMapPiece
+  - RPC_UpdateCharacterRecipe
+  - ChangeAvatar
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
