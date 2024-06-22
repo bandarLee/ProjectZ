@@ -332,7 +332,7 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "지도":
                 Debug.Log("Player found a map.");
-                //characterItemAbility.ItemActive("지도");
+                characterItemAbility.ItemActive("지도");
                 break;
             case "지도조각 1":
                 Debug.Log("Player found a map.");
