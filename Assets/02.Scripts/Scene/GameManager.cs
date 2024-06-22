@@ -5,6 +5,7 @@ using System.Collections;
 using UMA;
 using UMA.CharacterSystem;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -92,19 +93,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!CharacterInfo.Instance._isGameStart)
         {
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
+            Character.LocalPlayerInstance.PhotonView.RPC(nameof(ChangeAvatar), RpcTarget.OthersBuffered, newPlayer);
 
-            // Recipe 정보 로드
-            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
-            {
-                Debug.Log("Character Recipe in SpawnPlayer: " + characterRecipe);
-
-                var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
-                ApplyRecipeString(avatar, characterRecipe.ToString());
-            }
-            else
-            {
-                Debug.LogError("CharacterRecipe not found in CustomProperties");
-            }
+          
 
             CharacterInfo.Instance._isGameStart = true;
         }
@@ -113,8 +104,23 @@ public class GameManager : MonoBehaviourPunCallbacks
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
         }
     }
+    [PunRPC]
+    public void ChangeAvatar(GameObject newPlayer)
+    {
+        // Recipe 정보 로드
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
+        {
+            Debug.Log("Character Recipe in SpawnPlayer: " + characterRecipe);
 
-    public static void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
+            var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
+            ApplyRecipeString(avatar, characterRecipe.ToString());
+        }
+        else
+        {
+            Debug.LogError("CharacterRecipe not found in CustomProperties");
+        }
+    }
+    public void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
     {
         if (avatar != null && !string.IsNullOrEmpty(recipeString))
         {
