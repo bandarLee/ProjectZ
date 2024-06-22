@@ -100,9 +100,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
                 ApplyRecipeString(avatar, characterRecipe.ToString());
-
-                // RPC 호출
-                photonView.RPC("RPC_UpdateCharacterRecipe", RpcTarget.OthersBuffered, PhotonNetwork.LocalPlayer.ActorNumber, characterRecipe.ToString());
             }
             else
             {
@@ -116,32 +113,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
         }
     }
-    [PunRPC]
-    private void RPC_UpdateCharacterRecipe(int playerID, string recipe)
-    {
-        // 해당 playerID의 플레이어를 찾습니다
-        Player targetPlayer = PhotonNetwork.CurrentRoom.GetPlayer(playerID);
-        if (targetPlayer != null)
-        {
-            // 새로 생성된 플레이어 객체를 찾습니다
-            GameObject playerObj = PhotonView.Find(playerID).gameObject;
-            if (playerObj != null)
-            {
-                var avatar = playerObj.GetComponent<DynamicCharacterAvatar>();
-                ApplyRecipeString(avatar, recipe);
-            }
-        }
-    }
 
     public static void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
     {
         if (avatar != null && !string.IsNullOrEmpty(recipeString))
         {
             avatar.LoadFromRecipeString(recipeString);
-            avatar.BuildCharacter();
         }
     }
-
 
 
     public void LoadCity(CityZoneType cityZoneType)
