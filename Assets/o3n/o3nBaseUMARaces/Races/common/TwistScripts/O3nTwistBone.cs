@@ -11,7 +11,7 @@ public class O3nTwistBone : MonoBehaviour
     public Vector3[] axisVector;
     public Quaternion[] originalRefRotation;
     public bool[] shoulderTwist;
-    public new bool[] enabled;
+    public bool[] enabled;
 
     private float[] originalRefRotationAngle;
     private float[] twistRotation;
