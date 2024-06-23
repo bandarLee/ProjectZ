@@ -94,8 +94,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
 
-            StartCoroutine(WaitforPV(newPlayer));
-            // Recipe 정보 로드
+/*            StartCoroutine(WaitforPV(newPlayer));
+            // Recipe 정보 로드*/
 
             CharacterInfo.Instance._isGameStart = true;
         }

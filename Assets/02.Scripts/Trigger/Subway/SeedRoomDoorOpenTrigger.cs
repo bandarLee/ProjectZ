@@ -7,8 +7,8 @@ public class SeedRoomDoorOpenTrigger : MonoBehaviour
 {
     public GameObject SeedRoomTrigger;
     public GameObject MCDoor;
-    public float openAngle = 45f; // 열릴 각도
-    public float duration = 1f;   // 애니메이션 지속 시간
+    public float openAngle = 45f; 
+    public float duration = 1f;   
 
     private void OnTriggerEnter(Collider other)
     {
