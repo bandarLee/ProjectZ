@@ -1,15 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-// 플레이어 태그가 달린 오브젝트가 트리거하면 막힘   -> "세계수 씨앗을 가진 자만이 들어올 수 있다"
-// 세계수 씨앗을 자신의 인벤토리 or 퀵슬롯에 소지하고 있는 플레이어가 트리거하면 베리어가 풀림
-// 베리어가 풀리는 순간부터 타이머 100초부터 --
-// " 세계수를 지켜내세요 "
-// 상단에 세계수 체력 바 생기고 세계수를 100초동안 지켜야함
+    public TextMeshProUGUI NoSeedText;
 
-// 실패시 다시 지하철 스폰 포인트로 ㄱㄱ
-// 가지고 있는 아이템은 유지 or 삭제 : 회의 해야함
+    private Inventory playerInventory;
+    private QuickSlotManager quickSlotManager;
+    private InventoryUI inventoryUI;
+    private InventoryManager inventoryManager;
+    private ItemUseManager itemUseManager;
+
+    private void Start()
+    {
+        NoSeedText.gameObject.SetActive(false);
+
+        playerInventory = Inventory.Instance;
+        quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        itemUseManager = FindObjectOfType<ItemUseManager>();
+        StartCoroutine(InitializingInventory());
+
+        if (playerInventory == null)
+        {
+            Debug.LogError("Inventory not found");
+        }
+
+        if (quickSlotManager == null)
+        {
+            Debug.LogError("QuickSlotManager not found");
+        }
+
+        if (inventoryUI == null)
+        {
+            Debug.LogError("InventoryUI not found");
+        }
+
+        if (itemUseManager == null)
+        {
+            Debug.LogError("ItemUseManager not found");
+        }
+    }
+
+    private IEnumerator InitializingInventory()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        if (inventoryManager == null)
+        {
+            Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player triggered on barrier");
+
+            Item seedItem = GetSeedItem();
+            if (seedItem != null)
+            {
+                itemUseManager.ApplyEffect(seedItem);
+                //장막 해제 함수
+            }
+            else //세계수씨앗 없을 경우
+            {
+                NoSeedText.gameObject.SetActive(true);
+                StartCoroutine(HideNoSeedTextAfterDelay(2f));
+            }
+        }
+    }
+
+    private IEnumerator HideNoSeedTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        NoSeedText.gameObject.SetActive(false);
+    }
+
+    private Item GetSeedItem()
+    {
+        foreach (var item in playerInventory.items.Values)
+        {
+            if (item.itemType == ItemType.ETC && item.itemName == "세계수씨앗")
+            {
+                return item;
+            }
+        }
+        return null;
+    }
 }
