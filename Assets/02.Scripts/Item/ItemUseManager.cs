@@ -379,6 +379,9 @@ public class ItemUseManager : MonoBehaviour
             case "µð½ºÅ©3":
                 characterItemAbility.ItemActive("µð½ºÅ©1");
                 break;
+            case "¼¼°è¼ö¾¾¾Ñ":
+                characterItemAbility.ItemActive("¼¼°è¼ö¾¾¾Ñ");
+                break;
             default:
                 Debug.LogWarning("Unknown etc item.");
                 break;
@@ -648,6 +651,13 @@ public class ItemUseManager : MonoBehaviour
                 {
                     Debug.Log("Player used a Disk3");
                     uI_DiskText.DisplayText_3("<The Last Yggdrasil>.");
+                }
+                break;
+            case "¼¼°è¼ö¾¾¾Ñ":
+                if (computerTrigger.isPlayerInTrigger)
+                {
+                    Debug.Log("Player used a LastSeed");
+                    
                 }
                 break;
             default:
