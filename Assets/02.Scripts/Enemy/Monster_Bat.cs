@@ -38,6 +38,9 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     public GameObject[] CanMoveArea;
     public GameObject[] CantMoveArea;
 
+    private float findTargetInterval = 0.5f; // Å¸°Ù Å½»ö °£°Ý
+    private float findTargetTimer = 0f;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -80,8 +83,11 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
-            transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
+            if (Vector3.Distance(transform.position, syncPosition) > 0.1f || Quaternion.Angle(transform.rotation, syncRotation) > 1f)
+            {
+                transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
+                transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
+            }
         }
     }
 
@@ -89,8 +95,13 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         MoveTowardsTarget();
 
-        // Å¸°Ù Å½»ö
-        FindTarget();
+        // ÀÏÁ¤ °£°ÝÀ¸·Î Å¸°Ù Å½»ö
+        findTargetTimer += Time.deltaTime;
+        if (findTargetTimer >= findTargetInterval)
+        {
+            FindTarget();
+            findTargetTimer = 0f;
+        }
     }
 
     private void Chase()
@@ -148,8 +159,11 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private void MoveTowardsTarget()
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        RotateTowards(direction);
+        if (direction != Vector3.zero)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            RotateTowards(direction);
+        }
     }
 
     private void RotateTowards(Vector3 direction)
