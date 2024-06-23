@@ -49,13 +49,18 @@ public class GoToLastIslandTrigger : MonoBehaviour
     {
         FadeImage.gameObject.SetActive(true); 
         FadeImage.color = new Color(0, 0, 0, 0); // 초기 색상 투명
+        Debug.Log("1");
+
         FadeImage.DOFade(1, 1.5f);
+        Debug.Log("1");
         yield return new WaitForSeconds(1.5f);
+        Debug.Log("1");
         LoadLastIslandScene();
     }
 
     private void LoadLastIslandScene()
     {
         PhotonNetwork.LoadLevel("LastIsLandScene");
+        Debug.Log("1");
     }
 }

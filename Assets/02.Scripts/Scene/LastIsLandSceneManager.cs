@@ -8,7 +8,6 @@ public class LastIsLandSceneManager : MonoBehaviour
 {
     public GameObject playerPrefab;
     public Transform spawnPoint;
-    public Transform readyPoint;
     private GameObject Player;
 
     private void Start()
@@ -32,10 +31,7 @@ public class LastIsLandSceneManager : MonoBehaviour
             Debug.LogError("스폰 포인트가 지정되지 않았습니다.");
             return;
         }
-
-
-
-        Player = PhotonNetwork.Instantiate(playerPrefab.name, readyPoint.position, readyPoint.rotation, 0);
+        Player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation, 0);
     }
 
 }
