@@ -20,6 +20,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Image loadingFillImage;
     public TextMeshProUGUI loadingText;
     private bool isLoading = false;
+
+    public DynamicCharacterAvatar characterAvatar;
     private void Start()
     {
         PhotonNetwork.GameVersion = gameVersion;
@@ -54,12 +56,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         if (PhotonNetwork.IsConnected)
         {
-            int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
-            Hashtable props = new Hashtable
-            {
-                { "CharacterType", characterType }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
             PhotonNetwork.JoinOrCreateRoom("Server1", roomOptions, TypedLobby.Default);
         }
@@ -77,12 +74,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         if (PhotonNetwork.IsConnected)
         {
-            int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
-            Hashtable props = new Hashtable
-            {
-                { "CharacterType", characterType }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
             PhotonNetwork.JoinOrCreateRoom("Server2", roomOptions, TypedLobby.Default);
         }
@@ -101,12 +93,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         if (PhotonNetwork.IsConnected)
         {
-            int characterType = (int)UI_PlaceholderModel.Instance.SelectedCharacterType;
-            Hashtable props = new Hashtable
-            {
-                { "CharacterType", characterType }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+      
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
             PhotonNetwork.JoinOrCreateRoom("Server3", roomOptions, TypedLobby.Default);
         }
@@ -127,7 +114,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         loadingScreen.SetActive(true);
         isLoading = true;
-        DynamicCharacterAvatar avatar = FindObjectOfType<DynamicCharacterAvatar>(); // DynamicCharacterAvatar 객체 가져오기
+        DynamicCharacterAvatar avatar = characterAvatar; // DynamicCharacterAvatar 객체 가져오기
         if (avatar == null)
         {
             Debug.LogError("DynamicCharacterAvatar object not found!");
