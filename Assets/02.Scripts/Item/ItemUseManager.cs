@@ -379,8 +379,8 @@ public class ItemUseManager : MonoBehaviour
             case "µð½ºÅ©3":
                 characterItemAbility.ItemActive("µð½ºÅ©1");
                 break;
-            case "¼¼°è¼ö ¾¾¾Ñ":
-                characterItemAbility.ItemActive("¼¼°è¼ö ¾¾¾Ñ");
+            case "¼¼°è¼ö¾¾¾Ñ":
+                characterItemAbility.ItemActive("¼¼°è¼ö¾¾¾Ñ");
                 break;
             default:
                 Debug.LogWarning("Unknown etc item.");
@@ -653,7 +653,7 @@ public class ItemUseManager : MonoBehaviour
                     uI_DiskText.DisplayText_3("<The Last Yggdrasil>.");
                 }
                 break;
-            case "¼¼°è¼ö ¾¾¾Ñ":
+            case "¼¼°è¼ö¾¾¾Ñ":
                 if (computerTrigger.isPlayerInTrigger)
                 {
                     Debug.Log("Player used a LastSeed");

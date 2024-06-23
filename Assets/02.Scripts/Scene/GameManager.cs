@@ -94,54 +94,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
 
-/*            StartCoroutine(WaitforPV(newPlayer));
-            // Recipe 정보 로드*/
+         
 
             CharacterInfo.Instance._isGameStart = true;
         }
         else
         {
             Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(SceneMovePosition[CharacterInfo.Instance.SpawnDir].position);
-        }
-    }
-    public IEnumerator WaitforPV(GameObject newPlayer)
-    {
-        yield return new WaitForSeconds(3f);
-        int newPlayerViewID = newPlayer.GetComponent<PhotonView>().ViewID;
-
-        Character.LocalPlayerInstance.PhotonView.RPC(nameof(ChangeAvatar), RpcTarget.OthersBuffered, newPlayerViewID);
-
-
-    }
-    [PunRPC]
-    public void ChangeAvatar(int newPlayerViewID)
-    {
-        GameObject newPlayer = PhotonView.Find(newPlayerViewID).gameObject;
-
-        StartCoroutine(WaitforChangeAvatar(newPlayer));
-
-    }
-    public IEnumerator WaitforChangeAvatar(GameObject newPlayer)
-    {
-        yield return new WaitForSeconds(3f);
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
-        {
-            Debug.Log("Character Recipe in SpawnPlayer: " + characterRecipe);
-
-            var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
-            ApplyRecipeString(avatar, characterRecipe.ToString());
-        }
-        else
-        {
-            Debug.LogError("CharacterRecipe not found in CustomProperties");
-        }
-    }
-
-    public void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
-    {
-        if (avatar != null && !string.IsNullOrEmpty(recipeString))
-        {
-            avatar.LoadFromRecipeString(recipeString);
         }
     }
 

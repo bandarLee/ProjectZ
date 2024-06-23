@@ -7,6 +7,7 @@ public class CharacterInfo : MonoBehaviour
     public static CharacterInfo Instance { get; private set; }
      public bool _isGameStart = false;
      public int SpawnDir;
+    public string DNA;
 
     private void Awake()
     {
