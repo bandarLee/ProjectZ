@@ -32,6 +32,7 @@ public class BoatController : MonoBehaviourPun
 
         player.transform.position = controlPosition.position;
         player.transform.rotation = controlPosition.rotation;
+        
     }
 
     public void StartControlling(GameObject player)
@@ -50,7 +51,7 @@ public class BoatController : MonoBehaviourPun
             playerRigidbody.isKinematic = true;
         }
 
-
+        Character.LocalPlayerInstance._animator.SetBool("IsControl", true);
     }
 
     public void StopControlling()
@@ -69,5 +70,7 @@ public class BoatController : MonoBehaviourPun
         }
 
         player = null;
+
+        Character.LocalPlayerInstance._animator.SetBool("IsControl", false);
     }
 }
