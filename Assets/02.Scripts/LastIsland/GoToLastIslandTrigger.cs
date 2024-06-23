@@ -49,7 +49,8 @@ public class GoToLastIslandTrigger : MonoBehaviour
     {
         FadeImage.gameObject.SetActive(true); 
         FadeImage.color = new Color(0, 0, 0, 0); // 초기 색상 투명
-        yield return FadeImage.DOFade(1, 1.5f).WaitForCompletion(); 
+        FadeImage.DOFade(1, 1.5f);
+        yield return new WaitForSeconds(1.5f);
         LoadLastIslandScene();
     }
 
