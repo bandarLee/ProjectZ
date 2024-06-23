@@ -119,11 +119,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("Joined Room");
-
-        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("CharacterRecipe", out object characterRecipe))
-        {
-            Debug.Log("Character Recipe in OnJoinedRoom: " + characterRecipe);
-        }
+       
         StartLoading("CityScene");
 
     }
@@ -139,6 +135,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
 
         string characterRecipe = GetRecipeString(avatar);
+        CharacterInfo.Instance.DNA = characterRecipe;
         Debug.Log("Character Recipe: " + characterRecipe);
         Hashtable props = new Hashtable
     {
@@ -146,13 +143,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-
-        StartCoroutine(LoadSceneAfterPropertiesSet(sceneName));
-
+        AsyncOperation operation = PhotonNetwork.LoadLevel(sceneName);
+        StartCoroutine(UpdateLoadingProgress(operation));
+/*        StartCoroutine(LoadSceneAfterPropertiesSet(sceneName));
+*/
     }
     private IEnumerator LoadSceneAfterPropertiesSet(string sceneName)
     {
-        // 커스텀 프로퍼티가 설정될 때까지 대기
         yield return new WaitForSeconds(1);
 
         AsyncOperation operation = PhotonNetwork.LoadLevel(sceneName);
