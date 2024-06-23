@@ -80,7 +80,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         }
         else if (stream.IsReading)
         {
-            Stat.Health = (int)stream.ReceiveNext();
+            Stat.Health = (float)stream.ReceiveNext();
             Stat.Mental = (int)stream.ReceiveNext();
             Stat.Hunger = (int)stream.ReceiveNext();
             Stat.Temperature = (int)stream.ReceiveNext();
