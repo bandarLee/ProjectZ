@@ -13,13 +13,8 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
 
     }
 
-    void Update()
-    {
-        
-    }
     public IEnumerator WaitforPV()
     {
-        Debug.Log("3초기다렸다 채인지아바타");
 
         yield return new WaitForSeconds(0.1f);
         PhotonView newPlayerPhotonView = Character.LocalPlayerInstance.PhotonView;
@@ -55,7 +50,6 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ChangeAvatar(int newPlayerViewID)
     {
-        Debug.Log("채인지아바타");
 
         GameObject newPlayer = PhotonView.Find(newPlayerViewID)?.gameObject;
         if (newPlayer == null)
@@ -69,10 +63,8 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
     }
     public IEnumerator WaitforChangeAvatar(GameObject newPlayer)
     {
-        Debug.Log("채인지아바타 대기중");
 
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("변신");
 
         var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
         Player player = newPlayer.GetComponent<PhotonView>().Owner;
