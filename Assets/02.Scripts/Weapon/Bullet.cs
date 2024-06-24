@@ -3,18 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPooledObject
 {
     public float Damage = 20;
     public float Force = 30f;
     private Rigidbody rb;
     private bool hasDamaged = false;
 
-    private void Start()
+    public void OnObjectSpawn()
     {
-       rb = GetComponent<Rigidbody>();
-       rb.AddForce(transform.forward * Force);
-       Destroy(gameObject, 5f);
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.forward * Force);
+        hasDamaged = false;
+        Invoke("Deactivate", 5f);
+    }
+    private void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,6 +35,10 @@ public class Bullet : MonoBehaviour
             {
                 photonView.RPC("Damaged", RpcTarget.All, Damage * (Character.LocalPlayerInstance._statability.Stat.Damage), PhotonNetwork.LocalPlayer.ActorNumber);
                 hasDamaged = true;
+
+                ObjectPool.Instance.SpawnFromPool("BigExplosion", transform.position, Quaternion.identity);
+
+                Deactivate();
             } 
         }
     }

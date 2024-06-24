@@ -13,6 +13,7 @@ public class CharacterGunFireAbility : CharacterAbility
 
     public Gun CurrentGun; // 현재 들고있는 총
     public Bullet Bullet;
+    public string bulletTag = "Bullet";
     public GameObject[] GunObject;
     public GameObject bulletPrefab;
     public Transform FirePos;
@@ -146,7 +147,7 @@ public class CharacterGunFireAbility : CharacterAbility
     private void FireBullet()
     {
         Vector3 fireDirection = GetFireDirection();
-        GameObject bullet = Instantiate(bulletPrefab, FirePos.position, Quaternion.LookRotation(fireDirection));
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(bulletTag, FirePos.position, Quaternion.LookRotation(fireDirection));
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
