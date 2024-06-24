@@ -10,7 +10,7 @@ public class CharacterDNASliderManager : MonoBehaviour
     public DynamicCharacterAvatar Avatar;
     public Slider WeightSlider;
     public Slider MuscleSlider;
-
+    public Slider HeadSlider;
     public void ChangeAvatar(DynamicCharacterAvatar avatar)
     {
         Avatar = avatar;
@@ -38,6 +38,12 @@ public class CharacterDNASliderManager : MonoBehaviour
             {
                 Debug.Log("NoWeight");
             }
+            if (umaDna.ContainsKey("headSize"))
+                HeadSlider.value = umaDna["headSize"].Get();
+            else
+            {
+                Debug.Log("NoWeight");
+            }
         }
     }
     public void OnUpperWeightSliderChanged()
@@ -57,6 +63,16 @@ public class CharacterDNASliderManager : MonoBehaviour
         var umaDna = Avatar.GetDNA();
         umaDna["upperMuscle"].Set(value);
         umaDna["lowerMuscle"].Set(value);
+        Avatar.BuildCharacter();
+
+    }
+    public void OnHeadSliderChanged()
+    {
+        float value = HeadSlider.value;
+
+        var umaDna = Avatar.GetDNA();
+        umaDna["headSize"].Set(value);
+        umaDna["headWidth"].Set(value);
         Avatar.BuildCharacter();
 
     }
