@@ -106,6 +106,7 @@ MonoBehaviour:
   - RegisterMapPiece
   - RPC_UpdateCharacterRecipe
   - ChangeAvatar
+  - StopControllingBoat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
