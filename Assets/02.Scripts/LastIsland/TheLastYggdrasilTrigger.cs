@@ -87,7 +87,6 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             Item seedItem = GetSeedItem();
             if (seedItem != null)
             {
-                itemUseManager.DecreaseItemQuantity(seedItem);
                 StartCoroutine(HideNoSeedTextAfterDelay());
 
             }

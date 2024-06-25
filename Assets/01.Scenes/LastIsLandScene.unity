@@ -14983,7 +14983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a855c1cec6c3746bd97d7abb782f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 1009446781}
   isPointerOver: 0
 --- !u!114 &455696944
 MonoBehaviour:
@@ -37674,7 +37673,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d97c65662137458cef47c8e808eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPointerOver: 0
 --- !u!114 &1199892453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39873,7 +39871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d97c65662137458cef47c8e808eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPointerOver: 0
 --- !u!114 &1253339862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43120,7 +43117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d97c65662137458cef47c8e808eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPointerOver: 0
 --- !u!114 &1359214293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63256,7 +63252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d97c65662137458cef47c8e808eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPointerOver: 0
 --- !u!114 &1969154923
 MonoBehaviour:
   m_ObjectHideFlags: 0
