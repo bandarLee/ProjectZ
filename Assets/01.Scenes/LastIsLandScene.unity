@@ -34673,7 +34673,7 @@ MonoBehaviour:
   HolographicDotSightUI: {fileID: 1939534340}
   CircleSlider: {fileID: 791521582}
   CircleSliderComponent: {fileID: 791521584}
-  followCamera: {fileID: 0}
+  followCamera: {fileID: 1434020253}
   tpFollow: {fileID: 0}
   GunTextUI: {fileID: 1051610272}
   ReloadTextUI: {fileID: 707069881}
