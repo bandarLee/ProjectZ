@@ -141,11 +141,11 @@ public class CharacterItemAbility : CharacterAbility
     }
     public void ToggleFlashlight()
     {
-        if (PhotonView.IsMine)
+        if (Owner.PhotonView.IsMine)
         {
             isFlashlightOn = !isFlashlightOn;
             Flashlight.enabled = isFlashlightOn;
-            PhotonView.RPC("UpdateFlashlightState", RpcTarget.Others, isFlashlightOn);
+            Owner.PhotonView.RPC("UpdateFlashlightState", RpcTarget.Others, isFlashlightOn);
         }
     }
 

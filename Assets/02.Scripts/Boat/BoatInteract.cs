@@ -5,9 +5,10 @@ using Photon.Pun;
 public class BoatInteract : MonoBehaviourPunCallbacks
 {
     private bool isPlayerInRange = false;
+    public bool isBoatControlling = false;
     private GameObject player;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -27,9 +28,16 @@ public class BoatInteract : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && !isBoatControlling)
         {
             photonView.RPC("StartControllingBoat", RpcTarget.All, player.GetComponent<PhotonView>().ViewID);
+            isBoatControlling = true;
+        }
+        else if (isBoatControlling && Input.GetKeyDown(KeyCode.E) )
+        {
+            photonView.RPC("StopControllingBoat", RpcTarget.All, player.GetComponent<PhotonView>().ViewID);
+            isBoatControlling = false;
+
         }
     }
 
@@ -39,5 +47,12 @@ public class BoatInteract : MonoBehaviourPunCallbacks
         GameObject player = PhotonView.Find(playerViewID).gameObject;
         BoatController boatController = GetComponent<BoatController>();
         boatController.StartControlling(player);
+    }
+    [PunRPC]
+    private void StopControllingBoat(int playerViewID)
+    {
+        GameObject player = PhotonView.Find(playerViewID).gameObject;
+        BoatController boatController = GetComponent<BoatController>();
+        boatController.StopControlling(player);
     }
 }

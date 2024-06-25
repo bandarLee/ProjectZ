@@ -16,7 +16,9 @@ public class BoatController : MonoBehaviourPun
         if (isControlling && player.GetComponent<PhotonView>().IsMine)
         {
             HandleInput();
+
         }
+
     }
 
     private void HandleInput()
@@ -54,7 +56,7 @@ public class BoatController : MonoBehaviourPun
         Character.LocalPlayerInstance._animator.SetBool("IsControl", true);
     }
 
-    public void StopControlling()
+    public void StopControlling(GameObject player)
     {
         isControlling = false;
 
@@ -69,7 +71,6 @@ public class BoatController : MonoBehaviourPun
             playerRigidbody.isKinematic = false;
         }
 
-        player = null;
 
         Character.LocalPlayerInstance._animator.SetBool("IsControl", false);
     }

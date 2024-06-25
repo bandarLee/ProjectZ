@@ -15,7 +15,6 @@ public class ItemUseManager : MonoBehaviour
     public UI_BookText uI_BookText;
     public UI_DiskText uI_DiskText;
     public Map map;
-    public Light FlashLight;
     public GameObject MapImage;
 
     private bool isMapActive = false;
@@ -45,7 +44,6 @@ public class ItemUseManager : MonoBehaviour
         }
         characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
 
-        FlashLight.enabled = false;
         MapImage.SetActive(false); 
 
         // Áöµµ
