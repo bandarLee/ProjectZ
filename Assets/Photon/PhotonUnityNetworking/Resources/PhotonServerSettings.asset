@@ -107,6 +107,9 @@ MonoBehaviour:
   - RPC_UpdateCharacterRecipe
   - ChangeAvatar
   - StopControllingBoat
+  - SpawnMuzzleEffectRPC
+  - SpawnExplosionRPC
+  - SpawnHitEffectRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
