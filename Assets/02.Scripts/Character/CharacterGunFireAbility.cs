@@ -152,7 +152,17 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     private void SpawnMuzzleEffect()
     {
-        GameObject muzzleEffect = ObjectPool.Instance.SpawnFromPool(muzzleEffectTag, FirePos.position, Quaternion.identity);
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(SpawnMuzzleEffectRPC), RpcTarget.All, FirePos.position);
+        }
+        
+    }
+
+    [PunRPC]
+    private void SpawnMuzzleEffectRPC(Vector3 position)
+    {
+        GameObject muzzleEffect = ObjectPool.Instance.SpawnFromPool(muzzleEffectTag, position, Quaternion.identity);
         StartCoroutine(DisableMuzzleEffect(muzzleEffect));
     }
 

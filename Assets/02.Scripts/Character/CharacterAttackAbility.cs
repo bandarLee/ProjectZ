@@ -115,13 +115,23 @@ public class CharacterAttackAbility : CharacterAbility
             {
                 // 피격 이펙트 생성
                 Vector3 hitPosition = other.ClosestPoint(transform.position)+ new Vector3(0f, 0.5f, 0f);
-                GameObject hitEffect = ObjectPool.Instance.SpawnFromPool("ElectricalSparks", hitPosition, Quaternion.identity);
-                StartCoroutine(DisableHitEffect(hitEffect));
+                PhotonView ownerPhotonView = Owner.GetComponent<PhotonView>();
+                if (ownerPhotonView != null)
+                {
+                    ownerPhotonView.RPC(nameof(SpawnHitEffectRPC), RpcTarget.All, hitPosition);
+                }
                 float damage = GetWeaponDamage(_activeWeaponIndex);
                 photonView.RPC("Damaged", RpcTarget.All, damage, Owner.PhotonView.OwnerActorNr);
             }
         }
     }
+    [PunRPC]
+    private void SpawnHitEffectRPC(Vector3 position)
+    {
+        GameObject hitEffect = ObjectPool.Instance.SpawnFromPool("ElectricalSparks", position, Quaternion.identity);
+        StartCoroutine(DisableHitEffect(hitEffect));
+    }
+
     private IEnumerator DisableHitEffect(GameObject hitEffect)
     {
         ParticleSystem particleSystem = hitEffect.GetComponent<ParticleSystem>();
