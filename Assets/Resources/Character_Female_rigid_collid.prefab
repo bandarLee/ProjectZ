@@ -14864,11 +14864,9 @@ MonoBehaviour:
   Bullet: {fileID: 0}
   bulletTag: Bullet
   muzzleEffectTag: SmallExplosion
- 53d59623553d81074b7b32e07ca5436cb7bacdc8
-  GunObject:
-  - {fileID: 2943838032877333535}
-  bulletPrefab: {fileID: 4619007093716553816, guid: 5c2efe5eb8535434ba2cb14c6325d7bd, type: 3}
-  FirePos: {fileID: 2888758124019736164}
+  GunObject: []
+  bulletPrefab: {fileID: 0}
+  FirePos: {fileID: 0}
   uI_Gunfire: {fileID: 0}
 --- !u!95 &2283545895190766293
 Animator:
