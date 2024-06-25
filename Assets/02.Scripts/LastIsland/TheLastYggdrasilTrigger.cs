@@ -7,6 +7,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
 {
     public GameObject LastYggdrasilTrigger;
     public TextMeshProUGUI UseSeedText;
+    public TextMeshProUGUI NoSeedItemText;
 
     private Inventory playerInventory;
     private QuickSlotManager quickSlotManager;
@@ -19,6 +20,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private void Start()
     {
         UseSeedText.gameObject.SetActive(false);
+        NoSeedItemText.gameObject.SetActive(false );
 
         playerInventory = Inventory.Instance;
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
@@ -85,18 +87,31 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             Item seedItem = GetSeedItem();
             if (seedItem != null)
             {
-                itemUseManager.DecreaseItemQuantity(seedItem);
-                UseSeedText.gameObject.SetActive(false);
+                StartCoroutine(HideNoSeedTextAfterDelay());
+
             }
             else
             {
+                NoSeedItemText.gameObject.SetActive(true);
                 Debug.Log("No Seed Item in Quick Slot");
             }
         }
     }
 
+    private IEnumerator HideNoSeedTextAfterDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        NoSeedItemText.gameObject.SetActive(false );
+    }
+
     private Item GetSeedItem()
     {
+        if (quickSlotManager == null || quickSlotManager.quickSlotItems == null)
+        {
+            Debug.LogError("QuickSlotManager or quickSlotItems is null");
+            return null;
+        }
+
         // Äü½½·Ô °Ë»ç
         foreach (var slotItem in quickSlotManager.quickSlotItems)
         {

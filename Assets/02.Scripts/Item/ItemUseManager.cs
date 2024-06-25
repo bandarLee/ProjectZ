@@ -664,7 +664,7 @@ public class ItemUseManager : MonoBehaviour
                 if (BarrierTrigger)
                 {
                     Debug.Log("Player used a LastSeed");
-                    
+
                 }
                 break;
             default:
