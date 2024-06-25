@@ -41,8 +41,12 @@ public class BoatController : MonoBehaviourPun
     {
         this.player = player;
         isControlling = true;
-        cameraRoot = player.GetComponent<CharacterRotateAbility>().CameraRoot;
-
+        cameraRoot = player.GetComponent<CharacterRotateAbility>()?.CameraRoot;
+        if (cameraRoot == null)
+        {
+            Debug.LogError("CameraRoot not found on player.");
+            return;
+        }
         player.GetComponent<CharacterMoveAbilityTwo>().enabled = false;
         player.GetComponent<CharacterRotateAbility>().enabled = false;
         cameraRoot.localRotation = Quaternion.Euler(0, 0, 0);
