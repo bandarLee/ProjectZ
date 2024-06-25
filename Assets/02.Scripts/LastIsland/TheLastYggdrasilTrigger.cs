@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 
 public class TheLastYggdrasilTrigger : MonoBehaviour
 {
@@ -14,19 +15,18 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private InventoryUI inventoryUI;
     private InventoryManager inventoryManager;
     private ItemUseManager itemUseManager;
+    private UI_Timer uiTimer; // UI_Timer 클래스 참조 추가
 
     public bool IsPlayerTrigger = false;
 
     private void Start()
     {
         UseSeedText.gameObject.SetActive(false);
-        NoSeedItemText.gameObject.SetActive(false );
-
+        NoSeedItemText.gameObject.SetActive(false);
 
         StartCoroutine(InitializingInventory());
-
-
     }
+
     private IEnumerator InitializingInventory()
     {
         yield return new WaitForSeconds(1.1f);
@@ -40,6 +40,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
         inventoryUI = FindObjectOfType<InventoryUI>();
         itemUseManager = FindObjectOfType<ItemUseManager>();
+        uiTimer = FindObjectOfType<UI_Timer>(); // UI_Timer 인스턴스 찾기
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,13 +71,17 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             if (seedItem != null)
             {
                 itemUseManager.ApplyEffect(seedItem);
+                DestroyUseSeedText(); // UseSeedText 파괴
+                if (uiTimer != null && PhotonNetwork.IsMasterClient)
+                {
+                    uiTimer.StartTimer(); // 타이머 시작
+                }
             }
             else
             {
                 NoSeedItemText.gameObject.SetActive(true);
                 Debug.Log("No Seed Item in Quick Slot");
                 StartCoroutine(HideNoSeedTextAfterDelay());
-
             }
         }
     }
@@ -84,7 +89,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private IEnumerator HideNoSeedTextAfterDelay()
     {
         yield return new WaitForSeconds(1.5f);
-        NoSeedItemText.gameObject.SetActive(false );
+        NoSeedItemText.gameObject.SetActive(false);
     }
 
     private Item GetSeedItem()
@@ -105,5 +110,10 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void DestroyUseSeedText()
+    {
+        Destroy(UseSeedText.gameObject); // UseSeedText 파괴
     }
 }
