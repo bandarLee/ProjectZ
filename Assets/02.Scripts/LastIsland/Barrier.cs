@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class Barrier : MonoBehaviour
 {
     public TextMeshProUGUI NoSeedText;
+    public GameObject BarrierPrefab;
 
     private Inventory playerInventory;
     private QuickSlotManager quickSlotManager;
@@ -62,17 +64,17 @@ public class Barrier : MonoBehaviour
         {
             Debug.Log("Player triggered on barrier");
 
-            Item seedItem = GetSeedItem();
-            if (seedItem != null)
-            {
-                itemUseManager.ApplyEffect(seedItem);
-                //장막 해제 함수
-            }
-            else //세계수씨앗 없을 경우
-            {
-                NoSeedText.gameObject.SetActive(true);
-                StartCoroutine(HideNoSeedTextAfterDelay(2f));
-            }
+            //Item seedItem = GetSeedItem();
+            //if (seedItem != null)
+            //{
+                //itemUseManager.ApplyEffect(seedItem);
+                StartCoroutine(DestroyBarrier());
+            //}
+            //else //세계수씨앗 없을 경우
+            //{
+                //NoSeedText.gameObject.SetActive(true);
+                //StartCoroutine(HideNoSeedTextAfterDelay(2f));
+            //}
         }
     }
 
@@ -92,5 +94,23 @@ public class Barrier : MonoBehaviour
             }
         }
         return null;
+    }
+      private IEnumerator DestroyBarrier()
+    {
+        Renderer renderer = BarrierPrefab.GetComponent<Renderer>();
+        Color originalColor = renderer.material.color;
+        float duration = 1f; // 깜박이는 지속 시간
+
+        // 깜박이는 효과
+        for (int i = 0; i < 5; i++) // 5번 깜박임
+        {
+            renderer.material.DOColor(Color.clear, duration / 10f);
+            yield return new WaitForSeconds(duration / 10f);
+            renderer.material.DOColor(originalColor, duration / 10f);
+            yield return new WaitForSeconds(duration / 10f);
+        }
+
+        // Barrier 삭제
+        Destroy(BarrierPrefab);
     }
 }
