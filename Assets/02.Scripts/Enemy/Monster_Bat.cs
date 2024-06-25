@@ -57,7 +57,18 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         // 초기 순찰 위치 설정
         StartCoroutine(ChangeDirectionRoutine());
     }
+    private void OnEnable()
+    {
+        stat.Init();
+        state = MonsterState.Patrol;
+        Debug.Log("배트몬스터 스폰");
 
+    }
+    private void OnDisable()
+    {
+        stat.Init();
+        Debug.Log("배트몬스터 사망");
+    }
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -305,8 +316,8 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private IEnumerator DeathCoroutine()
     {
-        yield return new WaitForSeconds(3f);
-        PhotonNetwork.Destroy(gameObject);
+        yield return new WaitForSeconds(1f);
+        this.gameObject.SetActive(false);
     }
 
     private void RequestPlayAnimation(string animationName)
