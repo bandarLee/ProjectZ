@@ -3,7 +3,12 @@ guid: f2a21041e72cd3b4cb5ed22fcddb7312
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bgr_Clouds
+    second: {fileID: 2100000, guid: 84113ffa45cc0f44b94c0a74bfc300a2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
