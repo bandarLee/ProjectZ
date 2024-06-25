@@ -45,14 +45,20 @@ public class BoatInteract : MonoBehaviourPunCallbacks
     private void StartControllingBoat(int playerViewID)
     {
         GameObject player = PhotonView.Find(playerViewID).gameObject;
-        BoatController boatController = GetComponent<BoatController>();
-        boatController.StartControlling(player);
+        if (player != null)
+        {
+            BoatController boatController = GetComponent<BoatController>();
+            boatController.StartControlling(player);
+        }
     }
     [PunRPC]
     private void StopControllingBoat(int playerViewID)
     {
         GameObject player = PhotonView.Find(playerViewID).gameObject;
-        BoatController boatController = GetComponent<BoatController>();
-        boatController.StopControlling(player);
+        if (player != null)
+        {
+            BoatController boatController = GetComponent<BoatController>();
+            boatController.StopControlling(player);
+        }
     }
 }
