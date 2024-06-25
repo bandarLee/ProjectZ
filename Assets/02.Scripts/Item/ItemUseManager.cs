@@ -17,7 +17,7 @@ public class ItemUseManager : MonoBehaviour
     public Map map;
     public GameObject MapImage;
     public Barrier BarrierTrigger;
-
+    public TheLastYggdrasilTrigger theLastYggdrasilTrigger;
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
     private bool isDisplayingText = false;
@@ -46,7 +46,6 @@ public class ItemUseManager : MonoBehaviour
         {
             quickSlotManager = FindObjectOfType<QuickSlotManager>();
         }
-        characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
 
         MapImage.SetActive(false); 
 
@@ -69,6 +68,9 @@ public class ItemUseManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         attackAbility = Character.LocalPlayerInstance._attackability;
         gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
+        characterItemAbility = Character.LocalPlayerInstance.GetComponent<CharacterItemAbility>();
+        theLastYggdrasilTrigger = FindObjectOfType<TheLastYggdrasilTrigger>();
+
     }
     public void ApplyEffect(Item item)
     {
@@ -661,10 +663,13 @@ public class ItemUseManager : MonoBehaviour
                 }
                 break;
             case "¼¼°è¼ö¾¾¾Ñ":
-                if (BarrierTrigger)
+                if (theLastYggdrasilTrigger != null)
                 {
-                    Debug.Log("Player used a LastSeed");
+                    if (theLastYggdrasilTrigger.IsPlayerTrigger)
+                    {
+                        DecreaseItemQuantity(item);
 
+                    }
                 }
                 break;
             default:

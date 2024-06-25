@@ -15,49 +15,31 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private InventoryManager inventoryManager;
     private ItemUseManager itemUseManager;
 
-    private bool IsPlayerTrigger = false;
+    public bool IsPlayerTrigger = false;
 
     private void Start()
     {
         UseSeedText.gameObject.SetActive(false);
         NoSeedItemText.gameObject.SetActive(false );
 
-        playerInventory = Inventory.Instance;
-        quickSlotManager = FindObjectOfType<QuickSlotManager>();
-        inventoryUI = FindObjectOfType<InventoryUI>();
-        inventoryManager = FindObjectOfType<InventoryManager>();
-        itemUseManager = FindObjectOfType<ItemUseManager>();
+
         StartCoroutine(InitializingInventory());
 
-        if (playerInventory == null)
-        {
-            Debug.LogError("Inventory not found");
-        }
 
-        if (quickSlotManager == null)
-        {
-            Debug.LogError("QuickSlotManager not found");
-        }
-
-        if (inventoryUI == null)
-        {
-            Debug.LogError("InventoryUI not found");
-        }
-
-        if (itemUseManager == null)
-        {
-            Debug.LogError("ItemUseManager not found");
-        }
     }
     private IEnumerator InitializingInventory()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.1f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
         if (inventoryManager == null)
         {
             Debug.LogError("InventoryManager를 찾을 수 없습니다. 씬에 InventoryManager가 있는지 확인하세요.");
         }
+        playerInventory = Inventory.Instance;
+        quickSlotManager = FindObjectOfType<QuickSlotManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>();
+        itemUseManager = FindObjectOfType<ItemUseManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,13 +69,14 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             Item seedItem = GetSeedItem();
             if (seedItem != null)
             {
-                StartCoroutine(HideNoSeedTextAfterDelay());
-
+                itemUseManager.ApplyEffect(seedItem);
             }
             else
             {
                 NoSeedItemText.gameObject.SetActive(true);
                 Debug.Log("No Seed Item in Quick Slot");
+                StartCoroutine(HideNoSeedTextAfterDelay());
+
             }
         }
     }

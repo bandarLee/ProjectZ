@@ -316,7 +316,7 @@ public class QuickSlotManager : MonoBehaviour
             Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
             Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
         }
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I)|| Input.GetKeyDown(KeyCode.Escape))
         {
             inventoryManager.TogglePlayerInventory();
         }
