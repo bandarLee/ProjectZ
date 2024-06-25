@@ -114,14 +114,28 @@ public class CharacterAttackAbility : CharacterAbility
             if (photonView != null)
             {
                 // 피격 이펙트 생성
-                Vector3 hitPosition = (transform.position + other.transform.position) / 2f + new Vector3(0f, 1f, 0f);
-                //PhotonNetwork.Instantiate("HitEffect", hitPosition, Quaternion.identity);
+                Vector3 hitPosition = other.ClosestPoint(transform.position)+ new Vector3(0f, 0.5f, 0f);
+                GameObject hitEffect = ObjectPool.Instance.SpawnFromPool("ElectricalSparks", hitPosition, Quaternion.identity);
+                StartCoroutine(DisableHitEffect(hitEffect));
                 float damage = GetWeaponDamage(_activeWeaponIndex);
                 photonView.RPC("Damaged", RpcTarget.All, damage, Owner.PhotonView.OwnerActorNr);
             }
         }
     }
+    private IEnumerator DisableHitEffect(GameObject hitEffect)
+    {
+        ParticleSystem particleSystem = hitEffect.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            var main = particleSystem.main;
+            main.startSizeX = 0.1f;
+            main.startSizeY = 0.01f;
+            main.startSizeZ = 0.01f;
+        }
 
+        yield return new WaitForSeconds(1f);
+        hitEffect.SetActive(false);
+    }
     private float GetWeaponDamage(int weaponIndex)
     {
         switch (weaponIndex)
