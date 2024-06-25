@@ -14,6 +14,7 @@ public class CharacterGunFireAbility : CharacterAbility
     public Gun CurrentGun; // ÇöÀç µé°íÀÖ´Â ÃÑ
     public Bullet Bullet;
     public string bulletTag = "Bullet";
+    public string muzzleEffectTag = "SmallExplosion";
     public GameObject[] GunObject;
     public GameObject bulletPrefab;
     public Transform FirePos;
@@ -21,7 +22,6 @@ public class CharacterGunFireAbility : CharacterAbility
     private float _shotTimer;
 
     public UI_Gunfire uI_Gunfire;
-    public List<GameObject> MuzzleEffects; 
 
     private bool _isReloading = false;
 
@@ -35,10 +35,6 @@ public class CharacterGunFireAbility : CharacterAbility
 
         _animator = GetComponent<Animator>();
 
-        foreach (GameObject muzzleEffect in MuzzleEffects)
-        {
-            muzzleEffect.SetActive(false);
-        }
         if (bulletPrefab != null)
         {
             Bullet = bulletPrefab.GetComponent<Bullet>();
@@ -129,7 +125,7 @@ public class CharacterGunFireAbility : CharacterAbility
             ItemUseManager.Instance.UseConsumable(bulletItem);
             uI_Gunfire.RefreshUI();
             _shotTimer = 0;
-            StartCoroutine(MuzzleEffectOn_Coroutine());
+            SpawnMuzzleEffect();
 
 
             if (bulletItem != null)
@@ -153,6 +149,10 @@ public class CharacterGunFireAbility : CharacterAbility
         {
             rb.velocity = fireDirection * Bullet.Force;
         }
+    }
+    private void SpawnMuzzleEffect()
+    {
+        ObjectPool.Instance.SpawnFromPool(muzzleEffectTag, FirePos.position, Quaternion.identity);
     }
 
     private Vector3 GetFireDirection()
@@ -211,18 +211,6 @@ public class CharacterGunFireAbility : CharacterAbility
         }
 
     }
-
-    private IEnumerator MuzzleEffectOn_Coroutine()
-    {
-        // ÃÑ ÀÌÆåÆ® Áß ÇÏ³ª¸¦ ÄÑÁÜ
-        int randomIndex = UnityEngine.Random.Range(0, MuzzleEffects.Count);
-        MuzzleEffects[randomIndex].SetActive(true);
-
-        yield return new WaitForSeconds(0.1f);
-
-        MuzzleEffects[randomIndex].SetActive(false);
-    }
-
 
  [PunRPC]
     public void GunActiveRPC(int GunNumber)
