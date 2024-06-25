@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Init()
     {
-        int randomIndex = Random.Range(0, 6);
+        //int randomIndex = Random.Range(0, 6);//랜덤 섹터설정 부활
+        int randomIndex = 0;
         CityZoneType[] cityZoneTypes = (CityZoneType[])System.Enum.GetValues(typeof(CityZoneType));
 
         Hashtable SceneProperties = new Hashtable();
