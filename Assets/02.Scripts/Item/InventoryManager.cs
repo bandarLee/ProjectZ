@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -6,22 +7,24 @@ public class InventoryManager : MonoBehaviour
     public InventoryUI playerInventoryUI;
     public BoxInventoryUI boxInventoryUI;
     public CharacterRotateAbility characterRotateAbility;
+
     public void Start()
     {
-        characterRotateAbility = Character.LocalPlayerInstance._characterRotateAbility;
+        characterRotateAbility = null; 
         CloseAllInventories();
-       /* StartCoroutine(AssignCharacterRotateAbilityAfterDelay(1.5f));*/
+        StartCoroutine(AssignCharacterRotateAbilityAfterDelay(1f));
     }
-
 
     public void CloseAllInventories()
     {
         playerInventoryUI.CloseInventory();
         boxInventoryUI.CloseInventory();
         CloseItemInfo();
-        characterRotateAbility.SetMouseLock(true);
+        if (characterRotateAbility != null)
+        {
+            characterRotateAbility.SetMouseLock(true);
+        }
         playerInventoryUI.quickSlotManager.ItemUseLock = false;
-
     }
 
     public void OpenBoxInventory(BoxInventory boxInventory)
@@ -29,11 +32,13 @@ public class InventoryManager : MonoBehaviour
         boxInventoryUI.SetBoxInventory(boxInventory);
         playerInventoryUI.inventoryObject.SetActive(true);
         boxInventoryUI.inventoryObject.SetActive(true);
-        characterRotateAbility.SetMouseLock(false);
+        if (characterRotateAbility != null)
+        {
+            characterRotateAbility.SetMouseLock(false);
+        }
         playerInventoryUI.quickSlotManager.ItemUseLock = true;
-
-
     }
+
     public void CloseItemInfo()
     {
         playerInventoryUI.CloseItemInfo();
@@ -45,6 +50,7 @@ public class InventoryManager : MonoBehaviour
         playerInventoryUI.UpdateInventoryUI();
         boxInventoryUI.UpdateInventoryUI();
     }
+
     public void TogglePlayerInventory()
     {
         if (playerInventoryUI.inventoryObject.activeSelf)
@@ -52,18 +58,32 @@ public class InventoryManager : MonoBehaviour
             playerInventoryUI.CloseInventory();
             boxInventoryUI.CloseInventory();
 
-
-            characterRotateAbility.SetMouseLock(true);
+            if (characterRotateAbility != null)
+            {
+                characterRotateAbility.SetMouseLock(true);
+            }
             playerInventoryUI.quickSlotManager.ItemUseLock = false;
-
-
         }
         else
         {
             playerInventoryUI.inventoryObject.SetActive(true);
             playerInventoryUI.quickSlotManager.ItemUseLock = true;
 
-            characterRotateAbility.SetMouseLock(false);
+            if (characterRotateAbility != null)
+            {
+                characterRotateAbility.SetMouseLock(false);
+            }
+        }
+    }
+
+    private IEnumerator AssignCharacterRotateAbilityAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        characterRotateAbility = Character.LocalPlayerInstance._characterRotateAbility;
+
+        if (characterRotateAbility == null)
+        {
+            Debug.LogError("CharacterRotateAbility를 찾을 수 없습니다.");
         }
     }
 }

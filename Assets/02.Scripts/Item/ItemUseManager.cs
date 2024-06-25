@@ -16,6 +16,7 @@ public class ItemUseManager : MonoBehaviour
     public UI_DiskText uI_DiskText;
     public Map map;
     public GameObject MapImage;
+    public Barrier BarrierTrigger;
 
     private bool isMapActive = false;
     private bool isFlashLightActive = false;
@@ -35,9 +36,12 @@ public class ItemUseManager : MonoBehaviour
 
     private void Start()
     {
-        computerTrigger = FindObjectOfType<UseComputerTrigger>();
-        attackAbility = Character.LocalPlayerInstance._attackability;
-        gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
+        if(computerTrigger != null)
+        {
+            computerTrigger = FindObjectOfType<UseComputerTrigger>();
+
+        }
+        StartCoroutine(DelayAssign());
         if (quickSlotManager == null)
         {
             quickSlotManager = FindObjectOfType<QuickSlotManager>();
@@ -60,7 +64,12 @@ public class ItemUseManager : MonoBehaviour
             Debug.LogError("MapImage GameObject is not assigned!");
         }
     }
-
+    private IEnumerator DelayAssign()
+    {
+        yield return new WaitForSeconds(1f);
+        attackAbility = Character.LocalPlayerInstance._attackability;
+        gunFireAbility = Character.LocalPlayerInstance._gunfireAbility;
+    }
     public void ApplyEffect(Item item)
     {
 
@@ -652,7 +661,7 @@ public class ItemUseManager : MonoBehaviour
                 }
                 break;
             case "¼¼°è¼ö¾¾¾Ñ":
-                if (computerTrigger.isPlayerInTrigger)
+                if (BarrierTrigger)
                 {
                     Debug.Log("Player used a LastSeed");
                     

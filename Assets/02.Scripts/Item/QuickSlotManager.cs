@@ -15,7 +15,7 @@ public class QuickSlotManager : MonoBehaviour
 
     public Inventory inventory;
 
-    private InventoryManager inventoryManager;
+    public InventoryManager inventoryManager;
     private CharacterItemAbility characterItemAbility;
 
     public bool ItemUseLock = false;
@@ -38,9 +38,7 @@ public class QuickSlotManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
-        if (inventoryManager == null)
-        {
-        }
+
 
         GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
         if (localPlayer != null)

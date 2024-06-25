@@ -64,17 +64,17 @@ public class Barrier : MonoBehaviour
         {
             Debug.Log("Player triggered on barrier");
 
-            //Item seedItem = GetSeedItem();
-            //if (seedItem != null)
-            //{
-                //itemUseManager.ApplyEffect(seedItem);
+            Item seedItem = GetSeedItem();
+            if (seedItem != null)
+            {
+                itemUseManager.ApplyEffect(seedItem);
                 StartCoroutine(DestroyBarrier());
-            //}
-            //else //¼¼°è¼ö¾¾¾Ñ ¾øÀ» °æ¿ì
-            //{
-                //NoSeedText.gameObject.SetActive(true);
-                //StartCoroutine(HideNoSeedTextAfterDelay(2f));
-            //}
+            }
+            else // ¼¼°è¼ö¾¾¾Ñ ¾øÀ» °æ¿ì
+            {
+                NoSeedText.gameObject.SetActive(true);
+                StartCoroutine(HideNoSeedTextAfterDelay(2f));
+            }
         }
     }
 
@@ -95,7 +95,9 @@ public class Barrier : MonoBehaviour
         }
         return null;
     }
-      private IEnumerator DestroyBarrier()
+
+
+    private IEnumerator DestroyBarrier()
     {
         Renderer renderer = BarrierPrefab.GetComponent<Renderer>();
         Color originalColor = renderer.material.color;

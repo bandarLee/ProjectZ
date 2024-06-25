@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class LastIsLandSceneManager : MonoBehaviour
 {
-    public GameObject playerPrefab;
     public Transform spawnPoint;
     private GameObject Player;
 
@@ -20,18 +19,15 @@ public class LastIsLandSceneManager : MonoBehaviour
     }
     private void SpawnPlayer()
     {
-        if (playerPrefab == null)
-        {
-            Debug.LogError("플레이어 프리팹이 지정되지 않았습니다.");
-            return;
-        }
+
 
         if (spawnPoint == null)
         {
             Debug.LogError("스폰 포인트가 지정되지 않았습니다.");
             return;
         }
-        Player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation, 0);
+        Player = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPoint.position, spawnPoint.rotation);
+
     }
 
 }
