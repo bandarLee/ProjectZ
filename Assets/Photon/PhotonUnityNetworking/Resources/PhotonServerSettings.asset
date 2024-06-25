@@ -107,14 +107,11 @@ MonoBehaviour:
   - RPC_UpdateCharacterRecipe
   - ChangeAvatar
   - StopControllingBoat
-<<<<<<< HEAD
   - ShowTimer
   - TimerEnded
-=======
   - SpawnMuzzleEffectRPC
   - SpawnExplosionRPC
   - SpawnHitEffectRPC
->>>>>>> 29b5ba7c2460c39c155c9eb5f76a7c198fdab781
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
