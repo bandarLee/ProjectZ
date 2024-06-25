@@ -152,7 +152,14 @@ public class CharacterGunFireAbility : CharacterAbility
     }
     private void SpawnMuzzleEffect()
     {
-        ObjectPool.Instance.SpawnFromPool(muzzleEffectTag, FirePos.position, Quaternion.identity);
+        GameObject muzzleEffect = ObjectPool.Instance.SpawnFromPool(muzzleEffectTag, FirePos.position, Quaternion.identity);
+        StartCoroutine(DisableMuzzleEffect(muzzleEffect));
+    }
+
+    private IEnumerator DisableMuzzleEffect(GameObject muzzleEffect)
+    {
+        yield return new WaitForSeconds(0.1f);
+        muzzleEffect.SetActive(false);
     }
 
     private Vector3 GetFireDirection()
