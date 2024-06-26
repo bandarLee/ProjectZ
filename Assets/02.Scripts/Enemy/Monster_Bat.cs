@@ -42,6 +42,10 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Start()
     {
+        StartMethod();
+    }
+    public void StartMethod()
+    {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         initialPosition = transform.position;
@@ -55,7 +59,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         // 초기 순찰 위치 설정
         StartCoroutine(ChangeDirectionRoutine());
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(FindTargetRoutine());
 
@@ -79,6 +83,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         stat.Init();
         state = MonsterState.Patrol;
         targetCharacter = null;
+        StartMethod();
 
     }
 

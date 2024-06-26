@@ -33,7 +33,13 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private float lerpSpeed = 6f;
 
     public string navMeshAreaName;
+
+    public SphereCollider collisionAvoidanceCollider;
     private void Start()
+    {
+        StartMethod();
+    }
+    public void StartMethod()
     {
         agent.speed = stat.MoveSpeed;
         agent.avoidancePriority = Random.Range(0, 100);
@@ -45,11 +51,14 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             agent.enabled = false;
         }
+        if(collisionAvoidanceCollider != null)
+        {
+            SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
+            collisionAvoidanceCollider.isTrigger = true;
+            collisionAvoidanceCollider.radius = 3.0f;
+            SetNavMeshArea(navMeshAreaName);
+        }
 
-        SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
-        collisionAvoidanceCollider.isTrigger = true;
-        collisionAvoidanceCollider.radius = 3.0f;
-        SetNavMeshArea(navMeshAreaName);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -60,6 +69,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     }
     private void OnEnable()
     {
+        StartMethod();
+
         stat.Init();
         state = MonsterState.Patrol;
         targetCharacter = null;
