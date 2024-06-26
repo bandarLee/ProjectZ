@@ -1,14 +1,23 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
+using DG.Tweening;
 
 public class UI_Timer : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI timerText;
+    public Image UI_HappyEnding;
+
     private float timeRemaining;
     private bool isTimerRunning = false;
+
+    private void Start()
+    {
+        UI_HappyEnding.gameObject.SetActive(false);
+    }
 
     public void StartTimer(float duration)
     {
@@ -66,5 +75,24 @@ public class UI_Timer : MonoBehaviourPunCallbacks
     private void TimerEnded()
     {
         timerText.text = "00";
+        StartCoroutine(HappyEndingFadeImage());
     }
+
+    private IEnumerator HappyEndingFadeImage()
+    {
+        UI_HappyEnding.gameObject.SetActive(true);
+        UI_HappyEnding.color = new Color(1, 1, 1, 0); // 초기 색상 흰색 투명
+        Debug.Log("1");
+
+        UI_HappyEnding.DOFade(1, 1.5f); // 투명도 조정
+        Debug.Log("1");
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log("1");
+        //LoadHappyEndingScene();
+    }
+
+    /* private void LoadHappyEndingScene()
+     {
+         PhotonNetwork.LoadLevel("");
+     }*/
 }

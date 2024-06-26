@@ -19,6 +19,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     public Slider TheLastYggdrasilHPSlider;
     public UI_Timer uiTimer;
 
+
     private Inventory playerInventory;
     private QuickSlotManager quickSlotManager;
     private InventoryUI inventoryUI;
@@ -26,9 +27,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private ItemUseManager itemUseManager;
 
     public bool IsPlayerTrigger = false;
-    public bool LastYggdrasil = false;
-
     private Vector3 initialPosition; // 나무의 초기 위치 저장
+    private bool treePlanted = false; // 나무가 심어졌는지 여부를 추적
 
     private void Start()
     {
@@ -64,10 +64,10 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !LastYggdrasil)
+        if (!treePlanted && other.CompareTag("Player")) // 나무가 심어지지 않았을 때만 트리거 작동
         {
             Debug.Log("Player Triggered on LastYggdrasilTrigger");
-            
+
             IsPlayerTrigger = true;
             UseSeedText.gameObject.SetActive(true);
         }
@@ -83,54 +83,56 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     }
 
     // 플레이어가 E키를 눌러 세계수를 심는다
-    [PunRPC]
-    void LastYggdrasilTrue()
-    {
-        LastYggdrasil = true;
-    }
-
     private void Update()
     {
-        if (IsPlayerTrigger && Input.GetKeyDown(KeyCode.E))
+        if (!treePlanted && IsPlayerTrigger && Input.GetKeyDown(KeyCode.E))
         {
             Item seedItem = GetSeedItem();
             if (seedItem != null)
             {
                 itemUseManager.ApplyEffect(seedItem);
-
-                Character.LocalPlayerInstance.PhotonView.RPC("LastYggdrasilTrue", RpcTarget.All); 
+                UseSeedText.gameObject.SetActive(false); // UseSeedText 비활성화
+                NoSeedItemText.gameObject.SetActive(false); // NoSeedItemText 비활성화
+                treePlanted = true; // 나무가 심어졌음을 표시
 
                 // 타이머 시작
                 if (PhotonNetwork.IsMasterClient && uiTimer != null)
                 {
-                    uiTimer.StartTimer(100); 
+                    uiTimer.StartTimer(100);
                 }
                 StartCoroutine(ShowWaveTexts());
-                // TheLastYggdrasilPrefab의 스케일 변경
-                if (TheLastYggdrasilPrefab != null && LastYggdrasil)
-                {
-                    TheLastYggdrasilPrefab.SetActive(true);
-                    TheLastYggdrasilHPSlider.gameObject.SetActive(true); // 체력바 활성화
 
-                    TheLastYggdrasilPrefab.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    TheLastYggdrasilPrefab.transform.position = new Vector3(-45.53f, 10.7f, -54.78f);
-                    TheLastYggdrasilPrefab.transform.DOScale(new Vector3(1f, 1f, 1f), 60f).OnUpdate(() =>
-                    {
-                        // 스케일 변경에 따라 위치 보정
-                        Vector3 newPosition = CalculatePositionBasedOnScale(TheLastYggdrasilPrefab.transform.localScale);
-                        TheLastYggdrasilPrefab.transform.position = newPosition;
-                    });
-
-                }
+                // 나무 심은 것을 모든 플레이어에게 동기화
+                Character.LocalPlayerInstance.PhotonView.RPC("PlantTree", RpcTarget.All);
             }
             else
-            {   
+            {
                 NoSeedItemText.gameObject.SetActive(true);
                 Debug.Log("No Seed Item in Quick Slot");
                 StartCoroutine(HideNoSeedTextAfterDelay());
             }
+        } 
+    }
+
+    [PunRPC]
+    private void PlantTree()
+    {
+        if (TheLastYggdrasilPrefab != null)
+        {
+            TheLastYggdrasilPrefab.SetActive(true);
+            TheLastYggdrasilHPSlider.gameObject.SetActive(true); // 체력바 활성화
+
+            TheLastYggdrasilPrefab.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            TheLastYggdrasilPrefab.transform.position = new Vector3(-45.53f, 10.7f, -54.78f);
+            TheLastYggdrasilPrefab.transform.DOScale(new Vector3(1f, 1f, 1f), 60f).OnUpdate(() =>
+            {
+                // 스케일 변경에 따라 위치 보정
+                Vector3 newPosition = CalculatePositionBasedOnScale(TheLastYggdrasilPrefab.transform.localScale);
+                TheLastYggdrasilPrefab.transform.position = newPosition;
+            });
         }
     }
+      
 
     private IEnumerator ShowWaveTexts()
     {
@@ -167,7 +169,10 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private IEnumerator HideNoSeedTextAfterDelay()
     {
         yield return new WaitForSeconds(1.5f);
-        NoSeedItemText.gameObject.SetActive(false);
+        if (!treePlanted) // 나무가 심어지지 않았을 때만 텍스트 비활성화
+        {
+            NoSeedItemText.gameObject.SetActive(false);
+        }
     }
 
     private Item GetSeedItem()
