@@ -295,7 +295,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             state = (MonsterState)(int)stream.ReceiveNext();
             syncPosition = (Vector3)stream.ReceiveNext();
             syncRotation = (Quaternion)stream.ReceiveNext();
-            stat.Health = (int)stream.ReceiveNext();
+            stat.Health = (float)stream.ReceiveNext();
         }
     }
 
