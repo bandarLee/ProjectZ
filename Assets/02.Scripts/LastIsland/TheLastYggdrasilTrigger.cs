@@ -6,7 +6,7 @@ using Photon.Pun;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class TheLastYggdrasilTrigger : MonoBehaviour
+public class TheLastYggdrasilTrigger : MonoBehaviourPunCallbacks
 {
     public GameObject LastYggdrasilTrigger;
 
@@ -30,6 +30,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private Vector3 initialPosition; // 나무의 초기 위치 저장
     private bool treePlanted = false; // 나무가 심어졌는지 여부를 추적
 
+    public PhotonView PV;
+
     private void Start()
     {
         UseSeedText.gameObject.SetActive(false);
@@ -45,6 +47,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         uiTimer = FindObjectOfType<UI_Timer>();
 
         StartCoroutine(InitializingInventory());
+
+        PV = GetComponent<PhotonView>();    
     }
 
     private IEnumerator InitializingInventory()
@@ -103,7 +107,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
                 StartCoroutine(ShowWaveTexts());
 
                 // 나무 심은 것을 모든 플레이어에게 동기화
-                Character.LocalPlayerInstance.PhotonView.RPC("PlantTree", RpcTarget.All);
+                PV.RPC("PlantTree", RpcTarget.AllBuffered);
             }
             else
             {
