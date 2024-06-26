@@ -29276,6 +29276,8 @@ MonoBehaviour:
   LastYggdrasilTrigger: {fileID: 928222300}
   UseSeedText: {fileID: 406777319}
   NoSeedItemText: {fileID: 343610637}
+  TheLastYggdrasilPrefab: {fileID: 7494639562694784081}
+  TheLastYggdrasilHPSlider: {fileID: 2073874586}
   IsPlayerTrigger: 0
 --- !u!65 &928222302
 BoxCollider:
@@ -69855,25 +69857,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2239127134424153157, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
-      propertyPath: TheLastYggdrasilPrefab
-      value: 
-      objectReference: {fileID: 7494639562694784081}
+    - target: {fileID: 1410123172035108863, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418033646218155262, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418033646218155262, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.68
+      objectReference: {fileID: 0}
     - target: {fileID: 4161938503192335579, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_Name
       value: TheLastYggdrasil
       objectReference: {fileID: 0}
     - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.04
+      value: -44.96
       objectReference: {fileID: 0}
     - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.294
+      value: 12.34
       objectReference: {fileID: 0}
     - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -55.56
+      value: -55.46
       objectReference: {fileID: 0}
     - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -69902,6 +69924,10 @@ PrefabInstance:
     - target: {fileID: 8161427273357126865, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207330590305852205, guid: 20df82f8d16863747ad8a22ab5cba60e, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

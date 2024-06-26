@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TheLastYggdrasilWave : MonoBehaviour
 {
-    public GameObject TheLastYggdrasilPrefab;
-    public Slider TheLastYggdrasilHPSlider;
-
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        TheLastYggdrasilHPSlider.gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        
+        if (other.CompareTag("Monster"))
+        {
+          // 세계수 체력 --
+          // 세계수 체력bar 동기화
+          // 몬스터 삭제
+        }
     }
 }
