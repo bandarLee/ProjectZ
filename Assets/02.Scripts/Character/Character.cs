@@ -155,9 +155,9 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         if (particleSystem != null)
         {
             var main = particleSystem.main;
-            main.startSizeX = 0.001f;
-            main.startSizeY = 0.001f;
-            main.startSizeZ = 0.001f;
+            main.startSizeX = 0.01f;
+            main.startSizeY = 0.01f;
+            main.startSizeZ = 0.01f;
         }
 
         yield return new WaitForSeconds(1f);
