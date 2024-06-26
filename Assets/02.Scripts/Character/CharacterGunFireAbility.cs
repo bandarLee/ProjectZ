@@ -168,6 +168,15 @@ public class CharacterGunFireAbility : CharacterAbility
 
     private IEnumerator DisableMuzzleEffect(GameObject muzzleEffect)
     {
+        ParticleSystem particleSystem = muzzleEffect.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            var main = particleSystem.main;
+            main.startSizeX = 10f;
+            main.startSizeY = 10f;
+            main.startSizeZ = 10f;
+        }
+
         yield return new WaitForSeconds(0.1f);
         muzzleEffect.SetActive(false);
     }
