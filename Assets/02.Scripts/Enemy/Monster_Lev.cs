@@ -54,6 +54,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(FindTargetRoutine());
+            StartCoroutine(PatrolRoutine()); // 추가
+
         }
     }
     private void SetNavMeshArea(string areaName)
@@ -73,7 +75,20 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             yield return new WaitForSeconds(0.5f); // 타겟 탐색 주기 조정
         }
     }
-
+    private IEnumerator PatrolRoutine() // 추가
+    {
+        while (true)
+        {
+            if (PhotonNetwork.IsMasterClient && state == MonsterState.Patrol)
+            {
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    MoveToRandomPosition();
+                }
+            }
+            yield return new WaitForSeconds(5f); 
+        }
+    }
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -81,7 +96,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             switch (state)
             {
                 case MonsterState.Patrol:
-                    Patrol();
                     break;
                 case MonsterState.Chase:
                     Chase();
@@ -104,13 +118,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         }
     }
 
-    private void Patrol()
-    {
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            MoveToRandomPosition();
-        }
-    }
+
 
     private void Chase()
     {
