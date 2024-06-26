@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnSceneChanged(Player player, int newScene)
     {
         Debug.LogError($"Player {player.NickName} changed scene to {newScene}");
+        StartCoroutine(UpdatePlayerList());
 
     }
 
