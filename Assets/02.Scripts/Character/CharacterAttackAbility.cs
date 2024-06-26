@@ -113,13 +113,17 @@ public class CharacterAttackAbility : CharacterAbility
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null)
             {
-                // 피격 이펙트 생성
-                Vector3 hitPosition = other.ClosestPoint(transform.position)+ new Vector3(0f, 0.5f, 0f);
-                PhotonView ownerPhotonView = Owner.GetComponent<PhotonView>();
-                if (ownerPhotonView != null)
+                if (!photonView.IsMine)
                 {
-                    ownerPhotonView.RPC(nameof(SpawnHitEffectRPC), RpcTarget.All, hitPosition);
+                    // 피격 이펙트 생성
+                    Vector3 hitPosition = other.ClosestPoint(transform.position) + new Vector3(0f, 0.5f, 0f);
+                    PhotonView ownerPhotonView = Owner.GetComponent<PhotonView>();
+                    if (ownerPhotonView != null)
+                    {
+                        ownerPhotonView.RPC(nameof(SpawnHitEffectRPC), RpcTarget.All, hitPosition);
+                    }
                 }
+                    
                 float damage = GetWeaponDamage(_activeWeaponIndex);
                 photonView.RPC("Damaged", RpcTarget.All, damage, Owner.PhotonView.OwnerActorNr);
             }
