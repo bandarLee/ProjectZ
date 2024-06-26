@@ -2,6 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using UMA;
 using UMA.CharacterSystem;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPosition;
     public Transform[] SceneMovePosition;
     public GameObject[] CitySectors;
+
+    public List<Character> PlayerList = new List<Character>();
 
     private void Awake()
     {
@@ -48,6 +51,37 @@ public class GameManager : MonoBehaviourPunCallbacks
             Init();
         }
 
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        // 새 플레이어가 들어왔을 때 호출
+        UpdatePlayerList();
+        Debug.Log(PlayerList.Count);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        // 플레이어가 나갔을 때 호출
+        UpdatePlayerList();
+        Debug.Log(PlayerList.Count);
+
+    }
+
+    private void UpdatePlayerList()
+    {
+        PlayerList.Clear();
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.TagObject is GameObject playerObject)
+            {
+                Character character = playerObject.GetComponent<Character>();
+                if (character != null)
+                {
+                    PlayerList.Add(character);
+                }
+            }
+        }
     }
 
 

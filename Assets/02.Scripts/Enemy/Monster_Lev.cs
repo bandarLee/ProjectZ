@@ -198,7 +198,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         Character nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
 
-        foreach (var player in FindObjectsOfType<Character>())
+    
+        foreach (Character player in GameManager.Instance.PlayerList)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < nearestDistance && IsTargetOnNavMesh(player.transform.position))
@@ -213,7 +214,10 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             if (targetCharacter != nearestCharacter)
             {
                 targetCharacter = nearestCharacter;
-                photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+                }
             }
             ChangeState(MonsterState.Chase, "IsChasing", true);
         }
