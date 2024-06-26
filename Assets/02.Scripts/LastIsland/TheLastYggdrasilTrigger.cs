@@ -9,10 +9,15 @@ using UnityEngine.UI;
 public class TheLastYggdrasilTrigger : MonoBehaviour
 {
     public GameObject LastYggdrasilTrigger;
+
     public TextMeshProUGUI UseSeedText;
     public TextMeshProUGUI NoSeedItemText;
+    public TextMeshProUGUI StartWaveText;
+    public TextMeshProUGUI ProtectLastYggdrasilText;
+
     public GameObject TheLastYggdrasilPrefab;
     public Slider TheLastYggdrasilHPSlider;
+    public UI_Timer uiTimer;
 
     private Inventory playerInventory;
     private QuickSlotManager quickSlotManager;
@@ -21,6 +26,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private ItemUseManager itemUseManager;
 
     public bool IsPlayerTrigger = false;
+    public bool LastYggdrasil = false;
+
     private Vector3 initialPosition; // 나무의 초기 위치 저장
 
     private void Start()
@@ -28,10 +35,14 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         UseSeedText.gameObject.SetActive(false);
         NoSeedItemText.gameObject.SetActive(false);
         TheLastYggdrasilHPSlider.gameObject.SetActive(false);
+        StartWaveText.gameObject.SetActive(false);
+        ProtectLastYggdrasilText.gameObject.SetActive(false);
 
         initialPosition = new Vector3(-45.53f, 10.7f, -54.78f); // 초기 위치 설정
         TheLastYggdrasilPrefab.transform.position = initialPosition;
         TheLastYggdrasilPrefab.SetActive(false);
+
+        uiTimer = FindObjectOfType<UI_Timer>();
 
         StartCoroutine(InitializingInventory());
     }
@@ -53,10 +64,10 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !LastYggdrasil)
         {
             Debug.Log("Player Triggered on LastYggdrasilTrigger");
-
+            
             IsPlayerTrigger = true;
             UseSeedText.gameObject.SetActive(true);
         }
@@ -72,6 +83,12 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     }
 
     // 플레이어가 E키를 눌러 세계수를 심는다
+    [PunRPC]
+    void LastYggdrasilTrue()
+    {
+        LastYggdrasil = true;
+    }
+
     private void Update()
     {
         if (IsPlayerTrigger && Input.GetKeyDown(KeyCode.E))
@@ -80,12 +97,21 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             if (seedItem != null)
             {
                 itemUseManager.ApplyEffect(seedItem);
-                DestroyUseSeedText(); // UseSeedText 파괴
 
+                Character.LocalPlayerInstance.PhotonView.RPC("LastYggdrasilTrue", RpcTarget.All); 
+
+                // 타이머 시작
+                if (PhotonNetwork.IsMasterClient && uiTimer != null)
+                {
+                    uiTimer.StartTimer(100); 
+                }
+                StartCoroutine(ShowWaveTexts());
                 // TheLastYggdrasilPrefab의 스케일 변경
-                if (TheLastYggdrasilPrefab != null)
+                if (TheLastYggdrasilPrefab != null && LastYggdrasil)
                 {
                     TheLastYggdrasilPrefab.SetActive(true);
+                    TheLastYggdrasilHPSlider.gameObject.SetActive(true); // 체력바 활성화
+
                     TheLastYggdrasilPrefab.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     TheLastYggdrasilPrefab.transform.position = new Vector3(-45.53f, 10.7f, -54.78f);
                     TheLastYggdrasilPrefab.transform.DOScale(new Vector3(1f, 1f, 1f), 60f).OnUpdate(() =>
@@ -93,20 +119,38 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
                         // 스케일 변경에 따라 위치 보정
                         Vector3 newPosition = CalculatePositionBasedOnScale(TheLastYggdrasilPrefab.transform.localScale);
                         TheLastYggdrasilPrefab.transform.position = newPosition;
-                    }).OnComplete(() =>
-                    {
-                        // 세계수 HPBar 활성화
-                        TheLastYggdrasilHPSlider.gameObject.SetActive(true);
                     });
+
                 }
             }
             else
-            {
+            {   
                 NoSeedItemText.gameObject.SetActive(true);
                 Debug.Log("No Seed Item in Quick Slot");
                 StartCoroutine(HideNoSeedTextAfterDelay());
             }
         }
+    }
+
+    private IEnumerator ShowWaveTexts()
+    {
+        yield return DisplayText(StartWaveText, "몬스터들의 공격이 시작됩니다", 0.07f);
+        yield return DisplayText(ProtectLastYggdrasilText, "마지막 생명을 지켜내세요", 0.07f);
+    }
+
+    private IEnumerator DisplayText(TextMeshProUGUI textMeshProUGUI, string text, float typingSpeed)
+    {
+        textMeshProUGUI.gameObject.SetActive(true);
+        textMeshProUGUI.text = text;
+
+        int totalVisibleCharacters = text.Length;
+        for (int i = 0; i <= totalVisibleCharacters; i++)
+        {
+            textMeshProUGUI.maxVisibleCharacters = i;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        yield return new WaitForSeconds(1.5f);
+        textMeshProUGUI.gameObject.SetActive(false);
     }
 
     private Vector3 CalculatePositionBasedOnScale(Vector3 scale)
@@ -142,12 +186,6 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
                 return slotItem;
             }
         }
-
         return null;
-    }
-
-    private void DestroyUseSeedText()
-    {
-        Destroy(UseSeedText.gameObject); // UseSeedText 파괴
     }
 }

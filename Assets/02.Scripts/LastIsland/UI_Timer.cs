@@ -3,63 +3,68 @@ using TMPro;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
-using UnityEngine.SceneManagement;
 
 public class UI_Timer : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI TimerTextUI;
-    public Color TimerTextColor;
-    private int _totalTime = 0;
-    public PhotonView PV;
+    public TextMeshProUGUI timerText;
+    private float timeRemaining;
+    private bool isTimerRunning = false;
 
-    private void Start()
-    {
-        PV = GetComponent<PhotonView>();
-        TimerTextUI.gameObject.SetActive(false);
-    }
-
-    public void StartTimer()
+    public void StartTimer(float duration)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            TimerTextUI.gameObject.SetActive(true);
-            _totalTime = 100;
-            StartCoroutine(Timer_Coroutine());
+            timeRemaining = duration;
+            isTimerRunning = true;
+            StartCoroutine(TimerCoroutine());
+            Character.LocalPlayerInstance.PhotonView.RPC("SyncTimer", RpcTarget.Others, timeRemaining);
         }
     }
 
-    private IEnumerator Timer_Coroutine()
+    [PunRPC]
+    public void SyncTimer(float time)
     {
-        var wait = new WaitForSeconds(1f);
+        timeRemaining = time;
+        isTimerRunning = true;
+        StartCoroutine(TimerCoroutine());
+    }
 
-        while (true)
+    private IEnumerator TimerCoroutine()
+    {
+        while (isTimerRunning && timeRemaining > 0)
         {
-            yield return wait;
+            yield return new WaitForSeconds(1.0f);
+            if (PhotonNetwork.IsMasterClient)
             {
-                _totalTime -= 1;
-                PV.RPC("ShowTimer", RpcTarget.All, _totalTime); //1초 마다 방 모두에게 전달
+                timeRemaining -= 1.0f;
+                Character.LocalPlayerInstance.PhotonView.RPC("UpdateTimer", RpcTarget.Others, timeRemaining);
             }
-            if (_totalTime <= 0)
-            {
-                PV.RPC("ShowTimer", RpcTarget.All, _totalTime); //1초 마다 방 모두에게 전달
-                PV.RPC("TimerEnded", RpcTarget.All);
-                break;
-            }
+            UpdateTimerUI();
+        }
+
+        if (timeRemaining <= 0)
+        {
+            isTimerRunning = false;
+            TimerEnded();
         }
     }
 
     [PunRPC]
-    void ShowTimer(int number)
+    public void UpdateTimer(float time)
     {
-        int minutes = number / 60;
-        int seconds = number % 60;
-        TimerTextUI.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+        timeRemaining = time;
+        UpdateTimerUI();
     }
 
-    // 타이머 끝 => 엔딩
-    [PunRPC]
-    void TimerEnded()
+    private void UpdateTimerUI()
     {
-        Debug.Log("TimerEnded 함수 실행");
+        int seconds = Mathf.FloorToInt(timeRemaining);
+        timerText.text = $"{seconds:00}"; // 초만 표시
+    }
+
+    // 타이머가 끝남
+    private void TimerEnded()
+    {
+        timerText.text = "00";
     }
 }
