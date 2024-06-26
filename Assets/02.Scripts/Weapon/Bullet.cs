@@ -37,9 +37,9 @@ public class Bullet : MonoBehaviour, IPooledObject
                 hasDamaged = true;
 
                 ObjectPool.Instance.SpawnFromPool("BigExplosion", transform.position, Quaternion.identity);
-
                 Deactivate();
             } 
         }
     }
+    
 }
