@@ -206,11 +206,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         Character nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
 
-    
-        foreach (Character player in GameManager.Instance.PlayerList)
+
+        foreach (var player in FindObjectsOfType<Character>())
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance < nearestDistance && IsTargetOnNavMesh(player.transform.position))
+            if (distance < nearestDistance)
             {
                 nearestCharacter = player;
                 nearestDistance = distance;
