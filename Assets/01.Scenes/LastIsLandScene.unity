@@ -29391,6 +29391,7 @@ MonoBehaviour:
   TheLastYggdrasilHPSlider: {fileID: 2073874586}
   uiTimer: {fileID: 829183684}
   IsPlayerTrigger: 0
+  LastYggdrasil: 0
 --- !u!65 &928222302
 BoxCollider:
   m_ObjectHideFlags: 0
