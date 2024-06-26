@@ -10,12 +10,6 @@ public class Bullet : MonoBehaviour, IPooledObject
     private Rigidbody rb;
     private bool hasDamaged = false;
 
-    private PhotonView photonView;
-    private void Awake()
-    {
-        photonView = GetComponent<PhotonView>();
-    }
-
     public void OnObjectSpawn()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,23 +36,10 @@ public class Bullet : MonoBehaviour, IPooledObject
                 photonView.RPC("Damaged", RpcTarget.All, Damage * (Character.LocalPlayerInstance._statability.Stat.Damage), PhotonNetwork.LocalPlayer.ActorNumber);
                 hasDamaged = true;
 
-                photonView.RPC(nameof(SpawnExplosionRPC), RpcTarget.All, transform.position);
-
-
+                ObjectPool.Instance.SpawnFromPool("BigExplosion", transform.position, Quaternion.identity);
                 Deactivate();
             } 
         }
     }
-    [PunRPC]
-    private void SpawnExplosionRPC(Vector3 position)
-    {
-        GameObject explosion = ObjectPool.Instance.SpawnFromPool("BigExplosion", position, Quaternion.identity);
-        StartCoroutine(DisableExplosion(explosion));
-    }
-
-    private IEnumerator DisableExplosion(GameObject explosion)
-    {
-        yield return new WaitForSeconds(1f);
-        explosion.SetActive(false);
-    }
+    
 }
