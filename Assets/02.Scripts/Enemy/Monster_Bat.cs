@@ -28,7 +28,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 syncPosition;
     private Quaternion syncRotation;
 
-    private float lerpSpeed = 10f;
+    private float lerpSpeed = 4f;
 
     private Rigidbody rb;
 
