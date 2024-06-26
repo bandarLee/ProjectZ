@@ -15,7 +15,6 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
     private InventoryUI inventoryUI;
     private InventoryManager inventoryManager;
     private ItemUseManager itemUseManager;
-    private UI_Timer uiTimer; // UI_Timer 클래스 참조 추가
 
     public bool IsPlayerTrigger = false;
 
@@ -40,7 +39,6 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         quickSlotManager = FindObjectOfType<QuickSlotManager>();
         inventoryUI = FindObjectOfType<InventoryUI>();
         itemUseManager = FindObjectOfType<ItemUseManager>();
-        uiTimer = FindObjectOfType<UI_Timer>(); // UI_Timer 인스턴스 찾기
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +61,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
         }
     }
 
+    // 플레이어가 E키를 눌러 세계수를 심는다
     private void Update()
     {
         if (IsPlayerTrigger && Input.GetKeyDown(KeyCode.E))
@@ -72,10 +71,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviour
             {
                 itemUseManager.ApplyEffect(seedItem);
                 DestroyUseSeedText(); // UseSeedText 파괴
-                if (uiTimer != null && PhotonNetwork.IsMasterClient)
-                {
-                    uiTimer.StartTimer(); // 타이머 시작
-                }
+        
             }
             else
             {
