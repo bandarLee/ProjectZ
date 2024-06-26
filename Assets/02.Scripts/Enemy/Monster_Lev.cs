@@ -227,7 +227,22 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             ChangeState(MonsterState.Patrol, "IsChasing", false);
         }
     }
-
+    [PunRPC]
+    private void SetTarget(int targetViewID)
+    {
+        if (targetViewID == -1)
+        {
+            targetCharacter = null;
+        }
+        else
+        {
+            PhotonView targetView = PhotonView.Find(targetViewID);
+            if (targetView != null)
+            {
+                targetCharacter = targetView.GetComponent<Character>();
+            }
+        }
+    }
     private bool IsTargetOnNavMesh(Vector3 position)
     {
         NavMeshHit hit;
