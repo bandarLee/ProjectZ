@@ -122,6 +122,12 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             ChangeState(MonsterState.Patrol, "IsChasing", false);
             return;
         }
+        if (!IsPositionInCanMoveArea(targetCharacter.transform.position) || IsPositionInCantMoveArea(targetCharacter.transform.position))
+        {
+            targetCharacter = null;
+            ChangeState(MonsterState.Patrol, "IsChasing", false);
+            return;
+        }
 
         MoveTowards(targetCharacter.transform.position);
 
