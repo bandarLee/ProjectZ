@@ -11,17 +11,17 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
+  - name: City1
     cost: 1
-  - name: 
+  - name: City2
     cost: 1
-  - name: 
+  - name: City3
     cost: 1
-  - name: 
+  - name: City4
     cost: 1
-  - name: 
+  - name: City5
     cost: 1
-  - name: 
+  - name: City6
     cost: 1
   - name: 
     cost: 1

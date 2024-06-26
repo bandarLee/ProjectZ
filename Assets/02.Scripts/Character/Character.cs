@@ -28,6 +28,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterStatAbility _statability;
     public CharacterMoveAbilityTwo _moveAbilityTwo;
     public CharacterItemAbility _characterItemAbility;
+    private Collider _collider;
     private void Awake()
     {
         _statability = GetComponent<CharacterStatAbility>();
@@ -43,6 +44,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _characterRotateAbility = GetComponent<CharacterRotateAbility>();
         _moveAbilityTwo = GetComponent<CharacterMoveAbilityTwo>();
         _characterItemAbility = GetComponent <CharacterItemAbility>();
+        _collider = GetComponent<Collider>();
 
         if (PhotonView.IsMine)
         {
@@ -118,10 +120,49 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             if (this != null) // 오브젝트가 파괴되었는지 확인
             {
                 GetComponent<Animator>().SetTrigger("Damage");
+                SpawnTorchEffect();
             }
         }
     }
+    private void SpawnTorchEffect()
+    {
+        if (PhotonView.IsMine)
+        {
+            Vector3 torchPosition = GetBottomPosition();
+            PhotonView.RPC(nameof(SpawnTorchEffectRPC), RpcTarget.All, torchPosition);
+        }
+    }
 
+    private Vector3 GetBottomPosition()
+    {
+        if (_collider != null)
+        {
+            return _collider.bounds.min; 
+        }
+        return transform.position;
+    }
+
+    [PunRPC]
+    private void SpawnTorchEffectRPC(Vector3 position)
+    {
+        GameObject torchEffect = ObjectPool.Instance.SpawnFromPool("Torch", position, Quaternion.identity);
+        StartCoroutine(DisableTorchEffect(torchEffect));
+    }
+
+    private IEnumerator DisableTorchEffect(GameObject torchEffect)
+    {
+        ParticleSystem particleSystem = torchEffect.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            var main = particleSystem.main;
+            main.startSizeX = 0.01f;
+            main.startSizeY = 0.01f;
+            main.startSizeZ = 0.01f;
+        }
+
+        yield return new WaitForSeconds(1f);
+        torchEffect.SetActive(false);
+    }
     public void Death()
     {
         OnDeath();

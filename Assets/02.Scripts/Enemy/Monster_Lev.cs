@@ -30,8 +30,9 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 syncPosition;
     private Quaternion syncRotation;
 
-    private float lerpSpeed = 10f;
+    private float lerpSpeed = 6f;
 
+    public string navMeshAreaName;
     private void Start()
     {
         agent.speed = stat.MoveSpeed;
@@ -48,6 +49,29 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
         collisionAvoidanceCollider.isTrigger = true;
         collisionAvoidanceCollider.radius = 3.0f;
+        SetNavMeshArea(navMeshAreaName);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(FindTargetRoutine());
+        }
+    }
+    private void SetNavMeshArea(string areaName)
+    {
+        int areaMask = 1 << NavMesh.GetAreaFromName(areaName);
+        agent.areaMask = areaMask;
+    }
+
+    private IEnumerator FindTargetRoutine()
+    {
+        while (true)
+        {
+            if (PhotonNetwork.IsMasterClient && (state == MonsterState.Patrol || state == MonsterState.Chase))
+            {
+                FindTarget();
+            }
+            yield return new WaitForSeconds(0.5f); // Å¸°Ù Å½»ö ÁÖ±â Á¶Á¤
+        }
     }
 
     private void Update()
@@ -86,8 +110,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             MoveToRandomPosition();
         }
-
-        FindTarget();
     }
 
     private void Chase()
@@ -176,7 +198,8 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         Character nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
 
-        foreach (var player in FindObjectsOfType<Character>())
+    
+        foreach (Character player in GameManager.Instance.PlayerList)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < nearestDistance && IsTargetOnNavMesh(player.transform.position))
@@ -188,11 +211,42 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         if (nearestCharacter != null && nearestDistance <= detectRange)
         {
-            targetCharacter = nearestCharacter;
+            if (targetCharacter != nearestCharacter)
+            {
+                targetCharacter = nearestCharacter;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+                }
+            }
             ChangeState(MonsterState.Chase, "IsChasing", true);
         }
+        else
+        {
+            if (targetCharacter != null)
+            {
+                targetCharacter = null;
+                photonView.RPC("SetTarget", RpcTarget.Others, -1);
+            }
+            ChangeState(MonsterState.Patrol, "IsChasing", false);
+        }
     }
-
+    [PunRPC]
+    private void SetTarget(int targetViewID)
+    {
+        if (targetViewID == -1)
+        {
+            targetCharacter = null;
+        }
+        else
+        {
+            PhotonView targetView = PhotonView.Find(targetViewID);
+            if (targetView != null)
+            {
+                targetCharacter = targetView.GetComponent<Character>();
+            }
+        }
+    }
     private bool IsTargetOnNavMesh(Vector3 position)
     {
         NavMeshHit hit;
@@ -225,7 +279,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             state = (MonsterState)(int)stream.ReceiveNext();
             syncPosition = (Vector3)stream.ReceiveNext();
             syncRotation = (Quaternion)stream.ReceiveNext();
-            stat.Health = (int)stream.ReceiveNext();
+            stat.Health = (float)stream.ReceiveNext();
         }
     }
 
@@ -262,7 +316,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             return;
         }
-            if (other.CompareTag("Monster") && other.gameObject != this.gameObject)
+        if (other.CompareTag("Monster") && other.gameObject != this.gameObject)
         {
             Vector3 avoidDirection = transform.position - other.transform.position;
             Vector3 newPos = transform.position + avoidDirection.normalized * 10f;

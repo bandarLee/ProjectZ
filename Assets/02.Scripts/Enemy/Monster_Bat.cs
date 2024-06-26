@@ -55,7 +55,11 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         // 초기 순찰 위치 설정
         StartCoroutine(ChangeDirectionRoutine());
-        StartCoroutine(FindTargetRoutine());
+        if(PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(FindTargetRoutine());
+
+        }
     }
 
     private IEnumerator FindTargetRoutine()
@@ -281,7 +285,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         Character nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
 
-        foreach (var player in FindObjectsOfType<Character>())
+        foreach (Character player in GameManager.Instance.PlayerList)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
             if (distance < nearestDistance)
@@ -296,7 +300,10 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             if (targetCharacter != nearestCharacter)
             {
                 targetCharacter = nearestCharacter;
-                photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+                }
             }
             ChangeState(MonsterState.Chase, "IsChasing", true);
         }
@@ -305,7 +312,10 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             if (targetCharacter != null)
             {
                 targetCharacter = null;
-                photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                }
             }
             ChangeState(MonsterState.Patrol, "IsChasing", false);
         }
