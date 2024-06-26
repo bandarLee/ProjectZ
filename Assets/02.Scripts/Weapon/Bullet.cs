@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour, IPooledObject
     public float Force = 30f;
     private Rigidbody rb;
     private bool hasDamaged = false;
+    public CharacterGunFireAbility OwnerAbility { get; set; }
 
     public void OnObjectSpawn()
     {
@@ -36,7 +37,12 @@ public class Bullet : MonoBehaviour, IPooledObject
                 photonView.RPC("Damaged", RpcTarget.All, Damage * (Character.LocalPlayerInstance._statability.Stat.Damage), PhotonNetwork.LocalPlayer.ActorNumber);
                 hasDamaged = true;
 
-                ObjectPool.Instance.SpawnFromPool("BigExplosion", transform.position, Quaternion.identity);
+
+                if (OwnerAbility != null)
+                {
+                    OwnerAbility.SpawnExplosion(transform.position);
+                }
+
                 Deactivate();
             } 
         }

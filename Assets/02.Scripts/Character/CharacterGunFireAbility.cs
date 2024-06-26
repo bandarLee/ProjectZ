@@ -15,6 +15,7 @@ public class CharacterGunFireAbility : CharacterAbility
     public Bullet Bullet;
     public string bulletTag = "Bullet";
     public string muzzleEffectTag = "SmallExplosion";
+    public string explosionEffectTag = "BigExplosion";
     public GameObject[] GunObject;
     public GameObject bulletPrefab;
     public Transform FirePos;
@@ -144,12 +145,48 @@ public class CharacterGunFireAbility : CharacterAbility
     {
         Vector3 fireDirection = GetFireDirection();
         GameObject bullet = ObjectPool.Instance.SpawnFromPool(bulletTag, FirePos.position, Quaternion.LookRotation(fireDirection));
+        Bullet bulletComponent = bullet.GetComponent<Bullet>();
+        if (bulletComponent != null)
+        {
+            bulletComponent.OwnerAbility = this;
+        }
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.velocity = fireDirection * Bullet.Force;
         }
     }
+
+    public void SpawnExplosion(Vector3 position)
+    {
+        if (Owner.PhotonView.IsMine)
+        {
+            Owner.PhotonView.RPC(nameof(SpawnExplosionRPC), RpcTarget.All, position);
+        }
+    }
+
+    [PunRPC]
+    private void SpawnExplosionRPC(Vector3 position)
+    {
+        GameObject explosionEffect = ObjectPool.Instance.SpawnFromPool(explosionEffectTag, position, Quaternion.identity);
+        StartCoroutine(DisableExplosionEffect(explosionEffect));
+    }
+
+    private IEnumerator DisableExplosionEffect(GameObject explosionEffect)
+    {
+        ParticleSystem particleSystem = explosionEffect.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            var main = particleSystem.main;
+            main.startSizeX = 0.1f;
+            main.startSizeY = 0.1f;
+            main.startSizeZ = 0.1f;
+        }
+
+        yield return new WaitForSeconds(1f);
+        explosionEffect.SetActive(false);
+    }
+
     private void SpawnMuzzleEffect()
     {
         if (Owner.PhotonView.IsMine)
