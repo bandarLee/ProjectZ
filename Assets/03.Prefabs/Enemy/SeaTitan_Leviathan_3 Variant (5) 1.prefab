@@ -1589,7 +1589,6 @@ GameObject:
   - component: {fileID: 9118808327180543768}
   - component: {fileID: 7973464329783171755}
   - component: {fileID: 1689318990832095226}
-  - component: {fileID: 3265220361401884573}
   - component: {fileID: 8072003678232290550}
   - component: {fileID: 6121618576588910877}
   - component: {fileID: 4106860725945240303}
@@ -1689,6 +1688,7 @@ MonoBehaviour:
   agent: {fileID: 9118808327180543768}
   detectRange: 30
   attackRange: 3
+  attackDamageRange: 5
   patrolRadius: 20
   stat:
     Health: 100
@@ -1706,6 +1706,7 @@ MonoBehaviour:
     AttackCoolTime: 3
     JumpPower: 0
   state: 0
+  navMeshAreaName: 
 --- !u!114 &1689318990832095226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,28 +1727,11 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7973464329783171755}
-  - {fileID: 3265220361401884573}
   - {fileID: 8072003678232290550}
   - {fileID: 4106860725945240303}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3265220361401884573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4229129766581273947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &8072003678232290550
 MonoBehaviour:
   m_ObjectHideFlags: 0
