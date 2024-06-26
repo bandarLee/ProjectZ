@@ -78,7 +78,8 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         stat.Init();
         state = MonsterState.Patrol;
-        Debug.Log("배트몬스터 스폰");
+        targetCharacter = null;
+
     }
 
     private void OnDisable()

@@ -24,7 +24,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
-    private Vector3 initialPosition;
+    public Vector3 initialPosition;
     private float attackTimer = 0f;
 
     private Vector3 syncPosition;
@@ -57,6 +57,21 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             StartCoroutine(PatrolRoutine()); // 추가
 
         }
+    }
+    private void OnEnable()
+    {
+        stat.Init();
+        state = MonsterState.Patrol;
+        targetCharacter = null;
+
+
+        Debug.Log("레브몬스터 스폰");
+    }
+
+    private void OnDisable()
+    {
+        stat.Init();
+        Debug.Log("레브몬스터 사망");
     }
     private void SetNavMeshArea(string areaName)
     {

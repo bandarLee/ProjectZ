@@ -18,6 +18,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     private GameTime gameTimeScript;
     private GameTime.TimeType previousTimeType;
 
+    public EnemySpawnManager EnemySpawnManager;
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
         }
+        EnemySpawnManager = FindObjectOfType<EnemySpawnManager>();
     }
 
     private void Update()
@@ -76,6 +78,9 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         {
             previousTimeType = gameTimeScript.CurrentTimeType;
             gotoSubwayTrigger.ManageSubwayEntrance(gameTimeScript.CurrentTimeType);
+            EnemySpawnManager.NightEnemySpawn(gameTimeScript.CurrentTimeType);
+            EnemySpawnManager.DayEnemySpawn(gameTimeScript.CurrentTimeType);
+
         }
 
         // CurrentTimeType에 따라 UI 업데이트
