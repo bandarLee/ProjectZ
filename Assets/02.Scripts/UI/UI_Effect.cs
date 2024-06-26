@@ -6,19 +6,19 @@ using UnityEngine.UI;
 public class UI_Effect : MonoBehaviour
 {
     public Image DamageEffectImage;
-    public Image HotEffectImage;
-    public Image ColdEffectImage;
-    public float flashSpeed = 2.5f;
+    public Image TemperatureEffectImage;
+    public float flashSpeed = 1f;
 
-    public Color DamageColor = RGB(67, 0, 0, 208);
-    public Color HotColor = RGB(253, 80, 0, 99);
-    public Color ColdColor = RGB(28, 32, 171, 125);
+    public Color DamageColor = RGB(92, 3, 3, 208);
+    public Color HotColor = RGB(250, 156, 79, 37);
+    public Color VeryHotColor = RGB(255, 141, 47, 183);
+    public Color ColdColor = RGB(28, 72, 171, 183);
+    public Color VeryColdColor = RGB(28, 32, 171, 242);
 
     private void Start()
     {
         DamageEffectImage.gameObject.SetActive(false);
-        HotEffectImage.gameObject.SetActive(false);
-        ColdEffectImage.gameObject.SetActive(false);
+        TemperatureEffectImage.gameObject.SetActive(false);
     }
 
     public void ShowDamageEffect()
@@ -38,6 +38,55 @@ public class UI_Effect : MonoBehaviour
                 yield return null;
             }
             effectImage.gameObject.SetActive(false);
+    }
+
+    public void ShowHotEffect()
+    {
+        StartCoroutine(ChangeTemperatureEffectColor(HotColor));
+    }
+
+    public void ShowVeryHotEffect()
+    {
+        StartCoroutine(ChangeTemperatureEffectColor(VeryHotColor));
+    }
+
+    public void ShowColdEffect()
+    {
+        StartCoroutine(ChangeTemperatureEffectColor(ColdColor));
+    }
+
+    public void ShowVeryColdEffect()
+    {
+        StartCoroutine(ChangeTemperatureEffectColor(VeryColdColor));
+    }
+
+    public void HideTemperatureEffects()
+    {
+        if (TemperatureEffectImage != null)
+        {
+            TemperatureEffectImage.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator ChangeTemperatureEffectColor(Color targetColor)
+    {
+        if (TemperatureEffectImage != null)
+        {
+            TemperatureEffectImage.gameObject.SetActive(true);
+
+            Color initialColor = TemperatureEffectImage.color;
+            float duration = 2.0f; 
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                TemperatureEffectImage.color = Color.Lerp(initialColor, targetColor, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            TemperatureEffectImage.color = targetColor;
+        }
     }
 
     private static Color RGB(float r, float g, float b, float a = 255)

@@ -8,10 +8,12 @@ public class CharacterStatAbility : CharacterAbility
     public State State;
 
     public GameTime gameTime;
+    private UI_Effect _uiEffect;
 
     private void Start()
     {
         gameTime = FindObjectOfType<GameTime>();
+        _uiEffect = FindObjectOfType<UI_Effect>();
 
         if (Owner.PhotonView.IsMine)
         {
@@ -20,6 +22,7 @@ public class CharacterStatAbility : CharacterAbility
 
             StartCoroutine(HungerRoutine());
             StartCoroutine(DecreaseMentalRoutine());
+            StartCoroutine(CheckTemperatureRoutine());
         }
     }
 
@@ -151,5 +154,40 @@ public class CharacterStatAbility : CharacterAbility
     public void StartIncreaseMentalRoutine(int amount)
     {
         StartCoroutine(IncreaseMentalRoutine(amount));
+    }
+
+    private IEnumerator CheckTemperatureRoutine()
+    {
+        while (true)
+        {
+            CheckTemperature();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void CheckTemperature()
+    {
+        if (_uiEffect == null) return;
+
+        if (Stat.Temperature <= -10)
+        {
+            _uiEffect.ShowVeryColdEffect();
+        }
+        else if (Stat.Temperature <= 0)
+        {
+            _uiEffect.ShowColdEffect();
+        }
+        else if (Stat.Temperature >= 40)
+        {
+            _uiEffect.ShowVeryHotEffect();
+        }
+        else if (Stat.Temperature >= 30)
+        {
+            _uiEffect.ShowHotEffect();
+        }
+        else
+        {
+            _uiEffect.HideTemperatureEffects();
+        }
     }
 }
