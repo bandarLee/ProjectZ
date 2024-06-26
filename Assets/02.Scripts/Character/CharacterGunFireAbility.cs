@@ -172,9 +172,9 @@ public class CharacterGunFireAbility : CharacterAbility
         if (particleSystem != null)
         {
             var main = particleSystem.main;
-            main.startSizeX = 10f;
-            main.startSizeY = 10f;
-            main.startSizeZ = 10f;
+            main.startSizeX = 0.1f;
+            main.startSizeY = 0.1f;
+            main.startSizeZ = 0.1f;
         }
 
         yield return new WaitForSeconds(0.1f);
