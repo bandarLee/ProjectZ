@@ -55,7 +55,11 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         // 초기 순찰 위치 설정
         StartCoroutine(ChangeDirectionRoutine());
-        StartCoroutine(FindTargetRoutine());
+        if(PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(FindTargetRoutine());
+
+        }
     }
 
     private IEnumerator FindTargetRoutine()
@@ -305,7 +309,10 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             if (targetCharacter != null)
             {
                 targetCharacter = null;
-                photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                }
             }
             ChangeState(MonsterState.Patrol, "IsChasing", false);
         }
