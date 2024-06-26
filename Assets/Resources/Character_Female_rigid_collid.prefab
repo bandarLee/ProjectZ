@@ -14675,6 +14675,7 @@ MonoBehaviour:
   Bullet: {fileID: 0}
   bulletTag: Bullet
   muzzleEffectTag: SmallExplosion
+  explosionEffectTag: BigExplosion
   GunObject:
   - {fileID: 2943838032877333535}
   bulletPrefab: {fileID: 4619007093716553816, guid: 5c2efe5eb8535434ba2cb14c6325d7bd, type: 3}

@@ -51,49 +51,22 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Init();
         }
-        StartCoroutine(UpdatePlayerList());
-        Debug.Log(PlayerList.Count);
 
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         // 새 플레이어가 들어왔을 때 호출
-        StartCoroutine(UpdatePlayerList());
-        Debug.Log(PlayerList.Count);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         // 플레이어가 나갔을 때 호출
-        StartCoroutine(UpdatePlayerList());
-        Debug.Log(PlayerList.Count);
+
 
     }
 
-    IEnumerator UpdatePlayerList()
-    {
-        yield return new WaitForSeconds(2f);
-        Debug.Log(PlayerList.Count);
-
-        PlayerList.Clear();
-        Debug.Log(PlayerList.Count);
-
-        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(playerObjects.Length);
-        foreach (GameObject playerObject in playerObjects)
-        {
-            Character character = playerObject.GetComponent<Character>();
-            Debug.Log(character);
-
-            if (character != null)
-            {
-                PlayerList.Add(character);
-            }
-        }
-        Debug.Log(PlayerList.Count);
-
-    }
+    
 
     public void Init()
     {
@@ -108,7 +81,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         _init = true;
         lastZone = cityZoneTypes[randomIndex];
-        StartCoroutine(UpdatePlayerList());
         ActivateCitySectorsAndSpawnPlayer((int)lastZone);
     }
 
@@ -172,7 +144,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnSceneChanged(Player player, int newScene)
     {
         Debug.LogError($"Player {player.NickName} changed scene to {newScene}");
-        StartCoroutine(UpdatePlayerList());
 
     }
 
