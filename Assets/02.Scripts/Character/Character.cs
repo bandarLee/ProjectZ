@@ -29,6 +29,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterMoveAbilityTwo _moveAbilityTwo;
     public CharacterItemAbility _characterItemAbility;
     private Collider _collider;
+    private UI_Effect _effect;
     private void Awake()
     {
         _statability = GetComponent<CharacterStatAbility>();
@@ -45,11 +46,11 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _moveAbilityTwo = GetComponent<CharacterMoveAbilityTwo>();
         _characterItemAbility = GetComponent <CharacterItemAbility>();
         _collider = GetComponent<Collider>();
+        _effect = FindObjectOfType<UI_Effect>();
 
         if (PhotonView.IsMine)
         {
             LocalPlayerInstance = this;
-
         }
     }
 
@@ -121,6 +122,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
             {
                 GetComponent<Animator>().SetTrigger("Damage");
                 SpawnTorchEffect();
+                if (PhotonView.IsMine && _effect != null)
+                {
+                    _effect.ShowDamageEffect();
+                }
             }
         }
     }
