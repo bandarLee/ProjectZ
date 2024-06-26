@@ -234,7 +234,10 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             if (targetCharacter != null)
             {
                 targetCharacter = null;
-                photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("SetTarget", RpcTarget.Others, -1);
+                }
             }
             ChangeState(MonsterState.Patrol, "IsChasing", false);
         }
