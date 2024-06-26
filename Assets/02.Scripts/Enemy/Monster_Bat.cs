@@ -28,7 +28,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private Vector3 syncPosition;
     private Quaternion syncRotation;
 
-    private float lerpSpeed = 10f;
+    private float lerpSpeed = 4f;
 
     private Rigidbody rb;
 
@@ -39,7 +39,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     public GameObject[] CantMoveArea;
 
     private float findTargetInterval = 0.5f; // 타겟 탐색 간격
-    private float findTargetTimer = 0f;
 
     private void Start()
     {
@@ -56,19 +55,34 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         // 초기 순찰 위치 설정
         StartCoroutine(ChangeDirectionRoutine());
+        StartCoroutine(FindTargetRoutine());
     }
+
+    private IEnumerator FindTargetRoutine()
+    {
+        while (true)
+        {
+            if (PhotonNetwork.IsMasterClient && (state == MonsterState.Patrol || state == MonsterState.Chase))
+            {
+                FindTarget();
+            }
+            yield return new WaitForSeconds(findTargetInterval);
+        }
+    }
+
     private void OnEnable()
     {
         stat.Init();
         state = MonsterState.Patrol;
         Debug.Log("배트몬스터 스폰");
-
     }
+
     private void OnDisable()
     {
         stat.Init();
         Debug.Log("배트몬스터 사망");
     }
+
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -94,31 +108,35 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         }
         else
         {
-            if (Vector3.Distance(transform.position, syncPosition) > 0.1f || Quaternion.Angle(transform.rotation, syncRotation) > 1f)
-            {
-                transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
-                transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
-            }
+            SmoothSyncTransform();
+        }
+    }
+
+    private void SmoothSyncTransform()
+    {
+        if (Vector3.Distance(transform.position, syncPosition) > 0.1f || Quaternion.Angle(transform.rotation, syncRotation) > 1f)
+        {
+            transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
     }
 
     private void Patrol()
     {
         MoveTowardsTarget();
-
-        // 일정 간격으로 타겟 탐색
-        findTargetTimer += Time.deltaTime;
-        if (findTargetTimer >= findTargetInterval)
-        {
-            FindTarget();
-            findTargetTimer = 0f;
-        }
     }
 
     private void Chase()
     {
         if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
         {
+            ChangeState(MonsterState.Patrol, "IsChasing", false);
+            return;
+        }
+
+        if (!IsPositionInCanMoveArea(targetCharacter.transform.position) || IsPositionInCantMoveArea(targetCharacter.transform.position))
+        {
+            targetCharacter = null;
             ChangeState(MonsterState.Patrol, "IsChasing", false);
             return;
         }
@@ -140,10 +158,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         }
 
         // 공격 시 목표를 향해 올바르게 회전하도록 수정
-        Vector3 targetDirection = targetCharacter.transform.position - transform.position;
-        targetDirection.y = 0; // y축 회전만 고려
-        Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        RotateTowardsTarget(targetCharacter.transform.position);
 
         attackTimer += Time.deltaTime;
         if (attackTimer >= stat.AttackCoolTime)
@@ -183,8 +198,16 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         {
             Vector3 lookDirection = new Vector3(direction.x, 0, direction.z);
             Quaternion toRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 360 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * lerpSpeed);
         }
+    }
+
+    private void RotateTowardsTarget(Vector3 targetPosition)
+    {
+        Vector3 targetDirection = targetPosition - transform.position;
+        targetDirection.y = 0; // y축 회전만 고려
+        Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lerpSpeed);
     }
 
     private IEnumerator ChangeDirectionRoutine()
@@ -270,8 +293,38 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         if (nearestCharacter != null && nearestDistance <= detectRange)
         {
-            targetCharacter = nearestCharacter;
+            if (targetCharacter != nearestCharacter)
+            {
+                targetCharacter = nearestCharacter;
+                photonView.RPC("SetTarget", RpcTarget.Others, nearestCharacter.PhotonView.ViewID);
+            }
             ChangeState(MonsterState.Chase, "IsChasing", true);
+        }
+        else
+        {
+            if (targetCharacter != null)
+            {
+                targetCharacter = null;
+                photonView.RPC("SetTarget", RpcTarget.Others, -1);
+            }
+            ChangeState(MonsterState.Patrol, "IsChasing", false);
+        }
+    }
+
+    [PunRPC]
+    private void SetTarget(int targetViewID)
+    {
+        if (targetViewID == -1)
+        {
+            targetCharacter = null;
+        }
+        else
+        {
+            PhotonView targetView = PhotonView.Find(targetViewID);
+            if (targetView != null)
+            {
+                targetCharacter = targetView.GetComponent<Character>();
+            }
         }
     }
 
@@ -289,7 +342,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             state = (MonsterState)(int)stream.ReceiveNext();
             syncPosition = (Vector3)stream.ReceiveNext();
             syncRotation = (Quaternion)stream.ReceiveNext();
-            stat.Health = (int)stream.ReceiveNext();
+            stat.Health = (float)stream.ReceiveNext();
         }
     }
 
