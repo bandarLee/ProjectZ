@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+
         if (PhotonNetwork.InRoom)
         {
             if (!_init)
@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Init();
         }
+        UpdatePlayerList();
+        Debug.Log(PlayerList.Count);
 
     }
 
@@ -72,21 +74,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void UpdatePlayerList()
     {
         PlayerList.Clear();
-        foreach (Player player in PhotonNetwork.PlayerList)
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject playerObject in playerObjects)
         {
-            if (player.TagObject is GameObject playerObject)
+            Character character = playerObject.GetComponent<Character>();
+            if (character != null)
             {
-                Character character = playerObject.GetComponent<Character>();
-                if (character != null)
-                {
-                    PlayerList.Add(character);
-                }
+                PlayerList.Add(character);
             }
         }
     }
 
-
-    public void Init()
+        public void Init()
     {
         int randomIndex = Random.Range(0, 6);//랜덤 섹터설정 부활
 /*        int randomIndex = 0;
