@@ -113,7 +113,7 @@ public class CharacterAttackAbility : CharacterAbility
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null)
             {
-                if (!photonView.IsMine)
+                if (other.CompareTag("Monster"))
                 {
                     // 피격 이펙트 생성
                     Vector3 hitPosition = other.ClosestPoint(transform.position) + new Vector3(0f, 0.5f, 0f);
