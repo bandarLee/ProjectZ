@@ -27,7 +27,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnRightClick();
-            Debug.Log("¿ìÅ¬¸¯");
         }
     
     }
