@@ -35,11 +35,6 @@ public class UI_Timer : MonoBehaviourPunCallbacks
         while (true)
         {
             yield return wait;
-            if (_totalTime == 30)
-            {
-                PV.RPC("AnimationPlay", RpcTarget.All);
-            }
-            if (_totalTime > 0)
             {
                 _totalTime -= 1;
                 PV.RPC("ShowTimer", RpcTarget.All, _totalTime); //1초 마다 방 모두에게 전달
