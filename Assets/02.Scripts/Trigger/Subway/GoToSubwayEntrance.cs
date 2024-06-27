@@ -5,17 +5,18 @@ using System.Collections;
 public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
 {
     public GameObject inventoryObject;
-
+    public GameObject LoadingImage;
 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("도시 -> 지하철");
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null && photonView.IsMine)
             {
+                LoadingImage.SetActive(true);
+
                 TriggerSubwayTransition();
             }
         }
