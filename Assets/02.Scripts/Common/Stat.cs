@@ -49,4 +49,6 @@ public class Stat
         AttackCoolTime = 0.5f;
         JumpPower = 6;
     }
+
+
 }

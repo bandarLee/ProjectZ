@@ -697,6 +697,7 @@ public class ItemUseManager : MonoBehaviour
                 isDisplayingText = true;
                 uI_BookText.DisplayText("빨리 뛰는 법 ... 다리를 빠르게 움직인다 ", () => {
                     isDisplayingText = false;
+                    UI_StatText.Instance.StatTextUpdate();
                 });
                 break;
             case "스탯북_공격력":
@@ -705,6 +706,7 @@ public class ItemUseManager : MonoBehaviour
                 isDisplayingText = true;
                 uI_BookText.DisplayText("세게 때리는 법 ... 세게 팔을 휘두른다.", () => {
                     isDisplayingText = false;
+                    UI_StatText.Instance.StatTextUpdate();
                 });
                 break;
             case "스탯북_점프력":
@@ -713,6 +715,7 @@ public class ItemUseManager : MonoBehaviour
                 isDisplayingText = true;
                 uI_BookText.DisplayText("높이 뛰는 법 ... 신발을 좋은걸 신는다.", () => {
                     isDisplayingText = false;
+                    UI_StatText.Instance.StatTextUpdate();
                 });
                 break;
             case "스탯북_체력":
@@ -721,6 +724,7 @@ public class ItemUseManager : MonoBehaviour
                 isDisplayingText = true;
                 uI_BookText.DisplayText("체력이 좋아지는 법 ... 운동을 한다.", () => {
                     isDisplayingText = false;
+                    UI_StatText.Instance.StatTextUpdate();
                 });
                 break;
         }
