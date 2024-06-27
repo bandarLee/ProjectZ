@@ -49,24 +49,24 @@ public class UI_CharacterStat : MonoBehaviour
 
     private void UpdateWarnings(Stat stat)
     {
-        string warningMessage = "";
+        List<string> warnings = new List<string>();
 
         if (stat.Health <= 20)
         {
-            warningMessage += "체력 부족\n";
+            warnings.Add("체력 부족");
         }
 
         if (stat.Mental <= 20)
         {
-            warningMessage += "정신력 부족\n";
+            warnings.Add("정신력 부족");
         }
 
         if (stat.Hunger <= 20)
         {
-            warningMessage += "공복\n";
+            warnings.Add("공복");
         }
 
-        WarningText.text = warningMessage.TrimEnd(); 
+        WarningText.text = string.Join(", ", warnings);
     }
 
     public void SetMental(int mental)
