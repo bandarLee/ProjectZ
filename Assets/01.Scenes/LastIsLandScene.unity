@@ -26413,9 +26413,24 @@ MonoBehaviour:
     itemDescription: "\uC815\uC2E0\uC774 \uBC88\uCA4D\uB4E0\uB2E4."
   - itemName: "\uC138\uACC4\uC218\uC528\uC557"
     icon: {fileID: 21300000, guid: cfbe8abe1e19117448de35de786a7b95, type: 3}
-    itemType: 5
+    itemType: 9
     itemEffect: '?'
     itemDescription: "\uB9C8\uC9C0\uB9C9 \uC0DD\uBA85"
+  - itemName: "\uB514\uC2A4\uD06C1"
+    icon: {fileID: 21300000, guid: 82a706c5d3e6ed84a8a03c09433d42e9, type: 3}
+    itemType: 9
+    itemEffect: "\uCEF4\uD4E8\uD130\uAC00 \uD544\uC694\uD560\uB4EF"
+    itemDescription: "\uCEF4\uD4E8\uD130\uC5D0 \uB123\uC5B4 \uB0B4\uC6A9\uC744 \uD655\uC778\uD574\uBD10\uC57C\uACA0\uB2E4"
+  - itemName: "\uB514\uC2A4\uD06C2"
+    icon: {fileID: 21300000, guid: 82a706c5d3e6ed84a8a03c09433d42e9, type: 3}
+    itemType: 9
+    itemEffect: "\uCEF4\uD4E8\uD130\uAC00 \uD544\uC694\uD560\uB4EF"
+    itemDescription: "\uCEF4\uD4E8\uD130\uC5D0 \uB123\uC5B4 \uB0B4\uC6A9\uC744 \uD655\uC778\uD574\uBD10\uC57C\uACA0\uB2E4"
+  - itemName: "\uB514\uC2A4\uD06C3"
+    icon: {fileID: 21300000, guid: 82a706c5d3e6ed84a8a03c09433d42e9, type: 3}
+    itemType: 9
+    itemEffect: "\uCEF4\uD4E8\uD130\uAC00 \uD544\uC694\uD560\uB4EF"
+    itemDescription: "\uCEF4\uD4E8\uD130\uC5D0 \uB123\uC5B4 \uB0B4\uC6A9\uC744 \uD655\uC778\uD574\uBD10\uC57C\uACA0\uB2E4"
 --- !u!4 &915578171
 Transform:
   m_ObjectHideFlags: 0
