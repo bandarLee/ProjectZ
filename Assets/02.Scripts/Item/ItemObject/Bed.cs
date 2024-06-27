@@ -38,6 +38,8 @@ public class Bed : MonoBehaviour
             }
             else
             {
+                Debug.Log("player Enter the Bed Trigger");
+
                 UseBedText.gameObject.SetActive(true);
                 isPlayerInRange = true;
             }
