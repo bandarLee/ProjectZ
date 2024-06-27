@@ -83,7 +83,7 @@ namespace DigitalRuby.WeatherMaker
             {
                 // 하루 주기를 15분(900초)로 설정
                 float secondsInDay = 86400f;
-                float dayDurationInSeconds = 900f; // 하루가 900초 (15분)
+                float dayDurationInSeconds = 360f; // 하루가 900초 (15분)
                 float timeIncrement = secondsInDay / dayDurationInSeconds * Time.deltaTime;
                 TimeOfDay += timeIncrement;
 
