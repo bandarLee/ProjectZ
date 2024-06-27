@@ -50,11 +50,11 @@ public class EnemySpawnManager : MonoBehaviourPunCallbacks
     {
         foreach (GameObject lev in Leviatans)
         {
-            lev.SetActive(true);
+            lev.SetActive(false);
         }
         foreach (GameObject bat in Bats)
         {
-            bat.SetActive(false);
+            bat.SetActive(true);
         }
     }
     [PunRPC]

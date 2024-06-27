@@ -102,7 +102,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             {
                 FindTarget();
             }
-            yield return new WaitForSeconds(0.5f); // Å¸°Ù Å½»ö ÁÖ±â Á¶Á¤
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
