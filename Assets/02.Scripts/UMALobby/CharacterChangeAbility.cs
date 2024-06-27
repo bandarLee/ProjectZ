@@ -5,17 +5,16 @@ using UMA.CharacterSystem;
 using UnityEngine;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 public class CharacterChangeAbility : MonoBehaviourPunCallbacks
 {
     void Start()
     {
         StartCoroutine(WaitforPV());
-
     }
 
     public IEnumerator WaitforPV()
     {
-
         yield return new WaitForSeconds(0.1f);
         PhotonView newPlayerPhotonView = Character.LocalPlayerInstance.PhotonView;
         if (newPlayerPhotonView == null)
@@ -42,15 +41,11 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
 
         Debug.Log("Calling ChangeAvatar RPC");
         localPlayerPhotonView.RPC(nameof(ChangeAvatar), RpcTarget.AllBuffered, newPlayerViewID);
-
-
-
     }
 
     [PunRPC]
     public void ChangeAvatar(int newPlayerViewID)
     {
-
         GameObject newPlayer = PhotonView.Find(newPlayerViewID)?.gameObject;
         if (newPlayer == null)
         {
@@ -59,11 +54,10 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
         }
 
         StartCoroutine(WaitforChangeAvatar(newPlayer));
-
     }
+
     public IEnumerator WaitforChangeAvatar(GameObject newPlayer)
     {
-
         yield return new WaitForSeconds(0.1f);
 
         var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
@@ -79,15 +73,36 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
             Debug.LogError("CharacterRecipe not found in custom properties.");
         }
     }
+
     public void ApplyCharacterRecipe(Player player, string recipeString)
     {
-        GameObject playerObject = PhotonView.Find(player.ActorNumber)?.gameObject;
-        if (playerObject != null)
-        {
-            DynamicCharacterAvatar avatar = playerObject.GetComponent<DynamicCharacterAvatar>();
-            ApplyRecipeString(avatar, recipeString);
-        }
+        StartCoroutine(TryApplyCharacterRecipe(player, recipeString));
     }
+
+    private IEnumerator TryApplyCharacterRecipe(Player player, string recipeString, int maxAttempts = 3, float retryDelay = 1f)
+    {
+        int attempts = 0;
+        while (attempts < maxAttempts)
+        {
+            GameObject playerObject = PhotonView.Find(player.ActorNumber)?.gameObject;
+            if (playerObject != null)
+            {
+                DynamicCharacterAvatar avatar = playerObject.GetComponent<DynamicCharacterAvatar>();
+                if (avatar != null)
+                {
+                    ApplyRecipeString(avatar, recipeString);
+                    yield break; // 성공하면 종료
+                }
+            }
+
+            attempts++;
+            Debug.LogWarning($"Failed to apply character recipe. Attempt {attempts} of {maxAttempts}.");
+            yield return new WaitForSeconds(retryDelay);
+        }
+
+        Debug.LogError("Failed to apply character recipe after maximum attempts.");
+    }
+
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if (changedProps.TryGetValue("CharacterRecipe", out object characterRecipe))
@@ -95,6 +110,7 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
             ApplyCharacterRecipe(targetPlayer, characterRecipe.ToString());
         }
     }
+
     public void ApplyRecipeString(DynamicCharacterAvatar avatar, string recipeString)
     {
         if (avatar != null && !string.IsNullOrEmpty(recipeString))

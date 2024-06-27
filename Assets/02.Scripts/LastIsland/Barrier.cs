@@ -88,7 +88,7 @@ public class Barrier : MonoBehaviour
     {
         foreach (var item in playerInventory.items.Values)
         {
-            if (item.itemType == ItemType.ETC && item.itemName == "¼¼°è¼ö¾¾¾Ñ")
+            if (item.itemType == ItemType.Special && item.itemName == "¼¼°è¼ö¾¾¾Ñ")
             {
                 return item;
             }

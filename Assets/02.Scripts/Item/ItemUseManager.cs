@@ -105,6 +105,9 @@ public class ItemUseManager : MonoBehaviour
             case ItemType.StatBook:
                 ApplyStatBookEffect(item);
                 break;
+            case ItemType.Special:
+                ApplyEtcEffect(item.itemName, item);
+                break;
             default:
                 Debug.LogWarning("Unknown item type.");
                 break;
@@ -175,6 +178,9 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case ItemType.StatBook:
                 EquipStatBook(item.itemName);
+                break;
+            case ItemType.Special:
+                EquipEtc(item.itemName);
                 break;
             default:
                 Debug.LogWarning("This item type cannot be equipped.");
@@ -720,7 +726,7 @@ public class ItemUseManager : MonoBehaviour
         Inventory inventory = Inventory.Instance;
         if (inventory != null && Character.LocalPlayerInstance.PhotonView.IsMine)
         {
-            string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC ? item.uniqueId : item.itemName;
+            string itemName = item.itemType == ItemType.Weapon || item.itemType == ItemType.ETC || item.itemType == ItemType.Special ? item.uniqueId : item.itemName;
 
             if (inventory.itemQuantities.ContainsKey(itemName))
             {

@@ -51,7 +51,7 @@ public class UseComputerTrigger : MonoBehaviour
 
             foreach (Item item in playerInventory.items.Values)
                 {
-                    if (item.itemType == ItemType.ETC && (item.itemName == "디스크1" || item.itemName == "디스크2" || item.itemName == "디스크3"))
+                    if (item.itemType == ItemType.Special && (item.itemName == "디스크1" || item.itemName == "디스크2" || item.itemName == "디스크3"))
                     {
                         DiskItem = item;
                     break;

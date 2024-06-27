@@ -6,16 +6,17 @@ using UnityEngine;
 using UnityEngine.UI; // UI를 사용하기 위해 추가
 using DG.Tweening; // DOTween을 사용하기 위해 추가
 
-public class GoToLastIslandTrigger : MonoBehaviour
+public class GoToLastIslandTrigger : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI GotoLastIslandText;
     public Image FadeImage; 
     private bool isPlayerInTrigger = false;
-
+    public PhotonView pv;
     private void Start()
     {
         GotoLastIslandText.gameObject.SetActive(false);
-        FadeImage.gameObject.SetActive(false); 
+        FadeImage.gameObject.SetActive(false);
+        pv = GetComponent<PhotonView>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +61,25 @@ public class GoToLastIslandTrigger : MonoBehaviour
 
     private void LoadLastIslandScene()
     {
-        PhotonNetwork.LoadLevel("LastIsLandScene");
-        Debug.Log("1");
+        PhotonNetwork.AutomaticallySyncScene = true;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("LastIsLandScene");
+        }
+        else
+        {
+            pv.RPC("RequestLoadLevel", RpcTarget.MasterClient, "LastIsLandScene");
+        }
+        Debug.Log("4");
+    }
+
+    [PunRPC]
+    private void RequestLoadLevel(string levelName)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(levelName);
+        }
     }
 }

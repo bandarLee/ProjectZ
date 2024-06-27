@@ -79,13 +79,11 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         targetCharacter = null;
 
-        Debug.Log("레브몬스터 스폰");
     }
 
     private void OnDisable()
     {
         stat.Init();
-        Debug.Log("레브몬스터 사망");
     }
 
     private void SetNavMeshArea(string areaName)

@@ -90,7 +90,6 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     private void OnDisable()
     {
         stat.Init();
-        Debug.Log("배트몬스터 사망");
     }
 
     private void Update()

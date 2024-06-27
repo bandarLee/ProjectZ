@@ -21,5 +21,6 @@ public enum ItemType
     ETC,
     Consumable,
     Gun,
-    StatBook
+    StatBook,
+    Special
 }
