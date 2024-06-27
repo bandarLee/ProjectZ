@@ -1,23 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
+using System.Collections;
 
-public class BackToCityDoorTrigger : MonoBehaviour
+public class BackToCityDoorTrigger : MonoBehaviourPunCallbacks
 {
+    public GameObject inventoryObject;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(BackToCityWaitForSeconds());
+            PhotonView photonView = other.GetComponent<PhotonView>();
+            if (photonView != null && photonView.IsMine)
+            {
+                StartCoroutine(BackToCityWaitForSeconds());
+            }
         }
     }
 
     private IEnumerator BackToCityWaitForSeconds()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("City_1");
+        inventoryObject = FindObjectOfType<SubwayRoomHandler>().gameObject;
+
+        if (inventoryObject != null)
+        {
+            SubwayRoomHandler subwayHandler = inventoryObject.GetComponent<SubwayRoomHandler>();
+            if (subwayHandler != null)
+            {
+                subwayHandler.isTryingToJoinSubway = false;
+                subwayHandler.isTryingToJoinCity = true;
+                subwayHandler.InitiateCityRoomTransition();
+            }
+            else
+            {
+                Debug.LogError("SubwayRoomHandler component not found on the inventoryObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("InventoryObject reference is not set.");
+        }
     }
 }

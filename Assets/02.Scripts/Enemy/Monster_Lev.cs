@@ -24,7 +24,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     public MonsterState state = MonsterState.Patrol;
     private Character targetCharacter;
-    public Vector3 initialPosition;
+    private Vector3 initialPosition;
     private float attackTimer = 0f;
 
     private Vector3 syncPosition;
@@ -32,18 +32,22 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private float lerpSpeed = 6f;
 
+    private float updateInterval = 0.2f; // 업데이트 간격 (초)
+    private float nextUpdate;
+
     public string navMeshAreaName;
 
-    public SphereCollider collisionAvoidanceCollider;
-    private void Start()
+    private SphereCollider collisionAvoidanceCollider;
+
+    private void Awake()
     {
-        StartMethod();
+        initialPosition = this.gameObject.transform.position;
     }
+
     public void StartMethod()
     {
         agent.speed = stat.MoveSpeed;
         agent.avoidancePriority = Random.Range(0, 100);
-        initialPosition = transform.position;
         syncPosition = transform.position;
         syncRotation = transform.rotation;
 
@@ -51,30 +55,29 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         {
             agent.enabled = false;
         }
-        if(collisionAvoidanceCollider != null)
-        {
-            SphereCollider collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
-            collisionAvoidanceCollider.isTrigger = true;
-            collisionAvoidanceCollider.radius = 3.0f;
-            SetNavMeshArea(navMeshAreaName);
-        }
 
+        collisionAvoidanceCollider = gameObject.AddComponent<SphereCollider>();
+        collisionAvoidanceCollider.isTrigger = true;
+        collisionAvoidanceCollider.radius = 3.0f;
+        SetNavMeshArea(navMeshAreaName);
 
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(FindTargetRoutine());
-            StartCoroutine(PatrolRoutine()); // 추가
-
         }
+
+        nextUpdate = Time.time + Random.Range(0f, updateInterval); // 랜덤한 초기 딜레이 설정
     }
+
     private void OnEnable()
     {
         StartMethod();
 
         stat.Init();
         state = MonsterState.Patrol;
-        targetCharacter = null;
+        this.gameObject.transform.position = initialPosition;
 
+        targetCharacter = null;
 
         Debug.Log("레브몬스터 스폰");
     }
@@ -84,6 +87,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         stat.Init();
         Debug.Log("레브몬스터 사망");
     }
+
     private void SetNavMeshArea(string areaName)
     {
         int areaMask = 1 << NavMesh.GetAreaFromName(areaName);
@@ -101,41 +105,45 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             yield return new WaitForSeconds(0.5f); // 타겟 탐색 주기 조정
         }
     }
-    private IEnumerator PatrolRoutine() // 추가
+
+    private void Patrol()
     {
-        while (true)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (PhotonNetwork.IsMasterClient && state == MonsterState.Patrol)
-            {
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    MoveToRandomPosition();
-                }
-            }
-            yield return new WaitForSeconds(5f); 
+            MoveToRandomPosition();
         }
+
+        FindTarget();
     }
+
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            switch (state)
+            if (Time.time >= nextUpdate)
             {
-                case MonsterState.Patrol:
-                    break;
-                case MonsterState.Chase:
-                    Chase();
-                    break;
-                case MonsterState.Attack:
-                    Attack();
-                    break;
-                case MonsterState.Death:
-                    // 죽음 상태에서는 아무것도 하지 않음
-                    break;
-            }
+                nextUpdate = Time.time + updateInterval;
+                switch (state)
+                {
+                    case MonsterState.Patrol:
+                        Patrol();
+                        break;
+                    case MonsterState.Chase:
+                        Chase();
+                        break;
+                    case MonsterState.Attack:
+                        Attack();
+                        break;
+                    case MonsterState.Death:
+                        // 죽음 상태에서는 아무것도 하지 않음
+                        break;
+                }
 
-            syncPosition = transform.position;
-            syncRotation = transform.rotation;
+                syncPosition = transform.position;
+                syncRotation = transform.rotation;
+            }
+            CheckAndResetAgent();
+
         }
         else
         {
@@ -143,8 +151,15 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
         }
     }
-
-
+    private void CheckAndResetAgent()
+    {
+        if (agent.isStopped || agent.velocity.sqrMagnitude < 0.1f) // 에이전트가 멈춰있거나 매우 느리게 움직일 때
+        {
+            Debug.LogWarning("Agent stopped or stuck. Resetting path.");
+            agent.ResetPath(); // 경로 재설정
+            MoveToRandomPosition(); // 새로운 랜덤 위치로 이동
+        }
+    }
 
     private void Chase()
     {
@@ -232,7 +247,6 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
         Character nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
 
-
         foreach (var player in FindObjectsOfType<Character>())
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -268,6 +282,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             ChangeState(MonsterState.Patrol, "IsChasing", false);
         }
     }
+
     [PunRPC]
     private void SetTarget(int targetViewID)
     {
@@ -284,6 +299,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             }
         }
     }
+
     private bool IsTargetOnNavMesh(Vector3 position)
     {
         NavMeshHit hit;
@@ -292,14 +308,34 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void MoveToRandomPosition()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection += initialPosition;
-
+        Vector3 randomDirection;
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas);
+        bool foundPosition = false;
+        int attempts = 0;
+        int maxAttempts = 10;
 
-        agent.SetDestination(hit.position);
-        syncPosition = hit.position;
+        while (!foundPosition && attempts < maxAttempts)
+        {
+            randomDirection = Random.insideUnitSphere * patrolRadius;
+            randomDirection += initialPosition;
+
+            if (NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas))
+            {
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    foundPosition = true;
+                    agent.SetDestination(hit.position);
+                    syncPosition = hit.position;
+                }
+            }
+            attempts++;
+        }
+
+        if (!foundPosition)
+        {
+            Debug.LogWarning("Failed to find valid NavMesh position after multiple attempts.");
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

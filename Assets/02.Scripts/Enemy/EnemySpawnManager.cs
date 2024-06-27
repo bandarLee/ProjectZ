@@ -12,8 +12,13 @@ public class EnemySpawnManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        StartCoroutine(DelaySpawn());
         pv = GetComponent<PhotonView>();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("StartEnemy", RpcTarget.AllBuffered);
+        }
+        StartCoroutine(DelaySpawn());
     }
     public IEnumerator DelaySpawn()
     {
@@ -45,11 +50,23 @@ public class EnemySpawnManager : MonoBehaviourPunCallbacks
     {
         foreach (GameObject lev in Leviatans)
         {
+            lev.SetActive(true);
+        }
+        foreach (GameObject bat in Bats)
+        {
+            bat.SetActive(false);
+        }
+    }
+    [PunRPC]
+    public void StartEnemy()
+    {
+        foreach (GameObject lev in Leviatans)
+        {
             lev.SetActive(false);
         }
         foreach (GameObject bat in Bats)
         {
-            bat.SetActive(true);
+            bat.SetActive(false);
         }
     }
     [PunRPC]

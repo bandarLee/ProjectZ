@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Photon.Pun; 
+using Photon.Pun;
+using System.Collections;
 
 public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
 {
-    public GameObject UILoading;
+    public GameObject inventoryObject;
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -15,14 +16,38 @@ public class GoToSubwayEntrance : MonoBehaviourPunCallbacks
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null && photonView.IsMine)
             {
-                UILoading.SetActive(true);
-                LoadSubwayScene();
+                TriggerSubwayTransition();
             }
         }
     }
 
-    private void LoadSubwayScene()
+    private void TriggerSubwayTransition()
     {
-            PhotonNetwork.LoadLevel("SubwayScene");
+        inventoryObject = FindObjectOfType<SubwayRoomHandler>().gameObject;
+
+        if (inventoryObject != null)
+        {
+            SubwayRoomHandler subwayHandler = inventoryObject.GetComponent<SubwayRoomHandler>();
+            if (subwayHandler != null)
+            {
+                subwayHandler.isTryingToJoinSubway = true;
+                CharacterInfo.Instance._isGameStart = false;
+                string currentRoomName = PhotonNetwork.CurrentRoom?.Name;
+                if (string.IsNullOrEmpty(currentRoomName))
+                {
+                    Debug.LogError("Not in a room or not connected.");
+                    return;
+                }
+                subwayHandler.InitiateSubwayRoomTransition(currentRoomName);
+            }
+            else
+            {
+                Debug.LogError("SubwayRoomHandler component not found on the inventoryObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("InventoryObject reference is not set.");
+        }
     }
 }

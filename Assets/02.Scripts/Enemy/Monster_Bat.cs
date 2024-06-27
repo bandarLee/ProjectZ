@@ -40,15 +40,14 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private float findTargetInterval = 0.5f; // Å¸°Ù Å½»ö °£°Ý
 
-    private void Start()
+    private void Awake()
     {
-        StartMethod();
+        initialPosition = this.gameObject.transform.position;
     }
     public void StartMethod()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        initialPosition = transform.position;
         syncPosition = transform.position;
         syncRotation = transform.rotation;
 
@@ -82,6 +81,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         stat.Init();
         state = MonsterState.Patrol;
+        this.gameObject.transform.position = initialPosition;
         targetCharacter = null;
         StartMethod();
 
