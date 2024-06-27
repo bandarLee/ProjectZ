@@ -18,6 +18,8 @@ public class UI_CharacterStat : MonoBehaviour
     public TextMeshProUGUI MentalTextUI;
     public TextMeshProUGUI HungerTextUI;
 
+    public TextMeshProUGUI WarningText;
+
     private void Awake()
     {
         Instance = this;
@@ -31,6 +33,7 @@ public class UI_CharacterStat : MonoBehaviour
         }
 
         UpdateUI(MyCharacterAbility.Stat);
+        UpdateWarnings(MyCharacterAbility.Stat);
     }
 
     private void UpdateUI(Stat stat)
@@ -42,6 +45,28 @@ public class UI_CharacterStat : MonoBehaviour
         HealthTextUI.text = $"{(int)(HealthSliderUI.value * 100)}%";
         MentalTextUI.text = $"{(int)(MentalSliderUI.value * 100)}%";
         HungerTextUI.text = $"{(int)(HungerSliderUI.value * 100)}%";
+    }
+
+    private void UpdateWarnings(Stat stat)
+    {
+        string warningMessage = "";
+
+        if (stat.Health <= 20)
+        {
+            warningMessage += "체력 부족\n";
+        }
+
+        if (stat.Mental <= 20)
+        {
+            warningMessage += "정신력 부족\n";
+        }
+
+        if (stat.Hunger <= 20)
+        {
+            warningMessage += "공복\n";
+        }
+
+        WarningText.text = warningMessage.TrimEnd(); 
     }
 
     public void SetMental(int mental)
