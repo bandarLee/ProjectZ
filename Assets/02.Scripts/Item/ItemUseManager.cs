@@ -385,12 +385,15 @@ public class ItemUseManager : MonoBehaviour
                 break;
             case "디스크1":
                 characterItemAbility.ItemActive("디스크1");
+                Debug.Log("디스크1을 들었음");
                 break;
             case "디스크2":
                 characterItemAbility.ItemActive("디스크2");
+                Debug.Log("디스크2을 들었음");
                 break;
             case "디스크3":
                 characterItemAbility.ItemActive("디스크3");
+                Debug.Log("디스크3을 들었음");
                 break;
             case "세계수씨앗":
                 characterItemAbility.ItemActive("세계수씨앗");
@@ -646,23 +649,26 @@ public class ItemUseManager : MonoBehaviour
                 }
                 break;
             case "디스크1":
+                Debug.Log("Player used a Disk1");
                 if (computerTrigger1.isPlayerInTrigger || computerTrigger2.isPlayerInTrigger)
                 {
-                    Debug.Log("Player used a Disk1");
+                   
                     uI_DiskText.DisplayText_1("가장 깊은 곳에 마지막 생명이 숨쉬고 있다.");
                 }
                 break;
             case "디스크2":
+                Debug.Log("Player used a Disk2");
                 if (computerTrigger1.isPlayerInTrigger || computerTrigger2.isPlayerInTrigger)
                 {
-                    Debug.Log("Player used a Disk2");
+                    
                     uI_DiskText.DisplayText_2("마지막 생명과 함께 최후의 섬으로 가라.");
                 }
                 break;
             case "디스크3":
+                Debug.Log("Player used a Disk3");
                 if (computerTrigger1.isPlayerInTrigger || computerTrigger2.isPlayerInTrigger)
                 {
-                    Debug.Log("Player used a Disk3");
+                    
                     uI_DiskText.DisplayText_3("<The Last Yggdrasil>.");
                 }
                 break;
