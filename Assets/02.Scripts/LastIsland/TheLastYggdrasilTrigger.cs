@@ -190,7 +190,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviourPunCallbacks
         // Äü½½·Ô °Ë»ç
         foreach (var slotItem in quickSlotManager.quickSlotItems)
         {
-            if (slotItem != null && slotItem.itemType == ItemType.ETC && slotItem.itemName == "¼¼°è¼ö¾¾¾Ñ")
+            if (slotItem != null && slotItem.itemType == ItemType.Special && slotItem.itemName == "¼¼°è¼ö¾¾¾Ñ")
             {
                 return slotItem;
             }
