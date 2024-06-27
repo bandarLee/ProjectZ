@@ -17,10 +17,14 @@ public class Bullet : MonoBehaviour, IPooledObject
         rb.velocity = Vector3.zero;
         rb.AddForce(transform.forward * Force);
         hasDamaged = false;
-        Invoke("Deactivate", 5f);
+        Invoke("DeactivateAndExplode", 2f);
     }
-    private void Deactivate()
+    private void DeactivateAndExplode()
     {
+        if (OwnerAbility != null)
+        {
+            OwnerAbility.SpawnExplosion(transform.position);
+        }
         gameObject.SetActive(false);
     }
 
@@ -43,7 +47,7 @@ public class Bullet : MonoBehaviour, IPooledObject
                     OwnerAbility.SpawnExplosion(transform.position);
                 }
 
-                Deactivate();
+                gameObject.SetActive(false);
             } 
         }
     }
