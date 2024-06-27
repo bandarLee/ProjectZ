@@ -21,7 +21,7 @@ public class GoToLastIslandTrigger : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<Character>().PhotonView.IsMine)
         {
             Debug.Log("Player triggered GoToLastIslandTrigger");
             isPlayerInTrigger = true;

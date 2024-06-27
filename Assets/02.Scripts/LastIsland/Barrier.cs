@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 using DG.Tweening;
 
-public class Barrier : MonoBehaviour
+public class Barrier : MonoBehaviourPun
 {
     public TextMeshProUGUI NoSeedText;
     public GameObject BarrierPrefab;
@@ -68,7 +68,7 @@ public class Barrier : MonoBehaviour
             if (seedItem != null)
             {
                 itemUseManager.ApplyEffect(seedItem);
-                StartCoroutine(DestroyBarrier());
+                photonView.RPC("RPC_DestroyBarrier", RpcTarget.All);
             }
             else // ¼¼°è¼ö¾¾¾Ñ ¾øÀ» °æ¿ì
             {
@@ -96,6 +96,11 @@ public class Barrier : MonoBehaviour
         return null;
     }
 
+    [PunRPC]
+    private void RPC_DestroyBarrier()
+    {
+        StartCoroutine(DestroyBarrier());
+    }
 
     private IEnumerator DestroyBarrier()
     {
