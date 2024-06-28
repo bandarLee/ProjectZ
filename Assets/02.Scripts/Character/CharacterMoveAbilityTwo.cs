@@ -11,6 +11,8 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     private bool _canJump = true;
     private bool _canMove = true;
+    private bool _isPlayingWalkSound = false;
+    private bool _isPlayingRunSound = false;
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -44,7 +46,8 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) && _canJump ? 1f : 0.5f) : 0f;
         float lerpTime = speedValue == 1f ? Time.deltaTime * 3 : speedValue == 0.5f ? Time.deltaTime * 5 : Time.deltaTime * 8;
         _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, lerpTime));
-        
+        HandleFootstepSounds(horizontalDir.magnitude, speedValue);
+
 
         if (_canJump)
         {
@@ -60,6 +63,33 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
+
+    private void HandleFootstepSounds(float horizontalMagnitude, float speedValue)
+    {
+        if (horizontalMagnitude > 0)
+        {
+            if (speedValue == 1f && !_isPlayingRunSound)
+            {
+                PlayerAudioManager.instance.StopAllSounds();
+                PlayerAudioManager.instance.PlayAudio(1);
+                _isPlayingRunSound = true;
+                _isPlayingWalkSound = false;
+            }
+            else if (speedValue == 0.5f && !_isPlayingWalkSound)
+            {
+                PlayerAudioManager.instance.StopAllSounds();
+                PlayerAudioManager.instance.PlayAudio(0);
+                _isPlayingWalkSound = true;
+                _isPlayingRunSound = false;
+            }
+        }
+        else
+        {
+            PlayerAudioManager.instance.StopAllSounds();
+            _isPlayingWalkSound = false;
+            _isPlayingRunSound = false;
+        }
+    }
     private void RequestPlayAnimation(string animationName)
     {
         GetComponent<PhotonView>().RPC(nameof(PlayAnimation), RpcTarget.All, animationName);
@@ -67,6 +97,8 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public IEnumerator JumpCoroutine()
     {
+        PlayerAudioManager.instance.StopAllSounds();
+
         RequestPlayAnimation("Jump");
 
         _rigidbody.AddForce(Vector3.up * (Owner.Stat.JumpPower), ForceMode.Impulse);
