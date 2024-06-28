@@ -26,17 +26,17 @@ public class UI_StatText : MonoBehaviour
             return;
         }
         string statMessage = "";
-        statMessage += $"체력: {Character.LocalPlayerInstance.Stat.MaxHealth}\n";
-        statMessage += $"공격력: {Character.LocalPlayerInstance.Stat.Damage}\n";
-        statMessage += $"점프력: {Character.LocalPlayerInstance.Stat.JumpPower}\n";
-        statMessage += $"이동속도: {Character.LocalPlayerInstance.Stat.MoveSpeed}\n";
+        statMessage += $"체력: {Character.LocalPlayerInstance.Stat.MaxHealth}\n\n";
+        statMessage += $"공격력: {Character.LocalPlayerInstance.Stat.Damage}\n\n";
+        statMessage += $"점프력: {Character.LocalPlayerInstance.Stat.JumpPower}\n\n";
+        statMessage += $"이동속도: {Character.LocalPlayerInstance.Stat.MoveSpeed}\n\n\n";
 
-        statMessage += $"정신력: {Character.LocalPlayerInstance.Stat.MaxMental}\n";
-        statMessage += $"포만감: {Character.LocalPlayerInstance.Stat.MaxHunger}\n";
-        statMessage += $"체감온도: {Character.LocalPlayerInstance.Stat.Temperature}\n";
-        statMessage += $"달리기속도: {Character.LocalPlayerInstance.Stat.RunSpeed}\n";
-        statMessage += $"공격쿨타임: {Character.LocalPlayerInstance.Stat.AttackCoolTime}\n";
-        statMessage += $"회전속도: {Character.LocalPlayerInstance.Stat.RotationSpeed}\n";
+        statMessage += $"정신력: {Character.LocalPlayerInstance.Stat.MaxMental}\n\n";
+        statMessage += $"포만감: {Character.LocalPlayerInstance.Stat.MaxHunger}\n\n";
+        statMessage += $"체감온도: {Character.LocalPlayerInstance.Stat.Temperature}\n\n";
+        statMessage += $"달리기속도: {Character.LocalPlayerInstance.Stat.RunSpeed}\n\n";
+        statMessage += $"공격쿨타임: {Character.LocalPlayerInstance.Stat.AttackCoolTime}\n\n";
+        statMessage += $"회전속도: {Character.LocalPlayerInstance.Stat.RotationSpeed}\n\n";
 
         StatTextUI.text = statMessage.TrimEnd();
     }

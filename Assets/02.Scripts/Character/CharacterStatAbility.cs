@@ -19,6 +19,7 @@ public class CharacterStatAbility : CharacterAbility
         {
             UI_CharacterStat.Instance.MyCharacterAbility = this;
             UI_Temperature.Instance.MyCharacterAbility = this;
+            UI_StatText.Instance.StatTextUpdate();
 
             StartCoroutine(HungerRoutine());
             StartCoroutine(DecreaseMentalRoutine());
