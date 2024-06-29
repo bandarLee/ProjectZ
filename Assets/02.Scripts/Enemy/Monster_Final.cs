@@ -14,8 +14,8 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
     }
 
     public Animator animator;
-    public float detectRange = 8f;
-    public float attackRange = 2f;
+    public float detectRange = 15f;
+    public float attackRange = 5f;
     public float attackDamageRange = 3f;
     public float moveSpeed = 5f;
     public Stat stat;
@@ -34,7 +34,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
 
     private Vector3 targetPosition;
     public float changeDirectionInterval = 2f; // 방향을 변경하는 간격
-
+    public bool IsMonsterTrigger = false;
 
     public GameObject RushTargetObject;
     private float findTargetInterval = 0.2f; // 타겟 탐색 간격

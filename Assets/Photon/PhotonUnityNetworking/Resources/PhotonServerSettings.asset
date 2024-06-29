@@ -125,6 +125,9 @@ MonoBehaviour:
   - RPC_DestroyBarrier
   - RPC_PlayAudio
   - RPC_StopAllSounds
+  - UpdateTreeHealth
+  - LoadBadEndingScene
+  - LoadHappyEndingScene
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

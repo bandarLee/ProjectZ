@@ -10,14 +10,19 @@ public class UI_Timer : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI timerText;
     public Image UI_HappyEnding;
+    public Image UI_BadEnding;
 
     private float timeRemaining;
     private bool isTimerRunning = false;
+    private TheLastYggdrasilWave theLastYggdrasilWave;
 
     private void Start()
     {
         UI_HappyEnding.gameObject.SetActive(false);
+        UI_BadEnding.gameObject.SetActive(false);
+        theLastYggdrasilWave = FindObjectOfType<TheLastYggdrasilWave>();
     }
+
 
     public void StartTimer(float duration)
     {
@@ -72,10 +77,17 @@ public class UI_Timer : MonoBehaviourPunCallbacks
     }
 
     // 타이머가 끝남
-    private void TimerEnded()
+    public void TimerEnded()
     {
         timerText.text = "00";
-        StartCoroutine(HappyEndingFadeImage());
+        if (theLastYggdrasilWave != null && theLastYggdrasilWave.Health <= 0)
+        {
+            StartCoroutine(BadEndingFadeImage());
+        }
+        else
+        {
+            StartCoroutine(HappyEndingFadeImage());
+        }
     }
 
     private IEnumerator HappyEndingFadeImage()
@@ -88,11 +100,19 @@ public class UI_Timer : MonoBehaviourPunCallbacks
         Debug.Log("1");
         yield return new WaitForSeconds(1.5f);
         Debug.Log("1");
-        //LoadHappyEndingScene();
+
     }
 
-    /* private void LoadHappyEndingScene()
-     {
-         PhotonNetwork.LoadLevel("");
-     }*/
+    private IEnumerator BadEndingFadeImage()
+    {
+        UI_HappyEnding.gameObject.SetActive(true);
+        UI_HappyEnding.color = new Color(0, 0, 0, 0); // 초기 색상 흰색 투명
+        Debug.Log("1");
+
+        UI_HappyEnding.DOFade(1, 1.5f); // 투명도 조정
+        Debug.Log("1");
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log("1");
+
+    }
 }

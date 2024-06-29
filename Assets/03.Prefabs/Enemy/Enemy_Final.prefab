@@ -431,6 +431,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7199372204312141103}
+  - {fileID: 3887882937122011942}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -522,7 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3a9e74687e93c498b2355e9c499e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 2103572393397852996}
   detectRange: 8
   attackRange: 2
   attackDamageRange: 3
