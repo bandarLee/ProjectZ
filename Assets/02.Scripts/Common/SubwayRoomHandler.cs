@@ -7,9 +7,10 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
 {
     public bool isTryingToJoinSubway = false;
     public bool isTryingToJoinCity = false; // 추가된 플래그
+    public bool isTryingToLastScene = false;
     private string subwayRoomName;
     private string cityRoomName;
-
+    private string lastIslandName;
     public void InitiateSubwayRoomTransition(string currentRoomName)
     {
         switch (currentRoomName)
@@ -33,7 +34,28 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
         isTryingToJoinSubway = true;
         StartCoroutine(TryLeaveRoom());
     }
+    public void InitiateLastIslandTransition(string currentRoomName)
+    {
+        switch (currentRoomName)
+        {
+            case "Subway1":
+                lastIslandName = "LastIsland1";
+                break;
+            case "Subway2":
+                lastIslandName = "LastIsland2";
 
+                break;
+            case "Subway3":
+                lastIslandName = "LastIsland3";
+
+                break;
+            default:
+                Debug.LogError("Unknown Room");
+                return;
+        }
+        isTryingToLastScene = true;
+        StartCoroutine(TryLeaveRoom());
+    }
     public void InitiateCityRoomTransition()
     {
         cityRoomName = PhotonNetwork.CurrentRoom.Name.Replace("Subway", "Server");
@@ -65,6 +87,11 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
             Debug.Log("Left room, now joining lobby for city...");
             PhotonNetwork.JoinLobby();
         }
+        else if (isTryingToLastScene)
+        {
+            Debug.Log("Left room, now joining lobby for city...");
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnJoinedLobby()
@@ -80,6 +107,11 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
             Debug.Log("Joined lobby, now joining or creating City room...");
             JoinOrCreateCityRoom();
         }
+        else if (isTryingToLastScene)
+        {
+            Debug.Log("Left room, now joining lobby for city...");
+            JoinOrLastRoom();
+        }
     }
 
     private void JoinOrCreateSubwayRoom()
@@ -94,6 +126,12 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
         Debug.Log("Joining or creating City room...");
         RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
         PhotonNetwork.JoinOrCreateRoom(cityRoomName, roomOptions, TypedLobby.Default);
+    }
+    private void JoinOrLastRoom()
+    {
+        Debug.Log("Joining or creating City room...");
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 20 };
+        PhotonNetwork.JoinOrCreateRoom(lastIslandName, roomOptions, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
@@ -111,6 +149,12 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
             isTryingToJoinCity = false;
             PhotonNetwork.LoadLevel("CityScene");
         }
+        else if (isTryingToLastScene)
+        {
+            Debug.Log("Joined Last Room");
+            isTryingToJoinCity = false;
+            PhotonNetwork.LoadLevel("LastIsLandScene");
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -124,6 +168,10 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.JoinLobby();
         }
+        else if (isTryingToLastScene && !PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -131,5 +179,6 @@ public class SubwayRoomHandler : MonoBehaviourPunCallbacks
         Debug.LogError($"Disconnected from Photon with reason: {cause}");
         isTryingToJoinSubway = false;
         isTryingToJoinCity = false;
+        isTryingToLastScene = false;
     }
 }

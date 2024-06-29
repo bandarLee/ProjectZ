@@ -12,6 +12,8 @@ public class GoToLastIslandTrigger : MonoBehaviourPunCallbacks
     public Image FadeImage; 
     private bool isPlayerInTrigger = false;
     public PhotonView pv;
+    public GameObject inventoryObject;
+
     private void Start()
     {
         GotoLastIslandText.gameObject.SetActive(false);
@@ -56,30 +58,38 @@ public class GoToLastIslandTrigger : MonoBehaviourPunCallbacks
         Debug.Log("1");
         yield return new WaitForSeconds(1.5f);
         Debug.Log("1");
-        LoadLastIslandScene();
+        IslandTransition();
     }
-
-    private void LoadLastIslandScene()
+    private void IslandTransition()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        inventoryObject = FindObjectOfType<SubwayRoomHandler>().gameObject;
 
-        if (PhotonNetwork.IsMasterClient)
+        if (inventoryObject != null)
         {
-            PhotonNetwork.LoadLevel("LastIsLandScene");
+            SubwayRoomHandler subwayHandler = inventoryObject.GetComponent<SubwayRoomHandler>();
+            if (subwayHandler != null)
+            {
+                subwayHandler.isTryingToLastScene = true;
+                CharacterInfo.Instance._isGameStart = false;
+                string currentRoomName = PhotonNetwork.CurrentRoom?.Name;
+                if (string.IsNullOrEmpty(currentRoomName))
+                {
+                    Debug.LogError("Not in a room or not connected.");
+                    return;
+                }
+                subwayHandler.InitiateLastIslandTransition(currentRoomName);
+            }
+            else
+            {
+                Debug.LogError("SubwayRoomHandler component not found on the inventoryObject.");
+            }
         }
         else
         {
-            pv.RPC("RequestLoadLevel", RpcTarget.MasterClient, "LastIsLandScene");
+            Debug.LogError("InventoryObject reference is not set.");
         }
-        Debug.Log("4");
     }
 
-    [PunRPC]
-    private void RequestLoadLevel(string levelName)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.LoadLevel(levelName);
-        }
-    }
+
+
 }
