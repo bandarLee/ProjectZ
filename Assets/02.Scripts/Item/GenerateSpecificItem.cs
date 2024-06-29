@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,12 @@ public class GenerateSpecificItem : MonoBehaviour
         // 각 박스에 지정된 아이템 추가
         foreach (var pair in boxItemPairs)
         {
-            AddSpecificItemToBox(pair.targetBox, pair.itemNameToAdd);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                AddSpecificItemToBox(pair.targetBox, pair.itemNameToAdd);
+
+            }
+
         }
     }
 
