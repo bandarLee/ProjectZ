@@ -123,6 +123,8 @@ MonoBehaviour:
   - StartEnemy
   - RequestLoadLevel
   - RPC_DestroyBarrier
+  - RPC_PlayAudio
+  - RPC_StopAllSounds
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

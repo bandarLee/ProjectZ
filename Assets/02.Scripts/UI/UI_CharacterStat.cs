@@ -63,7 +63,7 @@ public class UI_CharacterStat : MonoBehaviour
 
         if (stat.Hunger <= 20)
         {
-            warnings.Add("°øº¹");
+            warnings.Add("±¾ÁÖ¸²");
         }
 
         WarningText.text = string.Join(", ", warnings);
