@@ -2323,12 +2323,12 @@ GameObject:
   - component: {fileID: 7167841178496525045}
   - component: {fileID: 6043471333780043644}
   - component: {fileID: 2678448499068123298}
-  - component: {fileID: 6985002557870536006}
   - component: {fileID: 5262805244594896826}
   - component: {fileID: 1972656426160072190}
   - component: {fileID: 7623353347964513302}
   - component: {fileID: 3356263056025491726}
   - component: {fileID: 4975459631847429901}
+  - component: {fileID: 3287316418031686807}
   m_Layer: 0
   m_Name: VampireBat 3
   m_TagString: Untagged
@@ -2402,71 +2402,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6985002557870536006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8431444229148007069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d16c6bd1f0a3d24ba42da4f5674abd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 6043471333780043644}
-  detectRange: 30
-  attackRange: 3
-  moveSpeed: 8
-  stat:
-    Health: 100
-    MaxHealth: 100
-    Mental: 0
-    MaxMental: 0
-    Hunger: 0
-    MaxHunger: 0
-    Temperature: 0
-    StandardTemperature: 0
-    Damage: 20
-    MoveSpeed: 10
-    RunSpeed: 10
-    RotationSpeed: 60
-    AttackCoolTime: 5
-    JumpPower: 5
-  state: 0
-  changeDirectionInterval: 4
-  CanMoveArea:
-  - {fileID: 0}
-  CantMoveArea:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &5262805244594896826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,9 +2421,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6985002557870536006}
   - {fileID: 1972656426160072190}
   - {fileID: 7623353347964513302}
+  - {fileID: 3287316418031686807}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2584,6 +2519,41 @@ CapsuleCollider:
   m_Height: 2.363941
   m_Direction: 2
   m_Center: {x: 0, y: 0.4908695, z: 0}
+--- !u!114 &3287316418031686807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431444229148007069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3a9e74687e93c498b2355e9c499e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  detectRange: 8
+  attackRange: 2
+  attackDamageRange: 3
+  moveSpeed: 5
+  stat:
+    Health: 0
+    MaxHealth: 0
+    Mental: 0
+    MaxMental: 0
+    Hunger: 0
+    MaxHunger: 0
+    Temperature: 0
+    StandardTemperature: 0
+    Damage: 0
+    MoveSpeed: 0
+    RunSpeed: 0
+    RotationSpeed: 0
+    AttackCoolTime: 0
+    JumpPower: 0
+  state: 0
+  changeDirectionInterval: 2
+  RushTargetObject: {fileID: 0}
 --- !u!1 &8587215526243198802
 GameObject:
   m_ObjectHideFlags: 0
