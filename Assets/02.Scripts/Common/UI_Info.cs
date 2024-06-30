@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Photon.Pun;
-
+using UnityEngine.UI;
 public class UI_Info : MonoBehaviour
 {
     public GameObject InfoObject;
@@ -13,8 +13,14 @@ public class UI_Info : MonoBehaviour
     public TextMeshProUGUI Name;
     public TextMeshProUGUI[] Stat;
 
+    public GameObject[] ProfileImages;
+
     public void AssignCharacter(GameObject Character)
     {
+        foreach(GameObject profile in ProfileImages)
+        {
+            profile.SetActive(false);
+        }
         InfoObject = Character;
 
         if (InfoObject.CompareTag("Monster"))
@@ -24,23 +30,21 @@ public class UI_Info : MonoBehaviour
             if (InfoObject.TryGetComponent<Monster_Bat>(out Monster_Bat monsterBat))
             {
                 detectstat = monsterBat.stat;
-                Debug.Log("bat");
+                ProfileImages[2].SetActive(true);
             }
             else if (InfoObject.TryGetComponent<Monster_Lev>(out Monster_Lev monsterLev))
             {
                 detectstat = monsterLev.stat;
-                Debug.Log("lev");
+                ProfileImages[1].SetActive(true);
 
             }
             else if (InfoObject.TryGetComponent<Monster_Final>(out Monster_Final monsterFinal))
             {
                 detectstat = monsterFinal.stat;
-            }
-            else
-            {
-                Debug.Log("No specific Monster component found");
+                ProfileImages[2].SetActive(true);
 
             }
+
             if (detectstat != null)
             {
                 Stat[0].text = $"생명력 : {detectstat.Health} / {detectstat.MaxHealth}";
@@ -60,6 +64,8 @@ public class UI_Info : MonoBehaviour
         {
             Player photonPlayer = InfoObject.GetComponent<PhotonView>().Owner;
             Stat detectstat = InfoObject.GetComponent<Character>().Stat;
+            ProfileImages[0].SetActive(true);
+
             Name.text = photonPlayer.NickName;
             Stat[0].text = $"생명력 : {detectstat.Health} / {detectstat.MaxHealth}";
             Stat[1].text = $"배고픔 : {detectstat.Hunger} / {detectstat.MaxHunger}";

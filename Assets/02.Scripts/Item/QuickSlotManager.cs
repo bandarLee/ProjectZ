@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 
 public class QuickSlotManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class QuickSlotManager : MonoBehaviour
     public Canvas canvas;
 
     public GameObject[] UIInfos;
+    public GameObject UIInfoBar;
     private void Start()
     {
 
@@ -344,6 +346,10 @@ public class QuickSlotManager : MonoBehaviour
     {
         IsScanning = true;
         InfoScan.SetActive(true);
+        RectTransform uiInfoBarRectTransform = UIInfoBar.GetComponent<RectTransform>();
+        Vector2 originalPosition = uiInfoBarRectTransform.anchoredPosition;
+        Vector2 startPosition = new Vector2(-Screen.width / 2, originalPosition.y);
+        Vector2 endPosition = new Vector2(Screen.width / 2, originalPosition.y);
 
         Camera currentCamera = Camera.main;
 
@@ -387,8 +393,12 @@ public class QuickSlotManager : MonoBehaviour
                 uiInfo.AssignCharacter(detectedObjects[i]);
             }
         }
+        uiInfoBarRectTransform.anchoredPosition = startPosition;
+        uiInfoBarRectTransform.DOAnchorPos(endPosition, 0.3f);
+        yield return new WaitForSeconds(1f);
+        uiInfoBarRectTransform.DOAnchorPos(originalPosition, 0.3f);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         InfoScan.SetActive(false);
         IsScanning = false;
     }

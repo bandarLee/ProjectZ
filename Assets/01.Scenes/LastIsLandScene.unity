@@ -970,8 +970,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 31917634}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -2543,8 +2541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 87105445}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -4565,8 +4561,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 114534095}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -5861,8 +5855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 136313445}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -7023,8 +7015,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 167546077}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -8734,8 +8724,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 197773068}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -11954,8 +11942,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 310812661}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -12762,8 +12748,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 323529827}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -17103,8 +17087,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 439086419}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -18752,8 +18734,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 471486015}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -23728,8 +23708,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 621213751}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -27979,8 +27957,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 765133580}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -29229,6 +29205,7 @@ MonoBehaviour:
   - {fileID: 949771701}
   - {fileID: 1513162062}
   - {fileID: 569190103}
+  UIInfoBar: {fileID: 1302754514}
 --- !u!224 &797772387
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29743,8 +29720,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 803072106}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -31435,8 +31410,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 843323478}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -32566,8 +32539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 861066392}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -34101,8 +34072,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 899901745}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -36936,6 +36905,7 @@ RectTransform:
   - {fileID: 949771700}
   - {fileID: 1513162061}
   - {fileID: 569190102}
+  - {fileID: 1302754515}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -41384,8 +41354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1094271154}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -41827,8 +41795,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1099512138}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -42971,8 +42937,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1118452509}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -43560,8 +43524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1126454561}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -47428,8 +47390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1232210890}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -48729,8 +48689,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1256702127}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -49399,8 +49357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1265861209}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -50292,8 +50248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1279849318}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -51182,6 +51136,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298347499}
   m_CullTransparentMesh: 0
+--- !u!1 &1302754514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302754515}
+  - component: {fileID: 1302754517}
+  - component: {fileID: 1302754516}
+  m_Layer: 5
+  m_Name: Bar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1302754515
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302754514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.17516, y: 1.5874, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 972040300}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 6.799988, y: 540}
+  m_SizeDelta: {x: 100, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1302754516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302754514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: f53f1a24bb4ef8f4d879ea7b3a5197e5, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1302754517
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302754514}
+  m_CullTransparentMesh: 1
 --- !u!1 &1306999323
 GameObject:
   m_ObjectHideFlags: 0
@@ -52810,8 +52839,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1357920875}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -57103,8 +57130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1512350268}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -60710,8 +60735,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1629614965}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -61970,8 +61993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1663555859}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -63417,8 +63438,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1682786176}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -68877,8 +68896,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1819190040}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -73004,8 +73021,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1936661131}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -73910,8 +73925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1946388189}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -75669,8 +75682,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1987617674}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -77914,8 +77925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2051586890}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
@@ -80847,8 +80856,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2142468353}
-  detectRange: 8
-  attackRange: 2
   attackDamageRange: 3
   stat:
     Health: 100
