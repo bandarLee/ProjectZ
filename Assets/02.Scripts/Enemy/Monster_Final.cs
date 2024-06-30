@@ -17,7 +17,6 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
     public float detectRange = 15f;
     public float attackRange = 5f;
     public float attackDamageRange = 3f;
-    public float moveSpeed = 5f;
     public Stat stat;
 
     public MonsterState state = MonsterState.Rush;
@@ -173,7 +172,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
     {      
 
         Vector3 direction = (targetPosition - transform.position).normalized;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, stat.MoveSpeed * Time.deltaTime);
         RotateTowards(direction);
     }
 

@@ -12,7 +12,7 @@ public class QuickSlotManager : MonoBehaviour
     public TMP_Text[] quickSlotQuantities;
     public Item[] quickSlotItems;
     public Item currentEquippedItem;
-
+    public Cinemachine.CinemachineVirtualCamera vcam;
     public Inventory inventory;
 
     public InventoryManager inventoryManager;
@@ -21,7 +21,13 @@ public class QuickSlotManager : MonoBehaviour
     public bool ItemUseLock = false;
 
     public Image[] SelectColors;
+    public GameObject InfoScan;
+    public LayerMask layerMask;
 
+    public bool IsScanning = false;
+    public Canvas canvas;
+
+    public GameObject[] UIInfos;
     private void Start()
     {
 
@@ -31,6 +37,7 @@ public class QuickSlotManager : MonoBehaviour
             image.gameObject.SetActive(false);
         }
         StartCoroutine(InitializeInventory());
+        InfoScan.SetActive(false);
     }
 
     private IEnumerator InitializeInventory()
@@ -38,7 +45,6 @@ public class QuickSlotManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
-
 
         GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
         if (localPlayer != null)
@@ -96,7 +102,7 @@ public class QuickSlotManager : MonoBehaviour
     {
         if (slotIndex < 0 || slotIndex >= quickSlotItems.Length || quickSlotItems[slotIndex] == null) return;
         Character.LocalPlayerInstance._animator.SetBool("isPullOut", true);
-        if(quickSlotItems[slotIndex].itemType == ItemType.Gun)
+        if (quickSlotItems[slotIndex].itemType == ItemType.Gun)
         {
             Character.LocalPlayerInstance._animator.SetBool("IsGun", true);
             StartCoroutine(TimeDelayGun());
@@ -266,6 +272,7 @@ public class QuickSlotManager : MonoBehaviour
         CheckQuickSlotInput();
 
 
+
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
             switch (currentEquippedItem.itemType)
@@ -283,7 +290,7 @@ public class QuickSlotManager : MonoBehaviour
                     inventoryManager.UpdateAllInventories();
                     break;
                 case ItemType.Mental:
-                    if(currentEquippedItem.itemName == "주사기")
+                    if (currentEquippedItem.itemName == "주사기")
                     {
                         ItemUseManager.Instance.UseItem(currentEquippedItem, 5f);
                     }
@@ -320,9 +327,69 @@ public class QuickSlotManager : MonoBehaviour
             Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
             Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
         }
-        if (Input.GetKeyDown(KeyCode.I)|| Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape))
         {
             inventoryManager.TogglePlayerInventory();
         }
+        if (!IsScanning)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                StartCoroutine(ScanInfo());
+            }
+        }
+
+    }
+    private IEnumerator ScanInfo()
+    {
+        IsScanning = true;
+        InfoScan.SetActive(true);
+
+        Camera currentCamera = Camera.main;
+
+        int gridSize = 20;
+        float stepX = Screen.width / gridSize;
+        float stepY = Screen.height / gridSize;
+
+        List<GameObject> detectedObjects = new List<GameObject>();
+
+        for (int x = 0; x < Screen.width; x += (int)stepX)
+        {
+            for (int y = 0; y < Screen.height; y += (int)stepY)
+            {
+                Vector3 screenPoint = new Vector3(x, y, 0);
+                Ray ray = currentCamera.ScreenPointToRay(screenPoint);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                {
+                    GameObject hitObject = hit.collider.gameObject;
+                    if (!detectedObjects.Contains(hitObject))
+                    {
+                        detectedObjects.Add(hitObject);
+                    }
+                }
+            }
+        }
+
+        foreach (GameObject uiinfo in UIInfos)
+        {
+            uiinfo.SetActive(false);
+        }
+        int count = Mathf.Min(detectedObjects.Count, UIInfos.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            UIInfos[i].SetActive(true);
+            UI_Info uiInfo = UIInfos[i].GetComponent<UI_Info>();
+            if (uiInfo != null)
+            {
+                uiInfo.AssignCharacter(detectedObjects[i]);
+            }
+        }
+
+        yield return new WaitForSeconds(1.5f);
+        InfoScan.SetActive(false);
+        IsScanning = false;
     }
 }

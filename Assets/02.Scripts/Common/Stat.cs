@@ -24,7 +24,8 @@ public class Stat
     public float AttackCoolTime;
 
     public float JumpPower;
-
+    public float detectRange;
+    public float attackRange;
     public void Init()
     {
         Health = MaxHealth;

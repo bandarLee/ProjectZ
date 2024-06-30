@@ -16,8 +16,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     public Animator animator;
     public NavMeshAgent agent;
-    public float detectRange = 30f;
-    public float attackRange = 2f;
+
     public float attackDamageRange = 5f;
     public float patrolRadius = 20f;
     public Stat stat;
@@ -75,12 +74,24 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         stat.Init();
         state = MonsterState.Patrol;
-        this.gameObject.transform.position = initialPosition;
+        SetInitialPositionOnNavMesh();
 
         targetCharacter = null;
 
     }
-
+    private void SetInitialPositionOnNavMesh()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(initialPosition, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            this.gameObject.transform.position = hit.position;
+        }
+        else
+        {
+            Debug.LogWarning("Failed to find NavMesh position for initial position.");
+            this.gameObject.transform.position = initialPosition;
+        }
+    }
     private void OnDisable()
     {
         stat.Init();
@@ -161,7 +172,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Chase()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.detectRange)
         {
             ChangeState(MonsterState.Patrol, "IsChasing", false);
             MoveToRandomPosition();
@@ -170,7 +181,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         agent.SetDestination(targetCharacter.transform.position);
 
-        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
+        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= stat.attackRange)
         {
             ChangeState(MonsterState.Attack, "IsAttacking", true);
         }
@@ -178,7 +189,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Attack()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.attackRange)
         {
             ChangeState(MonsterState.Chase, "IsAttacking", false);
             return;
@@ -255,7 +266,7 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
             }
         }
 
-        if (nearestCharacter != null && nearestDistance <= detectRange)
+        if (nearestCharacter != null && nearestDistance <= stat.detectRange)
         {
             if (targetCharacter != nearestCharacter)
             {

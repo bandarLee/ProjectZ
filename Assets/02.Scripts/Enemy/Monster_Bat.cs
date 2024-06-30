@@ -14,10 +14,8 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     }
 
     public Animator animator;
-    public float detectRange = 30f;
-    public float attackRange = 2f;
+
     public float attackDamageRange = 5f;
-    public float moveSpeed = 5f;
     public Stat stat;
 
     public MonsterState state = MonsterState.Patrol;
@@ -137,7 +135,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Chase()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.detectRange)
         {
             ChangeState(MonsterState.Patrol, "IsChasing", false);
             return;
@@ -152,7 +150,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
         MoveTowards(targetCharacter.transform.position);
 
-        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
+        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= stat.attackRange)
         {
             ChangeState(MonsterState.Attack, "IsAttacking", true);
         }
@@ -160,7 +158,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Attack()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.attackRange)
         {
             ChangeState(MonsterState.Chase, "IsAttacking", false);
             return;
@@ -187,7 +185,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         }
 
         Vector3 direction = (targetPosition - transform.position).normalized;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, stat.MoveSpeed * Time.deltaTime);
         RotateTowards(direction);
     }
 
@@ -196,7 +194,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         Vector3 direction = (targetPosition - transform.position).normalized;
         if (direction != Vector3.zero)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, stat.MoveSpeed * Time.deltaTime);
             RotateTowards(direction);
         }
     }
@@ -300,7 +298,7 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
             }
         }
 
-        if (nearestCharacter != null && nearestDistance <= detectRange)
+        if (nearestCharacter != null && nearestDistance <= stat.detectRange)
         {
             if (targetCharacter != nearestCharacter)
             {
