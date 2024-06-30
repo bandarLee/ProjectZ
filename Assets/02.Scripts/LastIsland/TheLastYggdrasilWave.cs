@@ -15,7 +15,7 @@ public class TheLastYggdrasilWave : MonoBehaviour
 
     private void Start()
     {
-        PV = GetComponent<PhotonView>();
+        PV = GetComponent<PhotonView>(); 
 
         // Slider 초기 설정
         if (TheLastYggdrasilHPBar != null)
@@ -57,16 +57,4 @@ public class TheLastYggdrasilWave : MonoBehaviour
         }
     }
 
-/*    [PunRPC]
-    private void LoadBadEndingScene()
-    {
-        // Bad Ending Scene으로 전환
-        PhotonNetwork.LoadLevel("BadEndingScene");
-    }
-    [PunRPC]
-    private void LoadHappyEndingScene()
-    {
-        // Bad Ending Scene으로 전환
-        PhotonNetwork.LoadLevel("HappyEndingScene");
-    }*/
 }

@@ -25,6 +25,7 @@ public class TheLastYggdrasilTrigger : MonoBehaviourPunCallbacks
     private InventoryUI inventoryUI;
     private InventoryManager inventoryManager;
     private ItemUseManager itemUseManager;
+    private MonsterManager monsterManager;
 
     public bool IsPlayerTrigger = false;
     private Vector3 initialPosition; // 나무의 초기 위치 저장
@@ -48,7 +49,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviourPunCallbacks
 
         StartCoroutine(InitializingInventory());
 
-        PV = GetComponent<PhotonView>();    
+        PV = GetComponent<PhotonView>();
+        monsterManager = FindAnyObjectByType<MonsterManager>();
     }
 
     private IEnumerator InitializingInventory()
@@ -142,6 +144,8 @@ public class TheLastYggdrasilTrigger : MonoBehaviourPunCallbacks
     {
         yield return DisplayText(StartWaveText, "몬스터들의 공격이 시작됩니다", 0.07f);
         yield return DisplayText(ProtectLastYggdrasilText, "마지막 생명을 지켜내세요", 0.07f);
+
+        monsterManager.StartWave();
     }
 
     private IEnumerator DisplayText(TextMeshProUGUI textMeshProUGUI, string text, float typingSpeed)
