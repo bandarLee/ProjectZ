@@ -9,20 +9,25 @@ using DG.Tweening;
 public class UI_Timer : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI timerText;
-    public Image UI_HappyEnding;
-    public Image UI_BadEnding;
+    public Image UI_Ending;
 
     private float timeRemaining;
     private bool isTimerRunning = false;
     private TheLastYggdrasilWave theLastYggdrasilWave;
-
+    private bool IsEnding= false;
     private void Start()
     {
-        UI_HappyEnding.gameObject.SetActive(false);
-        UI_BadEnding.gameObject.SetActive(false);
+        UI_Ending.gameObject.SetActive(false);
         theLastYggdrasilWave = FindObjectOfType<TheLastYggdrasilWave>();
     }
 
+    private void Update()
+    {
+        if (theLastYggdrasilWave.Health <= 0)
+        {
+            StartCoroutine(BadEnding());
+        }
+    }
 
     public void StartTimer(float duration)
     {
@@ -80,39 +85,33 @@ public class UI_Timer : MonoBehaviourPunCallbacks
     public void TimerEnded()
     {
         timerText.text = "00";
-        if (theLastYggdrasilWave != null && theLastYggdrasilWave.Health <= 0)
-        {
-            StartCoroutine(BadEndingFadeImage());
-        }
-        else
-        {
-            StartCoroutine(HappyEndingFadeImage());
-        }
+        StartCoroutine(HappyEndingFadeImage());
     }
 
     private IEnumerator HappyEndingFadeImage()
     {
-        UI_HappyEnding.gameObject.SetActive(true);
-        UI_HappyEnding.color = new Color(1, 1, 1, 0); // 초기 색상 흰색 투명
-        Debug.Log("1");
+        UI_Ending.gameObject.SetActive(true);
+        UI_Ending.color = new Color(1, 1, 1, 0);
+        Debug.Log("Happy");
 
-        UI_HappyEnding.DOFade(1, 1.5f); // 투명도 조정
-        Debug.Log("1");
+        UI_Ending.DOFade(1, 1.5f);
+        Debug.Log("Happy");
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("1");
-
+        Debug.Log("Happy");
     }
-
-    private IEnumerator BadEndingFadeImage()
+    private IEnumerator BadEnding()
     {
-        UI_HappyEnding.gameObject.SetActive(true);
-        UI_HappyEnding.color = new Color(0, 0, 0, 0); // 초기 색상 흰색 투명
-        Debug.Log("1");
+        if (!IsEnding)
+        {
+            IsEnding = true;    
+            UI_Ending.gameObject.SetActive(true);
+            UI_Ending.color = new Color(1, 1, 1, 0);
+            Debug.Log("Bad");
 
-        UI_HappyEnding.DOFade(1, 1.5f); // 투명도 조정
-        Debug.Log("1");
-        yield return new WaitForSeconds(1.5f);
-        Debug.Log("1");
-
+            UI_Ending.DOFade(1, 1.5f);
+            Debug.Log("Bad");
+            yield return new WaitForSeconds(1.5f);
+            Debug.Log("Bad");
+        }
     }
 }

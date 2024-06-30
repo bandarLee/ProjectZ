@@ -24,10 +24,6 @@ public class TheLastYggdrasilWave : MonoBehaviour
             TheLastYggdrasilHPBar.value = Health;
         }
     }
-    private void Update()
-    {
-        
-    }
 
     public void OnTriggerEnter(Collider other)
     {

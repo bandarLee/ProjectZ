@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 2142057181138763434}
   - component: {fileID: 8207330590305852205}
   - component: {fileID: 6985036668242950107}
+  - component: {fileID: 2732840592021191249}
   m_Layer: 0
   m_Name: TheLastYggdrasil
   m_TagString: Untagged
@@ -388,6 +389,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &2732840592021191249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161938503192335579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6edb13b572802a74c9482c9d2cc3f714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 10
+  TheLastYggdrasilHPBar: {fileID: 0}
 --- !u!1 &5796385091112684963
 GameObject:
   m_ObjectHideFlags: 0
