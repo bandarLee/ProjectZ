@@ -14,8 +14,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
     }
 
     public Animator animator;
-    public float detectRange = 15f;
-    public float attackRange = 5f;
+
     public float attackDamageRange = 3f;
     public Stat stat;
 
@@ -136,7 +135,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Chase()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > detectRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.detectRange)
         {
             ChangeState(MonsterState.Rush, "IsChasing", false);
             return;
@@ -144,7 +143,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
 
         MoveTowards(targetCharacter.transform.position);
 
-        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= attackRange)
+        if (Vector3.Distance(transform.position, targetCharacter.transform.position) <= stat.attackRange)
         {
             ChangeState(MonsterState.Attack, "IsAttacking", true);
         }
@@ -152,7 +151,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void Attack()
     {
-        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > attackRange)
+        if (targetCharacter == null || Vector3.Distance(transform.position, targetCharacter.transform.position) > stat.attackRange)
         {
             ChangeState(MonsterState.Chase, "IsAttacking", false);
             return;
@@ -209,7 +208,7 @@ public class Monster_Final : MonoBehaviourPun, IPunObservable, IDamaged
             }
         }
 
-        if (nearestCharacter != null && nearestDistance <= detectRange)
+        if (nearestCharacter != null && nearestDistance <= stat.detectRange)
         {
             if (targetCharacter != nearestCharacter)
             {

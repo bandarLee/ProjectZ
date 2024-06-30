@@ -1593,7 +1593,7 @@ GameObject:
   - component: {fileID: 6121618576588910877}
   - component: {fileID: 4106860725945240303}
   - component: {fileID: 3813857886920481430}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SeaTitan_Leviathan_3 Variant (5) 1
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -1686,8 +1686,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 853758237421491690}
   agent: {fileID: 9118808327180543768}
-  detectRange: 30
-  attackRange: 3
   attackDamageRange: 5
   patrolRadius: 20
   stat:
@@ -1705,6 +1703,8 @@ MonoBehaviour:
     RotationSpeed: 0
     AttackCoolTime: 3
     JumpPower: 0
+    detectRange: 0
+    attackRange: 0
   state: 0
   navMeshAreaName: 
 --- !u!114 &1689318990832095226

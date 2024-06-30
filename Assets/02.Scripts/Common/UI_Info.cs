@@ -16,6 +16,7 @@ public class UI_Info : MonoBehaviour
     public void AssignCharacter(GameObject Character)
     {
         InfoObject = Character;
+
         if (InfoObject.CompareTag("Monster"))
         {
             Name.text = "Monster";
@@ -23,14 +24,22 @@ public class UI_Info : MonoBehaviour
             if (InfoObject.TryGetComponent<Monster_Bat>(out Monster_Bat monsterBat))
             {
                 detectstat = monsterBat.stat;
+                Debug.Log("bat");
             }
             else if (InfoObject.TryGetComponent<Monster_Lev>(out Monster_Lev monsterLev))
             {
                 detectstat = monsterLev.stat;
+                Debug.Log("lev");
+
             }
             else if (InfoObject.TryGetComponent<Monster_Final>(out Monster_Final monsterFinal))
             {
                 detectstat = monsterFinal.stat;
+            }
+            else
+            {
+                Debug.Log("No specific Monster component found");
+
             }
             if (detectstat != null)
             {
