@@ -34,8 +34,8 @@ public class Stat
     }
     public void InitializeStat()
     {
-        Health = 100;
-        MaxHealth = 100;
+        Health = 1000;
+        MaxHealth = 1000;
         Mental = 100;
         MaxMental = 100;
         Hunger = 100;
