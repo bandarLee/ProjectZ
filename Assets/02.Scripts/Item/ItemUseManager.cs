@@ -786,7 +786,7 @@ public class ItemUseManager : MonoBehaviour
     {
         MapImage.SetActive(true);
         map.mapController.IsMapActive = true;
-        map.mapController.IconInactive(false);
+        map.mapController.IconInactive();
 
             map.OpenMap();
             Character.LocalPlayerInstance._characterRotateAbility.SetMouseLock(false);

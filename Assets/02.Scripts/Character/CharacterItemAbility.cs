@@ -127,6 +127,8 @@ public class CharacterItemAbility : CharacterAbility
         {
             item.SetActive(false);
         }
+        Flashlight.enabled = false;
+        ItemUseManager.Instance.MapExit();
         _activeItemIndex = -1;
 
     }

@@ -70,22 +70,22 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         {
             if (speedValue == 1f && !_isPlayingRunSound)
             {
-                PlayerAudioManager.instance.StopAllSounds();
-                PlayerAudioManager.instance.PlayAudio(1);
+                Character.LocalPlayerInstance._audioManager.StopAllSounds();
+                Character.LocalPlayerInstance._audioManager.PlayAudio(1);
                 _isPlayingRunSound = true;
                 _isPlayingWalkSound = false;
             }
             else if (speedValue == 0.5f && !_isPlayingWalkSound)
             {
-                PlayerAudioManager.instance.StopAllSounds();
-                PlayerAudioManager.instance.PlayAudio(0);
+                Character.LocalPlayerInstance._audioManager.StopAllSounds();
+                Character.LocalPlayerInstance._audioManager.PlayAudio(0);
                 _isPlayingWalkSound = true;
                 _isPlayingRunSound = false;
             }
         }
         else
         {
-            PlayerAudioManager.instance.StopAllSounds();
+            Character.LocalPlayerInstance._audioManager.StopAllSounds();
             _isPlayingWalkSound = false;
             _isPlayingRunSound = false;
         }
@@ -97,7 +97,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
 
     public IEnumerator JumpCoroutine()
     {
-        PlayerAudioManager.instance.StopAllSounds();
+        Character.LocalPlayerInstance._audioManager.StopAllSounds();
 
         RequestPlayAnimation("Jump");
 

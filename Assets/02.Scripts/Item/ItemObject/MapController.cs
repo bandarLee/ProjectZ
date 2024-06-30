@@ -1,4 +1,7 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +11,7 @@ public class MapController : MonoBehaviour
     public Transform playerTransform; // 플레이어 Transform
 
     public RectTransform[] otherPlayerIcons;
+    public TextMeshProUGUI[] playerNames;
 
     private Vector3 positionMargin = new Vector3(1155, 0, 1075); // 기준점, 이 값을 조정하여 기준점을 설정
     private float scaleX;
@@ -16,6 +20,8 @@ public class MapController : MonoBehaviour
     private float offsetY;
 
     public bool IsMapActive = false;
+
+    public GameObject[] players;
     private void OnEnable()
     {
         if (Character.LocalPlayerInstance != null && playerTransform == null)
@@ -39,12 +45,12 @@ public class MapController : MonoBehaviour
         }
 
     }
-    public void IconInactive(bool isactive)
+    public void IconInactive()
     {
-        playerIcon.gameObject.SetActive(isactive);
+        playerIcon.gameObject.SetActive(false);
         foreach (RectTransform otherplayerIcon in otherPlayerIcons)
         {
-            otherplayerIcon.gameObject.SetActive(isactive);
+            otherplayerIcon.gameObject.SetActive(false);
         }
     }
     private void CalculateTransformParameters()
@@ -94,7 +100,7 @@ public class MapController : MonoBehaviour
 
     private void UpdateOtherPlayerIconsPosition()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        players = GameObject.FindGameObjectsWithTag("Player");
 
         int index = 0;
         foreach (GameObject player in players)
@@ -110,8 +116,58 @@ public class MapController : MonoBehaviour
 
                 // 미니맵 좌표를 설정합니다.
                 otherPlayerIcons[index].anchoredPosition = new Vector2(x, y);
+                Debug.Log(otherPlayerIcons[index].anchoredPosition);
+
+                Player photonPlayer = player.GetComponent<PhotonView>().Owner;
+                playerNames[index].text = photonPlayer.NickName;
 
                 index++;
+            }
+        }
+
+    }
+    public void UpdateIconsBasedOnScene(int pieceIndex)
+    {
+        players = GameObject.FindGameObjectsWithTag("Player"); // 플레이어 목록 업데이트
+
+        playerIcon.gameObject.SetActive(false);
+        foreach (RectTransform icon in otherPlayerIcons)
+        {
+            icon.gameObject.SetActive(false);
+        }
+
+        int localPlayerScene = (int)PhotonNetwork.LocalPlayer.CustomProperties["CurrentScene"];
+        if (localPlayerScene == pieceIndex)
+        {
+            playerIcon.gameObject.SetActive(true);
+            UpdatePlayerIconPosition(); // 로컬 플레이어 아이콘 위치 업데이트
+        }
+
+        int index = 0;
+        foreach (GameObject player in players)
+        {
+            Player photonPlayer = player.GetComponent<PhotonView>().Owner;
+            if (photonPlayer != PhotonNetwork.LocalPlayer && photonPlayer.CustomProperties.ContainsKey("CurrentScene"))
+            {
+                int playerScene = (int)photonPlayer.CustomProperties["CurrentScene"];
+                if (playerScene == pieceIndex)
+                {
+                    if (index < otherPlayerIcons.Length)
+                    {
+                        otherPlayerIcons[index].gameObject.SetActive(true);
+                        Vector3 playerWorldPos = player.transform.localPosition;
+
+                        // 월드 좌표를 미니맵 좌표로 변환합니다.
+                        float x = playerWorldPos.x * scaleX + offsetX;
+                        float y = playerWorldPos.z * scaleY + offsetY;
+
+                        // 미니맵 좌표를 설정합니다.
+                        otherPlayerIcons[index].anchoredPosition = new Vector2(x, y);
+                        playerNames[index].text = photonPlayer.NickName;
+
+                        index++;
+                    }
+                }
             }
         }
     }

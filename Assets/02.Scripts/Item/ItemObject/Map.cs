@@ -95,12 +95,13 @@ public class Map : MonoBehaviourPunCallbacks
             Debug.Log("City " + (pieceIndex + 1) + " 버튼 클릭됨");
             FindMapText.gameObject.SetActive(false);
             ShowMapPiece(pieceIndex);
-            mapController.IconInactive(true);
+
+            mapController.UpdateIconsBasedOnScene(pieceIndex);
         }
     }
 
-    // 해당 구역의 지도 이미지를 보여주는 메서드
-    private void ShowMapPiece(int pieceIndex)
+        // 해당 구역의 지도 이미지를 보여주는 메서드
+        private void ShowMapPiece(int pieceIndex)
     {
         for (int i = 0; i < MapPieceImages.Length; i++)
         {
@@ -140,6 +141,7 @@ public class Map : MonoBehaviourPunCallbacks
             mapPiece.SetActive(false); // 모든 지도 조각을 비활성화
         }
         FindMapText.gameObject.SetActive(false); // "지도를 찾으세요" 텍스트를 비활성화
+
     }
 
     // 지도를 닫을 때 호출되는 메서드 추가

@@ -28,8 +28,10 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterStatAbility _statability;
     public CharacterMoveAbilityTwo _moveAbilityTwo;
     public CharacterItemAbility _characterItemAbility;
+    public PlayerAudioManager _audioManager;
     private Collider _collider;
     private UI_Effect _effect;
+
     private void Awake()
     {
         _statability = GetComponent<CharacterStatAbility>();
@@ -47,6 +49,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _characterItemAbility = GetComponent <CharacterItemAbility>();
         _collider = GetComponent<Collider>();
         _effect = FindObjectOfType<UI_Effect>();
+        _audioManager = GetComponent<PlayerAudioManager>();
 
         if (PhotonView.IsMine)
         {
@@ -175,6 +178,8 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         PhotonView.RPC(nameof(DeathRPC), RpcTarget.All);
         Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
         Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
+        Character.LocalPlayerInstance._characterItemAbility.DeactivateAllItems();
+
         _quickSlotManager.DropAllItem();
 
 

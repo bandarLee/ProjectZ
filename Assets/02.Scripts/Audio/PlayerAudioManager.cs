@@ -5,19 +5,7 @@ public class PlayerAudioManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] audioClips;
 
-    public static PlayerAudioManager instance;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     public void PlayAudio(int index)
     {
