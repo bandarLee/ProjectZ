@@ -37,14 +37,22 @@ public class CharacterAttackAbility : CharacterAbility
         if (Input.GetMouseButtonDown(0) && _attackTimer > Owner.Stat.AttackCoolTime && _activeWeaponIndex != -1 && !Owner._characterRotateAbility.CharacterRotateLocked)
         {
             _attackTimer = 0f;
+            Debug.Log("휘두름");
+
             StartCoroutine(PerformAttack());
 
         }
+    }
+    public void SwingSound()
+    {
+        Character.LocalPlayerInstance._effectAudioManager.PlayAudio(0);
+
     }
 
     private IEnumerator PerformAttack()
     {
         Owner._animator.SetBool("DoAttack", true);
+
         yield return new WaitForSeconds(0.08f); 
         Owner._animator.SetBool("DoAttack", false);
     }
@@ -110,11 +118,14 @@ public class CharacterAttackAbility : CharacterAbility
             // 안 맞은 애면 때린 리스트에 추가
             _damagedList.Add(damagedAbleObject);
 
+
             PhotonView photonView = other.GetComponent<PhotonView>();
             if (photonView != null)
             {
                 if (other.CompareTag("Monster"))
                 {
+                    Character.LocalPlayerInstance._effectAudioManager.PlayAudio(1);
+
                     // 피격 이펙트 생성
                     Vector3 hitPosition = other.ClosestPoint(transform.position) + new Vector3(0f, 0.5f, 0f);
                     PhotonView ownerPhotonView = Owner.GetComponent<PhotonView>();
