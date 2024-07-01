@@ -128,7 +128,6 @@ public class CharacterItemAbility : CharacterAbility
             item.SetActive(false);
         }
         Flashlight.enabled = false;
-        ItemUseManager.Instance.MapExit();
         _activeItemIndex = -1;
 
     }
@@ -137,6 +136,7 @@ public class CharacterItemAbility : CharacterAbility
     {
         if (Owner.PhotonView.IsMine)
         {
+            ItemUseManager.Instance.MapExit();
             Owner.PhotonView.RPC(nameof(DeactivateAllItemsRPC), RpcTarget.All);
         }
         DeactivateAllItemsRPC();
