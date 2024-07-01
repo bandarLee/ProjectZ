@@ -41,7 +41,7 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (State != State.Death)
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(6);
             Stat.Hunger -= 1;
             LimitStat();
         }
@@ -118,11 +118,11 @@ public class CharacterStatAbility : CharacterAbility
     {
         while (true)
         {
-            yield return new WaitForSeconds(5);
-            Stat.Temperature += 5;
+            yield return new WaitForSeconds(3);
+            Stat.Temperature += 6;
 
             // 정신력 증가
-            Stat.Mental += 5;
+            Stat.Mental += 6;
             if (Stat.Mental > Stat.MaxMental)
             {
                 Stat.Mental = Stat.MaxMental;

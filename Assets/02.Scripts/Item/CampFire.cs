@@ -6,16 +6,20 @@ public class CampFire : MonoBehaviour
 {
     private Dictionary<CharacterStatAbility, Coroutine> activeCoroutines = new Dictionary<CharacterStatAbility, Coroutine>();
 
-    private void OnTriggerEnter(Collider other)
+    private bool IsTrigger = false;
+
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !IsTrigger )
         {
-            Debug.Log("¸ð´ÚºÒ¿¡ Æ®¸®°Å!");
+            IsTrigger = true;   
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
             if (characterStatAbility != null && !activeCoroutines.ContainsKey(characterStatAbility))
             {
                 Coroutine coroutine = characterStatAbility.StartCoroutine(characterStatAbility.IncreaseTemperatureRoutine());
                 activeCoroutines.Add(characterStatAbility, coroutine);
+                StartCoroutine(TrashCode());
+
             }
         }
     }
@@ -24,6 +28,7 @@ public class CampFire : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            IsTrigger = false;
             Debug.Log("¸ð´ÚºÒÀ» ¹þ¾î³²!");
             CharacterStatAbility characterStatAbility = other.GetComponent<CharacterStatAbility>();
             if (characterStatAbility != null && activeCoroutines.ContainsKey(characterStatAbility))
@@ -32,5 +37,11 @@ public class CampFire : MonoBehaviour
                 activeCoroutines.Remove(characterStatAbility);
             }
         }
+    }
+
+    public IEnumerator TrashCode()
+    {
+        yield return new WaitForSeconds(3f);
+        IsTrigger = false;  
     }
 }

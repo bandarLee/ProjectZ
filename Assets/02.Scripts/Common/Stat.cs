@@ -35,8 +35,8 @@ public class Stat
     }
     public void InitializeStat()
     {
-        Health = 1000;
-        MaxHealth = 1000;
+        Health = 100;
+        MaxHealth = 100;
         Mental = 100;
         MaxMental = 100;
         Hunger = 100;
@@ -44,11 +44,11 @@ public class Stat
         Temperature = 20;
         StandardTemperature = 20;
         Damage = 1;
-        MoveSpeed = 7;
+        MoveSpeed = 4.5f;
         RunSpeed = 1.5f * MoveSpeed;
         RotationSpeed = 200;
         AttackCoolTime = 0.5f;
-        JumpPower = 4;
+        JumpPower = 4.5f;
     }
 
 
