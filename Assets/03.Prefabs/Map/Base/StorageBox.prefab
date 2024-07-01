@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 23000013844924346}
   - component: {fileID: 1609234306184998132}
   - component: {fileID: 89416721599617796}
-  - component: {fileID: 609944743273525126}
-  - component: {fileID: 5993637947059452333}
   m_Layer: 7
   m_Name: StorageBox
   m_TagString: Untagged
@@ -104,32 +102,6 @@ MonoBehaviour:
   boxType: 0
   boxInventoryUI: {fileID: 0}
 --- !u!114 &89416721599617796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010756568158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9896698b301d00649b8f2783ad9f884a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &609944743273525126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010756568158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afae9e7d626ace045a7f6a07d15df4a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxType: 0
-  boxInventoryUI: {fileID: 0}
---- !u!114 &5993637947059452333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
