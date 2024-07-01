@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 33000012621578274}
   - component: {fileID: 23000013844924346}
   - component: {fileID: 1609234306184998132}
-  - component: {fileID: 89416721599617796}
   m_Layer: 7
   m_Name: StorageBox
   m_TagString: Untagged
@@ -101,18 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxType: 0
   boxInventoryUI: {fileID: 0}
---- !u!114 &89416721599617796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010756568158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9896698b301d00649b8f2783ad9f884a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6058402025331317652
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +111,8 @@ GameObject:
   - component: {fileID: 7726160084895983388}
   - component: {fileID: 4646410020905157419}
   - component: {fileID: 8495495359809005475}
+  - component: {fileID: 1371280016884033608}
+  - component: {fileID: 551730525101371791}
   m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
@@ -196,3 +185,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1371280016884033608
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058402025331317652}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 0.9999999, z: 1.0000002}
+  m_Center: {x: 0.000030517578, y: -0.000061035156, z: 0}
+--- !u!114 &551730525101371791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058402025331317652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9896698b301d00649b8f2783ad9f884a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
