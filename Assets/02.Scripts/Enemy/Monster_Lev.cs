@@ -70,6 +70,12 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
     private void OnEnable()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+
         StartMethod();
 
         stat.Init();
@@ -78,11 +84,15 @@ public class Monster_Lev : MonoBehaviourPun, IPunObservable, IDamaged
 
         targetCharacter = null;
 
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+        }
     }
     private void SetInitialPositionOnNavMesh()
     {
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(initialPosition, out hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(initialPosition, out hit, 30f, NavMesh.AllAreas))
         {
             this.gameObject.transform.position = hit.position;
         }

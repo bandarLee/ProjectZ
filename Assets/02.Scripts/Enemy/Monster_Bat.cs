@@ -106,16 +106,18 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
                     Attack();
                     break;
                 case MonsterState.Death:
-                    // 죽음 상태에서는 아무것도 하지 않음
                     break;
             }
 
             syncPosition = transform.position;
             syncRotation = transform.rotation;
+
+
         }
         else
         {
             SmoothSyncTransform();
+
         }
     }
 
@@ -123,8 +125,10 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
     {
         if (Vector3.Distance(transform.position, syncPosition) > 0.1f || Quaternion.Angle(transform.rotation, syncRotation) > 1f)
         {
+            Quaternion targetRotation = syncRotation * Quaternion.Euler(0, 180, 0);
+
             transform.position = Vector3.Lerp(transform.position, syncPosition, Time.deltaTime * lerpSpeed);
-            transform.rotation = Quaternion.Lerp(transform.rotation, syncRotation, Time.deltaTime * lerpSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
         }
     }
 
@@ -346,8 +350,8 @@ public class Monster_Bat : MonoBehaviourPun, IPunObservable, IDamaged
         if (stream.IsWriting)
         {
             stream.SendNext((int)state);
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(syncPosition);
+            stream.SendNext(syncRotation);
             stream.SendNext(stat.Health);
         }
         else
