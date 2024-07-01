@@ -106,6 +106,8 @@ public class CharacterGunFireAbility : CharacterAbility
         if (Input.GetMouseButton(0) && _shotTimer >= CurrentGun.FireCooltime && CurrentGun.BulletRemainCount > 0 && !Owner._quickSlotManager.ItemUseLock)
         {
             Owner._animator.SetInteger("UsingHand", 2);
+            Character.LocalPlayerInstance._effectAudioManager.PlayAudio(3);
+
             StartCoroutine(TimeDelayGunShoot());
             // 재장전 취소
             if (_isReloading)
@@ -161,6 +163,8 @@ public class CharacterGunFireAbility : CharacterAbility
     {
         if (Owner.PhotonView.IsMine)
         {
+            Character.LocalPlayerInstance._effectAudioManager.PlayAudio(2);
+
             Owner.PhotonView.RPC(nameof(SpawnExplosionRPC), RpcTarget.All, position);
         }
     }

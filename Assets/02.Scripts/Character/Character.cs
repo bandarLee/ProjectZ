@@ -29,6 +29,7 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
     public CharacterMoveAbilityTwo _moveAbilityTwo;
     public CharacterItemAbility _characterItemAbility;
     public PlayerAudioManager _audioManager;
+    public PlayerEffectAudioManager _effectAudioManager;
     private Collider _collider;
     private UI_Effect _effect;
 
@@ -50,7 +51,6 @@ public class Character : MonoBehaviour, IPunObservable, IDamaged
         _collider = GetComponent<Collider>();
         _effect = FindObjectOfType<UI_Effect>();
         _audioManager = GetComponent<PlayerAudioManager>();
-
         if (PhotonView.IsMine)
         {
             LocalPlayerInstance = this;

@@ -60,14 +60,12 @@ public class CharacterRotateAbility : CharacterAbility
         {
             if (isLocked)
             {
-                Debug.Log("Lock");
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 CharacterRotateLocked = false;
             }
             else
             {
-                Debug.Log("Unlock");
 
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;

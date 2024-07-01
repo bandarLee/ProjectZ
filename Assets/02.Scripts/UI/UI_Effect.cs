@@ -24,6 +24,7 @@ public class UI_Effect : MonoBehaviour
     public void ShowDamageEffect()
     {
         StartCoroutine(FlashDamageEffect(DamageEffectImage, DamageColor));
+        Character.LocalPlayerInstance._effectAudioManager.PlayAudio(4);
     }
 
     private IEnumerator FlashDamageEffect(Image effectImage, Color effectColor)
