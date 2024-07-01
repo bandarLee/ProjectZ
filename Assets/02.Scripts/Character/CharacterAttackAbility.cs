@@ -45,8 +45,10 @@ public class CharacterAttackAbility : CharacterAbility
     }
     public void SwingSound()
     {
-        Character.LocalPlayerInstance._effectAudioManager.PlayAudio(0);
-
+        if (Owner.PhotonView.IsMine)
+        {
+            Character.LocalPlayerInstance._effectAudioManager.PlayAudio(0);
+        }
     }
 
     private IEnumerator PerformAttack()
