@@ -27,7 +27,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
     [PunRPC]
     public void BoxAddItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
     {
-        if (processedItems.Contains(uniqueId)) return;
+
 
         var icon = FindObjectOfType<ItemPresets>().GetIconByName(itemName);
         Item newItem = new Item
@@ -70,6 +70,8 @@ public class BoxInventory : MonoBehaviourPunCallbacks
                 itemQuantities[newItem.itemName] = 1;
             }
         }
+        Debug.Log(synchronize);
+
         if (synchronize && photonView.IsMine)
         {
             photonView.RPC("BoxAddItemRPC", RpcTarget.OthersBuffered, newItem.itemName, newItem.itemType.ToString(), newItem.uniqueId, newItem.itemEffect, newItem.itemDescription);
