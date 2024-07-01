@@ -18,10 +18,13 @@ public class CharacterRotateAbility : CharacterAbility
 
     private void Start()
     {
-        SetMouseLock(true);
+        if (Owner.PhotonView.IsMine)
+        {
+            SetMouseLock(true);
 
-        InitializeCamera();
-        _gunFireAbility = GetComponent<CharacterGunFireAbility>();
+            InitializeCamera();
+            _gunFireAbility = GetComponent<CharacterGunFireAbility>();
+        }
     }
     public void InitializeCamera()
     {
@@ -37,17 +40,18 @@ public class CharacterRotateAbility : CharacterAbility
             return;
         }
 
-
-        if (!CharacterRotateLocked)
+        if (Owner.PhotonView.IsMine)
         {
-            CharacterRotate();
+            if (!CharacterRotateLocked)
+            {
+                CharacterRotate();
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, lastRotationY, 0f);
+                CameraRoot.localEulerAngles = new Vector3(-lastCameraRotationX, 0, 0f);
+            }
         }
-        else
-        {
-            transform.eulerAngles = new Vector3(0, lastRotationY, 0f);
-            CameraRoot.localEulerAngles = new Vector3(-lastCameraRotationX, 0, 0f);
-        }
-
     }
 
     public void SetMouseLock(bool isLocked)

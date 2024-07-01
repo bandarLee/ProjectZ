@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
         playerInventoryUI.CloseInventory();
         boxInventoryUI.CloseInventory();
         CloseItemInfo();
-        if (characterRotateAbility != null)
+        if (characterRotateAbility != null && Character.LocalPlayerInstance.PhotonView.IsMine)
         {
             characterRotateAbility.SetMouseLock(true);
         }
