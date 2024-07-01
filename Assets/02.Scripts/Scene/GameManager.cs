@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPosition;
     public Transform[] SceneMovePosition;
     public GameObject[] CitySectors;
-
+    public UI_Clock UIClock;
     public List<Character> PlayerList = new List<Character>();
 
     private void Awake()
@@ -111,8 +111,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
 
             GameObject newPlayer = PhotonNetwork.Instantiate("Character_Female_rigid_collid", spawnPosition[spawnSector].position, Quaternion.identity);
+            UIClock.MasterTime();
 
-         
+
 
             CharacterInfo.Instance._isGameStart = true;
         }

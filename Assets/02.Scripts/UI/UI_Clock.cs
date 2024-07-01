@@ -3,7 +3,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_Clock : MonoBehaviourPun, IPunObservable
@@ -39,17 +38,12 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         }
         EnemySpawnManager = FindObjectOfType<EnemySpawnManager>();
 
-        // 씬 로드 이벤트에 메서드 등록
-        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
 
-    private void OnDestroy()
-    {
-        // 씬 로드 이벤트에서 메서드 등록 해제
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // 마스터 시간 동기화
+    public void MasterTime()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
