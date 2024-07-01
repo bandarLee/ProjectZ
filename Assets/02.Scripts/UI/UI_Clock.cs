@@ -32,57 +32,20 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         Sun.rectTransform.anchoredPosition = Vector2.zero;
         Moon.rectTransform.anchoredPosition = Vector2.zero;
 
-        gameTimeScript.OnTimeTypeChanged += HandleTimeTypeChanged;
-
         if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
         }
         EnemySpawnManager = FindObjectOfType<EnemySpawnManager>();
 
-        // 초기화 시 시간 타입에 따른 SubwayEntrance 상태 설정
-        HandleTimeTypeChanged(gameTimeScript.CurrentTimeType);
+
     }
 
-    private void HandleTimeTypeChanged(GameTime.TimeType newTimeType)
-    {
-        gotoSubwayTrigger.ManageSubwayEntrance(newTimeType);
-        EnemySpawnManager.NightEnemySpawn(newTimeType);
-        EnemySpawnManager.DayEnemySpawn(newTimeType);
 
-        // CurrentTimeType에 따라 UI 업데이트
-        switch (newTimeType)
-        {
-            case GameTime.TimeType.Day:
-                Sun.gameObject.SetActive(true);
-                Moon.gameObject.SetActive(false);
-                Mystery.gameObject.SetActive(false);
-                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(255, 145, 0, 255); // 주황색
-                break;
-
-            case GameTime.TimeType.Night:
-                Sun.gameObject.SetActive(false);
-                Moon.gameObject.SetActive(true);
-                Mystery.gameObject.SetActive(false);
-                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(30, 100, 255, 255); // 파란색
-                break;
-
-            case GameTime.TimeType.Mystery:
-                Sun.gameObject.SetActive(false);
-                Moon.gameObject.SetActive(false);
-                Mystery.gameObject.SetActive(true);
-                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(174, 0, 128, 255); // 보라색
-                break;
-        }
-    }
-
+    // 마스터 시간 동기화
     public void MasterTime()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            UpdateSunAndMoonVisibility();
-        }
-        else
+        if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("RequestTimeFromMaster", RpcTarget.MasterClient);
         }
@@ -112,15 +75,48 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         // 현재 시간에 따라 gameTimeScript의 CurrentTimeType 업데이트
         if (dayNightCycleManager.TimeOfDay >= 42240f && dayNightCycleManager.TimeOfDay < 44160f)
         {
-            gameTimeScript.SetTimeType(GameTime.TimeType.Mystery);
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Mystery;
         }
         else if (dayNightCycleManager.TimeOfDayCategory.HasFlag(WeatherMakerTimeOfDayCategory.Day))
         {
-            gameTimeScript.SetTimeType(GameTime.TimeType.Day);
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Day;
         }
         else
         {
-            gameTimeScript.SetTimeType(GameTime.TimeType.Night);
+            gameTimeScript.CurrentTimeType = GameTime.TimeType.Night;
+        }
+
+        if (gameTimeScript.CurrentTimeType != previousTimeType)
+        {
+            previousTimeType = gameTimeScript.CurrentTimeType;
+            gotoSubwayTrigger.ManageSubwayEntrance(gameTimeScript.CurrentTimeType);
+            EnemySpawnManager.NightEnemySpawn(gameTimeScript.CurrentTimeType);
+            EnemySpawnManager.DayEnemySpawn(gameTimeScript.CurrentTimeType);
+        }
+
+        // CurrentTimeType에 따라 UI 업데이트
+        switch (gameTimeScript.CurrentTimeType)
+        {
+            case GameTime.TimeType.Day:
+                Sun.gameObject.SetActive(true);
+                Moon.gameObject.SetActive(false);
+                Mystery.gameObject.SetActive(false);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(255, 145, 0, 255); // 주황색
+                break;
+
+            case GameTime.TimeType.Night:
+                Sun.gameObject.SetActive(false);
+                Moon.gameObject.SetActive(true);
+                Mystery.gameObject.SetActive(false);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(30, 100, 255, 255); // 파란색
+                break;
+
+            case GameTime.TimeType.Mystery:
+                Sun.gameObject.SetActive(false);
+                Moon.gameObject.SetActive(false);
+                Mystery.gameObject.SetActive(true);
+                ClockSlider.fillRect.GetComponentInChildren<Image>().color = new Color32(174, 0, 128, 255); // 보라색
+                break;
         }
     }
 
@@ -137,7 +133,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
     private void SyncTime(float masterTimeOfDay, int masterTimeType) // 마스터 클라이언트에서 시간을 받아와 동기화
     {
         dayNightCycleManager.TimeOfDay = masterTimeOfDay;
-        gameTimeScript.SetTimeType((GameTime.TimeType)masterTimeType);
+        gameTimeScript.CurrentTimeType = (GameTime.TimeType)masterTimeType;
         UpdateSunAndMoonVisibility(); // 받은 시간으로 UI 업데이트
     }
 
@@ -152,7 +148,7 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         else if (stream.IsReading)
         {
             dayNightCycleManager.TimeOfDay = (float)stream.ReceiveNext();
-            gameTimeScript.SetTimeType((GameTime.TimeType)stream.ReceiveNext());
+            gameTimeScript.CurrentTimeType = (GameTime.TimeType)stream.ReceiveNext();
             UpdateSunAndMoonVisibility(); // 받은 시간으로 UI 업데이트
         }
     }

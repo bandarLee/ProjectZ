@@ -13,19 +13,12 @@ public class GameTime : MonoBehaviour
 
     public TimeType CurrentTimeType;
     public delegate void TimeTypeChangedHandler(TimeType newTimeType);
-    public event TimeTypeChangedHandler OnTimeTypeChanged;
+    //public event TimeTypeChangedHandler OnTimeTypeChanged;
 
     void Start()
     {
         CurrentTimeType = TimeType.Day;
     }
 
-    public void SetTimeType(TimeType newTimeType)
-    {
-        if (CurrentTimeType != newTimeType)
-        {
-            CurrentTimeType = newTimeType;
-            OnTimeTypeChanged?.Invoke(newTimeType);
-        }
-    }
+   
 }
