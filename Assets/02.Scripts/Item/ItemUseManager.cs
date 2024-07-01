@@ -503,11 +503,11 @@ public class ItemUseManager : MonoBehaviour
         {
             case "구급상자":
                 Debug.Log("플레이어 체력 +20.");
-                Character.LocalPlayerInstance.Stat.Health += 20;
+                Character.LocalPlayerInstance.Stat.Health += 30;
                 break;
             case "진통제":
                 Debug.Log("플레이어 체력 +10.");
-                Character.LocalPlayerInstance.Stat.Health += 10;
+                Character.LocalPlayerInstance.Stat.Health += 15;
                 break;
 
             default:
