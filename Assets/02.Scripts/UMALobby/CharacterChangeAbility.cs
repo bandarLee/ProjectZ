@@ -15,7 +15,7 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
 
     public IEnumerator WaitforPV()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         PhotonView newPlayerPhotonView = Character.LocalPlayerInstance.PhotonView;
         if (newPlayerPhotonView == null)
         {
@@ -58,7 +58,7 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
 
     public IEnumerator WaitforChangeAvatar(GameObject newPlayer)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
 
         var avatar = newPlayer.GetComponent<DynamicCharacterAvatar>();
         Player player = newPlayer.GetComponent<PhotonView>().Owner;
@@ -79,7 +79,7 @@ public class CharacterChangeAbility : MonoBehaviourPunCallbacks
         StartCoroutine(TryApplyCharacterRecipe(player, recipeString));
     }
 
-    private IEnumerator TryApplyCharacterRecipe(Player player, string recipeString, int maxAttempts = 3, float retryDelay = 1f)
+    private IEnumerator TryApplyCharacterRecipe(Player player, string recipeString, int maxAttempts = 5, float retryDelay = 2f)
     {
         int attempts = 0;
         while (attempts < maxAttempts)

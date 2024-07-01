@@ -270,12 +270,8 @@ public class QuickSlotManager : MonoBehaviour
             }
         }
     }
-
-    private void Update()
+    public void QuickslotAction()
     {
-        CheckQuickSlotInput();
-
-
 
         if (Input.GetMouseButtonDown(0) && currentEquippedItem != null && !ItemUseLock)
         {
@@ -350,6 +346,18 @@ public class QuickSlotManager : MonoBehaviour
         {
             UI_Tutorial.SetActive(false);
         }
+    }
+    private void Update()
+    {
+        if (Character.LocalPlayerInstance.PhotonView.IsMine)
+        {
+            CheckQuickSlotInput();
+            QuickslotAction();
+
+        }
+
+
+
 
     }
     private IEnumerator ScanInfo()
