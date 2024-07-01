@@ -6,7 +6,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 public class TheLastYggdrasilWave : MonoBehaviour
 {
-    public int Health = 10;
+    public int Health = 1000;
     public Slider TheLastYggdrasilHPBar;
 
 
@@ -45,7 +45,7 @@ public class TheLastYggdrasilWave : MonoBehaviour
                     other.GetComponent<Monster_Final>().IsMonsterTrigger = true;
                     float damage = 1000;
                     photonView.RPC("Damaged", RpcTarget.All, damage, PV.OwnerActorNr);
-                    Health--;
+                    Health-=50;
                     Debug.Log("세계수 체력 --");
                     // 체력 감소 후 Slider 업데이트
                     if (TheLastYggdrasilHPBar != null)
