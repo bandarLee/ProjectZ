@@ -65,6 +65,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c8c42662026a30544a7c3bb902859d48, type: 2}
+  - {fileID: 2100000, guid: b9d5c6d68cf9a00419450b19898765a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,6 +100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseBedText: {fileID: 0}
+  StopUsingBedText: {fileID: 0}
+  CantUseBedText: {fileID: 0}
+  AllRecoveriesText: {fileID: 0}
+  UsingTimeSlider: {fileID: 0}
 --- !u!65 &8745518969541263897
 BoxCollider:
   m_ObjectHideFlags: 0

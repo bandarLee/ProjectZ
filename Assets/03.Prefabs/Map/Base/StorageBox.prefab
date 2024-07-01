@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33000012621578274}
   - component: {fileID: 23000013844924346}
   - component: {fileID: 1609234306184998132}
+  - component: {fileID: 7822126243027857572}
   m_Layer: 7
   m_Name: StorageBox
   m_TagString: Untagged
@@ -100,6 +101,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxType: 0
   boxInventoryUI: {fileID: 0}
+--- !u!65 &7822126243027857572
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010756568158}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9281755, y: 0.9183682, z: 0.7969705}
+  m_Center: {x: -0.000061035156, y: -0.26251787, z: -0.021230912}
 --- !u!1 &6058402025331317652
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,8 +151,8 @@ Transform:
   m_GameObject: {fileID: 6058402025331317652}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.71499324, w: 0.6991313}
-  m_LocalPosition: {x: 0.01, y: -0.32, z: 0.01}
-  m_LocalScale: {x: 1.7170923, y: 1.6358813, z: 0.85532004}
+  m_LocalPosition: {x: 0.010034, y: -0.31999, z: 0.17}
+  m_LocalScale: {x: 2.5426702, y: 2.7617931, z: 0.7237492}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4000013996190800}
