@@ -26,8 +26,13 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         {
             return;
         }
+        Move();
 
         // 1. 입력받기
+       
+    }
+    private void Move()
+    {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -36,22 +41,24 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         horizontalDir.y = 0; // Y 축 제거하여 수평 이동만 함
         horizontalDir.Normalize();
 
-        _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), h, Time.deltaTime * 8)); 
+        _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), h, Time.deltaTime * 8));
         _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), v, Time.deltaTime * 8));
 
         float speed = (Input.GetKey(KeyCode.LeftShift) ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed) * horizontalDir.magnitude;
         Vector3 moveVelocity = horizontalDir * speed;
-        moveVelocity.y = _rigidbody.velocity.y;  // 수직 속도 유지 (중력과 점프 힘 유지)
+        moveVelocity.y = _rigidbody.velocity.y; 
 
         float speedValue = horizontalDir.magnitude > 0 ? (Input.GetKey(KeyCode.LeftShift) && _canJump ? 1f : 0.5f) : 0f;
         float lerpTime = speedValue == 1f ? Time.deltaTime * 3 : speedValue == 0.5f ? Time.deltaTime * 5 : Time.deltaTime * 8;
         _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, lerpTime));
+
         HandleFootstepSounds(horizontalDir.magnitude, speedValue);
 
 
         if (_canJump)
         {
-            // 점프 로직
+            HandleFootstepSounds(horizontalDir.magnitude, speedValue);
+
             if (Input.GetKey(KeyCode.Space))
             {
                 StartCoroutine(JumpCoroutine());
@@ -63,7 +70,6 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         // 3. 이동하기
         transform.position += moveVelocity * Time.deltaTime;
     }
-
     private void HandleFootstepSounds(float horizontalMagnitude, float speedValue)
     {
         if (horizontalMagnitude > 0)
@@ -104,6 +110,7 @@ public class CharacterMoveAbilityTwo : CharacterAbility
         _rigidbody.AddForce(Vector3.up * (Owner.Stat.JumpPower), ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.25f);
+
         _canJump = true;
 
     }
