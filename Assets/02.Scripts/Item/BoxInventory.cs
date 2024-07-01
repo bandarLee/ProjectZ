@@ -78,7 +78,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         UpdateInventoryUI();
     }
     [PunRPC]
-    public void BoxRemoveItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription)
+    public void BoxRemoveItemRPC(string itemName, string itemType, string uniqueId, string itemEffect, string itemDescription, int quantity)
     {
         var icon = FindObjectOfType<ItemPresets>().GetIconByName(itemName);
 
@@ -91,15 +91,15 @@ public class BoxInventory : MonoBehaviourPunCallbacks
             itemEffect = itemEffect,
             itemDescription = itemDescription
         };
-        BoxRemoveItem(boxitem, false);
+        BoxRemoveItem(boxitem, quantity, false);
     }
-    public void BoxRemoveItem(Item boxitem, bool synchronize = true)
+    public void BoxRemoveItem(Item boxitem, int quantity = 1, bool synchronize = true)
     {
         string itemName = boxitem.itemType == ItemType.Weapon || boxitem.itemType == ItemType.ETC || boxitem.itemType == ItemType.Gun ? boxitem.uniqueId : boxitem.itemName;
 
         if (itemQuantities.ContainsKey(itemName))
         {
-            itemQuantities[itemName]--;
+        itemQuantities[itemName] -= quantity;
             if (itemQuantities[itemName] <= 0)
             {
                 items.Remove(itemName);
@@ -113,7 +113,7 @@ public class BoxInventory : MonoBehaviourPunCallbacks
         
             if (synchronize)
             {
-                photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, boxitem.itemName, boxitem.itemType.ToString(), boxitem.uniqueId, boxitem.itemEffect, boxitem.itemDescription);
+                photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, boxitem.itemName, boxitem.itemType.ToString(), boxitem.uniqueId, boxitem.itemEffect, boxitem.itemDescription, quantity);
             }
 
             UpdateInventoryUI();

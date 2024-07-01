@@ -164,14 +164,20 @@ public class BoxInventoryUI : MonoBehaviour
 
                 return;
             }
-            currentBoxInventory.BoxRemoveItem(slotitem);
-
-            playerInventory.AddItem(slotitem);
-
-            if (currentBoxInventory.photonView != null)
+            if (currentBoxInventory.itemQuantities.ContainsKey(slotitem.itemName) && currentBoxInventory.itemQuantities[slotitem.itemName] >= 10)
             {
-                currentBoxInventory.photonView.RPC("BoxRemoveItemRPC", RpcTarget.OthersBuffered, slotitem.itemName, slotitem.itemType.ToString(), slotitem.uniqueId, slotitem.itemEffect, slotitem.itemDescription);
+                currentBoxInventory.BoxRemoveItem(slotitem, 10);
+                playerInventory.AddItem(slotitem, 10);
+
+
             }
+            else
+            {
+                currentBoxInventory.BoxRemoveItem(slotitem);
+                playerInventory.AddItem(slotitem);
+            }
+
+
 
             ItemInfo.SetActive(false);
 

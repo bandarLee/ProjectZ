@@ -21,6 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI loadingText;
     private bool isLoading = false;
 
+    public GameObject UI_Tutorial;
     public DynamicCharacterAvatar characterAvatar;
     private void Start()
     {
@@ -30,7 +31,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinButton.interactable = false;
         connectionInfoText.text = "마스터 서버에 접속중...";
     }
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            TutorialInActive();
+        }
+    }
     public override void OnConnectedToMaster()
     {
         joinButton.interactable = true;
@@ -83,7 +90,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
-
+    public void TutorialActive() 
+        {
+            UI_Tutorial.SetActive(true);
+        }
+    public void TutorialInActive()
+    {
+        UI_Tutorial.SetActive(false);
+    }
     public void Connect3()
     {
         PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;

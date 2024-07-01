@@ -30,6 +30,8 @@ public class QuickSlotManager : MonoBehaviour
 
     public GameObject[] UIInfos;
     public GameObject UIInfoBar;
+
+    public GameObject UI_Tutorial;
     private void Start()
     {
 
@@ -47,7 +49,7 @@ public class QuickSlotManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         inventoryManager = FindObjectOfType<InventoryManager>();
-
+        UI_Tutorial.SetActive(false);
         GameObject localPlayer = Character.LocalPlayerInstance.gameObject;
         if (localPlayer != null)
         {
@@ -339,6 +341,14 @@ public class QuickSlotManager : MonoBehaviour
             {
                 StartCoroutine(ScanInfo());
             }
+        }
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            UI_Tutorial.SetActive(true);
+        }
+        else
+        {
+            UI_Tutorial.SetActive(false);
         }
 
     }

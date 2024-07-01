@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.TagObject = this;
     }
 
-    public void AddItem(Item newItem, bool synchronize = true)
+    public void AddItem(Item newItem, int quantity = 1, bool synchronize = true)
     { 
         if (newItem == null || string.IsNullOrEmpty(newItem.itemName) || string.IsNullOrEmpty(newItem.uniqueId))
         {
@@ -57,12 +57,12 @@ public class Inventory : MonoBehaviourPunCallbacks
         {
             if (items.ContainsKey(newItem.itemName))
             {
-                itemQuantities[newItem.itemName]++;
+                itemQuantities[newItem.itemName] += quantity;
             }
             else
             {
                 items[newItem.itemName] = newItem;
-                itemQuantities[newItem.itemName] = 1;
+                itemQuantities[newItem.itemName] = quantity;
             }
         }
         processedItems.Add(newItem.uniqueId);
