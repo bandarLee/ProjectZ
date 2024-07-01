@@ -52,20 +52,25 @@ public class CharacterRotateAbility : CharacterAbility
 
     public void SetMouseLock(bool isLocked)
     {
-        if (isLocked)
+        if (Owner.PhotonView.IsMine)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            CharacterRotateLocked = false;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            CharacterRotateLocked = true;
+            if (isLocked)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                CharacterRotateLocked = false;
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                CharacterRotateLocked = true;
 
-            ResetMouseInput();
+                ResetMouseInput();
+            }
+
         }
+
     }
 
     private void ResetMouseInput()
