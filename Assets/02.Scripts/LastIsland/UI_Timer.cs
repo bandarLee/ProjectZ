@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UI_Timer : MonoBehaviourPunCallbacks
 {
@@ -97,7 +98,8 @@ public class UI_Timer : MonoBehaviourPunCallbacks
         UI_Ending.DOFade(1, 1.5f);
         Debug.Log("Happy");
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("Happy");
+        SceneManager.LoadScene("HappyEnd");
+
     }
     private IEnumerator BadEnding()
     {
@@ -111,7 +113,7 @@ public class UI_Timer : MonoBehaviourPunCallbacks
             UI_Ending.DOFade(1, 1.5f);
             Debug.Log("Bad");
             yield return new WaitForSeconds(1.5f);
-            Debug.Log("Bad");
+            SceneManager.LoadScene("BadEnd");
         }
     }
 }

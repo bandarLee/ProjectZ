@@ -230,9 +230,8 @@ namespace Michsky.UI.Shift
         public void WindowFullscreen()
         {
 
-
-            Screen.fullScreen = false;
-            Screen.fullScreenMode = FullScreenMode.Windowed;
+            Screen.fullScreen = true;
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
 
         }
 
@@ -244,9 +243,10 @@ namespace Michsky.UI.Shift
 
         public void WindowWindowed()
         {
+            Screen.fullScreen = false;
+            Screen.fullScreenMode = FullScreenMode.Windowed;
 
-            Screen.fullScreen = true;
-            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+
         }
     }
 }

@@ -327,6 +327,10 @@ public class QuickSlotManager : MonoBehaviour
             Character.LocalPlayerInstance._attackability.DeactivateAllWeapons();
             Character.LocalPlayerInstance._gunfireAbility.DeactivateAllGuns();
         }
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            Character.LocalPlayerInstance.GetComponent<CharacterMoveAbilityTwo>().Teleport(new Vector3(1161.041f,711.3405f,1082.506f));
+        }
         if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape))
         {
             inventoryManager.TogglePlayerInventory();

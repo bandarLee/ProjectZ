@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/LastIsLandScene.unity
     guid: 10eb5294ad25ca84a9854ca1658d6005
+  - enabled: 1
+    path: Assets/01.Scenes/BadEnd.unity
+    guid: b07ec6cb67f63044a8b5fb917aa25370
+  - enabled: 1
+    path: Assets/01.Scenes/HappyEnd.unity
+    guid: 7202b85a8bd79234dabd921b9ba4329c
   m_configObjects: {}

@@ -89,9 +89,10 @@ public class UI_Clock : MonoBehaviourPun, IPunObservable
         if (gameTimeScript.CurrentTimeType != previousTimeType)
         {
             previousTimeType = gameTimeScript.CurrentTimeType;
-            gotoSubwayTrigger.ManageSubwayEntrance(gameTimeScript.CurrentTimeType);
             EnemySpawnManager.NightEnemySpawn(gameTimeScript.CurrentTimeType);
             EnemySpawnManager.DayEnemySpawn(gameTimeScript.CurrentTimeType);
+            gotoSubwayTrigger.ManageSubwayEntrance(gameTimeScript.CurrentTimeType);
+
         }
 
         // CurrentTimeType에 따라 UI 업데이트
