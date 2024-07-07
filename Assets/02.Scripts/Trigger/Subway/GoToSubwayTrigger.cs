@@ -29,4 +29,16 @@ public class GoToSubwayTrigger : MonoBehaviour
             this.gameObject.transform.DOMove(originalPosition, 2f);
         }
     }
+    public void OpenDoor()
+    {
+        this.gameObject.transform.DOMove(targetPosition, 2f);
+
+    }
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F12)) 
+        {
+            OpenDoor();
+        }
+    }
 }
